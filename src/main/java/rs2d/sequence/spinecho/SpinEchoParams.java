@@ -447,7 +447,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.01);
             param.setMaxValue(10.0);
-            param.setValue(0.08);
+            param.setValue(0.04);
             param.setDefaultValue(0.1);
             return param;
         }
@@ -516,7 +516,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.PERCENT);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(100.0);
+            param.setValue(50.0);
             param.setDefaultValue(100.0);
             return param;
         }
@@ -1621,7 +1621,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.PERCENT);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(100.0);
+            param.setValue(50.0);
             param.setDefaultValue(100.0);
             return param;
         }
@@ -1777,7 +1777,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(6.25E-4);
+            param.setValue(3.125E-4);
             param.setDefaultValue(5.0E-4);
             return param;
         }
@@ -1825,7 +1825,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setCategory(Category.Acquisition);
-            param.setValue("SE_2DSAG_256x128x12_ETL=4");
+            param.setValue("SE_2D_SAG_256x128x12_ETL=4");
             param.setDefaultValue("");
             return param;
         }
@@ -1874,7 +1874,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.2");
+            param.setValue("Version7.3");
             param.setDefaultValue("");
             return param;
         }

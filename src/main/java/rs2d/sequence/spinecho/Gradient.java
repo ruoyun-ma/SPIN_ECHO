@@ -427,7 +427,6 @@ public class Gradient {
 
     public void reoderPhaseEncoding(TransformPlugin plugin, int echoTrainLength, int acquisitionMatrixDimension2D, int acquisitionMatrixDimension1D) {
         double loopNumber, indexNew;
-        System.out.println("amplitudeArray : " + amplitudeArray );
         if( amplitudeArray != null) {
             double[] newTable = new double[acquisitionMatrixDimension2D];
             for (int j = 0; j < acquisitionMatrixDimension2D; j++) {

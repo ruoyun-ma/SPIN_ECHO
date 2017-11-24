@@ -4,7 +4,8 @@
 //
 // ---------------------------------------------------------------------
 //  last modification:  JR 24-03 2017
-//  V7.2 - 31-07
+//  V7.3 - 2-11 bugs memory 
+//  V7.2 - 30-11
 //       KS_CENTER_MODE Frequency_offset_init
 //  V7 - 31-07
 //	delete min_flush_delay and replace all call with  min_instruction_delay
@@ -24,26 +25,30 @@
 //  double min_instruction_delay = 0.000005;
 package rs2d.sequence.spinecho;
 
-import java.util.*;
-
+import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.hardware.controller.HardwareHandler;
 import rs2d.spinlab.instrument.Instrument;
 import rs2d.spinlab.instrument.util.GradientMath;
 import rs2d.spinlab.sequence.element.TimeElement;
-import rs2d.spinlab.tools.role.*;
-import rs2d.spinlab.sequence.table.*;
+import rs2d.spinlab.sequence.table.Shape;
+import rs2d.spinlab.sequence.table.Table;
+import rs2d.spinlab.sequence.table.Utility;
 import rs2d.spinlab.sequenceGenerator.SequenceGeneratorAbstract;
 import rs2d.spinlab.tools.param.*;
+import rs2d.spinlab.tools.role.RoleEnum;
 import rs2d.spinlab.tools.table.Order;
 import rs2d.spinlab.tools.utility.GradientAxe;
 import rs2d.spinlab.tools.utility.Nucleus;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static rs2d.sequence.spinecho.SpinEchoParams.*;
 
-
 import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
-
 
 
 
@@ -52,7 +57,6 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -137,11 +141,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         getParam(DIGITAL_FILTER_SHIFT).setDefaultValue(Instrument.instance().getDevices().getCameleon().getAcquDeadPointCount());
         getParam(DIGITAL_FILTER_REMOVED).setDefaultValue(Instrument.instance().getDevices().getCameleon().isRemoveAcquDeadPoint());
 
-        List<String> tx_shape = new ArrayList<String>();
-        tx_shape.add("HARD");
-        tx_shape.add("GAUSSIAN");
-        tx_shape.add("SINC3");
-        tx_shape.add("SINC5");
+        List<String> tx_shape = asList("HARD", "GAUSSIAN", "SINC3", "SINC5");
         ((TextParam) getParam(TX_SHAPE_90)).setSuggestedValues(tx_shape);
         ((TextParam) getParam(TX_SHAPE_90)).setRestrictedToSuggested(true);
         ((TextParam) getParam(TX_SHAPE_180)).setSuggestedValues(tx_shape);
@@ -223,8 +223,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         isKSCenterMode = ((BooleanParam) getParam(KS_CENTER_MODE)).getValue();
 
-        isEnablePhase3D =  !isKSCenterMode && ((BooleanParam) getParam(GRADIENT_ENABLE_PHASE_3D)).getValue();
-        isEnablePhase = !isKSCenterMode &&((BooleanParam) getParam(GRADIENT_ENABLE_PHASE)).getValue();
+        isEnablePhase3D = !isKSCenterMode && ((BooleanParam) getParam(GRADIENT_ENABLE_PHASE_3D)).getValue();
+        isEnablePhase = !isKSCenterMode && ((BooleanParam) getParam(GRADIENT_ENABLE_PHASE)).getValue();
         isEnableSlice = ((BooleanParam) getParam(GRADIENT_ENABLE_SLICE)).getValue();
         isEnableRead = ((BooleanParam) getParam(GRADIENT_ENABLE_READ)).getValue();
 
@@ -250,12 +250,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     //
     // --------------------------------------------------------------------------------------------------------------------------------------------
     private void beforeRouting() throws Exception {
-        setParamValue(SEQUENCE_VERSION, "Version7.2");
+        Log.debug(getClass(), "------------ BEFORE ROUTING -------------");
+
+        setParamValue(SEQUENCE_VERSION, "Version7.3");
         setParamValue(MODALITY, "MRI");
-        boolean b_comment = false; // Show the comments
-        if (b_comment) {
-            System.out.println("------------ BEFORE ROUTING -------------");
-        }
 
         // -----------------------------------------------
         // RX parameters : nucleus, RX gain & frequencies
@@ -466,12 +464,13 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             // Check memory: TX OFFSET FREQUENCY
             // the 180° is inside the Echo loop therefore , the slices_offset need to be repeated for each ETL
             int max_nb_planar_excitation_for_freq_off = userMatrixDimension3D;
-            if ((1 /* F0 */ + 3 + (isMultiplanar ? /* 2D */ userMatrixDimension3D * 4 :/* 3D */ 3)) > offset_channel_memory) {
-                max_nb_planar_excitation_for_freq_off = (int) Math.floor((offset_channel_memory - 4) / (float) (4));
+            if ((1 + 1 /* F0 */ + 3 + (isMultiplanar ? /* 2D */ userMatrixDimension3D * 2 :/* 3D */ 2)) > offset_channel_memory) {
+                max_nb_planar_excitation_for_freq_off = (int) Math.floor((offset_channel_memory - 5) / (float) (2));
                 memory_limit_reached = true;
-                System.out.println("OFFSET MEMORY ERROR : echo train length * number of slices too large");
-                System.out.println("tx_180° inside the EchoLoop -> frequency offset has to be repeated for each ETL  ");
-                System.out.println(" ");
+                Log.info(getClass(), "OFFSET MEMORY ERROR : number of slices too large \n");
+//                System.out.println("OFFSET MEMORY ERROR : echo train length * number of slices too large");
+//                System.out.println("tx_180° inside the EchoLoop -> frequency offset has to be repeated for each ETL  ");
+//                System.out.println(" ");
             }
             if (memory_limit_reached) {
                 int max_nb_interleaved_excitation_for_freq_off = (int) Math.floor(max_nb_planar_excitation_for_freq_off / ((double) nb_scan_3d));
@@ -488,6 +487,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
                     unreach_message = "Memory limit (TX OFFSET FREQUENCY): 4 + User_Mx3D *3 too large";
                 }
                 System.out.println(unreach_message);
+                System.out.println(nb_scan_3d);
+                System.out.println(min_max_nb_interleaved_excitation);
                 getUnreachParamExceptionManager().addParam(USER_MATRIX_DIMENSION_3D.name(), userMatrixDimension3D, ((NumberParam) getParam(USER_MATRIX_DIMENSION_3D)).getMinValue(), (nb_scan_3d * min_max_nb_interleaved_excitation), unreach_message);
 
                 userMatrixDimension3D = nb_scan_3d * min_max_nb_interleaved_excitation;
@@ -516,7 +517,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         }
         setParamValue(RESOLUTION_SLICE, pixel_dimension_3D); // phase true resolution for display
 
-        if (isMultiplanar) { // ToDO to move?
+        if (isMultiplanar) {
             double tmp = ((NumberParam) getParam(GRADIENT_PHASE_APPLICATION_TIME)).getValue().doubleValue();
             setParamValue(GRADIENT_CRUSHER_TOP_TIME, tmp);
         }
@@ -557,9 +558,9 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         setSequenceParamValue(Pre_scan, DUMMY_SCAN); // Do the prescan
         setSequenceParamValue(Nb_point, acquisitionMatrixDimension1D);
         setSequenceParamValue(Nb_1d, NUMBER_OF_AVERAGES);
-        setSequenceParamValue(Nb_2d, isKSCenterMode ? 2: nb_scan_2d);
-        setSequenceParamValue(Nb_3d, isKSCenterMode && ! isMultiplanar ? 1 :nb_scan_3d);
-        setSequenceParamValue(Nb_4d,  isKSCenterMode ? 1: nb_scan_4d);
+        setSequenceParamValue(Nb_2d, isKSCenterMode ? 2 : nb_scan_2d);
+        setSequenceParamValue(Nb_3d, isKSCenterMode && !isMultiplanar ? 1 : nb_scan_3d);
+        setSequenceParamValue(Nb_4d, isKSCenterMode ? 1 : nb_scan_4d);
         // set the calculated Loop dimensions
         setSequenceParamValue(Nb_echo, echoTrainLength - 1);
         setSequenceParamValue(Nb_interleaved_slice, nbOfInterleavedSlice - 1);
@@ -569,9 +570,9 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // -----------------------------------------------
         String seqDescription = "SE_";
         if (isMultiplanar) {
-            seqDescription = seqDescription.concat("2D");
+            seqDescription += "2D_";
         } else {
-            seqDescription = seqDescription.concat("3D");
+            seqDescription = seqDescription.concat("3D_");
         }
         String orientation = (String) getParam(ORIENTATION).getValue();
         seqDescription = seqDescription.concat(orientation.substring(0, 3));
@@ -650,7 +651,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private void prepareFovPhase() {
         fovPhase = (((BooleanParam) getParam(FOV_SQUARE)).getValue()) ? fov : fovPhase;
         fovPhase = fovPhase > fov ? fov : fovPhase;
-        setParamValue(FIELD_OF_VIEW_PHASE, fov);
+        setParamValue(FIELD_OF_VIEW_PHASE, fovPhase);
 
         setParamValue(PHASE_FIELD_OF_VIEW_RATIO, (fovPhase / fov * 100.0));    // FOV ratio for display
         setParamValue(FOV_RATIO_PHASE, Math.round(fovPhase / fov * 100.0));    // FOV ratio for display
@@ -665,7 +666,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     // --------------------------------------------------------------------------------------------------------------------------------------------
 
     private void afterRouting() throws Exception {
-        boolean b_comment = false; // Show the comments
+        Log.debug(getClass(), "------------ AFTER ROUTING -------------");
         plugin = getTransformPlugin();
         plugin.setParameters(this.getParams());
         // -----------------------------------------------
@@ -684,8 +685,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // -----------------------------------------------
         setSequenceParamValue(Grad_enable_IR, isInversionRecovery);
         setSequenceParamValue(Tx_enable_IR, isInversionRecovery);
-        setSequenceParamValue(Grad_enable_crush_IR, isInversionRecovery ? GRADIENT_ENABLE_CRUSHER_IR : false);
-
+        boolean isEnableCrusherIR =  ((BooleanParam) getParam(GRADIENT_ENABLE_CRUSHER_IR)).getValue();
+        setSequenceParamValue(Grad_enable_crush_IR, isInversionRecovery ? isEnableCrusherIR:false);
         // -----------------------------------------------
         // calculate gradient equivalent rise time
         // -----------------------------------------------
@@ -732,7 +733,6 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             default: // Custom
                 break;
         }
-
 
 
         // -----------------------------------------------
@@ -847,7 +847,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             gradReadPrep.refocalizeGradient(gradReadout, -((NumberParam) getParam(PREPHASING_READ_GRADIENT_RATIO)).getValue().doubleValue());
 
         // pre-calculate SLICE_refocusing
-        double grad_ratio_slice_refoc = isEnableSlice ? ((NumberParam) getParam(SLICE_REFOCUSING_GRADIENT_RATIO)).getValue().doubleValue() : 0.0;   // get slice refocussing ratio
+        double grad_ratio_slice_refoc = 0.5;   // get slice refocussing ratio
+        this.setParamValue(SLICE_REFOCUSING_GRADIENT_RATIO, grad_ratio_slice_refoc);   // display 180° amplitude
         Gradient gradSliceRef = Gradient.createGradient(getSequence(), Grad_amp_slice_refoc, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         if (isEnableSlice) {
             gradSliceRef.refocalizeGradient(gradSlice90, grad_ratio_slice_refoc);
@@ -858,7 +859,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         double grad_area_max = Math.max(gradReadPrep.getTotalArea(), gradSliceRef.getTotalArea());            // calculate the maximum gradient aera between SLICE REFOC & READ PREPHASING
         if (grad_area_max > grad_area_sequence_max) {
             double grad_read_prep_application_time_min = ceilToSubDecimal(grad_area_max / 100.0 - grad_shape_rise_time, 5);
-            getUnreachParamExceptionManager().addParam(GRADIENT_PHASE_APPLICATION_TIME.name(), grad_read_prep_application_time, grad_read_prep_application_time_min, ((NumberParam) getParam(GRADIENT_PHASE_APPLICATION_TIME)).getMaxValue(), "Gradient application time too short to reach this pixel dimension");
+            getUnreachParamExceptionManager().addParam(GRADIENT_READ_PREPHASING_APPLICATION_TIME.name(), grad_read_prep_application_time, grad_read_prep_application_time_min, ((NumberParam) getParam(GRADIENT_READ_PREPHASING_APPLICATION_TIME)).getMaxValue(), "Gradient application time too short to reach this pixel dimension");
             grad_read_prep_application_time = grad_read_prep_application_time_min;
             setSequenceTableSingleValue(Time_grad_read_prep_top, grad_read_prep_application_time);
             gradSliceRef.rePrepare();
@@ -882,10 +883,6 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // pre-calculate PHASE_2D
         Gradient gradPhase2D = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         gradPhase2D.preparePhaseEncodingForCheck(acquisitionMatrixDimension2D, acquisitionMatrixDimension2D, fovPhase, is_k_s_centred);
-        System.out.println("echoTrainLength "+echoTrainLength );
-        System.out.println("acquisitionMatrixDimension2D "+acquisitionMatrixDimension2D );
-        System.out.println("acquisitionMatrixDimension1D "+acquisitionMatrixDimension1D );
-        System.out.println("plugin "+plugin );
         if (is_FSE_vs_MultiEcho && echoTrainLength != 1) {
             gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
         }
@@ -893,6 +890,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // Check if enougth time for 2D_PHASE, 3D_PHASE SLICE_REF or READ_PREP
         grad_area_sequence_max = 100 * (grad_phase_application_time + grad_shape_rise_time);
         grad_area_max = Math.max(gradSlicePhase3D.getTotalArea(), gradPhase2D.getTotalArea());            // calculate the maximum gradient aera between SLICE REFOC & READ PREPHASING
+
         if (grad_area_max > grad_area_sequence_max) {
             double grad_phase_application_time_min = ceilToSubDecimal(grad_area_max / 100.0 - grad_shape_rise_time, 5);
             getUnreachParamExceptionManager().addParam(GRADIENT_PHASE_APPLICATION_TIME.name(), grad_phase_application_time, grad_phase_application_time_min, ((NumberParam) getParam(GRADIENT_PHASE_APPLICATION_TIME)).getMaxValue(), "Gradient application time too short to reach this pixel dimension");
@@ -936,7 +934,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // ------------------------------------------
         boolean is_FIR = Instrument.instance().getDevices().getCameleon().isRemoveAcquDeadPoint();
         double lo_FIR_dead_point = is_FIR ? Instrument.instance().getDevices().getCameleon().getAcquDeadPointCount() : 0;
-        double min_FIR_delay = (lo_FIR_dead_point + 2)  / spectralWidth;
+        double min_FIR_delay = (lo_FIR_dead_point + 2) / spectralWidth;
         double min_FIR_4pts_delay = 4 / spectralWidth;
 
         // ------------------------------------------
@@ -1103,8 +1101,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         //--------------------------------------------------------------------------------------
         //  External triggering
         //--------------------------------------------------------------------------------------
-        getSequence().getPublicParam(Synchro_trigger).setValue(isTrigger ? TimeElement.Trigger.External : TimeElement.Trigger.Timer);
-        getSequence().getPublicParam(Synchro_trigger).setLocked(true);
+        setSequenceParamValue(Synchro_trigger, isTrigger ? TimeElement.Trigger.External : TimeElement.Trigger.Timer);
         double time_external_trigger_delay_max = min_instruction_delay;
 
         Table triggerdelay = setSequenceTableValues(Time_trigger_delay, Order.Four);
@@ -1328,8 +1325,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             if (isInversionRecovery) {
                 pulseTXIR.prepareOffsetFreqMultiSlice(gradSlice180, nb_planar_excitation, spacing_between_slice, off_center_distance_3D);
                 pulseTXIR.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, slices_acquired_in_single_scan);
-             }
-            pulseTXIR.setFrequencyOffset(slices_acquired_in_single_scan != 1 ? Order.ThreeLoop : Order.Three);
+            }
+            pulseTXIR.setFrequencyOffset(isInversionRecovery ? (slices_acquired_in_single_scan != 1 ? Order.ThreeLoop : Order.Three) : Order.FourLoop);
 
         } else {
             //3D CASE :
@@ -1339,8 +1336,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             pulseTX180.setFrequencyOffset(Order.Three);
             if (isInversionRecovery) {
                 pulseTXIR.prepareOffsetFreqMultiSlice(gradSlice180, 1, 0, off_center_distance_3D);
-             }
-            pulseTXIR.setFrequencyOffset(Order.Three);
+            }
+            pulseTXIR.setFrequencyOffset(isInversionRecovery ? Order.Three : Order.FourLoop);
         }
 
         // ------------------------------------------------------------------
@@ -1494,14 +1491,14 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         //--------------------------------------------------------------------------------------
         // Comments
         //--------------------------------------------------------------------------------------
-        if (b_comment) { // Show the comments
+        if (false) { // Show the comments
             System.out.println("");
             System.out.println((((NumberParam) getSequence().getParam(Nb_1d)).getValue().intValue()));
             System.out.println((((NumberParam) getSequence().getParam(Nb_2d)).getValue().intValue()));
             System.out.println((((NumberParam) getSequence().getParam(Nb_3d)).getValue().intValue()));
             System.out.println((((NumberParam) getSequence().getParam(Nb_4d)).getValue().intValue()));
             System.out.println((((NumberParam) getSequence().getParam(Nb_echo)).getValue().intValue()));
-            System.out.println((((NumberParam) getSequence().getParam("Nb_interveaved_slice")).getValue().intValue()));
+            System.out.println((((NumberParam) getSequence().getParam(Nb_interleaved_slice)).getValue().intValue()));
             System.out.println("");
 
             for (int i = 0; i < 58; i++) {
@@ -1675,10 +1672,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         return time;
     }
 
-    public ArrayList<RoleEnum> getPluginAccess() {
-        ArrayList<RoleEnum> roleEnums = new ArrayList<RoleEnum>();
-        roleEnums.add(RoleEnum.User);
-        return roleEnums;
+    public List<RoleEnum> getPluginAccess() {
+        return Collections.singletonList(RoleEnum.User);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Generated Code (RS2D)">

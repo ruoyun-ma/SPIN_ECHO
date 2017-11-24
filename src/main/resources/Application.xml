@@ -521,7 +521,7 @@
                     <group>Dimension</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>0.08</value>
+                    <value>0.04</value>
                     <defaultValue>0.1</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>10.0</maxValue>
@@ -593,7 +593,7 @@
                     <group>Dimension</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>100.0</value>
+                    <value>50.0</value>
                     <defaultValue>100.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>100.0</maxValue>
@@ -2377,7 +2377,7 @@
                     <group>Dimension</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>100.0</value>
+                    <value>50.0</value>
                     <defaultValue>100.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>100.0</maxValue>
@@ -2541,7 +2541,7 @@
                     <group>Dimension</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>6.25E-4</value>
+                    <value>3.125E-4</value>
                     <defaultValue>5.0E-4</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>100.0</maxValue>
@@ -2614,7 +2614,7 @@
                     <group>User</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>Version7.2</value>
+                    <value>Version7.3</value>
                     <defaultValue></defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                 </value>
@@ -2629,7 +2629,7 @@
                     <lockedToDefault>false</lockedToDefault>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>SE_2DSAG_256x128x12_ETL=4</value>
+                    <value>SE_2D_SAG_256x128x12_ETL=4</value>
                     <defaultValue></defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                 </value>

@@ -201,7 +201,7 @@ public interface SpinEchoSequenceParams {
     String FreqOffset_tx_prep_90 = "FreqOffset_tx_prep_90";
 
     /**
-     * Group: Transmit, Order: 3D+Loop - FreqOffset (Hz)
+     * Group: Transmit, Order: 4D+Loop - FreqOffset (Hz)
      */
     String FreqOffset_tx_prep_IR = "FreqOffset_tx_prep_IR";
 
@@ -431,7 +431,7 @@ public interface SpinEchoSequenceParams {
     String Tx_freq_offset_90 = "Tx_freq_offset_90";
 
     /**
-     * Group: Transmit, Order: 3D+Loop - FreqOffset (Hz)
+     * Group: Transmit, Order: 4D+Loop - FreqOffset (Hz)
      */
     String Tx_freq_offset_IR = "Tx_freq_offset_IR";
 
