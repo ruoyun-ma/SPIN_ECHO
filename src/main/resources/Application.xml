@@ -2136,8 +2136,8 @@
                 <key>OFF_CENTER_FIELD_OF_VIEW_1D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OFF_CENTER_FIELD_OF_VIEW_1D</name>
-                    <description>offcenter location of the FOV in the direction of the readout gradient </description>
-                    <displayedName>FOV Offset 1D</displayedName>
+                    <description>Offset in Readout Direction</description>
+                    <displayedName>Location 1D</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Gradient</group>
@@ -2155,9 +2155,9 @@
                 <key>OFF_CENTER_FIELD_OF_VIEW_2D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OFF_CENTER_FIELD_OF_VIEW_2D</name>
-                    <description>offcenter location of the FOV in the direction of the phase encoding gradient </description>
-                    <displayedName>FOV Offset 2D</displayedName>
-                    <locked>false</locked>
+                    <description>Offset in Phase Encoding Direction</description>
+                    <displayedName>Location 2D</displayedName>
+                    <locked>true</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Gradient</group>
                     <category>Acquisition</category>
@@ -2174,9 +2174,9 @@
                 <key>OFF_CENTER_FIELD_OF_VIEW_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OFF_CENTER_FIELD_OF_VIEW_3D</name>
-                    <description>offcenter location of the FOV in the direction of the slice selection</description>
-                    <displayedName>FOV Offset 3D</displayedName>
-                    <locked>false</locked>
+                    <description>Offset in the slice direction</description>
+                    <displayedName>Location Z</displayedName>
+                    <locked>true</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Gradient</group>
                     <category>Acquisition</category>
@@ -2215,8 +2215,8 @@
                 <key>OFF_CENTER_FIELD_OF_VIEW_X</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OFF_CENTER_FIELD_OF_VIEW_X</name>
-                    <description>off centerFOV position along the Right/Left axis </description>
-                    <displayedName>OFF_CENTER_FIELD_OF_VIEW_X</displayedName>
+                    <description>Location in the R/L direction</description>
+                    <displayedName>Location X</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Gradient</group>
@@ -2225,8 +2225,8 @@
                     <value>0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
-                    <maxValue>2.0</maxValue>
-                    <minValue>-2.0</minValue>
+                    <maxValue>1.7976931348623157E308</maxValue>
+                    <minValue>-1.7976931348623157E308</minValue>
                     <numberEnum>Location</numberEnum>
                 </value>
             </entry>
@@ -2234,8 +2234,8 @@
                 <key>OFF_CENTER_FIELD_OF_VIEW_Y</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OFF_CENTER_FIELD_OF_VIEW_Y</name>
-                    <description>Off center of the FOV along the Up/Down axis </description>
-                    <displayedName>OFF_CENTER_FIELD_OF_VIEW_Y</displayedName>
+                    <description>Location in the A/P direction</description>
+                    <displayedName>Location Y</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Gradient</group>
@@ -2244,8 +2244,8 @@
                     <value>0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
-                    <maxValue>2.0</maxValue>
-                    <minValue>-2.0</minValue>
+                    <maxValue>1.7976931348623157E308</maxValue>
+                    <minValue>-1.7976931348623157E308</minValue>
                     <numberEnum>Location</numberEnum>
                 </value>
             </entry>
@@ -2253,8 +2253,8 @@
                 <key>OFF_CENTER_FIELD_OF_VIEW_Z</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OFF_CENTER_FIELD_OF_VIEW_Z</name>
-                    <description>Off center of the FOV along the tunnel axis</description>
-                    <displayedName>OFF_CENTER_FIELD_OF_VIEW_Z</displayedName>
+                    <description>Location in the I/S direction</description>
+                    <displayedName>Location Z</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Gradient</group>
@@ -2263,8 +2263,8 @@
                     <value>0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
-                    <maxValue>2.0</maxValue>
-                    <minValue>-2.0</minValue>
+                    <maxValue>1.7976931348623157E308</maxValue>
+                    <minValue>-1.7976931348623157E308</minValue>
                     <numberEnum>Location</numberEnum>
                 </value>
             </entry>
@@ -2436,25 +2436,6 @@
                 </value>
             </entry>
             <entry>
-                <key>PULSE_ATT</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                    <name>PULSE_ATT</name>
-                    <description>Transmitter attenuation</description>
-                    <displayedName>PULSE_ATT</displayedName>
-                    <locked>false</locked>
-                    <lockedToDefault>false</lockedToDefault>
-                    <group>Emission</group>
-                    <category>Acquisition</category>
-                    <rolesEnum>User</rolesEnum>
-                    <value>18.0</value>
-                    <defaultValue>26.0</defaultValue>
-                    <restrictedToSuggested>false</restrictedToSuggested>
-                    <maxValue>63.0</maxValue>
-                    <minValue>0.0</minValue>
-                    <numberEnum>TxAtt</numberEnum>
-                </value>
-            </entry>
-            <entry>
                 <key>RECEIVER_COUNT</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RECEIVER_COUNT</name>
@@ -2614,7 +2595,7 @@
                     <group>User</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>Version7.3</value>
+                    <value>Version7.4</value>
                     <defaultValue></defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                 </value>
@@ -2689,8 +2670,8 @@
                 <key>SLICE_THICKNESS</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SLICE_THICKNESS</name>
-                    <description>The slice thickness</description>
-                    <displayedName>SL</displayedName>
+                    <description>slice thickness</description>
+                    <displayedName>Slice Thickness</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Dimension</group>
@@ -2977,6 +2958,25 @@
                     <rolesEnum>User</rolesEnum>
                     <value>true</value>
                     <defaultValue>true</defaultValue>
+                </value>
+            </entry>
+            <entry>
+                <key>TX_ATT</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                    <name>TX_ATT</name>
+                    <description>The emission attenuation</description>
+                    <displayedName>TX_ATT</displayedName>
+                    <locked>false</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <group>Emission</group>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>18.0</value>
+                    <defaultValue>36.0</defaultValue>
+                    <restrictedToSuggested>false</restrictedToSuggested>
+                    <maxValue>63.0</maxValue>
+                    <minValue>0.0</minValue>
+                    <numberEnum>TxAtt</numberEnum>
                 </value>
             </entry>
             <entry>

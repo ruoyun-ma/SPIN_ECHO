@@ -4,7 +4,8 @@
 //
 // ---------------------------------------------------------------------
 //  last modification:  JR 24-03 2017
-//  V7.3 - 2-11 bugs memory 
+//  V7.4 - 17-11 sequenceVersion  && SWITCH_READ_PHASE
+///  V7.3 - 2-11 bugs memory
 //  V7.2 - 30-11
 //       KS_CENTER_MODE Frequency_offset_init
 //  V7 - 31-07
@@ -57,6 +58,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
+    private String sequenceVersion = "Version7.4";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -148,7 +150,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         ((TextParam) getParam(TX_SHAPE_180)).setRestrictedToSuggested(true);
 
         //TRANSFORM PLUGIN
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("Centered2D");
         list.add("Bordered2D");
         list.add("Sequential4D");
@@ -252,7 +254,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private void beforeRouting() throws Exception {
         Log.debug(getClass(), "------------ BEFORE ROUTING -------------");
 
-        setParamValue(SEQUENCE_VERSION, "Version7.3");
+        setParamValue(SEQUENCE_VERSION, sequenceVersion);
         setParamValue(MODALITY, "MRI");
 
         // -----------------------------------------------
@@ -286,7 +288,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         if (echoTrainLength == 1) {
             setParamValue(ECHO_SPACING, 0);
         }
-
+        System.out.println("- - - - - -  ");
+        System.out.println("echoTrainLength " +echoTrainLength);
+        System.out.println("TRANSFORM_PLUGIN " +getParam(TRANSFORM_PLUGIN).getValue());
+        System.out.println("SE_TYPE " +getParam(SE_TYPE).getValue());
         //  adapt the TRANSFORM_PLUGIN and the TE/TR depending on the IMAGE_CONTRAST
         if (("FSE".equalsIgnoreCase((String) (getParam(SE_TYPE).getValue())))) {
             is_FSE_vs_MultiEcho = true;
@@ -339,6 +344,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             }
             //setParamValue(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST, "Custom");
         }
+        System.out.println("- - - - - -  ");
+        System.out.println("echoTrainLength " +echoTrainLength);
+        System.out.println("TRANSFORM_PLUGIN " +getParam(TRANSFORM_PLUGIN).getValue());
+        System.out.println("SE_TYPE " +getParam(SE_TYPE).getValue());
 
         // -----------------------------------------------
         // 1stD managment
@@ -619,18 +628,22 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             off_center_distance_3D = 0;
         }
 
-        setParamValue(OFF_CENTER_FIELD_OF_VIEW_3D, off_center_distance_3D);
-        setParamValue(OFF_CENTER_FIELD_OF_VIEW_2D, off_center_distance_2D);
-        setParamValue(OFF_CENTER_FIELD_OF_VIEW_1D, off_center_distance_1D);
 
         boolean is_read_phase_inverted = ((BooleanParam) getParam(SWITCH_READ_PHASE)).getValue();
         if (is_read_phase_inverted) {
             setSequenceParamValue(Gradient_axe_phase, GradientAxe.R);
             setSequenceParamValue(Gradient_axe_read, GradientAxe.P);
+            double off_center_distance_tmp  = off_center_distance_2D;
+            off_center_distance_2D  = off_center_distance_1D;
+            off_center_distance_1D  = off_center_distance_tmp;
         } else {
             setSequenceParamValue(Gradient_axe_phase, GradientAxe.P);
             setSequenceParamValue(Gradient_axe_read, GradientAxe.R);
         }
+        setParamValue(OFF_CENTER_FIELD_OF_VIEW_3D, off_center_distance_3D);
+        setParamValue(OFF_CENTER_FIELD_OF_VIEW_2D, off_center_distance_2D);
+        setParamValue(OFF_CENTER_FIELD_OF_VIEW_1D, off_center_distance_1D);
+
         // -----------------------------------------------
         // activate gradient rotation matrix
         // -----------------------------------------------
@@ -668,6 +681,9 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private void afterRouting() throws Exception {
         Log.debug(getClass(), "------------ AFTER ROUTING -------------");
         plugin = getTransformPlugin();
+        System.out.println("- - - - - -  ");
+        System.out.println("plugin " +plugin.getName());
+
         plugin.setParameters(this.getParams());
         // -----------------------------------------------
         // enable gradient lines
@@ -685,8 +701,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // -----------------------------------------------
         setSequenceParamValue(Grad_enable_IR, isInversionRecovery);
         setSequenceParamValue(Tx_enable_IR, isInversionRecovery);
-        boolean isEnableCrusherIR =  ((BooleanParam) getParam(GRADIENT_ENABLE_CRUSHER_IR)).getValue();
-        setSequenceParamValue(Grad_enable_crush_IR, isInversionRecovery ? isEnableCrusherIR:false);
+        boolean isEnableCrusherIR = ((BooleanParam) getParam(GRADIENT_ENABLE_CRUSHER_IR)).getValue();
+        setSequenceParamValue(Grad_enable_crush_IR, isInversionRecovery ? false : isEnableCrusherIR);
+
+
         // -----------------------------------------------
         // calculate gradient equivalent rise time
         // -----------------------------------------------
@@ -765,11 +783,11 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
             pulseTX90.prepTxAmp((List<Integer>) getParam(TX_ROUTE).getValue());
             pulseTX180.prepTxAmp((List<Integer>) getParam(TX_ROUTE).getValue());
-            this.setParamValue(PULSE_ATT, pulseTX90.getAtt());            // display PULSE_ATT
+            this.setParamValue(TX_ATT, pulseTX90.getAtt());            // display PULSE_ATT
             this.setParamValue(TX_AMP_90, pulseTX90.getAmp90());     // display 90° amplitude
             this.setParamValue(TX_AMP_180, pulseTX180.getAmp180());   // display 180° amplitude
         } else {
-            pulseTX90.setAtt(((NumberParam) getParam(PULSE_ATT)));
+            pulseTX90.setAtt(((NumberParam) getParam(TX_ATT)));
             pulseTX90.setAmp(((NumberParam) getParam(TX_AMP_90)));
             pulseTX180.setAmp(((NumberParam) getParam(TX_AMP_180)));
         }
@@ -1158,11 +1176,11 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             double time0 = getTimeBetweenEvents(Events.IR + 1, Events.IRDelay - 1) + getTimeBetweenEvents(Events.IRDelay + 1, Events.TX90 - 1);
             time0 = time0 + txLength90 / 2.0 + txLength180 / 2.0;
             boolean increaseTI = false;
-            ArrayList<Number> arrayListTI = new ArrayList<Number>();
+           // ArrayList<Number> arrayListTI = new ArrayList<Number>();
             ArrayList<Number> arrayListTI_min = new ArrayList<Number>();
             for (int i = 0; i < number_of_IR_acquisition; i++) {
                 double IR_time = inversionRecoveryTime.getValue().get(i).doubleValue();
-                arrayListTI.add(IR_time);
+               // arrayListTI.add(IR_time);
                 double delay0 = IR_time - time0;
 
                 if ((delay0 < default_instruction_delay)) {
@@ -1204,7 +1222,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         double time_seq_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler) * slices_acquired_in_single_scan);
         double tr_min = time_seq_to_end_spoiler + default_instruction_delay * (slices_acquired_in_single_scan * 2 + 1) + min_instruction_delay;// 2 +( 2 default_instruction_delay: Events.event 22 +(20&21
-        tr_min = ceilToSubDecimal(tr_min, 3);
+        tr_min = ceilToSubDecimal(tr_min, 4);
 
         switch ((String) getParam(IMAGE_CONTRAST).getValue()) {
             case "Custom":

@@ -1321,8 +1321,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_1D");
-            param.setDisplayedName("FOV Offset 1D");
-            param.setDescription("offcenter location of the FOV in the direction of the readout gradient ");
+            param.setDisplayedName("Location 1D");
+            param.setDescription("Offset in Readout Direction");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Gradient);
             param.setCategory(Category.Acquisition);
@@ -1339,8 +1339,9 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_2D");
-            param.setDisplayedName("FOV Offset 2D");
-            param.setDescription("offcenter location of the FOV in the direction of the phase encoding gradient ");
+            param.setDisplayedName("Location 2D");
+            param.setDescription("Offset in Phase Encoding Direction");
+            param.setLocked(true);
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Gradient);
             param.setCategory(Category.Acquisition);
@@ -1357,8 +1358,9 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_3D");
-            param.setDisplayedName("FOV Offset 3D");
-            param.setDescription("offcenter location of the FOV in the direction of the slice selection");
+            param.setDisplayedName("Location Z");
+            param.setDescription("Offset in the slice direction");
+            param.setLocked(true);
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Gradient);
             param.setCategory(Category.Acquisition);
@@ -1393,14 +1395,14 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_X");
-            param.setDisplayedName("OFF_CENTER_FIELD_OF_VIEW_X");
-            param.setDescription("off centerFOV position along the Right/Left axis ");
+            param.setDisplayedName("Location X");
+            param.setDescription("Location in the R/L direction");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Gradient);
             param.setCategory(Category.Acquisition);
             param.setNumberEnum(NumberEnum.Location);
-            param.setMinValue(-2.0);
-            param.setMaxValue(2.0);
+            param.setMinValue(-1.7976931348623157E308);
+            param.setMaxValue(1.7976931348623157E308);
             param.setValue(0.0);
             param.setDefaultValue(0.0);
             return param;
@@ -1411,14 +1413,14 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_Y");
-            param.setDisplayedName("OFF_CENTER_FIELD_OF_VIEW_Y");
-            param.setDescription("Off center of the FOV along the Up/Down axis ");
+            param.setDisplayedName("Location Y");
+            param.setDescription("Location in the A/P direction");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Gradient);
             param.setCategory(Category.Acquisition);
             param.setNumberEnum(NumberEnum.Location);
-            param.setMinValue(-2.0);
-            param.setMaxValue(2.0);
+            param.setMinValue(-1.7976931348623157E308);
+            param.setMaxValue(1.7976931348623157E308);
             param.setValue(0.0);
             param.setDefaultValue(0.0);
             return param;
@@ -1429,14 +1431,14 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_Z");
-            param.setDisplayedName("OFF_CENTER_FIELD_OF_VIEW_Z");
-            param.setDescription("Off center of the FOV along the tunnel axis");
+            param.setDisplayedName("Location Z");
+            param.setDescription("Location in the I/S direction");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Gradient);
             param.setCategory(Category.Acquisition);
             param.setNumberEnum(NumberEnum.Location);
-            param.setMinValue(-2.0);
-            param.setMaxValue(2.0);
+            param.setMinValue(-1.7976931348623157E308);
+            param.setMaxValue(1.7976931348623157E308);
             param.setValue(0.0);
             param.setDefaultValue(0.0);
             return param;
@@ -1675,24 +1677,6 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PULSE_ATT {
-        Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("PULSE_ATT");
-            param.setDisplayedName("PULSE_ATT");
-            param.setDescription("Transmitter attenuation");
-            param.setRoles(new RoleEnum[] {RoleEnum.User});
-            param.setGroup(EnumGroup.Emission);
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.TxAtt);
-            param.setMinValue(0.0);
-            param.setMaxValue(63.0);
-            param.setValue(18.0);
-            param.setDefaultValue(26.0);
-            return param;
-        }
-    },
-
     RECEIVER_COUNT {
         Param build() {
             NumberParam param = new NumberParam();
@@ -1874,7 +1858,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.3");
+            param.setValue("Version7.4");
             param.setDefaultValue("");
             return param;
         }
@@ -1917,8 +1901,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("SLICE_THICKNESS");
-            param.setDisplayedName("SL");
-            param.setDescription("The slice thickness");
+            param.setDisplayedName("Slice Thickness");
+            param.setDescription("slice thickness");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Dimension);
             param.setCategory(Category.Acquisition);
@@ -2189,6 +2173,24 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setCategory(Category.Acquisition);
             param.setValue(true);
             param.setDefaultValue(true);
+            return param;
+        }
+    },
+
+    TX_ATT {
+        Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("TX_ATT");
+            param.setDisplayedName("TX_ATT");
+            param.setDescription("The emission attenuation");
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.TxAtt);
+            param.setMinValue(0.0);
+            param.setMaxValue(63.0);
+            param.setValue(18.0);
+            param.setDefaultValue(36.0);
             return param;
         }
     },

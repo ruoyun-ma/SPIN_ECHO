@@ -13691,7 +13691,7 @@
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <rolesEnum>User</rolesEnum>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>false</defaultValue>
             </value>
         </Entry>
@@ -13921,7 +13921,7 @@
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <rolesEnum>User</rolesEnum>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>false</defaultValue>
             </value>
         </Entry>
@@ -14785,7 +14785,7 @@
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <rolesEnum>User</rolesEnum>
-                <value xsi:type="codeEnum">GotoWhile</value>
+                <value xsi:type="codeEnum">GotoFirstWhile</value>
                 <defaultValue xsi:type="codeEnum">Continu</defaultValue>
             </value>
         </Entry>
@@ -14917,7 +14917,7 @@
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
                 <rolesEnum>User</rolesEnum>
-                <value>false</value>
+                <value>true</value>
                 <defaultValue>true</defaultValue>
             </value>
         </Entry>
