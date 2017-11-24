@@ -14917,7 +14917,7 @@
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
                 <rolesEnum>User</rolesEnum>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
             </value>
         </Entry>

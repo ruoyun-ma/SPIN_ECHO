@@ -8,11 +8,10 @@ import rs2d.spinlab.sequence.table.Shape;
 import rs2d.spinlab.sequence.table.Table;
 import rs2d.spinlab.sequence.table.Utility;
 import rs2d.spinlab.tools.table.Order;
+
 /**
  * Class Gradient
  * V2.1- 2017-10-24 JR
- *
- *
  */
 public class Gradient {
     private Table amplitudeTable = null;
@@ -25,7 +24,7 @@ public class Gradient {
     private double amplitude = Double.NaN;
     private double staticArea = Double.NaN;
 
-    private double[] amplitudeArray  = null;
+    private double[] amplitudeArray = null;
     private double maxAreaPE = Double.NaN;
 
     private int steps = -1;
@@ -276,7 +275,7 @@ public class Gradient {
      * @param fov
      * @return testSpectralWidth : false if the Spectralwidth need to be nicreased(call getSpectralWidth() )
      */
-    public boolean calculateReadoutGradient(double spectralWidth, double fov)  throws Exception{
+    public boolean calculateReadoutGradient(double spectralWidth, double fov) throws Exception {
         boolean testSpectralWidth = true;
         this.spectralWidth = spectralWidth;
         amplitude = spectralWidth / ((GradientMath.GAMMA) * fov) * 100.0 / gMax;                 // amplitude in T/m
@@ -309,7 +308,7 @@ public class Gradient {
     /**
      * set READOUT gradient Amplitude ETL values with back and forth(+/-) sign
      *
-     * @param ETL : number of gradient values
+     * @param ETL        : number of gradient values
      * @param tableorder
      */
     public void applyReadoutEchoPlanarAmplitude(int ETL, Order tableorder) {
@@ -328,11 +327,11 @@ public class Gradient {
         }
         applyAmplitude();
     }
+
     /**
      * calculate READOUT refocusing gradient Amplitude handeling ETL
      *
      * @param grad : Readout Gradient
-
      */
     public void refocalizeReadoutGradient(Gradient grad, double ratio) {
         int rOSteps = grad.getSteps();
@@ -427,7 +426,7 @@ public class Gradient {
 
     public void reoderPhaseEncoding(TransformPlugin plugin, int echoTrainLength, int acquisitionMatrixDimension2D, int acquisitionMatrixDimension1D) {
         double loopNumber, indexNew;
-        if( amplitudeArray != null) {
+        if (amplitudeArray != null) {
             double[] newTable = new double[acquisitionMatrixDimension2D];
             for (int j = 0; j < acquisitionMatrixDimension2D; j++) {
                 int[] indexScan = plugin.invTransf(0, j, 0, 0);
@@ -477,4 +476,4 @@ public class Gradient {
         }
     }
 
-}
+}

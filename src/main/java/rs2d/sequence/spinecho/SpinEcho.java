@@ -3,7 +3,10 @@
 //                 SPIN ECHO PSD V5.8
 //
 // ---------------------------------------------------------------------
-//  last modification:  JR 24-03 2017
+//  last modification:
+//  V7.5 - 20-11 
+//		new calculation for ETL ZeroFilling in FSE
+//   	update preScan SEQUENCE_TIME
 //  V7.4 - 17-11 sequenceVersion  && SWITCH_READ_PHASE
 ///  V7.3 - 2-11 bugs memory
 //  V7.2 - 30-11
@@ -52,13 +55,12 @@ import static rs2d.sequence.spinecho.SpinEchoParams.*;
 import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 
 
-
 // **************************************************************************************************
 // *************************************** SEQUENCE GENERATOR ***************************************
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.4";
+    private String sequenceVersion = "Version7.5";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -72,6 +74,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private int acquisitionMatrixDimension2D;
     private int acquisitionMatrixDimension3D;
     private int acquisitionMatrixDimension4D;
+    private int preScan;
+
     private int userMatrixDimension1D;
     private int userMatrixDimension2D;
     private int userMatrixDimension3D;
@@ -143,18 +147,21 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         getParam(DIGITAL_FILTER_SHIFT).setDefaultValue(Instrument.instance().getDevices().getCameleon().getAcquDeadPointCount());
         getParam(DIGITAL_FILTER_REMOVED).setDefaultValue(Instrument.instance().getDevices().getCameleon().isRemoveAcquDeadPoint());
 
-        List<String> tx_shape = asList("HARD", "GAUSSIAN", "SINC3", "SINC5");
+        List<String> tx_shape = asList(
+                "HARD",
+                "GAUSSIAN",
+                "SINC3",
+                "SINC5");
         ((TextParam) getParam(TX_SHAPE_90)).setSuggestedValues(tx_shape);
         ((TextParam) getParam(TX_SHAPE_90)).setRestrictedToSuggested(true);
         ((TextParam) getParam(TX_SHAPE_180)).setSuggestedValues(tx_shape);
         ((TextParam) getParam(TX_SHAPE_180)).setRestrictedToSuggested(true);
 
         //TRANSFORM PLUGIN
-        List<String> list = new ArrayList<>();
-        list.add("Centered2D");
-        list.add("Bordered2D");
-        list.add("Sequential4D");
-        list.add("Sequential2D");
+        List<String> list = asList("Centered2D",
+                "Bordered2D",
+                "Sequential4D",
+                "Sequential2D");
         ((TextParam) this.getParamFromName(MriDefaultParams.TRANSFORM_PLUGIN.name())).setSuggestedValues(list);
         ((TextParam) this.getParamFromName(MriDefaultParams.TRANSFORM_PLUGIN.name())).setRestrictedToSuggested(true);
 
@@ -184,6 +191,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         acquisitionMatrixDimension2D = ((NumberParam) getParam(ACQUISITION_MATRIX_DIMENSION_2D)).getValue().intValue();
         acquisitionMatrixDimension3D = ((NumberParam) getParam(ACQUISITION_MATRIX_DIMENSION_3D)).getValue().intValue();
         acquisitionMatrixDimension4D = ((NumberParam) getParam(ACQUISITION_MATRIX_DIMENSION_4D)).getValue().intValue();
+        preScan = ((NumberParam) getParam(DUMMY_SCAN)).getValue().intValue();
 
         userMatrixDimension1D = ((NumberParam) getParam(USER_MATRIX_DIMENSION_1D)).getValue().intValue();
         userMatrixDimension2D = ((NumberParam) getParam(USER_MATRIX_DIMENSION_2D)).getValue().intValue();
@@ -288,10 +296,6 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         if (echoTrainLength == 1) {
             setParamValue(ECHO_SPACING, 0);
         }
-        System.out.println("- - - - - -  ");
-        System.out.println("echoTrainLength " +echoTrainLength);
-        System.out.println("TRANSFORM_PLUGIN " +getParam(TRANSFORM_PLUGIN).getValue());
-        System.out.println("SE_TYPE " +getParam(SE_TYPE).getValue());
         //  adapt the TRANSFORM_PLUGIN and the TE/TR depending on the IMAGE_CONTRAST
         if (("FSE".equalsIgnoreCase((String) (getParam(SE_TYPE).getValue())))) {
             is_FSE_vs_MultiEcho = true;
@@ -344,10 +348,6 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             }
             //setParamValue(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST, "Custom");
         }
-        System.out.println("- - - - - -  ");
-        System.out.println("echoTrainLength " +echoTrainLength);
-        System.out.println("TRANSFORM_PLUGIN " +getParam(TRANSFORM_PLUGIN).getValue());
-        System.out.println("SE_TYPE " +getParam(SE_TYPE).getValue());
 
         // -----------------------------------------------
         // 1stD managment
@@ -383,23 +383,22 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         // MATRIX
         setSquarePixel(((BooleanParam) getParam(SQUARE_PIXEL)).getValue());
-
         double partial_phase = ((NumberParam) getParam(USER_PARTIAL_PHASE)).getValue().doubleValue();
         double zero_filling_2D = (100 - partial_phase) / 100f;
+        if (is_FSE_vs_MultiEcho) {
+            int shoot = (int) Math.round((1 - zero_filling_2D) * userMatrixDimension2D / (2.0 * echoTrainLength));
+            zero_filling_2D = 1.0 - shoot * (2.0 * echoTrainLength) / ((double) userMatrixDimension2D);
+            if (zero_filling_2D < 0)
+                zero_filling_2D = 1.0 - (shoot - 1) * (2.0 * echoTrainLength) / ((double) userMatrixDimension2D);
+            partial_phase = (100 - zero_filling_2D * 100f);
+        }
         setParamValue(USER_ZERO_FILLING_2D, (100 - partial_phase));
-
         acquisitionMatrixDimension2D = floorEven((1 - zero_filling_2D) * userMatrixDimension2D);
         acquisitionMatrixDimension2D = (acquisitionMatrixDimension2D < 4) && isEnablePhase ? 4 : acquisitionMatrixDimension2D;
 
         // Pixel dimension calculation
         double pixelDimensionPhase = fovPhase / acquisitionMatrixDimension2D;
         setParamValue(RESOLUTION_PHASE, pixelDimensionPhase); // phase true resolution for display
-
-        // -----------------------------------------------
-        // 2nd D managment  Loop index memory limitiation
-        // -----------------------------------------------
-        // check and modify parameter when 2D+loop exceed 2048 (memory alocated for the loop indice) then all the parameter must be power of 2
-        int nb_of_shoot_3d = ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getValue().intValue();
 
         // -----------------------------------------------
         // 2nd D managment  ETL
@@ -446,6 +445,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             acquisitionMatrixDimension3D = userMatrixDimension3D;
         }
 
+        int nb_of_shoot_3d = ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getValue().intValue();
         nb_of_shoot_3d = isMultiplanar ? getInferiorDivisorToGetModulusZero(nb_of_shoot_3d, userMatrixDimension3D) : 0;
         nbOfInterleavedSlice = isMultiplanar ? (int) Math.ceil((acquisitionMatrixDimension3D / nb_of_shoot_3d)) : 1;
         setParamValue(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d);
@@ -581,34 +581,34 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         if (isMultiplanar) {
             seqDescription += "2D_";
         } else {
-            seqDescription = seqDescription.concat("3D_");
+            seqDescription += "3D_";
         }
         String orientation = (String) getParam(ORIENTATION).getValue();
-        seqDescription = seqDescription.concat(orientation.substring(0, 3));
+        seqDescription += orientation.substring(0, 3);
 
         String seqMatrixDescription = "_";
-        seqMatrixDescription = seqMatrixDescription.concat(String.valueOf(userMatrixDimension1D) + "x" + String.valueOf(acquisitionMatrixDimension2D) + "x" + String.valueOf(acquisitionMatrixDimension3D));
+        seqMatrixDescription += String.valueOf(userMatrixDimension1D) + "x" + String.valueOf(acquisitionMatrixDimension2D) + "x" + String.valueOf(acquisitionMatrixDimension3D);
         if (acquisitionMatrixDimension4D != 1) {
-            seqMatrixDescription = seqMatrixDescription.concat("x" + String.valueOf(acquisitionMatrixDimension4D));
+            seqMatrixDescription += "x" + String.valueOf(acquisitionMatrixDimension4D);
         }
-        seqDescription = seqDescription.concat(seqMatrixDescription);
+        seqDescription += seqMatrixDescription;
 
         if (echoTrainLength != 1) {
-            seqDescription = seqDescription.concat("_ETL=" + String.valueOf(echoTrainLength));
+            seqDescription += "_ETL=" + String.valueOf(echoTrainLength);
         }
 
         if (isInversionRecovery && numberOfInversionRecovery != 1) {
-            seqDescription = seqDescription.concat("_IR-" + String.valueOf(numberOfInversionRecovery));
+            seqDescription += "_IR-" + String.valueOf(numberOfInversionRecovery);
         } else if (isInversionRecovery) {
-            seqDescription = seqDescription.concat("_IR=" + String.valueOf(inversionRecoveryTime.getValue().get(0).doubleValue()) + "s");
+            seqDescription += "_IR=" + String.valueOf(inversionRecoveryTime.getValue().get(0).doubleValue()) + "s";
         }
         if (isTrigger && numberOfTrigger != 1) {
-            seqDescription = seqDescription.concat("_TRIG=" + String.valueOf(numberOfTrigger));
+            seqDescription += "_TRIG=" + String.valueOf(numberOfTrigger);
         } else if (isTrigger) {
-            seqDescription = seqDescription.concat("_TRIG");
+            seqDescription += "_TRIG ";
         }
         if (isDynamic) {
-            seqDescription = seqDescription.concat("_DYN=" + String.valueOf(numberOfDynamicAcquisition));
+            seqDescription += "_DYN=" + String.valueOf(numberOfDynamicAcquisition);
         }
         setParamValue(SEQ_DESCRIPTION, seqDescription);
 
@@ -633,9 +633,9 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         if (is_read_phase_inverted) {
             setSequenceParamValue(Gradient_axe_phase, GradientAxe.R);
             setSequenceParamValue(Gradient_axe_read, GradientAxe.P);
-            double off_center_distance_tmp  = off_center_distance_2D;
-            off_center_distance_2D  = off_center_distance_1D;
-            off_center_distance_1D  = off_center_distance_tmp;
+            double off_center_distance_tmp = off_center_distance_2D;
+            off_center_distance_2D = off_center_distance_1D;
+            off_center_distance_1D = off_center_distance_tmp;
         } else {
             setSequenceParamValue(Gradient_axe_phase, GradientAxe.P);
             setSequenceParamValue(Gradient_axe_read, GradientAxe.R);
@@ -681,9 +681,6 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private void afterRouting() throws Exception {
         Log.debug(getClass(), "------------ AFTER ROUTING -------------");
         plugin = getTransformPlugin();
-        System.out.println("- - - - - -  ");
-        System.out.println("plugin " +plugin.getName());
-
         plugin.setParameters(this.getParams());
         // -----------------------------------------------
         // enable gradient lines
@@ -702,7 +699,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         setSequenceParamValue(Grad_enable_IR, isInversionRecovery);
         setSequenceParamValue(Tx_enable_IR, isInversionRecovery);
         boolean isEnableCrusherIR = ((BooleanParam) getParam(GRADIENT_ENABLE_CRUSHER_IR)).getValue();
-        setSequenceParamValue(Grad_enable_crush_IR, isInversionRecovery ? false : isEnableCrusherIR);
+        setSequenceParamValue(Grad_enable_crush_IR, isInversionRecovery ? isEnableCrusherIR : false);
 
 
         // -----------------------------------------------
@@ -1176,11 +1173,11 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             double time0 = getTimeBetweenEvents(Events.IR + 1, Events.IRDelay - 1) + getTimeBetweenEvents(Events.IRDelay + 1, Events.TX90 - 1);
             time0 = time0 + txLength90 / 2.0 + txLength180 / 2.0;
             boolean increaseTI = false;
-           // ArrayList<Number> arrayListTI = new ArrayList<Number>();
+            // ArrayList<Number> arrayListTI = new ArrayList<Number>();
             ArrayList<Number> arrayListTI_min = new ArrayList<Number>();
             for (int i = 0; i < number_of_IR_acquisition; i++) {
                 double IR_time = inversionRecoveryTime.getValue().get(i).doubleValue();
-               // arrayListTI.add(IR_time);
+                // arrayListTI.add(IR_time);
                 double delay0 = IR_time - time0;
 
                 if ((delay0 < default_instruction_delay)) {
@@ -1316,7 +1313,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // ------------------------------------------------------------------
         // Total Acquisition Time
         // ------------------------------------------------------------------
-        double total_acquisition_time = (frame_acquisition_time * number_of_IR_acquisition + min_instruction_delay * (number_of_IR_acquisition - 1) + interval_between_frames_delay) * numberOfDynamicAcquisition;
+        double total_acquisition_time = (frame_acquisition_time * number_of_IR_acquisition + min_instruction_delay * (number_of_IR_acquisition - 1) + interval_between_frames_delay) * numberOfDynamicAcquisition + tr * preScan;
         setParamValue(SEQUENCE_TIME, total_acquisition_time);
 
         // -----------------------------------------------

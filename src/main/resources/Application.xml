@@ -2576,7 +2576,7 @@
                     <group>Delay</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>133.656576</value>
+                    <value>134.700576</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.0E9</maxValue>
@@ -2595,7 +2595,7 @@
                     <group>User</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>Version7.4</value>
+                    <value>Version7.5</value>
                     <defaultValue></defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                 </value>

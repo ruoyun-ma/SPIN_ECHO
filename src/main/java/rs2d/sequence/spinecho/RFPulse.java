@@ -23,8 +23,6 @@ import java.util.List;
 /**
  * Class RFPulse
  * V2.1- 2017-10-24 JR
- *
- *
  */
 public class RFPulse {
     private Table amplitudeTable = null;
@@ -304,7 +302,7 @@ public class RFPulse {
         double instrument_power = (flipAngle < 135 ? pulse.getHardPulse90().y : pulse.getHardPulse180().y) / power_factor;
         powerPulse = instrument_power * Math.pow(instrument_length / pulseDuration, 2) * Math.pow(flipAngle / (flipAngle < 135 ? 90 : 180), 2);
         if (powerPulse > pulse.getMaxRfPowerPulsed()) {  // TX LENGTH 90 MIN
-            pulseDuration = Math.ceil(instrument_length / Math.sqrt(pulse.getMaxRfPowerPulsed() / (instrument_power * Math.pow(flipAngle / (flipAngle < 135 ? 90 : 180), 2)))*10e5)/10e5;
+            pulseDuration = Math.ceil(instrument_length / Math.sqrt(pulse.getMaxRfPowerPulsed() / (instrument_power * Math.pow(flipAngle / (flipAngle < 135 ? 90 : 180), 2))) * 10e5) / 10e5;
             setSequenceTableSingleValue(timeTable, pulseDuration);
             powerPulse = instrument_power * Math.pow(instrument_length / pulseDuration, 2) * Math.pow(flipAngle / (flipAngle < 135 ? 90 : 180), 2);
             test_change_time = false;
@@ -397,8 +395,8 @@ public class RFPulse {
     private void setShapeTableValuesFromSincGen(Table table, int nbpoint, int nblobe, double amp, Boolean abs, String window) throws Exception {
         TableGeneratorInterface gen;
         gen = LoaderFactory.getTableGeneratorPluginLoader().getPluginByName("Sinus Cardinal with Apodisation");
-         if (gen == null) {
-            throw new IllegalStateException("Table generator not found: Sinus Cardinal with Apodisation" );
+        if (gen == null) {
+            throw new IllegalStateException("Table generator not found: Sinus Cardinal with Apodisation");
         }
         table.setGenerator(gen);
         gen.getParams().get(0).setValue(nbpoint);
@@ -423,7 +421,7 @@ public class RFPulse {
         TableGeneratorInterface gen;
         gen = LoaderFactory.getTableGeneratorPluginLoader().getPluginByName("Gaussian");
         if (gen == null) {
-            throw new IllegalStateException("Table generator not found: Gaussian" );
+            throw new IllegalStateException("Table generator not found: Gaussian");
         }
         table.setGenerator(gen);
         gen.getParams().get(0).setValue(nbpoint);
@@ -434,7 +432,6 @@ public class RFPulse {
         gen.generate();
 
     }
-
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -507,7 +504,7 @@ public class RFPulse {
             for (int k = 0; k < numberOfFreqOffset; k++) {
                 FrequencyOffsetTable.add(txFrequencyOffsetTable[k]);
             }
-        }else{
+        } else {
             FrequencyOffsetTable.add(0);
         }
     }
@@ -525,7 +522,7 @@ public class RFPulse {
     public void setCompensationFrequencyOffset(RFPulse pulse, double ratio) {
         FrequencyOffsetOrder = pulse.getFrequencyOffsetOrder();
         numberOfFreqOffset = pulse.getNumberOfFreqOffset();
-        if (numberOfFreqOffset !=-1) {
+        if (numberOfFreqOffset != -1) {
             txFrequencyOffsetTable = new double[numberOfFreqOffset];
             for (int k = 0; k < numberOfFreqOffset; k++) {
                 txFrequencyOffsetTable[k] = -((pulse.getFrequencyOffset(k) * pulse.getPulseDuration() * ratio) % 1) / pulseDuration;
@@ -605,4 +602,4 @@ public class RFPulse {
         }
     }
 
-}
+}

@@ -1843,7 +1843,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(133.656576);
+            param.setValue(134.700576);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -1858,7 +1858,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.4");
+            param.setValue("Version7.5");
             param.setDefaultValue("");
             return param;
         }
