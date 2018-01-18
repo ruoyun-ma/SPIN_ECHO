@@ -684,7 +684,7 @@
                     <group>Gradient</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>5.566997162685152E-5</value>
+                    <value>5.567078717420658E-5</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.7976931348623157E308</maxValue>
@@ -890,6 +890,142 @@
                     <maxValue>1.0</maxValue>
                     <minValue>0.0</minValue>
                     <numberEnum>Time</numberEnum>
+                </value>
+            </entry>
+            <entry>
+                <key>HARDWARE_A0</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
+                    <name>HARDWARE_A0</name>
+                    <description></description>
+                    <displayedName>nparam</displayedName>
+                    <locked>true</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <maxValue>2.147483647E9</maxValue>
+                    <minValue>-2.147483648E9</minValue>
+                    <numberEnum>PERCENT</numberEnum>
+                </value>
+            </entry>
+            <entry>
+                <key>HARDWARE_DC</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
+                    <name>HARDWARE_DC</name>
+                    <description></description>
+                    <displayedName>nparam</displayedName>
+                    <locked>true</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <maxValue>2.147483647E9</maxValue>
+                    <minValue>-2.147483648E9</minValue>
+                    <numberEnum>PERCENT</numberEnum>
+                </value>
+            </entry>
+            <entry>
+                <key>HARDWARE_PREEMPHASIS_A</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
+                    <name>HARDWARE_PREEMPHASIS_A</name>
+                    <description></description>
+                    <displayedName>nparam</displayedName>
+                    <locked>true</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <group>Emission</group>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <maxValue>2.147483647E9</maxValue>
+                    <minValue>-2.147483648E9</minValue>
+                    <numberEnum>PERCENT</numberEnum>
+                </value>
+            </entry>
+            <entry>
+                <key>HARDWARE_PREEMPHASIS_T</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
+                    <name>HARDWARE_PREEMPHASIS_T</name>
+                    <description></description>
+                    <displayedName>nparam</displayedName>
+                    <locked>true</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <group>Emission</group>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <maxValue>1.0E9</maxValue>
+                    <minValue>0.0</minValue>
+                    <numberEnum>Time</numberEnum>
+                </value>
+            </entry>
+            <entry>
+                <key>HARDWARE_SHIM</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
+                    <name>HARDWARE_SHIM</name>
+                    <description></description>
+                    <displayedName>nparam</displayedName>
+                    <locked>true</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>0.0</value>
+                    <maxValue>2.147483647E9</maxValue>
+                    <minValue>-2.147483648E9</minValue>
+                    <numberEnum>PERCENT</numberEnum>
+                </value>
+            </entry>
+            <entry>
+                <key>HARDWARE_SHIM_LABEL</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
+                    <name>HARDWARE_SHIM_LABEL</name>
+                    <description></description>
+                    <displayedName>tparam</displayedName>
+                    <locked>true</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>NotConnected</value>
+                    <defaultValue></defaultValue>
+                    <restrictedToSuggested>false</restrictedToSuggested>
                 </value>
             </entry>
             <entry>

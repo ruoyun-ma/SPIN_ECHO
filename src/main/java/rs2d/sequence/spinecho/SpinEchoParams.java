@@ -603,7 +603,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Double);
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(5.566997162685152E-5);
+            param.setValue(5.567078717420658E-5);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -800,6 +800,108 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMaxValue(1.0);
             param.setValue(1.5E-4);
             param.setDefaultValue(1.9999999999999998E-4);
+            return param;
+        }
+    },
+
+    HARDWARE_A0 {
+        Param build() {
+            ListNumberParam param = new ListNumberParam();
+            param.setName("HARDWARE_A0");
+            param.setDisplayedName("nparam");
+            param.setDescription("");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setCategory(Category.Acquisition);
+            param.setMinValue(-2.147483648E9);
+            param.setMaxValue(2.147483647E9);
+            param.setNumberEnum(NumberEnum.PERCENT);
+            param.setValue(asList(0.0, 0.0, 0.0));
+            return param;
+        }
+    },
+
+    HARDWARE_DC {
+        Param build() {
+            ListNumberParam param = new ListNumberParam();
+            param.setName("HARDWARE_DC");
+            param.setDisplayedName("nparam");
+            param.setDescription("");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setCategory(Category.Acquisition);
+            param.setMinValue(-2.147483648E9);
+            param.setMaxValue(2.147483647E9);
+            param.setNumberEnum(NumberEnum.PERCENT);
+            param.setValue(asList(0.0, 0.0, 0.0, 0.0));
+            return param;
+        }
+    },
+
+    HARDWARE_PREEMPHASIS_A {
+        Param build() {
+            ListNumberParam param = new ListNumberParam();
+            param.setName("HARDWARE_PREEMPHASIS_A");
+            param.setDisplayedName("nparam");
+            param.setDescription("");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setMinValue(-2.147483648E9);
+            param.setMaxValue(2.147483647E9);
+            param.setNumberEnum(NumberEnum.PERCENT);
+            param.setValue(asList(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+            return param;
+        }
+    },
+
+    HARDWARE_PREEMPHASIS_T {
+        Param build() {
+            ListNumberParam param = new ListNumberParam();
+            param.setName("HARDWARE_PREEMPHASIS_T");
+            param.setDisplayedName("nparam");
+            param.setDescription("");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setValue(asList(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+            return param;
+        }
+    },
+
+    HARDWARE_SHIM {
+        Param build() {
+            ListNumberParam param = new ListNumberParam();
+            param.setName("HARDWARE_SHIM");
+            param.setDisplayedName("nparam");
+            param.setDescription("");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setCategory(Category.Acquisition);
+            param.setMinValue(-2.147483648E9);
+            param.setMaxValue(2.147483647E9);
+            param.setNumberEnum(NumberEnum.PERCENT);
+            param.setValue(asList(0.0));
+            return param;
+        }
+    },
+
+    HARDWARE_SHIM_LABEL {
+        Param build() {
+            TextParam param = new TextParam();
+            param.setName("HARDWARE_SHIM_LABEL");
+            param.setDisplayedName("tparam");
+            param.setDescription("");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setCategory(Category.Acquisition);
+            param.setValue("NotConnected");
+            param.setDefaultValue("");
             return param;
         }
     },
