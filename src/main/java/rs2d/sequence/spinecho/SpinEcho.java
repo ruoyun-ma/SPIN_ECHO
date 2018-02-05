@@ -4,6 +4,7 @@
 //
 // ---------------------------------------------------------------------
 //  last modification:
+//  V7.7 - 20-11 
 //  V7.5 - 20-11 
 //		new calculation for ETL ZeroFilling in FSE
 //   	update preScan SEQUENCE_TIME
@@ -64,7 +65,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.6";
+    private String sequenceVersion = "Version7.7";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -73,6 +74,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private Nucleus nucleus;
 
     private boolean isMultiplanar;
+
+    private int number_of_averages;
 
     private int acquisitionMatrixDimension1D;
     private int acquisitionMatrixDimension2D;
@@ -84,6 +87,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private int userMatrixDimension2D;
     private int userMatrixDimension3D;
 
+    private int nb_scan_1d;
     private int nb_scan_2d;
     private int nb_scan_3d;
     private int nb_scan_4d;
@@ -191,12 +195,14 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private void initUserParam() {
         isMultiplanar = (((BooleanParam) getParam(MULTI_PLANAR_EXCITATION)).getValue());
 
+
 //        acquisitionMatrixDimension1D = ((NumberParam) getParam(ACQUISITION_MATRIX_DIMENSION_1D)).getValue().intValue();
         acquisitionMatrixDimension2D = ((NumberParam) getParam(ACQUISITION_MATRIX_DIMENSION_2D)).getValue().intValue();
         acquisitionMatrixDimension3D = ((NumberParam) getParam(ACQUISITION_MATRIX_DIMENSION_3D)).getValue().intValue();
         acquisitionMatrixDimension4D = ((NumberParam) getParam(ACQUISITION_MATRIX_DIMENSION_4D)).getValue().intValue();
         preScan = ((NumberParam) getParam(DUMMY_SCAN)).getValue().intValue();
 
+        number_of_averages = ((NumberParam) getParam(NUMBER_OF_AVERAGES)).getValue().intValue();
         userMatrixDimension1D = ((NumberParam) getParam(USER_MATRIX_DIMENSION_1D)).getValue().intValue();
         userMatrixDimension2D = ((NumberParam) getParam(USER_MATRIX_DIMENSION_2D)).getValue().intValue();
         userMatrixDimension3D = ((NumberParam) getParam(USER_MATRIX_DIMENSION_3D)).getValue().intValue();
@@ -379,6 +385,9 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         observation_time = acquisitionMatrixDimension1D / spectralWidth;
         setParamValue(ACQUISITION_TIME_PER_SCAN, observation_time);   // display observation time
 
+
+
+        nb_scan_1d = number_of_averages;
         // -----------------------------------------------
         // 2nd D managment
         // -----------------------------------------------
@@ -570,7 +579,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // set the calculated sequence dimensions
         setSequenceParamValue(Pre_scan, DUMMY_SCAN); // Do the prescan
         setSequenceParamValue(Nb_point, acquisitionMatrixDimension1D);
-        setSequenceParamValue(Nb_1d, NUMBER_OF_AVERAGES);
+        setSequenceParamValue(Nb_1d, nb_scan_1d);
         setSequenceParamValue(Nb_2d, isKSCenterMode ? 2 : nb_scan_2d);
         setSequenceParamValue(Nb_3d, isKSCenterMode && !isMultiplanar ? 1 : nb_scan_3d);
         setSequenceParamValue(Nb_4d, isKSCenterMode ? 1 : nb_scan_4d);
@@ -1117,6 +1126,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             gradSliceSpoiler.addSpoiler(((NumberParam) getParam(GRADIENT_AMP_SPOILER)).getValue().doubleValue());
         }
         gradSliceSpoiler.applyAmplitude();
+
         //--------------------------------------------------------------------------------------
         //  External triggering
         //--------------------------------------------------------------------------------------
@@ -1282,11 +1292,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // Calculate frame acquisition time
         // Calculate delay between 4D acquisition
         //----------------------------------------------------------------------
-        int number_of_averages = ((NumberParam) getParam(NUMBER_OF_AVERAGES)).getValue().intValue();
         boolean is_dynamic_min_time = ((BooleanParam) getParam(DYNAMIC_MIN_TIME)).getValue();
 
         Table dyn_delay = setSequenceTableValues(Time_btw_dyn_frames, Order.Four);
-        double frame_acquisition_time = number_of_averages * nb_scan_3d * nb_scan_2d * tr;
+        double frame_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
         double time_between_frames_min = ceilToSubDecimal((frame_acquisition_time * number_of_IR_acquisition + min_instruction_delay * (number_of_IR_acquisition)), 1);
         double time_between_frames = time_between_frames_min;
         double interval_between_frames_delay = min_flush_delay;

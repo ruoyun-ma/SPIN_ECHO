@@ -100,6 +100,21 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
+    ACQUISITION_MODE {
+        Param build() {
+            ListTextParam param = new ListTextParam();
+            param.setName("ACQUISITION_MODE");
+            param.setDisplayedName("ACQUISITION_MODE");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setValue(asList("COMPLEX", "REAL", "REAL", "REAL"));
+            param.setDefaultValue(asList("COMPLEX", "REAL", "REAL", "REAL"));
+            return param;
+        }
+    },
+
     ACQUISITION_TIME_OFFSET {
         Param build() {
             ListNumberParam param = new ListNumberParam();
@@ -148,7 +163,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(1.2818100000000001E8);
+            param.setValue(1.27552944E8);
             param.setDefaultValue(1.27552944E8);
             return param;
         }
@@ -204,6 +219,21 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMaxValue(3.0E9);
             param.setValue(0.0);
             param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    DATA_REPRESENTATION {
+        Param build() {
+            ListTextParam param = new ListTextParam();
+            param.setName("DATA_REPRESENTATION");
+            param.setDisplayedName("DATA_REPRESENTATION");
+            param.setLocked(true);
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Dimension);
+            param.setCategory(Category.Miscellaneous);
+            param.setValue(asList("COMPLEX", "REAL", "REAL", "REAL"));
+            param.setDefaultValue(asList("COMPLEX", "REAL", "REAL", "REAL"));
             return param;
         }
     },
@@ -603,7 +633,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Double);
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(5.567078717420658E-5);
+            param.setValue(5.566997162685152E-5);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -639,7 +669,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(4.0E-4);
+            param.setValue(3.9999999999999996E-4);
             param.setDefaultValue(3.9999999999999996E-4);
             return param;
         }
@@ -970,7 +1000,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(2.051E7);
+            param.setValue(2.151E7);
             param.setDefaultValue(2.051E7);
             return param;
         }
@@ -1238,7 +1268,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Miscellaneous);
             param.setCategory(Category.Acquisition);
-            param.setValue("");
+            param.setValue("NONE");
             param.setDefaultValue("");
             param.setSuggestedValues(asList("TE", "TI", "B-VALUE", "TRIGGER DELAY"));
             return param;
@@ -1257,6 +1287,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
+            param.setValue(asList(0.0));
             param.setDefaultValue(asList(0.0));
             return param;
         }
@@ -1911,7 +1942,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setCategory(Category.Acquisition);
-            param.setValue("SE_2D_SAG_256x128x12_ETL=4");
+            param.setValue("FSE_2D_SAG_256x128x12_ETL=4");
             param.setDefaultValue("");
             return param;
         }
@@ -1960,7 +1991,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.5");
+            param.setValue("Version5.9");
             param.setDefaultValue("");
             return param;
         }
@@ -2077,7 +2108,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(50080.128205128196);
+            param.setValue(50000.0);
             param.setDefaultValue(12500.0);
             return param;
         }
@@ -2110,7 +2141,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(195.62550080128202);
+            param.setValue(195.3125);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2188,7 +2219,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.SequenceDesigner});
             param.setGroup(EnumGroup.Scan);
             param.setCategory(Category.Acquisition);
-            param.setValue("Centered2D");
+            param.setValue("Centered2D_FSE");
             param.setDefaultValue("Centered2D");
             param.setSuggestedValues(asList("Centered2D", "Bordered2D", "Sequential4D", "Sequential2D"));
             return param;
@@ -2240,7 +2271,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAmp);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(86.70053947826925);
+            param.setValue(89.76147634415707);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2258,7 +2289,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAmp);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(44.25189688320475);
+            param.setValue(44.82676331564222);
             param.setDefaultValue(0.0);
             return param;
         }

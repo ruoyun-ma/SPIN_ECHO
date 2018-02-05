@@ -97,6 +97,26 @@
             </value>
         </entry>
         <entry>
+            <key>ACQUISITION_MODE</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listTextParam">
+                <name>ACQUISITION_MODE</name>
+                <displayedName>ACQUISITION_MODE</displayedName>
+                <locked>true</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <group>Miscellaneous</group>
+                <category>Acquisition</category>
+                <rolesEnum>User</rolesEnum>
+                <value>COMPLEX</value>
+                <value>REAL</value>
+                <value>REAL</value>
+                <value>REAL</value>
+                <defaultValue>COMPLEX</defaultValue>
+                <defaultValue>REAL</defaultValue>
+                <defaultValue>REAL</defaultValue>
+                <defaultValue>REAL</defaultValue>
+            </value>
+        </entry>
+        <entry>
             <key>ACQUISITION_TIME_OFFSET</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>ACQUISITION_TIME_OFFSET</name>
@@ -207,6 +227,26 @@
                 <maxValue>3.0E9</maxValue>
                 <minValue>0.0</minValue>
                 <numberEnum>Frequency</numberEnum>
+            </value>
+        </entry>
+        <entry>
+            <key>DATA_REPRESENTATION</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listTextParam">
+                <name>DATA_REPRESENTATION</name>
+                <displayedName>DATA_REPRESENTATION</displayedName>
+                <locked>true</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <group>Dimension</group>
+                <category>Miscellaneous</category>
+                <rolesEnum>User</rolesEnum>
+                <value>COMPLEX</value>
+                <value>REAL</value>
+                <value>REAL</value>
+                <value>REAL</value>
+                <defaultValue>COMPLEX</defaultValue>
+                <defaultValue>REAL</defaultValue>
+                <defaultValue>REAL</defaultValue>
+                <defaultValue>REAL</defaultValue>
             </value>
         </entry>
         <entry>
@@ -2665,7 +2705,7 @@
                 <group>User</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>Version7.5</value>
+                <value>Version7.7</value>
                 <defaultValue></defaultValue>
                 <restrictedToSuggested>false</restrictedToSuggested>
             </value>
