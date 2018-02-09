@@ -6136,7 +6136,7 @@
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
                 <rolesEnum>User</rolesEnum>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
             </value>
         </Entry>
@@ -13330,7 +13330,7 @@
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
                 <rolesEnum>User</rolesEnum>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
             </value>
         </Entry>
@@ -19149,7 +19149,7 @@
                 <name>Tx_freq_offset_90</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
-                <order>ThreeLoop</order>
+                <order>Three</order>
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>1</address>
@@ -19218,18 +19218,7 @@
                         <defaultValue>false</defaultValue>
                     </params>
                 </generator>
-                <list>16829.999999999996</list>
-                <list>10709.999999999996</list>
-                <list>4589.999999999998</list>
-                <list>-1530.0</list>
-                <list>-7650.0</list>
-                <list>-13770.0</list>
-                <list>13769.999999999996</list>
-                <list>7649.999999999998</list>
-                <list>1529.9999999999982</list>
-                <list>-4590.0</list>
-                <list>-10710.0</list>
-                <list>-16829.999999999996</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -19855,7 +19844,7 @@
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>19.076580079115523</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -19878,7 +19867,7 @@
                 <name>Tx_freq_offset_180</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
-                <order>ThreeLoop</order>
+                <order>Three</order>
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>17</address>
@@ -19947,18 +19936,7 @@
                         <defaultValue>false</defaultValue>
                     </params>
                 </generator>
-                <list>16829.999999999996</list>
-                <list>10709.999999999996</list>
-                <list>4589.999999999998</list>
-                <list>-1530.0</list>
-                <list>-7650.0</list>
-                <list>-13770.0</list>
-                <list>13769.999999999996</list>
-                <list>7649.999999999998</list>
-                <list>1529.9999999999982</list>
-                <list>-4590.0</list>
-                <list>-10710.0</list>
-                <list>-16829.999999999996</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -20535,7 +20513,7 @@
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>19.076580079115523</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -20799,7 +20777,7 @@
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>2</address>
-                <list>-19.222220842493122</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -22117,22 +22095,11 @@
                 <name>FreqOffset_tx_prep_90</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
-                <order>ThreeLoop</order>
+                <order>Three</order>
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>-2766.666666666661</list>
-                <list>-2366.666666666658</list>
-                <list>-1966.6666666666604</list>
-                <list>5100.000000000001</list>
-                <list>5500.000000000002</list>
-                <list>5899.999999999999</list>
-                <list>-5899.999999999987</list>
-                <list>-5499.999999999995</list>
-                <list>-5099.9999999999945</list>
-                <list>1966.6666666666663</list>
-                <list>2366.6666666666697</list>
-                <list>2766.666666666661</list>
+                <list>-0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -22713,22 +22680,11 @@
                 <name>FreqOffset_tx_prep_180</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
-                <order>ThreeLoop</order>
+                <order>Three</order>
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>-2766.666666666661</list>
-                <list>-2366.666666666658</list>
-                <list>-1966.6666666666604</list>
-                <list>5100.000000000001</list>
-                <list>5500.000000000002</list>
-                <list>5899.999999999999</list>
-                <list>-5899.999999999987</list>
-                <list>-5499.999999999995</list>
-                <list>-5099.9999999999945</list>
-                <list>1966.6666666666663</list>
-                <list>2366.6666666666697</list>
-                <list>2766.666666666661</list>
+                <list>-0.0</list>
             </value>
         </Entry>
         <Entry>

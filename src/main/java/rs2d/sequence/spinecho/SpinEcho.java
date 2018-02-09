@@ -4,8 +4,9 @@
 //
 // ---------------------------------------------------------------------
 //  last modification:
-//  V7.7 - 20-11 
-//  V7.5 - 20-11 
+//  V7.8 - 17-02-07  
+//  V7.7 - 20-11
+//  V7.5 - 20-11
 //		new calculation for ETL ZeroFilling in FSE
 //   	update preScan SEQUENCE_TIME
 //  V7.4 - 17-11 sequenceVersion  && SWITCH_READ_PHASE
@@ -28,6 +29,7 @@
 //           getUnreachParamExceptionManager().addParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.GRADIENT_RISE_TIME.name(), grad_rise_time, new_grad_rise_time,((NumberParam) getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.GRADIENT_RISE_TIME")).getMaxValue(), "Gradient ramp time too short ");
 //  V5.6
 //  double min_instruction_delay = 0.000005;
+
 package rs2d.sequence.spinecho;
 
 import rs2d.commons.log.Log;
@@ -65,7 +67,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.7";
+    private String sequenceVersion = "Version7.8";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -839,8 +841,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
                 sliceThickness = slice_thickness_min;
             }
         }
-        gradSlice90.applyAmplitude(sliceThickness);
-        gradSlice180.applyAmplitude(sliceThickness);
+        gradSlice90.applyAmplitude(slice_thickness_excitation);
+        gradSlice180.applyAmplitude(slice_thickness_excitation_180);
 
         // -----------------------------------------------
         // calculate ADC observation time

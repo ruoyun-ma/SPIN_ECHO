@@ -775,7 +775,7 @@
                 <group>Gradient</group>
                 <category>Acquisition</category>
                 <rolesEnum>SequenceDesigner</rolesEnum>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
             </value>
         </entry>
@@ -2291,7 +2291,7 @@
                 <group>Gradient</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>-0.0</value>
+                <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <maxValue>1.7976931348623157E308</maxValue>
@@ -2705,7 +2705,7 @@
                 <group>User</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>Version7.7</value>
+                <value>Version7.8</value>
                 <defaultValue></defaultValue>
                 <restrictedToSuggested>false</restrictedToSuggested>
             </value>

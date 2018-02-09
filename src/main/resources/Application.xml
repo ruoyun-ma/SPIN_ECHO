@@ -230,7 +230,7 @@
                     <group>Emission</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>1.27552944E8</value>
+                    <value>1.2818100000000001E8</value>
                     <defaultValue>1.27552944E8</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>3.0E9</maxValue>
@@ -724,7 +724,7 @@
                     <group>Gradient</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>5.566997162685152E-5</value>
+                    <value>5.567078717420658E-5</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.7976931348623157E308</maxValue>
@@ -762,7 +762,7 @@
                     <group>Delay</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>3.9999999999999996E-4</value>
+                    <value>4.0E-4</value>
                     <defaultValue>3.9999999999999996E-4</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.0E9</maxValue>
@@ -841,7 +841,7 @@
                     <group>Gradient</group>
                     <category>Acquisition</category>
                     <rolesEnum>SequenceDesigner</rolesEnum>
-                    <value>true</value>
+                    <value>false</value>
                     <defaultValue>true</defaultValue>
                 </value>
             </entry>
@@ -1149,7 +1149,7 @@
                     <group>Reception</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>2.151E7</value>
+                    <value>2.051E7</value>
                     <defaultValue>2.051E7</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>3.0E9</maxValue>
@@ -1420,7 +1420,7 @@
                     <group>Miscellaneous</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>NONE</value>
+                    <value></value>
                     <defaultValue></defaultValue>
                     <suggestedValues>TE</suggestedValues>
                     <suggestedValues>TI</suggestedValues>
@@ -1440,7 +1440,6 @@
                     <group>Miscellaneous</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <maxValue>1.7976931348623157E308</maxValue>
                     <minValue>-1.7976931348623157E308</minValue>
@@ -2358,7 +2357,7 @@
                     <group>Gradient</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>-0.0</value>
+                    <value>0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.7976931348623157E308</maxValue>
@@ -2772,7 +2771,7 @@
                     <group>User</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>Version5.9</value>
+                    <value>Version7.7</value>
                     <defaultValue></defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                 </value>
@@ -2787,7 +2786,7 @@
                     <lockedToDefault>false</lockedToDefault>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>FSE_2D_SAG_256x128x12_ETL=4</value>
+                    <value>SE_2D_SAG_256x128x12_ETL=4</value>
                     <defaultValue></defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                 </value>
@@ -2923,7 +2922,7 @@
                     <group>Reception</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>50000.0</value>
+                    <value>50080.128205128196</value>
                     <defaultValue>12500.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.0E8</maxValue>
@@ -2957,7 +2956,7 @@
                     <group>Delay</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>195.3125</value>
+                    <value>195.62550080128202</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.0E8</maxValue>
@@ -3042,7 +3041,7 @@
                     <group>Scan</group>
                     <category>Acquisition</category>
                     <rolesEnum>SequenceDesigner</rolesEnum>
-                    <value>Centered2D_FSE</value>
+                    <value>Centered2D</value>
                     <defaultValue>Centered2D</defaultValue>
                     <suggestedValues>Centered2D</suggestedValues>
                     <suggestedValues>Bordered2D</suggestedValues>
@@ -3095,7 +3094,7 @@
                     <group>Emission</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>89.76147634415707</value>
+                    <value>86.70053947826925</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>100.0</maxValue>
@@ -3114,7 +3113,7 @@
                     <group>Emission</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>44.82676331564222</value>
+                    <value>44.25189688320475</value>
                     <defaultValue>0.0</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>100.0</maxValue>
