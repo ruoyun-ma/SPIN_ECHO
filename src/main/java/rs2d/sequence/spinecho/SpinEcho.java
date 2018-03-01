@@ -4,7 +4,8 @@
 //
 // ---------------------------------------------------------------------
 //  last modification:
-//  V7.8 - 17-02-07  
+//  V7.8 - 01-02-07 modif Sequence time when KS_CENTER_MODE
+//  V7.8 - 17-02-07
 //  V7.7 - 20-11
 //  V7.5 - 20-11
 //		new calculation for ETL ZeroFilling in FSE
@@ -67,7 +68,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.8";
+    private String sequenceVersion = "Version7.9";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -573,18 +574,28 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // -----------------------------------------------
         // set the ACQUISITION_MATRIX and Nb XD
         // -----------------------------------------------        // set the calculated acquisition matrix
+
+        if (isKSCenterMode) {
+            nb_scan_1d = 1;
+            nb_scan_2d = 2;
+            nb_scan_3d = !isMultiplanar ? 1 : nb_scan_3d;
+            nb_scan_4d = 1;
+        }
+
         setParamValue(ACQUISITION_MATRIX_DIMENSION_1D, acquisitionMatrixDimension1D);
         setParamValue(ACQUISITION_MATRIX_DIMENSION_2D, acquisitionMatrixDimension2D);
         setParamValue(ACQUISITION_MATRIX_DIMENSION_3D, acquisitionMatrixDimension3D);
         setParamValue(ACQUISITION_MATRIX_DIMENSION_4D, acquisitionMatrixDimension4D);
 
+
+
         // set the calculated sequence dimensions
         setSequenceParamValue(Pre_scan, DUMMY_SCAN); // Do the prescan
         setSequenceParamValue(Nb_point, acquisitionMatrixDimension1D);
         setSequenceParamValue(Nb_1d, nb_scan_1d);
-        setSequenceParamValue(Nb_2d, isKSCenterMode ? 2 : nb_scan_2d);
-        setSequenceParamValue(Nb_3d, isKSCenterMode && !isMultiplanar ? 1 : nb_scan_3d);
-        setSequenceParamValue(Nb_4d, isKSCenterMode ? 1 : nb_scan_4d);
+        setSequenceParamValue(Nb_2d, nb_scan_2d);
+        setSequenceParamValue(Nb_3d, nb_scan_3d);
+        setSequenceParamValue(Nb_4d, nb_scan_4d);
         // set the calculated Loop dimensions
         setSequenceParamValue(Nb_echo, echoTrainLength - 1);
         setSequenceParamValue(Nb_interleaved_slice, nbOfInterleavedSlice - 1);
