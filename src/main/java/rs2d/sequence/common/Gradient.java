@@ -109,6 +109,14 @@ public class Gradient {
         }
     }
 
+    public double getAmplitudeArray_mTpm(int pos) {
+        if (amplitudeArray == null || pos >= steps) {
+            return Double.NaN;
+        } else {
+            return amplitudeArray[pos] * gMax / 100.0;
+        }
+    }
+
     public double getSliceThickness() {
         return sliceThicknessExcitation;
     }
@@ -166,15 +174,15 @@ public class Gradient {
     }
 
     public void setAmplitude(double... values) {
-        if (values.length == 1){
+        if (values.length == 1) {
             amplitude = values[0];
-        }else{
+        } else {
             amplitudeArray = new double[values.length];
-            int i =0;
+            int i = 0;
             for (double value : values) {
-                System.out.println(i +" "+value);
+                //  System.out.println(i +" "+value);
                 amplitudeArray[i] = value;
-                i+=1;
+                i += 1;
             }
             steps = i;
         }
@@ -380,6 +388,23 @@ public class Gradient {
             staticArea = -grad.getAmplitude() * grad.getEquivalentTime() * ratio;
         }
         calculateStaticAmplitude();
+    }
+
+    /*
+    * calculate READOUT refocusing
+    *
+    * @param grad : Readout Gradient
+    * @param ratio : ratio to compensate
+    */
+    public void refocalizeReadoutGradients(Gradient grad, double ratio) {
+        steps = grad.getSteps();
+        amplitudeArray = new double[steps];
+        for (int i = 0; i < steps; i++) {
+            // flatTimeTable.get(0).doubleValue() + grad_shape_rise_time
+            amplitudeArray[i] = -grad.getAmplitudeArray(i) * grad.getEquivalentTime() / this.getEquivalentTime() * ratio;
+        }
+
+        order = grad.getOrder();
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

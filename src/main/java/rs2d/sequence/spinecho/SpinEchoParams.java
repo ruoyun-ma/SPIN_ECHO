@@ -1990,7 +1990,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.8");
+            param.setValue("Version7.10");
             param.setDefaultValue("");
             return param;
         }

@@ -68,7 +68,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.9";
+    private String sequenceVersion = "Version7.10";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
