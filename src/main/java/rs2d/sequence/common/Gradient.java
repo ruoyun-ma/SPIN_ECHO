@@ -11,7 +11,7 @@ import rs2d.spinlab.tools.table.Order;
 
 /**
  * Class Gradient
- * V2.1- 2017-10-24 JR
+ * V2.1- 2018-03-20b JR
  */
 public class Gradient {
     private Table amplitudeTable = null;
@@ -44,10 +44,15 @@ public class Gradient {
     private boolean bPhaseEncoding = false;
     private double fovPhase = Double.NaN;
     private boolean isKSCentred = false;
+
+    private double k0pos = Double.NaN;
     private double spoilerExcess = Double.NaN;
+    private double minTopTime = Double.NaN;
 
     private boolean bRefocalizeGradient = false;
+    private boolean bStaticGradient = false;
 
+    private Gradient gradFlowComp = null;
 
     private static double gMax = GradientMath.getMaxGradientStrength();
 
@@ -125,6 +130,9 @@ public class Gradient {
         return spoilerExcess;
     }
 
+    public double getMinTopTime() {
+        return minTopTime;
+    }
 
     public int getSteps() {
         return steps;
@@ -132,6 +140,10 @@ public class Gradient {
 
     public Order getOrder() {
         return order;
+    }
+
+    public double getK0pos() {
+        return k0pos;
     }
 
     public double getEquivalentTime() {
@@ -152,6 +164,10 @@ public class Gradient {
             totalArea += staticArea;
         }
         return totalArea;
+    }
+
+    public double getTotalAbsArea() {
+        return Math.abs(getTotalArea());
     }
 
     public double calculateStaticArea() {
@@ -180,12 +196,17 @@ public class Gradient {
             amplitudeArray = new double[values.length];
             int i = 0;
             for (double value : values) {
-                //  System.out.println(i +" "+value);
+                //System.out.println(i + " " + value);
                 amplitudeArray[i] = value;
                 i += 1;
             }
             steps = i;
         }
+    }
+
+    public void setAmplitude(Order order, double... values) {
+        setAmplitude(values);
+        applyAmplitude(order);
     }
 
 
@@ -265,6 +286,7 @@ public class Gradient {
         if (grad_shape_rise_time == Double.NaN) {
             computeShapeRiseTime();
         }
+        minTopTime = flatTimeTable.get(0).doubleValue();
         equivalentTime = (flatTimeTable.get(0).doubleValue() + grad_shape_rise_time);
         return equivalentTime;
     }
@@ -274,7 +296,18 @@ public class Gradient {
     }
 
     public void refocalizeGradient(Gradient grad, double ratio) {
-        bRefocalizeGradient = true;
+        bStaticGradient = true;
+        staticArea = -grad.getStaticArea() * ratio;
+        calculateStaticAmplitude();
+    }
+
+    public void refocalizeGradientWithFlowComp(Gradient grad, double ratio, Gradient gradflowcomp) {
+        gradFlowComp = gradflowcomp;
+        // to modify , flow Comp
+        //to do: modify the calculation and prepare as well gradFlowComp Gradient
+
+
+        bStaticGradient = true;
         staticArea = -grad.getStaticArea() * ratio;
         calculateStaticAmplitude();
     }
@@ -289,12 +322,14 @@ public class Gradient {
         double topTime = equivalentTime - grad_shape_rise_time;
         if (topTime < 0.000004) {
             topTime = 0.000004;
-            flatTimeTable.set(0, topTime);
-            prepareEquivalentTime();
-            calculateStaticAmplitude();
+//            flatTimeTable.set(0, topTime);
+//            prepareEquivalentTime();
+//            calculateStaticAmplitude();
             test_Amplitude = false;
         }
         flatTimeTable.set(0, topTime);
+        prepareEquivalentTime();
+        calculateStaticAmplitude();
         return test_Amplitude;
     }
 
@@ -302,8 +337,8 @@ public class Gradient {
         prepareEquivalentTime();
         if (bPhaseEncoding)
             preparePhaseEncoding();
-        if (bRefocalizeGradient)
-            refocalizeGradient();
+        if (bStaticGradient)
+            calculateStaticAmplitude();
 
     }
 
@@ -460,6 +495,19 @@ public class Gradient {
         preparePhaseEncoding(matrixDimension, fovDim, isKSCentred);
     }
 
+
+    public void preparePhaseEncodingForCheckWithFlowComp(int matrixDimensionForCheck, int matrixDimension, double fovDim, boolean isKSCentred, Gradient gradflowcomp) {
+        gradFlowComp = gradflowcomp;
+        // to modify , flow Comp
+        //to do: modify the calculation and prepare as well gradFlowComp Gradient
+
+        double grad_total_area_phase = prepPhaseGradTotalArea(matrixDimensionForCheck, fovDim);
+        double grad_index_max_phase = prepPhaseGradIndexMax(isKSCentred);
+        maxAreaPE = grad_index_max_phase * grad_total_area_phase;
+
+        preparePhaseEncoding(matrixDimension, fovDim, isKSCentred);
+    }
+
     public double prepPhaseGradTotalArea(int matrixDimension, double fovPhase) {
         return ((matrixDimension - 1) / ((GradientMath.GAMMA) * fovPhase)) * 100.0 / gMax;
     }
@@ -471,6 +519,7 @@ public class Gradient {
         } else {
             gradIndexMaxPhase = 1 / 2.0 + ((steps + 1) % 2) / (2.0 * ((float) steps - 1));// always go trough k0
         }
+        k0pos = gradIndexMaxPhase * steps;
         return gradIndexMaxPhase;
     }
 
@@ -488,11 +537,25 @@ public class Gradient {
     }
 
     public void reoderPhaseEncoding(TransformPlugin plugin, int echoTrainLength, int acquisitionMatrixDimension2D, int acquisitionMatrixDimension1D) {
+        // flow Comp
+        if (gradFlowComp != null) {
+            gradFlowComp.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
+        }
         double loopNumber, indexNew;
         if (amplitudeArray != null) {
             double[] newTable = new double[acquisitionMatrixDimension2D];
+
+            System.out.println("----- " + plugin.getName());
+            int[] tmp = Centric(acquisitionMatrixDimension2D);
+
+
             for (int j = 0; j < acquisitionMatrixDimension2D; j++) {
                 int[] indexScan = plugin.invTransf(0, j, 0, 0);
+                //              System.out.println(j + " :  " +indexScan[0] + " " +indexScan[1]+ "        " +  plugin.transf(0, j, 0, 0)[0]+ " " +  plugin.transf(0, j, 0, 0)[1]);
+                if ("Centric4D".equalsIgnoreCase(plugin.getName())) {
+                    indexScan[1] = tmp[j];
+//                    System.out.println(j + " :  " + indexScan[1]);
+                }
                 loopNumber = indexScan[0] / acquisitionMatrixDimension1D; // Echo-block number: ETL-loop index
                 indexNew = indexScan[1] * echoTrainLength + loopNumber;    // indexScan[1]: index de Nb 2D
                 newTable[(int) indexNew] = amplitudeArray[j];
@@ -501,13 +564,62 @@ public class Gradient {
         }
     }
 
+    public void reoderPhaseEncoding3D(TransformPlugin plugin, int acquisitionMatrixDimension3D) {
+        // to modify , flow Comp
+        if (gradFlowComp != null) {
+            gradFlowComp.reoderPhaseEncoding3D(plugin, acquisitionMatrixDimension3D);
+        }
 
+        double indexNew;
+        if (amplitudeArray != null) {
+            double[] newTable = new double[acquisitionMatrixDimension3D];
+
+            System.out.println("----- " + plugin.getName());
+            int[] tmp = Centric(acquisitionMatrixDimension3D);
+            for (int k = 0; k < acquisitionMatrixDimension3D; k++) {
+                int[] indexScan = plugin.invTransf(0, 0, k, 0);
+                //              System.out.println(j + " :  " +indexScan[0] + " " +indexScan[1]+ "        " +  plugin.transf(0, j, 0, 0)[0]+ " " +  plugin.transf(0, j, 0, 0)[1]);
+                if ("Centric4D".equalsIgnoreCase(plugin.getName())) {
+                    indexScan[2] = tmp[k];
+//                    System.out.println(j + " :  " + indexScan[1]);
+                }
+                indexNew = indexScan[2];    // indexScan[1]: index de Nb 2D
+                newTable[(int) indexNew] = amplitudeArray[k];
+            }
+            amplitudeArray = newTable;
+        }
+    }
+
+
+    public int[] Centric(int acquisition_matrix_dimension_3D) {
+        int[] k_index = new int[acquisition_matrix_dimension_3D];
+        int[] tmpInv = new int[acquisition_matrix_dimension_3D];
+
+        k_index[0] = 0;
+        for (int i = 1; i < acquisition_matrix_dimension_3D; i++) {
+            if (k_index[i - 1] == 0) {
+                k_index[i] = 1;
+            } else if (k_index[i - 1] > 0) {
+                k_index[i] = -1 * k_index[i - 1];
+            } else if (k_index[i - 1] < 0) {
+                k_index[i] = -1 * (k_index[i - 1] - 1);
+            }
+        }
+        for (int i = 0; i < acquisition_matrix_dimension_3D; i++) {
+            k_index[i] = k_index[i] + (acquisition_matrix_dimension_3D / 2 - 1);
+        }
+        for (int i = 0; i < acquisition_matrix_dimension_3D; i++) {
+            tmpInv[k_index[i]] = i;
+        }
+        return tmpInv;
+    }
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                  Spoiler
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public boolean addSpoiler(double gradAmplitude) {
         boolean testSpoilerSupThan100 = true;
+        bStaticGradient = true;
         if (Double.isNaN(amplitude)) {
             amplitude = gradAmplitude;
         } else {
@@ -518,11 +630,60 @@ public class Gradient {
         if (gradMaxMin[0] > 100.0) {
             amplitude = 100.0;
             spoilerExcess = gradMaxMin[0] - 100.0;
+            minTopTime = ceilToSubDecimal((gradMaxMin[0] * equivalentTime - grad_shape_rise_time * 100.0) / 100.0, 5);
             testSpoilerSupThan100 = false;
         }
         return (testSpoilerSupThan100);
     }
 
+    public boolean addSpoiler(double pixel_dimension, double factor) {
+        bStaticGradient = true;
+        double grad_area_spoiler = factor / ((GradientMath.GAMMA) * pixel_dimension);//GradientMath.GAMMA: gamma/2pi értéke Hz/T-ban
+        double grad_amp_spoiler = (grad_area_spoiler / equivalentTime) / gMax * 100.0;//
+        return (addSpoiler(grad_amp_spoiler));
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //                  Flow Compensation
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public double getMoment(double t, String type, int order) {
+        double rise_time_up = rampTimeUpTable.get(0).doubleValue();
+        double rise_time_down = rampTimeDownTable.get(0).doubleValue();
+        double plato = flatTimeTable.get(0).doubleValue();
+        double amp = amplitude;
+        if (order == 0) {
+
+            if (type == "slice") {
+                t = 0;
+                double moment0 = amp * (2 * (rise_time_up + rise_time_down) / Math.PI + plato) / 2;
+                return moment0;
+            } else if (type == "read") {
+                double moment0 = amp * (2 * (rise_time_up + rise_time_down) / Math.PI + plato) / 2;
+                return moment0;
+            } else {
+                double moment0 = amp * (2 * (rise_time_up + rise_time_down) / Math.PI + plato);
+                return moment0;
+            }
+
+        } else if (type == "slice") {
+            t = 0;
+            double moment0 = amp * (2 * (rise_time_up + rise_time_down) / Math.PI + plato) / 2;
+            double moment1 = 1 / 8 * amp * plato * plato + amp * (rise_time_up + rise_time_down) / 2 * (Math.PI * plato + (Math.PI - 2.0) * (rise_time_up + rise_time_down)) / Math.PI / Math.PI;
+            double moment1_all = moment1 + t * moment0;
+            return moment1_all;
+        } else if (type == "read") {
+            double moment0 = amp * (2 * (rise_time_up + rise_time_down) / Math.PI + plato) / 2;
+            double moment1 = 1 / 2 * amp * ((rise_time_up + rise_time_down) / 2 * plato + plato * plato) + amp * (rise_time_up + rise_time_down) * (rise_time_up + rise_time_down) / Math.PI / Math.PI;
+            double moment1_all = moment1 + t * moment0;
+            return moment1_all;
+        } else {
+            double moment0 = amp * (2 * (rise_time_up + rise_time_down) / Math.PI + plato);
+            double moment1 = amp * (plato + (rise_time_up + rise_time_down)) * ((rise_time_up + rise_time_down) / Math.PI + plato / 2);
+            double moment1_all = moment1 + t * moment0;
+            return moment1_all;
+        }
+    }
 
     // ---------------------------------------------------------------
     // ----------------- General Methode----------------------------------------------
