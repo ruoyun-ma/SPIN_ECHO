@@ -775,7 +775,7 @@
                 <group>Gradient</group>
                 <category>Acquisition</category>
                 <rolesEnum>SequenceDesigner</rolesEnum>
-                <value>false</value>
+                <value>true</value>
                 <defaultValue>true</defaultValue>
             </value>
         </entry>
@@ -871,14 +871,11 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_A0</name>
                 <description></description>
-                <displayedName>nparam</displayedName>
+                <displayedName>HARDWARE_A0</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
                 <maxValue>2.147483647E9</maxValue>
                 <minValue>-2.147483648E9</minValue>
                 <numberEnum>PERCENT</numberEnum>
@@ -889,15 +886,11 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_DC</name>
                 <description></description>
-                <displayedName>nparam</displayedName>
+                <displayedName>HARDWARE_DC</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
                 <maxValue>2.147483647E9</maxValue>
                 <minValue>-2.147483648E9</minValue>
                 <numberEnum>PERCENT</numberEnum>
@@ -908,30 +901,12 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_PREEMPHASIS_A</name>
                 <description></description>
-                <displayedName>nparam</displayedName>
+                <displayedName>HARDWARE_PREEMPHASIS_A</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Emission</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
                 <maxValue>2.147483647E9</maxValue>
                 <minValue>-2.147483648E9</minValue>
                 <numberEnum>PERCENT</numberEnum>
@@ -942,30 +917,12 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_PREEMPHASIS_T</name>
                 <description></description>
-                <displayedName>nparam</displayedName>
+                <displayedName>HARDWARE_PREEMPHASIS_T</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Emission</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
                 <maxValue>1.0E9</maxValue>
                 <minValue>0.0</minValue>
                 <numberEnum>Time</numberEnum>
@@ -976,12 +933,11 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_SHIM</name>
                 <description></description>
-                <displayedName>nparam</displayedName>
+                <displayedName>HARDWARE_SHIM</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>0.0</value>
                 <maxValue>2.147483647E9</maxValue>
                 <minValue>-2.147483648E9</minValue>
                 <numberEnum>PERCENT</numberEnum>
@@ -992,7 +948,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>HARDWARE_SHIM_LABEL</name>
                 <description></description>
-                <displayedName>tparam</displayedName>
+                <displayedName>HARDWARE_SHIM_LABEL</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <category>Acquisition</category>
@@ -2291,7 +2247,7 @@
                 <group>Gradient</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>0.0</value>
+                <value>-0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <maxValue>1.7976931348623157E308</maxValue>
@@ -2546,6 +2502,19 @@
             </value>
         </entry>
         <entry>
+            <key>PROBES</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listTextParam">
+                <name>PROBES</name>
+                <description>The probes used for the acquisition</description>
+                <displayedName>Probes</displayedName>
+                <locked>true</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <group>Miscellaneous</group>
+                <category>Acquisition</category>
+                <rolesEnum>User</rolesEnum>
+            </value>
+        </entry>
+        <entry>
             <key>RECEIVER_COUNT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>RECEIVER_COUNT</name>
@@ -2705,7 +2674,7 @@
                 <group>User</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>Version7.10</value>
+                <value>Version7.11</value>
                 <defaultValue></defaultValue>
                 <restrictedToSuggested>false</restrictedToSuggested>
             </value>
