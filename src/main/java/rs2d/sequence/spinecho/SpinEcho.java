@@ -68,7 +68,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.11";
+    private String sequenceVersion = "Version7.12";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -170,6 +170,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         //TRANSFORM PLUGIN
         List<String> list = asList("Centered2D",
+                "Centered2DRot",
                 "Bordered2D",
                 "Sequential4D",
                 "Sequential2D");
@@ -305,6 +306,13 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // -----------------------------------------------
         //      CONTRAST
         // -----------------------------------------------
+        int echoEffective = ((NumberParam) getParam(ECHO_EFFECTIVE)).getValue().intValue();
+
+        if (echoEffective > echoTrainLength) {
+            echoEffective = echoTrainLength;
+            setParamValue(ECHO_EFFECTIVE, echoEffective);
+        }
+
         boolean is_FSE_vs_MultiEcho;
         if (echoTrainLength == 1) {
             setParamValue(ECHO_SPACING, 0);
@@ -361,6 +369,19 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             }
             //setParamValue(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST, "Custom");
         }
+        switch ((String) getParam(TRANSFORM_PLUGIN).getValue()) {
+            case "Centered2D":
+                echoEffective = 1;
+                break;
+            case "Bordered2D":
+                echoEffective = echoTrainLength;
+                break;
+            case "Sequential4D":
+            case "Sequential2D":
+                echoEffective = Math.round(echoTrainLength / 2);
+                break;
+        }
+        setParamValue(ECHO_EFFECTIVE, echoEffective);
 
         // -----------------------------------------------
         // 1stD managment
@@ -387,7 +408,6 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         setParamValue(SPECTRAL_WIDTH, spectralWidthUP);
         observation_time = acquisitionMatrixDimension1D / spectralWidth;
         setParamValue(ACQUISITION_TIME_PER_SCAN, observation_time);   // display observation time
-
 
 
         nb_scan_1d = number_of_averages;
@@ -586,7 +606,6 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         setParamValue(ACQUISITION_MATRIX_DIMENSION_2D, acquisitionMatrixDimension2D);
         setParamValue(ACQUISITION_MATRIX_DIMENSION_3D, acquisitionMatrixDimension3D);
         setParamValue(ACQUISITION_MATRIX_DIMENSION_4D, acquisitionMatrixDimension4D);
-
 
 
         // set the calculated sequence dimensions

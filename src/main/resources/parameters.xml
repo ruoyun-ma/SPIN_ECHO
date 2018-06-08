@@ -371,6 +371,25 @@
             </value>
         </entry>
         <entry>
+            <key>ECHO_EFFECTIVE</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                <name>ECHO_EFFECTIVE</name>
+                <description></description>
+                <displayedName>ECHO_EFFECTIVE</displayedName>
+                <locked>false</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <group>Scan</group>
+                <category>Acquisition</category>
+                <rolesEnum>User</rolesEnum>
+                <value>1</value>
+                <defaultValue>1</defaultValue>
+                <restrictedToSuggested>false</restrictedToSuggested>
+                <maxValue>2147483647</maxValue>
+                <minValue>1</minValue>
+                <numberEnum>Integer</numberEnum>
+            </value>
+        </entry>
+        <entry>
             <key>ECHO_SPACING</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_SPACING</name>
@@ -2674,7 +2693,7 @@
                 <group>User</group>
                 <category>Acquisition</category>
                 <rolesEnum>User</rolesEnum>
-                <value>Version7.11</value>
+                <value>Version7.12</value>
                 <defaultValue></defaultValue>
                 <restrictedToSuggested>false</restrictedToSuggested>
             </value>
@@ -2947,6 +2966,7 @@
                 <value>Centered2D</value>
                 <defaultValue>Centered2D</defaultValue>
                 <suggestedValues>Centered2D</suggestedValues>
+                <suggestedValues>Centered2DRot</suggestedValues>
                 <suggestedValues>Bordered2D</suggestedValues>
                 <suggestedValues>Sequential4D</suggestedValues>
                 <suggestedValues>Sequential2D</suggestedValues>
