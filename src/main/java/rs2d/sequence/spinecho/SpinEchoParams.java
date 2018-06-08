@@ -369,7 +369,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Integer);
             param.setMinValue(1);
             param.setMaxValue(2147483647);
-            param.setValue(4);
+            param.setValue(1);
             param.setDefaultValue(1);
             return param;
         }
@@ -405,7 +405,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.036000000000000004);
+            param.setValue(0.009000000000000001);
             param.setDefaultValue(0.005);
             return param;
         }
@@ -423,7 +423,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.001);
             param.setMaxValue(10.0);
-            param.setValue(0.036000000000000004);
+            param.setValue(0.009000000000000001);
             param.setDefaultValue(0.01);
             return param;
         }
@@ -657,6 +657,24 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
+    GRADIENT_AREA_CRUSHER_PI {
+        Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("GRADIENT_AREA_CRUSHER_PI");
+            param.setDisplayedName("GRADIENT_AREA_CRUSHER_PI");
+            param.setDescription("Number of pi dephasing by the crusher");
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Gradient);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Double);
+            param.setMinValue(-1.7976931348623157E308);
+            param.setMaxValue(1.7976931348623157E308);
+            param.setValue(2.369905410005974);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
     GRADIENT_CRUSHER_IR_TOP_TIME {
         Param build() {
             NumberParam param = new NumberParam();
@@ -671,6 +689,24 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMaxValue(1.0E9);
             param.setValue(3.9999999999999996E-4);
             param.setDefaultValue(3.9999999999999996E-4);
+            return param;
+        }
+    },
+
+    GRADIENT_CRUSHER_READ_TOP_TIME {
+        Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("GRADIENT_CRUSHER_READ_TOP_TIME");
+            param.setDisplayedName("GRADIENT_CRUSHER_READ_TOP_TIME");
+            param.setDescription("");
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Delay);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setMinValue(4.9999999999999996E-6);
+            param.setMaxValue(1.0E9);
+            param.setValue(4.9999999999999996E-6);
+            param.setDefaultValue(4.9999999999999996E-6);
             return param;
         }
     },
@@ -2017,7 +2053,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.12");
+            param.setValue("Version7.13");
             param.setDefaultValue("");
             return param;
         }

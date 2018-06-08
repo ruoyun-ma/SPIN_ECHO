@@ -34,10 +34,7 @@
 package rs2d.sequence.spinecho;
 
 import rs2d.commons.log.Log;
-import rs2d.sequence.common.Gradient;
-import rs2d.sequence.common.RFPulse;
-import rs2d.sequence.common.HardwareShim;
-import rs2d.sequence.common.HardwarePreemphasis;
+import rs2d.sequence.common.*;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.hardware.controller.HardwareHandler;
 import rs2d.spinlab.instrument.Instrument;
@@ -68,7 +65,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.12";
+    private String sequenceVersion = "Version7.13";
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -878,11 +875,13 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // calculate ADC observation time
         // -----------------------------------------------
         setSequenceTableSingleValue(Time_rx, observation_time);
-
+        double grad_crusher_read_time = ((NumberParam) getParam(GRADIENT_CRUSHER_READ_TOP_TIME)).getValue().doubleValue();
+        setSequenceTableSingleValue(Time_grad_read_crusher, grad_crusher_read_time);
         // -----------------------------------------------
         // calculate READ gradient amplitude
         // -----------------------------------------------
-        Gradient gradReadout = Gradient.createGradient(getSequence(), Grad_amp_read_read, Time_rx, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
+        
+        Gradient gradReadout = Gradient5Event.createGradient(getSequence(), Grad_amp_read_read, Time_grad_read_crusher, Time_rx, Time_grad_read_crusher, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         if (isEnableRead && !gradReadout.calculateReadoutGradient(spectralWidth, pixelDimension * acquisitionMatrixDimension1D)) {
             double spectral_width_max = gradReadout.getSpectralWidth();
             if (isSW) {
@@ -985,6 +984,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         gradSliceCrusher.applyAmplitude();
         double grad_area_crusher = (time_grad_crusher_top + grad_shape_rise_time) * grad_amp_crusher * gMax / 100.0;
         setParamValue(GRADIENT_AREA_CRUSHER, grad_area_crusher);
+        setParamValue(GRADIENT_AREA_CRUSHER_PI, grad_area_crusher * (GradientMath.GAMMA) * sliceThickness);
+    
 
         // --------------------------------------------------------------------------------------------------------------------------------------------
         // TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING
@@ -1011,14 +1012,14 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         time1 = time1 + txLength90 / 2.0 + (txLength180) / 2.0;
         time1 += 3 * min_instruction_delay;
 
-        double time2 = getTimeBetweenEvents(Events.TX180 + 1, Events.Delay2 - 1) + getTimeBetweenEvents(Events.Acq - 1, Events.Acq - 1);
+        double time2 = getTimeBetweenEvents(Events.TX180 + 1, Events.Delay2 - 1) + getTimeBetweenEvents(Events.Acq - 2, Events.Acq - 1);
         time2 = time2 + txLength180 / 2.0 + observation_time / 2.0; // time sans le PE gradient et la pause
-        double time2_min = time2 + (isMultiplanar ? 3 * min_instruction_delay : grad_phase_application_time + grad_rise_time * 2);
+        double time2_min = time2 + (isMultiplanar ? 2 * min_instruction_delay : grad_phase_application_time + grad_rise_time );
 
-        double time3 = (getTimeBetweenEvents(Events.Acq, Events.Acq + 1) - observation_time) + getTimeBetweenEvents(Events.Delay3 + 1, Events.LoopEndEcho);
+        double time3 = (getTimeBetweenEvents(Events.Acq, Events.Acq + 1) - observation_time) + getTimeBetweenEvents(Events.Delay3 + 2, Events.LoopEndEcho);
         time3 = time3 + observation_time / 2.0;
 //        time3 = time3 + (isMultiplanar ? (-getTimeBetweenEvents(Events.Acq + 2, Events.Acq + 4) + 3 * min_instruction_delay) : 0) + min_instruction_delay;
-        time3 = time3 + (isMultiplanar ? 3 * min_instruction_delay : grad_phase_application_time + grad_rise_time * 2);
+        time3 = time3 + (isMultiplanar ? 2 * min_instruction_delay : grad_phase_application_time + grad_rise_time);
 
         double time3_for_min_FIR_delay = min_FIR_4pts_delay + getTimeBetweenEvents(Events.LoopEndEcho, Events.LoopEndEcho) + observation_time / 2.0;
         double time3_min = Math.max(time3, time3_for_min_FIR_delay);
@@ -1116,9 +1117,9 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         boolean enable_phase_2 = !isMultiplanar;
 
         // in 2D if the delay is loong pack the Phase close to the redaout
-        if ((delay2 + (3 * min_instruction_delay - default_instruction_delay) > grad_phase_application_time + 2 * grad_rise_time) && (delay3 + (3 * min_instruction_delay - default_instruction_delay) > grad_phase_application_time + 2 * grad_rise_time)) {
-            delay2 = delay2 + 3 * min_instruction_delay - (grad_phase_application_time + 2 * grad_rise_time);
-            delay3 = delay3 + 3 * min_instruction_delay - (grad_phase_application_time + 2 * grad_rise_time);
+        if ((delay2 + (2 * min_instruction_delay - default_instruction_delay) > grad_phase_application_time +  grad_rise_time) && (delay3 + (2 * min_instruction_delay - default_instruction_delay) > grad_phase_application_time + grad_rise_time)) {
+            delay2 = delay2 + 2 * min_instruction_delay - (grad_phase_application_time +  grad_rise_time);
+            delay3 = delay3 + 2 * min_instruction_delay - (grad_phase_application_time +  grad_rise_time);
             grad_rise_time_phase_2 = grad_rise_time;
             grad_phase_application_time_2 = grad_phase_application_time;
             enable_phase_2 = true;

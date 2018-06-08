@@ -447,7 +447,7 @@
                     <group>Scan</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>4</value>
+                    <value>1</value>
                     <defaultValue>1</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>2147483647</maxValue>
@@ -485,7 +485,7 @@
                     <group>Delay</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>0.036000000000000004</value>
+                    <value>0.009000000000000001</value>
                     <defaultValue>0.005</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.0E9</maxValue>
@@ -504,7 +504,7 @@
                     <group>Delay</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>0.036000000000000004</value>
+                    <value>0.009000000000000001</value>
                     <defaultValue>0.01</defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>10.0</maxValue>
@@ -752,6 +752,25 @@
                 </value>
             </entry>
             <entry>
+                <key>GRADIENT_AREA_CRUSHER_PI</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                    <name>GRADIENT_AREA_CRUSHER_PI</name>
+                    <description>Number of pi dephasing by the crusher</description>
+                    <displayedName>GRADIENT_AREA_CRUSHER_PI</displayedName>
+                    <locked>false</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <group>Gradient</group>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>2.369905410005974</value>
+                    <defaultValue>0.0</defaultValue>
+                    <restrictedToSuggested>false</restrictedToSuggested>
+                    <maxValue>1.7976931348623157E308</maxValue>
+                    <minValue>-1.7976931348623157E308</minValue>
+                    <numberEnum>Double</numberEnum>
+                </value>
+            </entry>
+            <entry>
                 <key>GRADIENT_CRUSHER_IR_TOP_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_CRUSHER_IR_TOP_TIME</name>
@@ -767,6 +786,25 @@
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <maxValue>1.0E9</maxValue>
                     <minValue>0.0</minValue>
+                    <numberEnum>Time</numberEnum>
+                </value>
+            </entry>
+            <entry>
+                <key>GRADIENT_CRUSHER_READ_TOP_TIME</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                    <name>GRADIENT_CRUSHER_READ_TOP_TIME</name>
+                    <description></description>
+                    <displayedName>GRADIENT_CRUSHER_READ_TOP_TIME</displayedName>
+                    <locked>false</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <group>Delay</group>
+                    <category>Acquisition</category>
+                    <rolesEnum>User</rolesEnum>
+                    <value>4.9999999999999996E-6</value>
+                    <defaultValue>4.9999999999999996E-6</defaultValue>
+                    <restrictedToSuggested>false</restrictedToSuggested>
+                    <maxValue>1.0E9</maxValue>
+                    <minValue>4.9999999999999996E-6</minValue>
                     <numberEnum>Time</numberEnum>
                 </value>
             </entry>
@@ -2759,7 +2797,7 @@
                     <group>User</group>
                     <category>Acquisition</category>
                     <rolesEnum>User</rolesEnum>
-                    <value>Version7.12</value>
+                    <value>Version7.13</value>
                     <defaultValue></defaultValue>
                     <restrictedToSuggested>false</restrictedToSuggested>
                 </value>

@@ -13,67 +13,38 @@ import rs2d.spinlab.tools.table.Order;
  * Class Gradient
  * V2.1- 2018-03-20b JR
  */
-public class Gradient {
-    protected Table amplitudeTable = null;
-    protected Table flatTimeTable = null;
-    protected Shape shapeUpTable = null;
-    protected Shape shapeDownTable = null;
-    protected Table rampTimeUpTable;
-    protected Table rampTimeDownTable;
+public class Gradient5Event extends Gradient {
 
-    protected double amplitude = Double.NaN;
-    protected double staticArea = Double.NaN;
+    protected Table flatTimeTable1 = null;
+    protected Table flatTimeTable3 = null;
 
-    protected double[] amplitudeArray = null;
-    protected double maxAreaPE = Double.NaN;
-
-    protected int steps = -1;
-    protected Order order = Order.FourLoop;
-
-    protected double grad_shape_rise_time = Double.NaN;
-    protected double equivalentTime = Double.NaN;
-
-    // Slc
-    protected double sliceThicknessExcitation = Double.NaN;
-    protected double txBandwidth = Double.NaN;
-
-    // RO
-    protected double spectralWidth = Double.NaN;
-
-    // PE
-    protected boolean bPhaseEncoding = false;
-    protected double fovPhase = Double.NaN;
-    protected boolean isKSCentred = false;
-
-    protected double k0pos = Double.NaN;
-    protected double spoilerExcess = Double.NaN;
-    protected double minTopTime = Double.NaN;
-
-    protected boolean bRefocalizeGradient = false;
-    protected boolean bStaticGradient = false;
-
-    protected Gradient gradFlowComp = null;
-
-    protected static double gMax = GradientMath.getMaxGradientStrength();
-
-    public Gradient(Table amplitudeTab, Table flat_TimeTab, Shape shapeUpTab, Shape shapeDownTab, Table rampTimeUpTab, Table rampTimeDownTab) {
-        amplitudeTable = amplitudeTab;
-        flatTimeTable = flat_TimeTab;
-        shapeUpTable = shapeUpTab;
-        shapeDownTable = shapeDownTab;
-        rampTimeUpTable = rampTimeUpTab;
-        rampTimeDownTable = rampTimeDownTab;
-        gMax = GradientMath.getMaxGradientStrength();
+    public Gradient5Event(Table amplitudeTab, Table flat_TimeTab1, Table flat_TimeTab2, Table flat_TimeTab3, Shape shapeUpTab, Shape shapeDownTab, Table rampTimeUpTab, Table rampTimeDownTab) {
+        super(amplitudeTab, flat_TimeTab2, shapeUpTab, shapeDownTab, rampTimeUpTab, rampTimeDownTab);
+        flatTimeTable1 = flat_TimeTab1;
+        flatTimeTable3 = flat_TimeTab3;
         init();
+        //        Table flatTimeTable1 = getSequence().getPublicTable(Time_grad_read_crusher);
+        System.out.println(flatTimeTable1.getFirst());
+        System.out.println(flatTimeTable1.size());
+        System.out.println(flatTimeTable1.getName());
+        System.out.println(flatTimeTable1.get(0).doubleValue());
+
     }
 
-    public static Gradient createGradient(Sequence sequence, String amplitudeTab, String flat_TimeTab, String shapeUpTab, String shapeDownTab, String rampTimeTab) {
-        return new Gradient(sequence.getPublicTable(amplitudeTab), sequence.getPublicTable(flat_TimeTab), (Shape) sequence.getPublicTable(shapeUpTab),
+    public static Gradient5Event createGradient(Sequence sequence, String amplitudeTab, String flat_TimeTab1, String flat_TimeTab2, String flat_TimeTab3, String shapeUpTab, String shapeDownTab, String rampTimeTab) {
+        System.out.println(" ");
+        System.out.println(" Gradient5Event createGradient 1  ");
+        System.out.println(" flat_TimeTab1  " + flat_TimeTab1);
+        System.out.println(flat_TimeTab1);
+        return new Gradient5Event(sequence.getPublicTable(amplitudeTab), sequence.getPublicTable(flat_TimeTab1), sequence.getPublicTable(flat_TimeTab2), sequence.getPublicTable(flat_TimeTab3), (Shape) sequence.getPublicTable(shapeUpTab),
                 (Shape) sequence.getPublicTable(shapeDownTab), sequence.getPublicTable(rampTimeTab), sequence.getPublicTable(rampTimeTab));
     }
 
-    public static Gradient createGradient(Sequence sequence, String amplitudeTab, String flat_TimeTab, String shapeUpTab, String shapeDownTab, String rampTimeUpTab, String rampTimeDownTab) {
-        return new Gradient(sequence.getPublicTable(amplitudeTab), sequence.getPublicTable(flat_TimeTab), (Shape) sequence.getPublicTable(shapeUpTab),
+    public static Gradient5Event createGradient(Sequence sequence, String amplitudeTab, String flat_TimeTab1, String flat_TimeTab2, String flat_TimeTab3, String shapeUpTab, String shapeDownTab, String rampTimeUpTab, String rampTimeDownTab) {
+        System.out.println(" ");
+        System.out.println(" Gradient5Event createGradient 2 ");
+        System.out.println(" flat_TimeTab1  " + flat_TimeTab1);
+        return new Gradient5Event(sequence.getPublicTable(amplitudeTab), sequence.getPublicTable(flat_TimeTab1), sequence.getPublicTable(flat_TimeTab2), sequence.getPublicTable(flat_TimeTab3), (Shape) sequence.getPublicTable(shapeUpTab),
                 (Shape) sequence.getPublicTable(shapeDownTab), sequence.getPublicTable(rampTimeUpTab), sequence.getPublicTable(rampTimeDownTab));
     }
 
@@ -86,7 +57,8 @@ public class Gradient {
         prepareEquivalentTime();
     }
 
-    public double getStaticArea() {
+
+    /*public double getStaticArea() {
         if (Double.isNaN(staticArea)) {
             return 0.0;
         } else {
@@ -182,9 +154,9 @@ public class Gradient {
         return staticArea;
     }
 
-    /**
+    *//**
      * calculate Static Amplitude from staticArea
-     */
+     *//*
     public double calculateStaticAmplitude() {
         if (Double.isNaN(equivalentTime)) {
             prepareEquivalentTime();
@@ -214,9 +186,9 @@ public class Gradient {
     }
 
 
-    /**
+    *//**
      * write the prepared amplitude into the Sequence_parameter
-     */
+     *//*
     public void applyAmplitude() {
         double offset = 0.0;
         if (!Double.isNaN(amplitude)) {
@@ -239,9 +211,9 @@ public class Gradient {
         applyAmplitude();
     }
 
-    /**
+    *//**
      * Check if the statid and dynamic gradient do not exceed the gradient max:
-     */
+     *//*
     public double[] checkGradientMax() {
         double gradMax = 0;
         double gradMin = 0;
@@ -266,13 +238,13 @@ public class Gradient {
         return (gradMaxMin);
     }
 
-    /**
+    *//**
      * Calculate equivalent shape rise time from rampTime ans shapes
      * equivalent time for rectangular gradient with same Area and amplitude
      *
      * @return grad_shape_rise_time :
-     */
-    protected double computeShapeRiseTime() {
+     *//*
+    private double computeShapeRiseTime() {
         double grad_shape_rise_factor_up = Utility.voltageFillingFactor(shapeUpTable);
         double grad_shape_rise_factor_down = Utility.voltageFillingFactor(shapeDownTable);
         double grad_up_rise_time = rampTimeUpTable.get(0).doubleValue();
@@ -281,31 +253,45 @@ public class Gradient {
         return grad_shape_rise_time;
     }
 
+    */
+
     /**
      * Calculate equivalentTime of a rectangular gradient with same Area and amplitude
      *
      * @return equivalentTime :
-     */
+     *//*
+    */
     public double prepareEquivalentTime() {
+        System.out.println(" ");
+        System.out.println(" prepareEquivalentTime() ");
+        System.out.println(" flatTimeTable " + flatTimeTable1);
+
         if (grad_shape_rise_time == Double.NaN) {
             computeShapeRiseTime();
         }
-        minTopTime = flatTimeTable.get(0).doubleValue();
-        equivalentTime = (flatTimeTable.get(0).doubleValue() + grad_shape_rise_time);
+        if (flatTimeTable1  != null) {
+            System.out.println("flatTimeTable.get(0).doubleValue()  = " + flatTimeTable.get(0).doubleValue());
+            System.out.println("flatTimeTable1.get(0).doubleValue()  = " + flatTimeTable1.get(0).doubleValue());
+            System.out.println("flatTimeTable3.get(0).doubleValue()  = " + flatTimeTable3.get(0).doubleValue());
+            minTopTime = flatTimeTable.get(0).doubleValue() + flatTimeTable1.get(0).doubleValue() + flatTimeTable3.get(0).doubleValue();
+            equivalentTime = (minTopTime + grad_shape_rise_time);
+            System.out.println("minTopTime  = " + minTopTime);
+            System.out.println("grad_shape_rise_time  = " + grad_shape_rise_time);
+        }
         return equivalentTime;
     }
-
+/*
     public void refocalizeGradient() {
         calculateStaticAmplitude();
     }
 
-    public void refocalizeGradient(Gradient grad, double ratio) {
+    public void refocalizeGradient(Gradient5Event grad, double ratio) {
         bStaticGradient = true;
         staticArea = -grad.getStaticArea() * ratio;
         calculateStaticAmplitude();
     }
 
-    public void refocalizeGradientWithFlowComp(Gradient grad, double ratio, Gradient gradflowcomp) {
+    public void refocalizeGradientWithFlowComp(Gradient5Event grad, double ratio, Gradient5Event gradflowcomp) {
         gradFlowComp = gradflowcomp;
         // to modify , flow Comp
         //to do: modify the calculation and prepare as well gradFlowComp Gradient
@@ -316,7 +302,7 @@ public class Gradient {
         calculateStaticAmplitude();
     }
 
-    public boolean refocalizeGradientWithAmplitude(Gradient grad, double ratio, double amplitude) {
+    public boolean refocalizeGradientWithAmplitude(Gradient5Event grad, double ratio, double amplitude) {
         if (grad_shape_rise_time == Double.NaN) {
             computeShapeRiseTime();
         }
@@ -350,32 +336,29 @@ public class Gradient {
     //     RO             Readout  methodes             RO
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    */
+
     /**
      * calculate readout Gradient Amplitude
      *
      * @param spectralWidth
      * @param fov
      * @return testSpectralWidth : false if the Spectralwidth need to be nicreased(call getSpectralWidth() )
-     */
+     *//*
+ */
+    @Override
     public boolean calculateReadoutGradient(double spectralWidth, double fov) throws Exception {
-        boolean testSpectralWidth = true;
-        this.spectralWidth = spectralWidth;
-        amplitude = spectralWidth / ((GradientMath.GAMMA) * fov) * 100.0 / gMax;                 // amplitude in T/m
-        if (amplitude > 100.0) {
-            this.spectralWidth = solveSpectralWidthMax(fov);
-            amplitude = this.spectralWidth / ((GradientMath.GAMMA) * fov) * 100.0 / gMax;                 // amplitude in T/m
-            testSpectralWidth = false;
-        }
+        boolean testSpectralWidth = super.calculateReadoutGradient(spectralWidth, fov);
         calculateStaticArea();
         return testSpectralWidth;
     }
-
-    /**
+/*
+    *//**
      * calculate spectral width max for a given FOV
      *
      * @param fov
      * @return sw
-     */
+     *//*
     public double solveSpectralWidthMax(double fov) throws Exception {
         double spectralWidth_init = (gMax * GradientMath.GAMMA * fov);
         double spectralWidth = spectralWidth_init;
@@ -390,12 +373,12 @@ public class Gradient {
         return spectralWidth;
     }
 
-    /**
+    *//**
      * set READOUT gradient Amplitude ETL values with back and forth(+/-) sign
      *
      * @param ETL        : number of gradient values
      * @param tableorder
-     */
+     *//*
     public void applyReadoutEchoPlanarAmplitude(int ETL, Order tableorder) {
         order = tableorder;
         if (!Double.isNaN(amplitude)) {
@@ -413,12 +396,12 @@ public class Gradient {
         applyAmplitude();
     }
 
-    /**
+    *//**
      * calculate READOUT refocusing gradient Amplitude handeling ETL
      *
      * @param grad : Readout Gradient
-     */
-    public void refocalizeReadoutGradient(Gradient grad, double ratio) {
+     *//*
+    public void refocalizeReadoutGradient(Gradient5Event grad, double ratio) {
         int rOSteps = grad.getSteps();
         if (rOSteps > 0) {
             ratio = (rOSteps % 2) == 1 ? ratio : 1 - ratio;
@@ -429,13 +412,13 @@ public class Gradient {
         calculateStaticAmplitude();
     }
 
-    /*
+    *//*
     * calculate READOUT refocusing
     *
     * @param grad : Readout Gradient
     * @param ratio : ratio to compensate
-    */
-    public void refocalizeReadoutGradients(Gradient grad, double ratio) {
+    *//*
+    public void refocalizeReadoutGradients(Gradient5Event grad, double ratio) {
         steps = grad.getSteps();
         amplitudeArray = new double[steps];
         for (int i = 0; i < steps; i++) {
@@ -500,7 +483,7 @@ public class Gradient {
     }
 
 
-    public void preparePhaseEncodingForCheckWithFlowComp(int matrixDimensionForCheck, int matrixDimension, double fovDim, boolean isKSCentred, Gradient gradflowcomp) {
+    public void preparePhaseEncodingForCheckWithFlowComp(int matrixDimensionForCheck, int matrixDimension, double fovDim, boolean isKSCentred, Gradient5Event gradflowcomp) {
         gradFlowComp = gradflowcomp;
         // to modify , flow Comp
         //to do: modify the calculation and prepare as well gradFlowComp Gradient
@@ -528,7 +511,7 @@ public class Gradient {
     }
 
 
-    public double[] refocalizePhaseEncodingGradient(Gradient grad) {
+    public double[] refocalizePhaseEncodingGradient(Gradient5Event grad) {
         steps = grad.getSteps();
         if (steps > 0) {
             order = grad.getOrder();
@@ -706,6 +689,6 @@ public class Gradient {
         for (double value : values) {
             table.add(value);
         }
-    }
+    }*/
 
 }
