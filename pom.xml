@@ -4,12 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>rs2d-sequence</groupId>
   <artifactId>spin-echo</artifactId>
-  <version>SPIN_ECHO-git</version>
+  <version>master</version>
   <properties>
-    <seqdev.update-dependencies>false</seqdev.update-dependencies>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <seqdev.update-dependencies>false</seqdev.update-dependencies>
+    <seqdev.use-branch-as-version>true</seqdev.use-branch-as-version>
   </properties>
   <dependencies>
     <dependency>
