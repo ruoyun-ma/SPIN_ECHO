@@ -7,6 +7,7 @@ import rs2d.spinlab.tools.table.*;
 import rs2d.spinlab.tools.role.RoleEnum;
 import rs2d.spinlab.sequenceGenerator.GeneratorParamEnum;
 
+import java.util.List;
 import static java.util.Arrays.asList;
 
 public enum SpinEchoParams implements GeneratorParamEnum {
@@ -127,8 +128,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asList(0.0));
-            param.setDefaultValue(asList(0.0));
+            param.setValue(asListNumber(0.0));
+            param.setDefaultValue(asListNumber(0.0));
             return param;
         }
     },
@@ -145,7 +146,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.005111808000000001);
+            param.setValue(0.005111821086261981);
             param.setDefaultValue(1.0);
             return param;
         }
@@ -469,8 +470,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("FIELD_OF_VIEW_3D");
-            param.setDisplayedName("FIELD_OF_VIEW_3D");
-            param.setDescription("Total coverage in the third dim.");
+            param.setDisplayedName("FOV 3D");
+            param.setDescription("Total coverage in the third dim. FOV");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Dimension);
             param.setCategory(Category.Acquisition);
@@ -487,8 +488,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         Param build() {
             NumberParam param = new NumberParam();
             param.setName("FIELD_OF_VIEW_PHASE");
-            param.setDisplayedName("FIELD_OF_VIEW_PHASE");
-            param.setDescription("");
+            param.setDisplayedName("FOV PHASE");
+            param.setDescription("FOV in phase encoding direction");
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.Dimension);
             param.setCategory(Category.Acquisition);
@@ -1013,8 +1014,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
-            param.setValue(asList(0.0, 0.0, -1.0, 0.0, -1.0, 0.0));
-            param.setDefaultValue(asList(1.0, 0.0, 0.0, 0.0, 1.0, 0.0));
+            param.setValue(asListNumber(0.0, 0.0, -1.0, 0.0, -1.0, 0.0));
+            param.setDefaultValue(asListNumber(1.0, 0.0, 0.0, 0.0, 1.0, 0.0));
             return param;
         }
     },
@@ -1031,8 +1032,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Location);
-            param.setValue(asList(0.0, 0.0, 0.0));
-            param.setDefaultValue(asList(0.0, 0.0, 0.0));
+            param.setValue(asListNumber(0.0, 0.0, 0.0));
+            param.setDefaultValue(asListNumber(0.0, 0.0, 0.0));
             return param;
         }
     },
@@ -1100,7 +1101,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asList(0.0));
+            param.setValue(asListNumber(0.0));
             return param;
         }
     },
@@ -1146,8 +1147,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-2147483648);
             param.setMaxValue(2147483647);
             param.setNumberEnum(NumberEnum.Integer);
-            param.setValue(asList(0, 0, 0));
-            param.setDefaultValue(asList(0, 0, 0));
+            param.setValue(asListNumber(0, 0, 0));
+            param.setDefaultValue(asListNumber(0, 0, 0));
             return param;
         }
     },
@@ -1164,8 +1165,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(9.999999999999999E-5);
             param.setMaxValue(60.0);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asList(0.02, 2.0));
-            param.setDefaultValue(asList(0.02, 2.0));
+            param.setValue(asListNumber(0.02, 2.0));
+            param.setDefaultValue(asListNumber(0.02, 2.0));
             return param;
         }
     },
@@ -1182,8 +1183,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(9.999999999999999E-5);
             param.setMaxValue(100.0);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asList(0.02, 0.4, 0.7000000000000001));
-            param.setDefaultValue(asList(0.02, 0.7));
+            param.setValue(asListNumber(0.02, 0.4, 0.7000000000000001));
+            param.setDefaultValue(asListNumber(0.02, 0.7));
             return param;
         }
     },
@@ -1200,8 +1201,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asList(0.08, 2.0));
-            param.setDefaultValue(asList(0.08, 2.0));
+            param.setValue(asListNumber(0.08, 2.0));
+            param.setDefaultValue(asListNumber(0.08, 2.0));
             return param;
         }
     },
@@ -1336,7 +1337,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
-            param.setDefaultValue(asList(0.0));
+            param.setDefaultValue(asListNumber(0.0));
             return param;
         }
     },
@@ -1566,8 +1567,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Location);
-            param.setValue(asList(0.0, 0.0, 0.0));
-            param.setDefaultValue(asList(0.0, 0.0, 0.0));
+            param.setValue(asListNumber(0.0, 0.0, 0.0));
+            param.setDefaultValue(asListNumber(0.0, 0.0, 0.0));
             return param;
         }
     },
@@ -2038,7 +2039,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(134.700576);
+            param.setValue(134.676005);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2053,7 +2054,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.13");
+            param.setValue("Version7.14");
             param.setDefaultValue("");
             return param;
         }
@@ -2170,7 +2171,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(50080.128205128196);
+            param.setValue(50080.0);
             param.setDefaultValue(12500.0);
             return param;
         }
@@ -2203,7 +2204,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(195.62550080128202);
+            param.setValue(195.625);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2315,8 +2316,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asList(0.0));
-            param.setDefaultValue(asList(0.01));
+            param.setValue(asListNumber(0.0));
+            param.setDefaultValue(asListNumber(0.01));
             return param;
         }
     },
@@ -2402,8 +2403,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
-            param.setValue(asList(0.75, 1.35, 2.55, 4.25));
-            param.setDefaultValue(asList(0.8, 1.45, 2.55, 3.9));
+            param.setValue(asListNumber(0.75, 1.35, 2.55, 4.25));
+            param.setDefaultValue(asListNumber(0.8, 1.45, 2.55, 3.9));
             return param;
         }
     },
@@ -2420,8 +2421,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
-            param.setValue(asList(1.9, 2.7, 5.1, 8.5));
-            param.setDefaultValue(asList(1.1, 3.2, 5.0, 7.3));
+            param.setValue(asListNumber(1.9, 2.7, 5.1, 8.5));
+            param.setDefaultValue(asListNumber(1.1, 3.2, 5.0, 7.3));
             return param;
         }
     },
@@ -2474,7 +2475,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-2147483648);
             param.setMaxValue(2147483647);
             param.setNumberEnum(NumberEnum.Integer);
-            param.setValue(asList(0));
+            param.setValue(asListNumber(0));
             return param;
         }
     },
@@ -2775,4 +2776,8 @@ public enum SpinEchoParams implements GeneratorParamEnum {
     };
 
     abstract Param build();
+
+    private static List<Number> asListNumber(Number ... numbers) {
+        return asList(numbers);
+    }
 }

@@ -15,7 +15,7 @@
 //  V7.2 - 30-11
 //       KS_CENTER_MODE Frequency_offset_init
 //  V7 - 31-07
-//	delete min_flush_delay and replace all call with  min_instruction_delay
+//	delete min_flush_delay and replace all call with  minInstructionDelay
 //      Loop A loop B
 //      rename all the "USER_PARAM" rs2d.sequence.spinecho.SPIN_ECHO_devParams.USER_PARAM
 //      remove off_center_distance_2D and off_center_distance_3D in order to do it in the process
@@ -29,7 +29,7 @@
 // 		   Introduce Gradient Delay on  90deg 180deg and ADC event
 //           getUnreachParamExceptionManager().addParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.GRADIENT_RISE_TIME.name(), grad_rise_time, new_grad_rise_time,((NumberParam) getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.GRADIENT_RISE_TIME")).getMaxValue(), "Gradient ramp time too short ");
 //  V5.6
-//  double min_instruction_delay = 0.000005;
+//  double minInstructionDelay = 0.000005;
 
 package rs2d.sequence.spinecho;
 
@@ -65,7 +65,8 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.13";
+    private String sequenceVersion = "Version7.14";
+    private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -138,8 +139,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
     private int amp_channel_memory = 2048;
     private int loopIndice_memory = 2048;
 
-    private double default_instruction_delay = 0.000010;     // single instruction minimal duration
-    private double min_instruction_delay = 0.000005;     // single instruction minimal duration
+    private double defaultInstructionDelay = 0.000010;     // single instruction minimal duration
+    private double minInstructionDelay = 0.000005;     // single instruction minimal duration
 
     public SpinEcho() {
         super();
@@ -1001,7 +1002,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // ------------------------------------------
         // delays for sequence instructions
         // ------------------------------------------
-        setSequenceTableSingleValue(Time_min_instruction, min_instruction_delay);
+        setSequenceTableSingleValue(Time_min_instruction, minInstructionDelay);
         // ------------------------------------------
         // calculate delays adapted to current TE 1/2 :Check min TE
         // ------------------------------------------+
@@ -1010,16 +1011,16 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // calculate actual delays between pulses: time1 ,time2, (time3 + time3bis)
         double time1 = getTimeBetweenEvents(Events.TX90 + 1, Events.Delay1 - 1) + getTimeBetweenEvents(Events.Delay1 + 4, Events.TX180 - 1);
         time1 = time1 + txLength90 / 2.0 + (txLength180) / 2.0;
-        time1 += 3 * min_instruction_delay;
+        time1 += 3 * minInstructionDelay;
 
         double time2 = getTimeBetweenEvents(Events.TX180 + 1, Events.Delay2 - 1) + getTimeBetweenEvents(Events.Acq - 2, Events.Acq - 1);
         time2 = time2 + txLength180 / 2.0 + observation_time / 2.0; // time sans le PE gradient et la pause
-        double time2_min = time2 + (isMultiplanar ? 2 * min_instruction_delay : grad_phase_application_time + grad_rise_time );
+        double time2_min = time2 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time );
 
         double time3 = (getTimeBetweenEvents(Events.Acq, Events.Acq + 1) - observation_time) + getTimeBetweenEvents(Events.Delay3 + 2, Events.LoopEndEcho);
         time3 = time3 + observation_time / 2.0;
-//        time3 = time3 + (isMultiplanar ? (-getTimeBetweenEvents(Events.Acq + 2, Events.Acq + 4) + 3 * min_instruction_delay) : 0) + min_instruction_delay;
-        time3 = time3 + (isMultiplanar ? 2 * min_instruction_delay : grad_phase_application_time + grad_rise_time);
+//        time3 = time3 + (isMultiplanar ? (-getTimeBetweenEvents(Events.Acq + 2, Events.Acq + 4) + 3 * minInstructionDelay) : 0) + minInstructionDelay;
+        time3 = time3 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
 
         double time3_for_min_FIR_delay = min_FIR_4pts_delay + getTimeBetweenEvents(Events.LoopEndEcho, Events.LoopEndEcho) + observation_time / 2.0;
         double time3_min = Math.max(time3, time3_for_min_FIR_delay);
@@ -1029,12 +1030,12 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         time3bis = time3bis + txLength180 / 2.0;
 
         // FIR delay from one ETL to the next
-        double time4_for_min_FIR_delay = Math.max(min_FIR_delay, min_instruction_delay) + observation_time;
+        double time4_for_min_FIR_delay = Math.max(min_FIR_delay, minInstructionDelay) + observation_time;
 
         // get minimal TE value & search for incoherence
 
         double max_time = ceilToSubDecimal(Math.max(time1, Math.max(time2_min, (time3_min + time3bis))), 5);
-        double te_min = Math.max(2 * (max_time + min_instruction_delay), time4_for_min_FIR_delay);
+        double te_min = Math.max(2 * (max_time + minInstructionDelay), time4_for_min_FIR_delay);
         te_min = ceilToSubDecimal(te_min, 5);
 
         //double new_te = te;
@@ -1093,11 +1094,11 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // ------------------------------------------
         // set calculated the delay1
         double delay1 = echo_spacing / 2.0 - time1;
-        double grad_read_prep_application_time_2 = min_instruction_delay;
-        double grad_rise_time_read_2 = min_instruction_delay;
+        double grad_read_prep_application_time_2 = minInstructionDelay;
+        double grad_rise_time_read_2 = minInstructionDelay;
         boolean enable_read_prep_2 = false;
-        if (delay1 + (3 * min_instruction_delay) > grad_read_prep_application_time + 2 * grad_rise_time + min_instruction_delay) {
-            delay1 = delay1 + 3 * min_instruction_delay - (grad_read_prep_application_time + 2 * grad_rise_time);
+        if (delay1 + (3 * minInstructionDelay) > grad_read_prep_application_time + 2 * grad_rise_time + minInstructionDelay) {
+            delay1 = delay1 + 3 * minInstructionDelay - (grad_read_prep_application_time + 2 * grad_rise_time);
             grad_rise_time_read_2 = grad_rise_time;
             grad_read_prep_application_time_2 = grad_read_prep_application_time;
             enable_read_prep_2 = true;
@@ -1112,20 +1113,20 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         double delay2 = echo_spacing / 2.0 - time2_min;
         double delay3 = echo_spacing / 2.0 - (time3_min + time3bis);
 
-        double grad_phase_application_time_2 = isMultiplanar ? min_instruction_delay : grad_phase_application_time;
-        double grad_rise_time_phase_2 = isMultiplanar ? min_instruction_delay : grad_rise_time;
+        double grad_phase_application_time_2 = isMultiplanar ? minInstructionDelay : grad_phase_application_time;
+        double grad_rise_time_phase_2 = isMultiplanar ? minInstructionDelay : grad_rise_time;
         boolean enable_phase_2 = !isMultiplanar;
 
         // in 2D if the delay is loong pack the Phase close to the redaout
-        if ((delay2 + (2 * min_instruction_delay - default_instruction_delay) > grad_phase_application_time +  grad_rise_time) && (delay3 + (2 * min_instruction_delay - default_instruction_delay) > grad_phase_application_time + grad_rise_time)) {
-            delay2 = delay2 + 2 * min_instruction_delay - (grad_phase_application_time +  grad_rise_time);
-            delay3 = delay3 + 2 * min_instruction_delay - (grad_phase_application_time +  grad_rise_time);
+        if ((delay2 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time +  grad_rise_time) && (delay3 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time + grad_rise_time)) {
+            delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time +  grad_rise_time);
+            delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time +  grad_rise_time);
             grad_rise_time_phase_2 = grad_rise_time;
             grad_phase_application_time_2 = grad_phase_application_time;
             enable_phase_2 = true;
         }
         if (echoTrainLength == 1) {
-            delay3 = min_instruction_delay;
+            delay3 = minInstructionDelay;
         }
 
         setSequenceTableSingleValue(Time_grad_ramp_phase, grad_rise_time_phase_2);
@@ -1164,15 +1165,15 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         //  External triggering
         //--------------------------------------------------------------------------------------
         setSequenceParamValue(Synchro_trigger, isTrigger ? TimeElement.Trigger.External : TimeElement.Trigger.Timer);
-        double time_external_trigger_delay_max = min_instruction_delay;
+        double time_external_trigger_delay_max = minInstructionDelay;
 
         Table triggerdelay = setSequenceTableValues(Time_trigger_delay, Order.Four);
         if ((!isTrigger)) {
-            triggerdelay.add(min_instruction_delay);
+            triggerdelay.add(minInstructionDelay);
         } else {
             for (int i = 0; i < numberOfTrigger; i++) {
                 double time_external_trigger_delay = roundToDecimal(triggerTime.getValue().get(i).doubleValue(), 7);
-                time_external_trigger_delay = time_external_trigger_delay < default_instruction_delay ? default_instruction_delay : time_external_trigger_delay;
+                time_external_trigger_delay = time_external_trigger_delay < defaultInstructionDelay ? defaultInstructionDelay : time_external_trigger_delay;
                 triggerdelay.add(time_external_trigger_delay);
                 time_external_trigger_delay_max = Math.max(time_external_trigger_delay_max, time_external_trigger_delay);
             }
@@ -1193,16 +1194,16 @@ public class SpinEcho extends SequenceGeneratorAbstract {
                 setSequenceTableSingleValue(Time_grad_IR_crusher_top, time_grad_IR_tmp_top);
                 setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, grad_rise_time);
             } else {
-                setSequenceTableSingleValue(Time_grad_IR_crusher_top, default_instruction_delay);
-                setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, default_instruction_delay);
+                setSequenceTableSingleValue(Time_grad_IR_crusher_top, defaultInstructionDelay);
+                setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
             }
             setSequenceTableSingleValue(Time_tx_IR_length, txLength180);
             setSequenceTableSingleValue(Time_grad_IR_ramp, grad_rise_time);
         } else {
-            setSequenceTableSingleValue(Time_tx_IR_length, default_instruction_delay);
-            setSequenceTableSingleValue(Time_grad_IR_ramp, default_instruction_delay);
-            setSequenceTableSingleValue(Time_grad_IR_crusher_top, default_instruction_delay);
-            setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, default_instruction_delay);
+            setSequenceTableSingleValue(Time_tx_IR_length, defaultInstructionDelay);
+            setSequenceTableSingleValue(Time_grad_IR_ramp, defaultInstructionDelay);
+            setSequenceTableSingleValue(Time_grad_IR_crusher_top, defaultInstructionDelay);
+            setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
         }
 
         // ------------------------------------------
@@ -1227,8 +1228,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
                 // arrayListTI.add(IR_time);
                 double delay0 = IR_time - time0;
 
-                if ((delay0 < default_instruction_delay)) {
-                    double ti_min = ceilToSubDecimal((time0 + default_instruction_delay), 4);
+                if ((delay0 < defaultInstructionDelay)) {
+                    double ti_min = ceilToSubDecimal((time0 + defaultInstructionDelay), 4);
 //                    System.out.println("IR_time-" + IR_time + " -- >" + ti_min + " car " + delay0);
                     IR_time = ti_min;
                     increaseTI = true;
@@ -1248,8 +1249,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
             time_TI_delay.setOrder(Order.Four);
             time_TI_delay.setLocked(true);
         } else {
-            time_IR_delay_max = default_instruction_delay;
-            time_TI_delay.add(default_instruction_delay);
+            time_IR_delay_max = defaultInstructionDelay;
+            time_TI_delay.add(defaultInstructionDelay);
         }
 
         // ------------------------------------------
@@ -1262,10 +1263,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         double delay_echo_loop = getTimeBetweenEvents(Events.LoopStartEcho, Events.LoopEndEcho);
         double delay_spoiler = getTimeBetweenEvents(Events.LoopEndEcho + 1, Events.LoopMultiPlanarEnd - 2);// grad_phase_application_time + grad_rise_time * 2;
         double min_flush_delay = min_time_per_acq_point * acquisitionMatrixDimension1D * echoTrainLength * slices_acquired_in_single_scan * 2;   // minimal time to flush Chameleon buffer (this time is doubled to avoid hidden delays);
-        min_flush_delay = Math.max(min_flush_delay, default_instruction_delay);
+        min_flush_delay = Math.max(CameleonVersion105 ? min_flush_delay : 0, minInstructionDelay);
 
         double time_seq_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler) * slices_acquired_in_single_scan);
-        double tr_min = time_seq_to_end_spoiler + default_instruction_delay * (slices_acquired_in_single_scan * 2 + 1) + min_instruction_delay;// 2 +( 2 default_instruction_delay: Events.event 22 +(20&21
+        double tr_min = time_seq_to_end_spoiler + defaultInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 defaultInstructionDelay: Events.event 22 +(20&21
         tr_min = ceilToSubDecimal(tr_min, 4);
 
         switch ((String) getParam(IMAGE_CONTRAST).getValue()) {
@@ -1298,23 +1299,23 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // set calculated TR
         // ------------------------------------------
         // set  TR delay to compensate and trigger delays
-        double last_delay = min_instruction_delay;
+        double last_delay = minInstructionDelay;
         double tr_delay;
         Table time_tr_delay = setSequenceTableValues(Time_TR_delay, Order.Four);
         if (number_of_IR_acquisition != 1) {
             for (int i = 0; i < number_of_IR_acquisition; i++) {
                 double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler + (time_TI_delay.get(i).doubleValue() - time_IR_delay_max) * slices_acquired_in_single_scan;
-                tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + min_instruction_delay)) / slices_acquired_in_single_scan - default_instruction_delay;
+                tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
                 time_tr_delay.add(tr_delay);
             }
         } else if (numberOfTrigger != 1) {
             for (int i = 0; i < numberOfTrigger; i++) {
                 double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler - time_external_trigger_delay_max + triggerdelay.get(i).doubleValue();
-                tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + min_instruction_delay)) / slices_acquired_in_single_scan - default_instruction_delay;
+                tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
                 time_tr_delay.add(tr_delay);
             }
         } else {
-            tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + min_instruction_delay)) / slices_acquired_in_single_scan - default_instruction_delay;
+            tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
             time_tr_delay.add(tr_delay);
         }
         setSequenceTableSingleValue(Time_last_delay, last_delay);
@@ -1329,7 +1330,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         Table dyn_delay = setSequenceTableValues(Time_btw_dyn_frames, Order.Four);
         double frame_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
-        double time_between_frames_min = ceilToSubDecimal((frame_acquisition_time * number_of_IR_acquisition + min_instruction_delay * (number_of_IR_acquisition)), 1);
+        double time_between_frames_min = ceilToSubDecimal((frame_acquisition_time * number_of_IR_acquisition + minInstructionDelay * (number_of_IR_acquisition)), 1);
         double time_between_frames = time_between_frames_min;
         double interval_between_frames_delay = min_flush_delay;
 
@@ -1343,10 +1344,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
                 this.getUnreachParamExceptionManager().addParam(DYN_TIME_BTW_FRAMES.name(), time_between_frames, time_between_frames_min, ((NumberParam) getParam(DYN_TIME_BTW_FRAMES)).getMaxValue(), "Minimum frame acquisition time ");
                 time_between_frames = time_between_frames_min;
             }
-            interval_between_frames_delay = Math.max(time_between_frames - frame_acquisition_time * number_of_IR_acquisition - min_instruction_delay * (number_of_IR_acquisition - 1), min_instruction_delay);
+            interval_between_frames_delay = Math.max(time_between_frames - frame_acquisition_time * number_of_IR_acquisition - minInstructionDelay * (number_of_IR_acquisition - 1), minInstructionDelay);
             if (number_of_IR_acquisition != 1) {
                 for (int i = 0; i < number_of_IR_acquisition - 1; i++) {
-                    dyn_delay.add(min_instruction_delay);
+                    dyn_delay.add(minInstructionDelay);
                 }
                 dyn_delay.add(interval_between_frames_delay);
             } else {
@@ -1359,7 +1360,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // ------------------------------------------------------------------
         // Total Acquisition Time
         // ------------------------------------------------------------------
-        double total_acquisition_time = (frame_acquisition_time * number_of_IR_acquisition + min_instruction_delay * (number_of_IR_acquisition - 1) + interval_between_frames_delay) * numberOfDynamicAcquisition + tr * preScan;
+        double total_acquisition_time = (frame_acquisition_time * number_of_IR_acquisition + minInstructionDelay * (number_of_IR_acquisition - 1) + interval_between_frames_delay) * numberOfDynamicAcquisition + tr * preScan;
         setParamValue(SEQUENCE_TIME, total_acquisition_time);
 
         // -----------------------------------------------

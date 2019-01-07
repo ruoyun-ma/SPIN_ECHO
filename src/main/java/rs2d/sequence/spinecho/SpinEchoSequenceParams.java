@@ -8,6 +8,11 @@ public interface SpinEchoSequenceParams {
     //-- public params
 
     /**
+     * Group: Reception, Type: NumberParam - Integer
+     */
+    String FIR_coef2 = "FIR coef2";
+
+    /**
      * Group: Gradient, Type: BooleanParam
      */
     String Grad_enable_crush_IR = "Grad_enable_crush_IR";
