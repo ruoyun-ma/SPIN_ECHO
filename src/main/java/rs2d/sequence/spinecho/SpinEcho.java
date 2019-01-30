@@ -1019,6 +1019,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         double time2 = getTimeBetweenEvents(Events.TX180 + 1, Events.Delay2 - 1) + getTimeBetweenEvents(Events.Acq - 2, Events.Acq - 1);
         time2 = time2 + txLength180 / 2.0 + observation_time / 2.0; // time sans le PE gradient et la pause
         double time2_min = time2 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time );
+        System.out.println("getTimeBetweenEvents"+ getTimeBetweenEvents(Events.Acq - 2, Events.Acq - 1) );
 
         double time3 = (getTimeBetweenEvents(Events.Acq, Events.Acq + 1) - observation_time) + getTimeBetweenEvents(Events.Delay3 + 2, Events.LoopEndEcho);
         time3 = time3 + observation_time / 2.0;
@@ -1119,9 +1120,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         double grad_phase_application_time_2 = isMultiplanar ? minInstructionDelay : grad_phase_application_time;
         double grad_rise_time_phase_2 = isMultiplanar ? minInstructionDelay : grad_rise_time;
         boolean enable_phase_2 = !isMultiplanar;
-
+        System.out.println(  "time2_min"      +time2_min    );
         // in 2D if the delay is loong pack the Phase close to the redaout
         if ((delay2 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time +  grad_rise_time) && (delay3 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time + grad_rise_time)) {
+            System.out.println(  "Bug"          );
             delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time +  grad_rise_time);
             delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time +  grad_rise_time);
             grad_rise_time_phase_2 = grad_rise_time;
