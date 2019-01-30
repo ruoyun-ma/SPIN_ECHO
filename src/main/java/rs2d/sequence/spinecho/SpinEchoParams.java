@@ -676,6 +676,24 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
+    GRADIENT_CRUSHER_END_TOP_TIME {
+        Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("GRADIENT_CRUSHER_END_TOP_TIME");
+            param.setDisplayedName("GRADIENT_CRUSHER_END_TOP_TIME");
+            param.setDescription("");
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Delay);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setValue(5.0E-4);
+            param.setDefaultValue(3.0E-4);
+            return param;
+        }
+    },
+
     GRADIENT_CRUSHER_IR_TOP_TIME {
         Param build() {
             NumberParam param = new NumberParam();
@@ -849,6 +867,24 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMaxValue(1.0);
             param.setValue(4.0E-4);
             param.setDefaultValue(5.0E-4);
+            return param;
+        }
+    },
+
+    GRADIENT_READ_OFFSET {
+        Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("GRADIENT_READ_OFFSET");
+            param.setDisplayedName("GRADIENT_READ_OFFSET");
+            param.setDescription("");
+            param.setRoles(new RoleEnum[] {RoleEnum.User});
+            param.setGroup(EnumGroup.Gradient);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.GradAmp);
+            param.setMinValue(-100.0);
+            param.setMaxValue(100.0);
+            param.setValue(0.0);
+            param.setDefaultValue(0.0);
             return param;
         }
     },
@@ -2054,7 +2090,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setRoles(new RoleEnum[] {RoleEnum.User});
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.14");
+            param.setValue("Version7.15");
             param.setDefaultValue("");
             return param;
         }

@@ -313,6 +313,11 @@ public interface SpinEchoSequenceParams {
     /**
      * Group: Delay, Order: 4D+Loop - Time (s)
      */
+    String Time_grad_crusher_top2 = "Time_grad_crusher_top2";
+
+    /**
+     * Group: Delay, Order: 4D+Loop - Time (s)
+     */
     String Time_grad_IR_crusher_ramp = "Time_grad_IR_crusher_ramp";
 
     /**

@@ -255,7 +255,7 @@ public class RFPulse {
      */
     private double calculateTxAmp90(InstrumentTxChannel txCh) {
         if (txAtt == -1) {
-            txAtt = (int) attParam.getValue();
+            txAtt = ((NumberParam) attParam).getValue().intValue();
         }
         double tx_amp;
         Probe probe = Instrument.instance().getTransmitProbe();

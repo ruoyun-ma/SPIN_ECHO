@@ -65,7 +65,7 @@ import static rs2d.sequence.spinecho.SpinEchoSequenceParams.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends SequenceGeneratorAbstract {
-    private String sequenceVersion = "Version7.14";
+    private String sequenceVersion = "Version7.15";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -899,12 +899,15 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // calculate READ_PREP  & SLICE_REF
         // -------------------------------------------------------------------------------------------------
         double grad_read_prep_application_time = ((NumberParam) getParam(GRADIENT_READ_PREPHASING_APPLICATION_TIME)).getValue().doubleValue();
+        double grad_read_prep_offset = ((NumberParam) getParam(GRADIENT_READ_OFFSET)).getValue().doubleValue();
         setSequenceTableSingleValue(Time_grad_read_prep_top, grad_read_prep_application_time);
 
         // pre-calculate READ_prephasing max area
         Gradient gradReadPrep = Gradient.createGradient(getSequence(), Grad_amp_read_prep, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         if (isEnableRead)
             gradReadPrep.refocalizeGradient(gradReadout, -((NumberParam) getParam(PREPHASING_READ_GRADIENT_RATIO)).getValue().doubleValue());
+            if (!gradReadPrep.addSpoiler(grad_read_prep_offset))
+                setParamValue(GRADIENT_READ_OFFSET, grad_read_prep_offset -gradReadPrep.getSpoilerExcess());   // display observation time
 
         // pre-calculate SLICE_refocusing
         double grad_ratio_slice_refoc = 0.5;   // get slice refocussing ratio
@@ -1154,7 +1157,10 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // -------------------------------------------------------------------------------------------------
         // SPoiler Gradient
         // -------------------------------------------------------------------------------------------------
-        Gradient gradSliceSpoiler = Gradient.createGradient(getSequence(), Grad_amp_spoiler_slice, Time_grad_crusher_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
+        double time_grad_crusher_end_top = ((NumberParam) getParam(GRADIENT_CRUSHER_END_TOP_TIME)).getValue().doubleValue();
+        setSequenceTableSingleValue(Time_grad_crusher_top2, time_grad_crusher_end_top);
+
+        Gradient gradSliceSpoiler = Gradient.createGradient(getSequence(), Grad_amp_spoiler_slice, Time_grad_crusher_top2, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         boolean is_spoiler = ((BooleanParam) getParam(GRADIENT_ENABLE_SPOILER)).getValue();
         if (is_spoiler) {
             gradSliceSpoiler.addSpoiler(((NumberParam) getParam(GRADIENT_AMP_SPOILER)).getValue().doubleValue());
