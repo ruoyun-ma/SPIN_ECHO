@@ -196,12 +196,12 @@ public interface SpinEchoSequenceParams {
     String FreqOffset_rx_1D_3Dprep = "FreqOffset_rx_1D_3Dprep";
 
     /**
-     * Group: Transmit, Order: 3D+Loop - FreqOffset (Hz)
+     * Group: Transmit, Order: 3D - FreqOffset (Hz)
      */
     String FreqOffset_tx_prep_180 = "FreqOffset_tx_prep_180";
 
     /**
-     * Group: Transmit, Order: 3D+Loop - FreqOffset (Hz)
+     * Group: Transmit, Order: 3D - FreqOffset (Hz)
      */
     String FreqOffset_tx_prep_90 = "FreqOffset_tx_prep_90";
 
@@ -221,12 +221,12 @@ public interface SpinEchoSequenceParams {
     String Grad_amp_crusher_IR = "Grad_amp_crusher_IR";
 
     /**
-     * Group: Gradient, Order: 2D+LoopB - GradAmp (%)
+     * Group: Gradient, Order: 2D - GradAmp (%)
      */
     String Grad_amp_phase_2D_comp = "Grad_amp_phase_2D_comp";
 
     /**
-     * Group: Gradient, Order: 2D+LoopB - GradAmp (%)
+     * Group: Gradient, Order: 2D - GradAmp (%)
      */
     String Grad_amp_phase_2D_prep = "Grad_amp_phase_2D_prep";
 
@@ -291,7 +291,7 @@ public interface SpinEchoSequenceParams {
     String Rx_freq_offset = "Rx_freq_offset";
 
     /**
-     * Group: Reception, Order: 1D - Phase (°)
+     * Group: Reception, Order: 2D - Phase (°)
      */
     String Rx_phase = "Rx_phase";
 
@@ -436,12 +436,12 @@ public interface SpinEchoSequenceParams {
     String Tx_amp_90 = "Tx_amp_90";
 
     /**
-     * Group: Transmit, Order: 3D+Loop - FreqOffset (Hz)
+     * Group: Transmit, Order: 3D - FreqOffset (Hz)
      */
     String Tx_freq_offset_180 = "Tx_freq_offset_180";
 
     /**
-     * Group: Transmit, Order: 3D+Loop - FreqOffset (Hz)
+     * Group: Transmit, Order: 3D - FreqOffset (Hz)
      */
     String Tx_freq_offset_90 = "Tx_freq_offset_90";
 
@@ -456,7 +456,7 @@ public interface SpinEchoSequenceParams {
     String Tx_phase_180 = "Tx_phase_180";
 
     /**
-     * Group: Transmit, Order: 1D - Phase (°)
+     * Group: Transmit, Order: 2D - Phase (°)
      */
     String Tx_phase_90 = "Tx_phase_90";
 

@@ -586,7 +586,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         nb_scan_4d = numberOfTrigger * numberOfInversionRecovery * numberOfDynamicAcquisition;
         acquisitionMatrixDimension4D = nb_scan_4d * numberOfEcho;
-        setParamValue(USER_MATRIX_DIMENSION_4D, nb_scan_4d);
+        setParamValue(USER_MATRIX_DIMENSION_4D, acquisitionMatrixDimension4D);
 
 
         // -----------------------------------------------
@@ -881,7 +881,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         // -----------------------------------------------
         // calculate READ gradient amplitude
         // -----------------------------------------------
-        
+
         Gradient gradReadout = Gradient5Event.createGradient(getSequence(), Grad_amp_read_read, Time_grad_read_crusher, Time_rx, Time_grad_read_crusher, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         if (isEnableRead && !gradReadout.calculateReadoutGradient(spectralWidth, pixelDimension * acquisitionMatrixDimension1D)) {
             double spectral_width_max = gradReadout.getSpectralWidth();
@@ -906,8 +906,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         Gradient gradReadPrep = Gradient.createGradient(getSequence(), Grad_amp_read_prep, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         if (isEnableRead)
             gradReadPrep.refocalizeGradient(gradReadout, -((NumberParam) getParam(PREPHASING_READ_GRADIENT_RATIO)).getValue().doubleValue());
-            if (!gradReadPrep.addSpoiler(grad_read_prep_offset))
-                setParamValue(GRADIENT_READ_OFFSET, grad_read_prep_offset -gradReadPrep.getSpoilerExcess());   // display observation time
+        if (!gradReadPrep.addSpoiler(grad_read_prep_offset))
+            setParamValue(GRADIENT_READ_OFFSET, grad_read_prep_offset - gradReadPrep.getSpoilerExcess());   // display observation time
 
         // pre-calculate SLICE_refocusing
         double grad_ratio_slice_refoc = 0.5;   // get slice refocussing ratio
@@ -989,7 +989,7 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         double grad_area_crusher = (time_grad_crusher_top + grad_shape_rise_time) * grad_amp_crusher * gMax / 100.0;
         setParamValue(GRADIENT_AREA_CRUSHER, grad_area_crusher);
         setParamValue(GRADIENT_AREA_CRUSHER_PI, grad_area_crusher * (GradientMath.GAMMA) * sliceThickness);
-    
+
 
         // --------------------------------------------------------------------------------------------------------------------------------------------
         // TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING
@@ -1018,8 +1018,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         double time2 = getTimeBetweenEvents(Events.TX180 + 1, Events.Delay2 - 1) + getTimeBetweenEvents(Events.Acq - 2, Events.Acq - 1);
         time2 = time2 + txLength180 / 2.0 + observation_time / 2.0; // time sans le PE gradient et la pause
-        double time2_min = time2 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time );
-        System.out.println("getTimeBetweenEvents"+ getTimeBetweenEvents(Events.Acq - 2, Events.Acq - 1) );
+        double time2_min = time2 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
+        System.out.println("getTimeBetweenEvents" + getTimeBetweenEvents(Events.Acq - 2, Events.Acq - 1));
 
         double time3 = (getTimeBetweenEvents(Events.Acq, Events.Acq + 1) - observation_time) + getTimeBetweenEvents(Events.Delay3 + 2, Events.LoopEndEcho);
         time3 = time3 + observation_time / 2.0;
@@ -1044,15 +1044,23 @@ public class SpinEcho extends SequenceGeneratorAbstract {
 
         //double new_te = te;
         // calculate echo time depending on image contrast and transform plugin
-        if (te < te_min) {
-            if (te_min > TE_TR_lim[1]) {
-                getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "(1):TE too short for the User Mx1D and SW (2):as TE increases, T1-weighted or PD-weighted imaging is not guaranteed");
-                //setParamValue(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST, "Custom");
-            } else {
-                getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "TE too short for the User Mx1D and SW");
-                //te = te_min;
+        if (("Custom".equalsIgnoreCase((String) (getParam(IMAGE_CONTRAST).getValue()))) && echoTrainLength != 1 && is_FSE_vs_MultiEcho) {
+            if(echo_spacing < te_min){
+                getUnreachParamExceptionManager().addParam(ECHO_SPACING.name(), echo_spacing, te_min, ((NumberParam) getParam(ECHO_SPACING)).getMaxValue(), "Echo_Spacing too short for the User Mx1D and SW");
+                echo_spacing = te_min;
+                te = te_min;
             }
-            te = te_min;
+        } else {
+            if (te < te_min) {
+                if (te_min > TE_TR_lim[1]) {
+                    getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "(1):TE too short for the User Mx1D and SW (2):as TE increases, T1-weighted or PD-weighted imaging is not guaranteed");
+                    //setParamValue(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST, "Custom");
+                } else {
+                    getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "TE too short for the User Mx1D and SW");
+                    //te = te_min;
+                }
+                te = te_min;
+            }
         }
 
         if (is_FSE_vs_MultiEcho) {
@@ -1120,12 +1128,12 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         double grad_phase_application_time_2 = isMultiplanar ? minInstructionDelay : grad_phase_application_time;
         double grad_rise_time_phase_2 = isMultiplanar ? minInstructionDelay : grad_rise_time;
         boolean enable_phase_2 = !isMultiplanar;
-        System.out.println(  "time2_min"      +time2_min    );
+        System.out.println("time2_min" + time2_min);
         // in 2D if the delay is loong pack the Phase close to the redaout
-        if ((delay2 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time +  grad_rise_time) && (delay3 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time + grad_rise_time)) {
-            System.out.println(  "Bug"          );
-            delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time +  grad_rise_time);
-            delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time +  grad_rise_time);
+        if ((delay2 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time + grad_rise_time) && (delay3 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time + grad_rise_time)) {
+            System.out.println("Bug");
+            delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
+            delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
             grad_rise_time_phase_2 = grad_rise_time;
             grad_phase_application_time_2 = grad_phase_application_time;
             enable_phase_2 = true;
@@ -1765,8 +1773,8 @@ public class SpinEcho extends SequenceGeneratorAbstract {
         return "SPIN_ECHO";
     }
 
-    public float getVersion() {
-        return 0.0f;
+    public String getVersion() {
+        return "master";
     }
     //</editor-fold>
 }
