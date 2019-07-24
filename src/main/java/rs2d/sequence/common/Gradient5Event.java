@@ -1,5 +1,7 @@
 package rs2d.sequence.common;
 
+import rs2d.sequence.spinecho.S;
+import rs2d.sequence.spinecho.U;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.hardware.controller.HardwareHandler;
 import rs2d.spinlab.instrument.util.GradientMath;
@@ -23,7 +25,7 @@ public class Gradient5Event extends Gradient {
         flatTimeTable1 = flat_TimeTab1;
         flatTimeTable3 = flat_TimeTab3;
         init();
-        //        Table flatTimeTable1 = getSequence().getPublicTable(Time_grad_read_crusher);
+        //        Table flatTimeTable1 = getSequenceTable(Time_grad_read_crusher);
         System.out.println(flatTimeTable1.getFirst());
         System.out.println(flatTimeTable1.size());
         System.out.println(flatTimeTable1.getName());
@@ -31,21 +33,21 @@ public class Gradient5Event extends Gradient {
 
     }
 
-    public static Gradient5Event createGradient(Sequence sequence, String amplitudeTab, String flat_TimeTab1, String flat_TimeTab2, String flat_TimeTab3, String shapeUpTab, String shapeDownTab, String rampTimeTab) {
+    public static Gradient5Event createGradient(Sequence sequence, S amplitudeTab, S flat_TimeTab1, S flat_TimeTab2, S flat_TimeTab3, S shapeUpTab, S shapeDownTab, S rampTimeTab) {
         System.out.println(" ");
         System.out.println(" Gradient5Event createGradient 1  ");
         System.out.println(" flat_TimeTab1  " + flat_TimeTab1);
         System.out.println(flat_TimeTab1);
-        return new Gradient5Event(sequence.getPublicTable(amplitudeTab), sequence.getPublicTable(flat_TimeTab1), sequence.getPublicTable(flat_TimeTab2), sequence.getPublicTable(flat_TimeTab3), (Shape) sequence.getPublicTable(shapeUpTab),
-                (Shape) sequence.getPublicTable(shapeDownTab), sequence.getPublicTable(rampTimeTab), sequence.getPublicTable(rampTimeTab));
+        return new Gradient5Event(sequence.getTable(amplitudeTab.toString()), sequence.getTable(flat_TimeTab1.toString()),sequence.getTable(flat_TimeTab2.toString()),sequence.getTable(flat_TimeTab3.toString()), (Shape) sequence.getTable(shapeUpTab.toString()),
+                (Shape) sequence.getPublicTable(shapeDownTab.toString()),sequence.getTable(rampTimeTab.toString()),sequence.getTable(rampTimeTab.toString()));
     }
 
-    public static Gradient5Event createGradient(Sequence sequence, String amplitudeTab, String flat_TimeTab1, String flat_TimeTab2, String flat_TimeTab3, String shapeUpTab, String shapeDownTab, String rampTimeUpTab, String rampTimeDownTab) {
+    public static Gradient5Event createGradient(Sequence sequence, S amplitudeTab, S flat_TimeTab1, S flat_TimeTab2, S flat_TimeTab3, S shapeUpTab, S shapeDownTab, S rampTimeUpTab, S rampTimeDownTab) {
         System.out.println(" ");
         System.out.println(" Gradient5Event createGradient 2 ");
         System.out.println(" flat_TimeTab1  " + flat_TimeTab1);
-        return new Gradient5Event(sequence.getPublicTable(amplitudeTab), sequence.getPublicTable(flat_TimeTab1), sequence.getPublicTable(flat_TimeTab2), sequence.getPublicTable(flat_TimeTab3), (Shape) sequence.getPublicTable(shapeUpTab),
-                (Shape) sequence.getPublicTable(shapeDownTab), sequence.getPublicTable(rampTimeUpTab), sequence.getPublicTable(rampTimeDownTab));
+        return new Gradient5Event(sequence.getPublicTable(amplitudeTab.toString()),sequence.getTable(flat_TimeTab1.toString()),sequence.getTable(flat_TimeTab2.toString()),sequence.getTable(flat_TimeTab3.toString()), (Shape) sequence.getTable(shapeUpTab.toString()),
+                (Shape) sequence.getPublicTable(shapeDownTab.toString()),sequence.getTable(rampTimeUpTab.toString()),sequence.getTable(rampTimeDownTab.toString()));
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
