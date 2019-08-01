@@ -9,6 +9,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <seqdev.project-type>MANUAL</seqdev.project-type>
     <seqdev.update-dependencies>true</seqdev.update-dependencies>
     <seqdev.use-branch-as-version>true</seqdev.use-branch-as-version>
   </properties>
@@ -16,12 +17,12 @@
     <dependency>
       <groupId>rs2d</groupId>
       <artifactId>spinlab</artifactId>
-      <version>2019.01.2</version>
+      <version>2019.06.1</version>
     </dependency>
     <dependency>
       <groupId>rs2d</groupId>
       <artifactId>rs2d-commons</artifactId>
-      <version>2019.01.2</version>
+      <version>2019.06.1</version>
     </dependency>
   </dependencies>
   <build>
@@ -35,9 +36,9 @@
               <RS2D-Sequence-Name>SPIN_ECHO</RS2D-Sequence-Name>
               <RS2D-Sequence-File>SpinEcho.sxml</RS2D-Sequence-File>
               <RS2D-Sequence-Generator>rs2d.sequence.spinecho.SpinEcho</RS2D-Sequence-Generator>
-              <RS2D-Pulses-File>SpinEcho.pul</RS2D-Pulses-File>
-              <RS2D-Spinlab-Version>2019.01.2</RS2D-Spinlab-Version>
-              <RS2D-Compiler-Version>203-1.218</RS2D-Compiler-Version>
+              <RS2D-Spinlab-Version>2019.06.1</RS2D-Spinlab-Version>
+              <RS2D-Compiler-Version>204-2019.01</RS2D-Compiler-Version>
+              <RS2D-Java-Version>11.0.1+13 (OpenJDK Runtime Environment)</RS2D-Java-Version>
               <RS2D-Java-Version>11.0.1+13 (OpenJDK Runtime Environment)</RS2D-Java-Version>
             </manifestEntries>
           </archive>

@@ -10,8 +10,8 @@ import rs2d.spinlab.sequenceGenerator.GeneratorParamEnum;
 import java.util.List;
 import static java.util.Arrays.asList;
 
-public enum SpinEchoParams implements GeneratorParamEnum {
-    ACCU_DIM {
+public enum U implements GeneratorParamEnum {
+    ACCU_DIM("ACCU_DIM") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ACCU_DIM");
@@ -28,7 +28,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    ACQUISITION_MATRIX_DIMENSION_1D {
+    ACQUISITION_MATRIX_DIMENSION_1D("ACQUISITION_MATRIX_DIMENSION_1D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ACQUISITION_MATRIX_DIMENSION_1D");
@@ -45,7 +45,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    ACQUISITION_MATRIX_DIMENSION_2D {
+    ACQUISITION_MATRIX_DIMENSION_2D("ACQUISITION_MATRIX_DIMENSION_2D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ACQUISITION_MATRIX_DIMENSION_2D");
@@ -56,18 +56,35 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(0);
             param.setMaxValue(65536);
-            param.setValue(256);
+            param.setValue(128);
             param.setDefaultValue(128);
             return param;
         }
     },
 
-    ACQUISITION_MATRIX_DIMENSION_3D {
+    ACQUISITION_MATRIX_DIMENSION_3D("ACQUISITION_MATRIX_DIMENSION_3D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ACQUISITION_MATRIX_DIMENSION_3D");
             param.setDisplayedName("Acquisition 3D");
             param.setDescription("The acquisition size of the third dimension");
+            param.setGroup(EnumGroup.Scan);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Scan);
+            param.setMinValue(0);
+            param.setMaxValue(65536);
+            param.setValue(12);
+            param.setDefaultValue(1);
+            return param;
+        }
+    },
+
+    ACQUISITION_MATRIX_DIMENSION_4D("ACQUISITION_MATRIX_DIMENSION_4D") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("ACQUISITION_MATRIX_DIMENSION_4D");
+            param.setDisplayedName("Acquisition 4D");
+            param.setDescription("The acquisition size of the fourth dimension");
             param.setGroup(EnumGroup.Scan);
             param.setCategory(Category.Acquisition);
             param.setNumberEnum(NumberEnum.Scan);
@@ -79,24 +96,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    ACQUISITION_MATRIX_DIMENSION_4D {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("ACQUISITION_MATRIX_DIMENSION_4D");
-            param.setDisplayedName("Acquisition 4D");
-            param.setDescription("The acquisition size of the fourth dimension");
-            param.setGroup(EnumGroup.Scan);
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.Scan);
-            param.setMinValue(0);
-            param.setMaxValue(65536);
-            param.setValue(6);
-            param.setDefaultValue(1);
-            return param;
-        }
-    },
-
-    ACQUISITION_MODE {
+    ACQUISITION_MODE("ACQUISITION_MODE") {
         public Param build() {
             ListTextParam param = new ListTextParam();
             param.setName("ACQUISITION_MODE");
@@ -110,7 +110,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    ACQUISITION_TIME_OFFSET {
+    ACQUISITION_TIME_OFFSET("ACQUISITION_TIME_OFFSET") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("ACQUISITION_TIME_OFFSET");
@@ -121,13 +121,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asListNumber(0.0, 0.01, 0.02, 0.03, 0.04, 0.05));
+            param.setValue(asListNumber(0.0));
             param.setDefaultValue(asListNumber(0.0));
             return param;
         }
     },
 
-    ACQUISITION_TIME_PER_SCAN {
+    ACQUISITION_TIME_PER_SCAN("ACQUISITION_TIME_PER_SCAN") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ACQUISITION_TIME_PER_SCAN");
@@ -138,13 +138,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.0063570896448969455);
+            param.setValue(0.005111821086261981);
             param.setDefaultValue(1.0);
             return param;
         }
     },
 
-    BASE_FREQ_1 {
+    BASE_FREQ_1("BASE_FREQ_1") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("BASE_FREQ_1");
@@ -155,13 +155,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(1.27279829E8);
+            param.setValue(1.2818100000000001E8);
             param.setDefaultValue(1.27552944E8);
             return param;
         }
     },
 
-    BASE_FREQ_2 {
+    BASE_FREQ_2("BASE_FREQ_2") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("BASE_FREQ_2");
@@ -178,7 +178,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    BASE_FREQ_3 {
+    BASE_FREQ_3("BASE_FREQ_3") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("BASE_FREQ_3");
@@ -195,7 +195,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    BASE_FREQ_4 {
+    BASE_FREQ_4("BASE_FREQ_4") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("BASE_FREQ_4");
@@ -212,7 +212,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    DATA_REPRESENTATION {
+    DATA_REPRESENTATION("DATA_REPRESENTATION") {
         public Param build() {
             ListTextParam param = new ListTextParam();
             param.setName("DATA_REPRESENTATION");
@@ -226,7 +226,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    DIGITAL_FILTER_REMOVED {
+    DIGITAL_FILTER_REMOVED("DIGITAL_FILTER_REMOVED") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("DIGITAL_FILTER_REMOVED");
@@ -241,7 +241,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    DIGITAL_FILTER_SHIFT {
+    DIGITAL_FILTER_SHIFT("DIGITAL_FILTER_SHIFT") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("DIGITAL_FILTER_SHIFT");
@@ -259,7 +259,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    DUMMY_SCAN {
+    DUMMY_SCAN("DUMMY_SCAN") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("DUMMY_SCAN");
@@ -276,7 +276,35 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    DYN_NUMBER_OF_ACQUISITION {
+    DYNAMIC_MIN_TIME("DYNAMIC_MIN_TIME") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("DYNAMIC_MIN_TIME");
+            param.setDisplayedName("DYNAMIC_MIN_TIME");
+            param.setDescription("Execute the dynamic scan without delay between repetitions");
+            param.setGroup(EnumGroup.Delay);
+            param.setCategory(Category.Acquisition);
+            param.setValue(true);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
+    DYNAMIC_SEQUENCE("DYNAMIC_SEQUENCE") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("DYNAMIC_SEQUENCE");
+            param.setDisplayedName("DYNAMIC_SEQUENCE");
+            param.setDescription("Sequence used for dynamic acquisitions");
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setValue(false);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
+    DYN_NUMBER_OF_ACQUISITION("DYN_NUMBER_OF_ACQUISITION") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("DYN_NUMBER_OF_ACQUISITION");
@@ -293,7 +321,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    DYN_TIME_BTW_FRAMES {
+    DYN_TIME_BTW_FRAMES("DYN_TIME_BTW_FRAMES") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("DYN_TIME_BTW_FRAMES");
@@ -310,35 +338,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    DYNAMIC_MIN_TIME {
-        public Param build() {
-            BooleanParam param = new BooleanParam();
-            param.setName("DYNAMIC_MIN_TIME");
-            param.setDisplayedName("DYNAMIC_MIN_TIME");
-            param.setDescription("Execute the dynamic scan without delay between repetitions");
-            param.setGroup(EnumGroup.Delay);
-            param.setCategory(Category.Acquisition);
-            param.setValue(true);
-            param.setDefaultValue(false);
-            return param;
-        }
-    },
-
-    DYNAMIC_SEQUENCE {
-        public Param build() {
-            BooleanParam param = new BooleanParam();
-            param.setName("DYNAMIC_SEQUENCE");
-            param.setDisplayedName("DYNAMIC_SEQUENCE");
-            param.setDescription("Sequence used for dynamic acquisitions");
-            param.setGroup(EnumGroup.Miscellaneous);
-            param.setCategory(Category.Acquisition);
-            param.setValue(false);
-            param.setDefaultValue(false);
-            return param;
-        }
-    },
-
-    ECHO_EFFECTIVE {
+    ECHO_EFFECTIVE("ECHO_EFFECTIVE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ECHO_EFFECTIVE");
@@ -349,13 +349,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Integer);
             param.setMinValue(1);
             param.setMaxValue(2147483647);
-            param.setValue(2);
+            param.setValue(1);
             param.setDefaultValue(1);
             return param;
         }
     },
 
-    ECHO_SPACING {
+    ECHO_SPACING("ECHO_SPACING") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ECHO_SPACING");
@@ -366,13 +366,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(0.01);
+            param.setValue(0.009000000000000001);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    ECHO_TIME {
+    ECHO_TIME("ECHO_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ECHO_TIME");
@@ -383,13 +383,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.01);
+            param.setValue(0.009000000000000001);
             param.setDefaultValue(0.005);
             return param;
         }
     },
 
-    ECHO_TIME_EFFECTIVE {
+    ECHO_TIME_EFFECTIVE("ECHO_TIME_EFFECTIVE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ECHO_TIME_EFFECTIVE");
@@ -400,13 +400,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.001);
             param.setMaxValue(10.0);
-            param.setValue(0.01);
+            param.setValue(0.009000000000000001);
             param.setDefaultValue(0.01);
             return param;
         }
     },
 
-    ECHO_TRAIN_LENGTH {
+    ECHO_TRAIN_LENGTH("ECHO_TRAIN_LENGTH") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("ECHO_TRAIN_LENGTH");
@@ -417,13 +417,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(0);
             param.setMaxValue(65536);
-            param.setValue(6);
+            param.setValue(4);
             param.setDefaultValue(1);
             return param;
         }
     },
 
-    FIELD_OF_VIEW {
+    FIELD_OF_VIEW("FIELD_OF_VIEW") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("FIELD_OF_VIEW");
@@ -434,13 +434,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.001);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(0.05);
+            param.setValue(0.08);
             param.setDefaultValue(0.6);
             return param;
         }
     },
 
-    FIELD_OF_VIEW_3D {
+    FIELD_OF_VIEW_3D("FIELD_OF_VIEW_3D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("FIELD_OF_VIEW_3D");
@@ -451,13 +451,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.0);
             param.setMaxValue(1.0);
-            param.setValue(0.001);
+            param.setValue(0.0142);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    FIELD_OF_VIEW_PHASE {
+    FIELD_OF_VIEW_PHASE("FIELD_OF_VIEW_PHASE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("FIELD_OF_VIEW_PHASE");
@@ -468,13 +468,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.01);
             param.setMaxValue(10.0);
-            param.setValue(0.05);
+            param.setValue(0.04);
             param.setDefaultValue(0.1);
             return param;
         }
     },
 
-    FLIP_ANGLE {
+    FLIP_ANGLE("FLIP_ANGLE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("FLIP_ANGLE");
@@ -491,7 +491,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    FOV_DOUBLED {
+    FOV_DOUBLED("FOV_DOUBLED") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("FOV_DOUBLED");
@@ -505,7 +505,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    FOV_EFF {
+    FOV_EFF("FOV_EFF") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("FOV_EFF");
@@ -516,13 +516,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.0);
             param.setMaxValue(1.7976931348623156E305);
-            param.setValue(0.05);
+            param.setValue(0.08);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    FOV_RATIO_PHASE {
+    FOV_RATIO_PHASE("FOV_RATIO_PHASE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("FOV_RATIO_PHASE");
@@ -533,13 +533,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.PERCENT);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(100.0);
+            param.setValue(50.0);
             param.setDefaultValue(100.0);
             return param;
         }
     },
 
-    FOV_SQUARE {
+    FOV_SQUARE("FOV_SQUARE") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("FOV_SQUARE");
@@ -553,7 +553,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_AMP_CRUSHER {
+    GRADIENT_AMP_CRUSHER("GRADIENT_AMP_CRUSHER") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_AMP_CRUSHER");
@@ -564,13 +564,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.PERCENT);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(15.0);
+            param.setValue(30.0);
             param.setDefaultValue(8.0);
             return param;
         }
     },
 
-    GRADIENT_AMP_CRUSHER_IR {
+    GRADIENT_AMP_CRUSHER_IR("GRADIENT_AMP_CRUSHER_IR") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_AMP_CRUSHER_IR");
@@ -587,7 +587,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_AMP_SPOILER {
+    GRADIENT_AMP_SPOILER("GRADIENT_AMP_SPOILER") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_AMP_SPOILER");
@@ -598,13 +598,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.PERCENT);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(15.0);
+            param.setValue(20.0);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    GRADIENT_AREA_CRUSHER {
+    GRADIENT_AREA_CRUSHER("GRADIENT_AREA_CRUSHER") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_AREA_CRUSHER");
@@ -615,13 +615,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Double);
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(2.783539358710329E-5);
+            param.setValue(5.567078717420658E-5);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    GRADIENT_AREA_CRUSHER_PI {
+    GRADIENT_AREA_CRUSHER_PI("GRADIENT_AREA_CRUSHER_PI") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_AREA_CRUSHER_PI");
@@ -632,13 +632,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Double);
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(1.184952705002987);
+            param.setValue(2.369905410005974);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    GRADIENT_CRUSHER_END_TOP_TIME {
+    GRADIENT_CRUSHER_END_TOP_TIME("GRADIENT_CRUSHER_END_TOP_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_CRUSHER_END_TOP_TIME");
@@ -655,7 +655,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_CRUSHER_IR_TOP_TIME {
+    GRADIENT_CRUSHER_IR_TOP_TIME("GRADIENT_CRUSHER_IR_TOP_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_CRUSHER_IR_TOP_TIME");
@@ -672,7 +672,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_CRUSHER_READ_TOP_TIME {
+    GRADIENT_CRUSHER_READ_TOP_TIME("GRADIENT_CRUSHER_READ_TOP_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_CRUSHER_READ_TOP_TIME");
@@ -689,7 +689,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_CRUSHER_TOP_TIME {
+    GRADIENT_CRUSHER_TOP_TIME("GRADIENT_CRUSHER_TOP_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_CRUSHER_TOP_TIME");
@@ -706,7 +706,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_ENABLE_CRUSHER_IR {
+    GRADIENT_ENABLE_CRUSHER_IR("GRADIENT_ENABLE_CRUSHER_IR") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("GRADIENT_ENABLE_CRUSHER_IR");
@@ -720,7 +720,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_ENABLE_PHASE {
+    GRADIENT_ENABLE_PHASE("GRADIENT_ENABLE_PHASE") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("GRADIENT_ENABLE_PHASE");
@@ -734,7 +734,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_ENABLE_PHASE_3D {
+    GRADIENT_ENABLE_PHASE_3D("GRADIENT_ENABLE_PHASE_3D") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("GRADIENT_ENABLE_PHASE_3D");
@@ -742,13 +742,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.Gradient);
             param.setCategory(Category.Acquisition);
-            param.setValue(true);
+            param.setValue(false);
             param.setDefaultValue(true);
             return param;
         }
     },
 
-    GRADIENT_ENABLE_READ {
+    GRADIENT_ENABLE_READ("GRADIENT_ENABLE_READ") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("GRADIENT_ENABLE_READ");
@@ -762,7 +762,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_ENABLE_SLICE {
+    GRADIENT_ENABLE_SLICE("GRADIENT_ENABLE_SLICE") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("GRADIENT_ENABLE_SLICE");
@@ -776,7 +776,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_ENABLE_SLICE_CRUSH {
+    GRADIENT_ENABLE_SLICE_CRUSH("GRADIENT_ENABLE_SLICE_CRUSH") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("GRADIENT_ENABLE_SLICE_CRUSH");
@@ -790,7 +790,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_ENABLE_SPOILER {
+    GRADIENT_ENABLE_SPOILER("GRADIENT_ENABLE_SPOILER") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("GRADIENT_ENABLE_SPOILER");
@@ -804,7 +804,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_PHASE_APPLICATION_TIME {
+    GRADIENT_PHASE_APPLICATION_TIME("GRADIENT_PHASE_APPLICATION_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_PHASE_APPLICATION_TIME");
@@ -821,7 +821,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_READ_OFFSET {
+    GRADIENT_READ_OFFSET("GRADIENT_READ_OFFSET") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_READ_OFFSET");
@@ -838,7 +838,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    GRADIENT_READ_PREPHASING_APPLICATION_TIME {
+    GRADIENT_READ_PREPHASING_APPLICATION_TIME("GRADIENT_READ_PREPHASING_APPLICATION_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_READ_PREPHASING_APPLICATION_TIME");
@@ -849,13 +849,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0);
-            param.setValue(3.0E-4);
+            param.setValue(3.9999999999999996E-4);
             param.setDefaultValue(5.0E-4);
             return param;
         }
     },
 
-    GRADIENT_RISE_TIME {
+    GRADIENT_RISE_TIME("GRADIENT_RISE_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("GRADIENT_RISE_TIME");
@@ -872,7 +872,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    HARDWARE_A0 {
+    HARDWARE_A0("HARDWARE_A0") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("HARDWARE_A0");
@@ -883,12 +883,12 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-2.147483648E9);
             param.setMaxValue(2.147483647E9);
             param.setNumberEnum(NumberEnum.PERCENT);
-            param.setValue(asListNumber(0.0, 0.0, 0.0));
+            param.setValue(asListNumber(27.69, 28.58, 22.43));
             return param;
         }
     },
 
-    HARDWARE_DC {
+    HARDWARE_DC("HARDWARE_DC") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("HARDWARE_DC");
@@ -899,12 +899,12 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-2.147483648E9);
             param.setMaxValue(2.147483647E9);
             param.setNumberEnum(NumberEnum.PERCENT);
-            param.setValue(asListNumber(0.0, 0.0, 0.0, 0.0));
+            param.setValue(asListNumber(0.2869, 0.003052, -0.647, 0.0));
             return param;
         }
     },
 
-    HARDWARE_PREEMPHASIS_A {
+    HARDWARE_PREEMPHASIS_A("HARDWARE_PREEMPHASIS_A") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("HARDWARE_PREEMPHASIS_A");
@@ -921,7 +921,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    HARDWARE_PREEMPHASIS_T {
+    HARDWARE_PREEMPHASIS_T("HARDWARE_PREEMPHASIS_T") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("HARDWARE_PREEMPHASIS_T");
@@ -933,12 +933,12 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asListNumber(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+            param.setValue(asListNumber(0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
             return param;
         }
     },
 
-    HARDWARE_SHIM {
+    HARDWARE_SHIM("HARDWARE_SHIM") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("HARDWARE_SHIM");
@@ -949,12 +949,12 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-2.147483648E9);
             param.setMaxValue(2.147483647E9);
             param.setNumberEnum(NumberEnum.PERCENT);
-            param.setValue(asListNumber(0.0));
+            param.setValue(asListNumber(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
             return param;
         }
     },
 
-    HARDWARE_SHIM_LABEL {
+    HARDWARE_SHIM_LABEL("HARDWARE_SHIM_LABEL") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("HARDWARE_SHIM_LABEL");
@@ -962,13 +962,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("");
             param.setLocked(true);
             param.setCategory(Category.Acquisition);
-            param.setValue("NotConnected");
+            param.setValue("YZ XY XZ X2-Y2 Z0 Z2 X Y Z");
             param.setDefaultValue("");
             return param;
         }
     },
 
-    IMAGE_CONTRAST {
+    IMAGE_CONTRAST("IMAGE_CONTRAST") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("IMAGE_CONTRAST");
@@ -983,7 +983,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    IMAGE_ORIENTATION_SUBJECT {
+    IMAGE_ORIENTATION_SUBJECT("IMAGE_ORIENTATION_SUBJECT") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("IMAGE_ORIENTATION_SUBJECT");
@@ -994,13 +994,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
-            param.setValue(asListNumber(1.0, 0.0, 0.0, 0.0, -1.0, 0.0));
+            param.setValue(asListNumber(0.0, 0.0, -1.0, 0.0, -1.0, 0.0));
             param.setDefaultValue(asListNumber(1.0, 0.0, 0.0, 0.0, 1.0, 0.0));
             return param;
         }
     },
 
-    IMAGE_POSITION_SUBJECT {
+    IMAGE_POSITION_SUBJECT("IMAGE_POSITION_SUBJECT") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("IMAGE_POSITION_SUBJECT");
@@ -1017,7 +1017,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    INTERMEDIATE_FREQUENCY {
+    INTERMEDIATE_FREQUENCY("INTERMEDIATE_FREQUENCY") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("INTERMEDIATE_FREQUENCY");
@@ -1028,13 +1028,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(2.151E7);
-            param.setDefaultValue(2.151E7);
+            param.setValue(2.051E7);
+            param.setDefaultValue(2.051E7);
             return param;
         }
     },
 
-    INVERSION_RECOVERY {
+    INVERSION_RECOVERY("INVERSION_RECOVERY") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("INVERSION_RECOVERY");
@@ -1048,7 +1048,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    INVERSION_TIME {
+    INVERSION_TIME("INVERSION_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("INVERSION_TIME");
@@ -1059,13 +1059,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.1);
+            param.setValue(0.0);
             param.setDefaultValue(0.005);
             return param;
         }
     },
 
-    INVERSION_TIME_MULTI {
+    INVERSION_TIME_MULTI("INVERSION_TIME_MULTI") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("INVERSION_TIME_MULTI");
@@ -1076,25 +1076,12 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asListNumber(0.3));
+            param.setValue(asListNumber(0.0));
             return param;
         }
     },
 
-    KS_CENTER_MODE {
-        public Param build() {
-            BooleanParam param = new BooleanParam();
-            param.setName("KS_CENTER_MODE");
-            param.setDisplayedName("KS_CENTER_MODE");
-            param.setDescription("Turn off the PE gradient and acquieres two single scan only");
-            param.setCategory(Category.Acquisition);
-            param.setValue(false);
-            param.setDefaultValue(false);
-            return param;
-        }
-    },
-
-    KS_CENTERED {
+    KS_CENTERED("KS_CENTERED") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("KS_CENTERED");
@@ -1108,7 +1095,20 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    LAST_PUT {
+    KS_CENTER_MODE("KS_CENTER_MODE") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("KS_CENTER_MODE");
+            param.setDisplayedName("KS_CENTER_MODE");
+            param.setDescription("Turn off the PE gradient and acquieres two single scan only");
+            param.setCategory(Category.Acquisition);
+            param.setValue(false);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
+    LAST_PUT("LAST_PUT") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("LAST_PUT");
@@ -1125,7 +1125,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    LIM_PD_WEIGHTED {
+    LIM_PD_WEIGHTED("LIM_PD_WEIGHTED") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("LIM_PD_WEIGHTED");
@@ -1142,7 +1142,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    LIM_T1_WEIGHTED {
+    LIM_T1_WEIGHTED("LIM_T1_WEIGHTED") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("LIM_T1_WEIGHTED");
@@ -1159,7 +1159,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    LIM_T2_WEIGHTED {
+    LIM_T2_WEIGHTED("LIM_T2_WEIGHTED") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("LIM_T2_WEIGHTED");
@@ -1176,7 +1176,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    MAGNETIC_FIELD_STRENGTH {
+    MAGNETIC_FIELD_STRENGTH("MAGNETIC_FIELD_STRENGTH") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("MAGNETIC_FIELD_STRENGTH");
@@ -1194,7 +1194,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    MANUFACTURER {
+    MANUFACTURER("MANUFACTURER") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("MANUFACTURER");
@@ -1209,7 +1209,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    MIN_RISE_TIME_FACTOR {
+    MIN_RISE_TIME_FACTOR("MIN_RISE_TIME_FACTOR") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("MIN_RISE_TIME_FACTOR");
@@ -1226,7 +1226,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    MODALITY {
+    MODALITY("MODALITY") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("MODALITY");
@@ -1243,7 +1243,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    MODEL_NAME {
+    MODEL_NAME("MODEL_NAME") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("MODEL_NAME");
@@ -1258,7 +1258,38 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    MULTI_PLANAR_EXCITATION {
+    MULTISERIES_PARAMETER_NAME("MULTISERIES_PARAMETER_NAME") {
+        public Param build() {
+            TextParam param = new TextParam();
+            param.setName("MULTISERIES_PARAMETER_NAME");
+            param.setDisplayedName("MULTISERIES_PARAMETER_NAME");
+            param.setDescription("Name of MultiSeries Parameter");
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setValue("");
+            param.setDefaultValue("");
+            param.setSuggestedValues(asList("TE", "TI", "B-VALUE", "TRIGGER DELAY"));
+            return param;
+        }
+    },
+
+    MULTISERIES_PARAMETER_VALUE("MULTISERIES_PARAMETER_VALUE") {
+        public Param build() {
+            ListNumberParam param = new ListNumberParam();
+            param.setName("MULTISERIES_PARAMETER_VALUE");
+            param.setDisplayedName("MULTISERIES_PARAMETER_VALUE");
+            param.setDescription("Values of MultiSeries Parameter");
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setMinValue(-1.7976931348623157E308);
+            param.setMaxValue(1.7976931348623157E308);
+            param.setNumberEnum(NumberEnum.Double);
+            param.setDefaultValue(asListNumber(0.0));
+            return param;
+        }
+    },
+
+    MULTI_PLANAR_EXCITATION("MULTI_PLANAR_EXCITATION") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("MULTI_PLANAR_EXCITATION");
@@ -1272,39 +1303,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    MULTISERIES_PARAMETER_NAME {
-        public Param build() {
-            TextParam param = new TextParam();
-            param.setName("MULTISERIES_PARAMETER_NAME");
-            param.setDisplayedName("MULTISERIES_PARAMETER_NAME");
-            param.setDescription("Name of MultiSeries Parameter");
-            param.setGroup(EnumGroup.Miscellaneous);
-            param.setCategory(Category.Acquisition);
-            param.setValue("TE");
-            param.setDefaultValue("");
-            param.setSuggestedValues(asList("TE", "TI", "B-VALUE", "TRIGGER DELAY"));
-            return param;
-        }
-    },
-
-    MULTISERIES_PARAMETER_VALUE {
-        public Param build() {
-            ListNumberParam param = new ListNumberParam();
-            param.setName("MULTISERIES_PARAMETER_VALUE");
-            param.setDisplayedName("MULTISERIES_PARAMETER_VALUE");
-            param.setDescription("Values of MultiSeries Parameter");
-            param.setGroup(EnumGroup.Miscellaneous);
-            param.setCategory(Category.Acquisition);
-            param.setMinValue(-1.7976931348623157E308);
-            param.setMaxValue(1.7976931348623157E308);
-            param.setNumberEnum(NumberEnum.Double);
-            param.setValue(asListNumber(10.0, 20.0, 30.0, 40.0, 50.0, 60.0));
-            param.setDefaultValue(asListNumber(0.0));
-            return param;
-        }
-    },
-
-    NUCLEUS_1 {
+    NUCLEUS_1("NUCLEUS_1") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("NUCLEUS_1");
@@ -1320,7 +1319,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    NUCLEUS_2 {
+    NUCLEUS_2("NUCLEUS_2") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("NUCLEUS_2");
@@ -1336,7 +1335,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    NUCLEUS_3 {
+    NUCLEUS_3("NUCLEUS_3") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("NUCLEUS_3");
@@ -1352,7 +1351,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    NUCLEUS_4 {
+    NUCLEUS_4("NUCLEUS_4") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("NUCLEUS_4");
@@ -1368,7 +1367,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    NUMBER_OF_AVERAGES {
+    NUMBER_OF_AVERAGES("NUMBER_OF_AVERAGES") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("NUMBER_OF_AVERAGES");
@@ -1379,13 +1378,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(0);
             param.setMaxValue(65536);
-            param.setValue(1);
+            param.setValue(8);
             param.setDefaultValue(1);
             return param;
         }
     },
 
-    NUMBER_OF_INTERLEAVED_SLICE {
+    NUMBER_OF_INTERLEAVED_SLICE("NUMBER_OF_INTERLEAVED_SLICE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("NUMBER_OF_INTERLEAVED_SLICE");
@@ -1396,13 +1395,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(0);
             param.setMaxValue(1000);
-            param.setValue(1);
+            param.setValue(12);
             param.setDefaultValue(0);
             return param;
         }
     },
 
-    NUMBER_OF_SHOOT_3D {
+    NUMBER_OF_SHOOT_3D("NUMBER_OF_SHOOT_3D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("NUMBER_OF_SHOOT_3D");
@@ -1419,7 +1418,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OBSERVED_FREQUENCY {
+    OBSERVED_FREQUENCY("OBSERVED_FREQUENCY") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OBSERVED_FREQUENCY");
@@ -1430,13 +1429,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(1.27279829E8);
+            param.setValue(1.2818100000000001E8);
             param.setDefaultValue(6.3E7);
             return param;
         }
     },
 
-    OBSERVED_NUCLEUS {
+    OBSERVED_NUCLEUS("OBSERVED_NUCLEUS") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("OBSERVED_NUCLEUS");
@@ -1452,7 +1451,75 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OFF_CENTER_FIELD_OF_VIEW_1D {
+    OFFSET_FREQ_1("OFFSET_FREQ_1") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("OFFSET_FREQ_1");
+            param.setDisplayedName("Offset 1");
+            param.setDescription("The offset frequency of the first sequence channel");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.FrequencyOffset);
+            param.setMinValue(-1.5E9);
+            param.setMaxValue(1.5E9);
+            param.setValue(0.0);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    OFFSET_FREQ_2("OFFSET_FREQ_2") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("OFFSET_FREQ_2");
+            param.setDisplayedName("Offset 2");
+            param.setDescription("The offset frequency of the second sequence channel");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.FrequencyOffset);
+            param.setMinValue(-1.5E9);
+            param.setMaxValue(1.5E9);
+            param.setValue(0.0);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    OFFSET_FREQ_3("OFFSET_FREQ_3") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("OFFSET_FREQ_3");
+            param.setDisplayedName("Offset 3");
+            param.setDescription("The offset frequency of the third sequence channel");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.FrequencyOffset);
+            param.setMinValue(-1.5E9);
+            param.setMaxValue(1.5E9);
+            param.setValue(0.0);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    OFFSET_FREQ_4("OFFSET_FREQ_4") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("OFFSET_FREQ_4");
+            param.setDisplayedName("Offset 4");
+            param.setDescription("The offset frequency of the fourth sequence channel");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.FrequencyOffset);
+            param.setMinValue(-1.5E9);
+            param.setMaxValue(1.5E9);
+            param.setValue(0.0);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    OFF_CENTER_FIELD_OF_VIEW_1D("OFF_CENTER_FIELD_OF_VIEW_1D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_1D");
@@ -1469,7 +1536,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OFF_CENTER_FIELD_OF_VIEW_2D {
+    OFF_CENTER_FIELD_OF_VIEW_2D("OFF_CENTER_FIELD_OF_VIEW_2D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_2D");
@@ -1487,7 +1554,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OFF_CENTER_FIELD_OF_VIEW_3D {
+    OFF_CENTER_FIELD_OF_VIEW_3D("OFF_CENTER_FIELD_OF_VIEW_3D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_3D");
@@ -1499,13 +1566,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Location);
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(0.0);
+            param.setValue(-0.0);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    OFF_CENTER_FIELD_OF_VIEW_EFF {
+    OFF_CENTER_FIELD_OF_VIEW_EFF("OFF_CENTER_FIELD_OF_VIEW_EFF") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_EFF");
@@ -1522,7 +1589,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OFF_CENTER_FIELD_OF_VIEW_X {
+    OFF_CENTER_FIELD_OF_VIEW_X("OFF_CENTER_FIELD_OF_VIEW_X") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_X");
@@ -1539,7 +1606,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OFF_CENTER_FIELD_OF_VIEW_Y {
+    OFF_CENTER_FIELD_OF_VIEW_Y("OFF_CENTER_FIELD_OF_VIEW_Y") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_Y");
@@ -1556,7 +1623,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OFF_CENTER_FIELD_OF_VIEW_Z {
+    OFF_CENTER_FIELD_OF_VIEW_Z("OFF_CENTER_FIELD_OF_VIEW_Z") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_Z");
@@ -1573,75 +1640,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    OFFSET_FREQ_1 {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("OFFSET_FREQ_1");
-            param.setDisplayedName("Offset 1");
-            param.setDescription("The offset frequency of the first sequence channel");
-            param.setGroup(EnumGroup.Emission);
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.FrequencyOffset);
-            param.setMinValue(-1.5E9);
-            param.setMaxValue(1.5E9);
-            param.setValue(0.0);
-            param.setDefaultValue(0.0);
-            return param;
-        }
-    },
-
-    OFFSET_FREQ_2 {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("OFFSET_FREQ_2");
-            param.setDisplayedName("Offset 2");
-            param.setDescription("The offset frequency of the second sequence channel");
-            param.setGroup(EnumGroup.Emission);
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.FrequencyOffset);
-            param.setMinValue(-1.5E9);
-            param.setMaxValue(1.5E9);
-            param.setValue(0.0);
-            param.setDefaultValue(0.0);
-            return param;
-        }
-    },
-
-    OFFSET_FREQ_3 {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("OFFSET_FREQ_3");
-            param.setDisplayedName("Offset 3");
-            param.setDescription("The offset frequency of the third sequence channel");
-            param.setGroup(EnumGroup.Emission);
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.FrequencyOffset);
-            param.setMinValue(-1.5E9);
-            param.setMaxValue(1.5E9);
-            param.setValue(0.0);
-            param.setDefaultValue(0.0);
-            return param;
-        }
-    },
-
-    OFFSET_FREQ_4 {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("OFFSET_FREQ_4");
-            param.setDisplayedName("Offset 4");
-            param.setDescription("The offset frequency of the fourth sequence channel");
-            param.setGroup(EnumGroup.Emission);
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.FrequencyOffset);
-            param.setMinValue(-1.5E9);
-            param.setMaxValue(1.5E9);
-            param.setValue(0.0);
-            param.setDefaultValue(0.0);
-            return param;
-        }
-    },
-
-    ORIENTATION {
+    ORIENTATION("ORIENTATION") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("ORIENTATION");
@@ -1649,7 +1648,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("Field of view orientation");
             param.setGroup(EnumGroup.Dimension);
             param.setCategory(Category.Acquisition);
-            param.setValue("AXIAL");
+            param.setValue("SAGITTAL");
             param.setDefaultValue("AXIAL");
             param.setSuggestedValues(asList("AXIAL", "CORONAL", "SAGITTAL", "OBLIQUE"));
             param.setRestrictedToSuggested(true);
@@ -1657,7 +1656,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PAROPT_PARAM {
+    PAROPT_PARAM("PAROPT_PARAM") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("PAROPT_PARAM");
@@ -1671,7 +1670,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PHASE_0 {
+    PHASE_0("PHASE_0") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("PHASE_0");
@@ -1686,7 +1685,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PHASE_1 {
+    PHASE_1("PHASE_1") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("PHASE_1");
@@ -1701,7 +1700,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PHASE_APPLIED {
+    PHASE_APPLIED("PHASE_APPLIED") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("PHASE_APPLIED");
@@ -1715,7 +1714,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PHASE_CYCLING {
+    PHASE_CYCLING("PHASE_CYCLING") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("PHASE_CYCLING");
@@ -1729,7 +1728,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PHASE_FIELD_OF_VIEW_RATIO {
+    PHASE_FIELD_OF_VIEW_RATIO("PHASE_FIELD_OF_VIEW_RATIO") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("PHASE_FIELD_OF_VIEW_RATIO");
@@ -1740,13 +1739,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.PERCENT);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(100.0);
+            param.setValue(50.0);
             param.setDefaultValue(100.0);
             return param;
         }
     },
 
-    PHASE_RESET {
+    PHASE_RESET("PHASE_RESET") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("PHASE_RESET");
@@ -1754,13 +1753,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.Emission);
             param.setCategory(Category.Acquisition);
-            param.setValue(true);
+            param.setValue(false);
             param.setDefaultValue(false);
             return param;
         }
     },
 
-    PREPHASING_READ_GRADIENT_RATIO {
+    PREPHASING_READ_GRADIENT_RATIO("PREPHASING_READ_GRADIENT_RATIO") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("PREPHASING_READ_GRADIENT_RATIO");
@@ -1777,7 +1776,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PROBE {
+    PROBE("PROBE") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("PROBE");
@@ -1791,7 +1790,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    PROBES {
+    PROBES("PROBES") {
         public Param build() {
             ListTextParam param = new ListTextParam();
             param.setName("PROBES");
@@ -1804,7 +1803,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    RECEIVER_COUNT {
+    RECEIVER_COUNT("RECEIVER_COUNT") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("RECEIVER_COUNT");
@@ -1821,7 +1820,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    RECEIVER_GAIN {
+    RECEIVER_GAIN("RECEIVER_GAIN") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("RECEIVER_GAIN");
@@ -1832,13 +1831,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.RxGain);
             param.setMinValue(0.0);
             param.setMaxValue(120.0);
-            param.setValue(40.0);
+            param.setValue(42.0);
             param.setDefaultValue(10.0);
             return param;
         }
     },
 
-    REPETITION_TIME {
+    REPETITION_TIME("REPETITION_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("REPETITION_TIME");
@@ -1849,13 +1848,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.6);
+            param.setValue(0.522);
             param.setDefaultValue(0.2);
             return param;
         }
     },
 
-    RESOLUTION_FREQUENCY {
+    RESOLUTION_FREQUENCY("RESOLUTION_FREQUENCY") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("RESOLUTION_FREQUENCY");
@@ -1866,13 +1865,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(1.953125E-4);
+            param.setValue(3.125E-4);
             param.setDefaultValue(0.01);
             return param;
         }
     },
 
-    RESOLUTION_PHASE {
+    RESOLUTION_PHASE("RESOLUTION_PHASE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("RESOLUTION_PHASE");
@@ -1883,13 +1882,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(1.953125E-4);
+            param.setValue(3.125E-4);
             param.setDefaultValue(5.0E-4);
             return param;
         }
     },
 
-    RESOLUTION_SLICE {
+    RESOLUTION_SLICE("RESOLUTION_SLICE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("RESOLUTION_SLICE");
@@ -1906,35 +1905,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SE_TYPE {
-        public Param build() {
-            TextParam param = new TextParam();
-            param.setName("SE_TYPE");
-            param.setDisplayedName("SE_TYPE");
-            param.setDescription("chose between FSE and MultiEcho");
-            param.setGroup(EnumGroup.Scan);
-            param.setCategory(Category.Acquisition);
-            param.setValue("MultiEcho");
-            param.setDefaultValue("FSE");
-            param.setSuggestedValues(asList("MultiEcho"));
-            return param;
-        }
-    },
-
-    SEQ_DESCRIPTION {
-        public Param build() {
-            TextParam param = new TextParam();
-            param.setName("SEQ_DESCRIPTION");
-            param.setDisplayedName("SEQ_DESCRIPTION");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setValue("SE_2D_AXI_256x256x1x6_ETL=6");
-            param.setDefaultValue("");
-            return param;
-        }
-    },
-
-    SEQUENCE_NAME {
+    SEQUENCE_NAME("SEQUENCE_NAME") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("SEQUENCE_NAME");
@@ -1949,7 +1920,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SEQUENCE_TIME {
+    SEQUENCE_TIME("SEQUENCE_TIME") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("SEQUENCE_TIME");
@@ -1960,13 +1931,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(154.80000499999997);
+            param.setValue(134.676005);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    SEQUENCE_VERSION {
+    SEQUENCE_VERSION("SEQUENCE_VERSION") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("SEQUENCE_VERSION");
@@ -1974,13 +1945,26 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version7.15");
+            param.setValue("Version8.1");
             param.setDefaultValue("");
             return param;
         }
     },
 
-    SETUP_MODE {
+    SEQ_DESCRIPTION("SEQ_DESCRIPTION") {
+        public Param build() {
+            TextParam param = new TextParam();
+            param.setName("SEQ_DESCRIPTION");
+            param.setDisplayedName("SEQ_DESCRIPTION");
+            param.setDescription("");
+            param.setCategory(Category.Acquisition);
+            param.setValue("SE_2D_SAG_256x128x12_ETL=4");
+            param.setDefaultValue("");
+            return param;
+        }
+    },
+
+    SETUP_MODE("SETUP_MODE") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("SETUP_MODE");
@@ -1994,7 +1978,22 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SLICE_REFOCUSING_GRADIENT_RATIO {
+    SE_TYPE("SE_TYPE") {
+        public Param build() {
+            TextParam param = new TextParam();
+            param.setName("SE_TYPE");
+            param.setDisplayedName("SE_TYPE");
+            param.setDescription("chose between FSE and MultiEcho");
+            param.setGroup(EnumGroup.Scan);
+            param.setCategory(Category.Acquisition);
+            param.setValue("FSE");
+            param.setDefaultValue("FSE");
+            param.setSuggestedValues(asList("MultiEcho"));
+            return param;
+        }
+    },
+
+    SLICE_REFOCUSING_GRADIENT_RATIO("SLICE_REFOCUSING_GRADIENT_RATIO") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("SLICE_REFOCUSING_GRADIENT_RATIO");
@@ -2011,7 +2010,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SLICE_THICKNESS {
+    SLICE_THICKNESS("SLICE_THICKNESS") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("SLICE_THICKNESS");
@@ -2028,7 +2027,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SLICE_THICKNESS_180_WIDER {
+    SLICE_THICKNESS_180_WIDER("SLICE_THICKNESS_180_WIDER") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("SLICE_THICKNESS_180_WIDER");
@@ -2042,7 +2041,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SOFTWARE_VERSION {
+    SOFTWARE_VERSION("SOFTWARE_VERSION") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("SOFTWARE_VERSION");
@@ -2050,13 +2049,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setDescription("The version of the software");
             param.setGroup(EnumGroup.Miscellaneous);
             param.setCategory(Category.Miscellaneous);
-            param.setValue("1.208.9");
+            param.setValue("1.0199");
             param.setDefaultValue("Software version");
             return param;
         }
     },
 
-    SPACING_BETWEEN_SLICE {
+    SPACING_BETWEEN_SLICE("SPACING_BETWEEN_SLICE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("SPACING_BETWEEN_SLICE");
@@ -2073,7 +2072,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SPECTRAL_WIDTH {
+    SPECTRAL_WIDTH("SPECTRAL_WIDTH") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("SPECTRAL_WIDTH");
@@ -2084,13 +2083,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(40270.0);
+            param.setValue(50080.0);
             param.setDefaultValue(12500.0);
             return param;
         }
     },
 
-    SPECTRAL_WIDTH_OPT {
+    SPECTRAL_WIDTH_OPT("SPECTRAL_WIDTH_OPT") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("SPECTRAL_WIDTH_OPT");
@@ -2104,7 +2103,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SPECTRAL_WIDTH_PER_PIXEL {
+    SPECTRAL_WIDTH_PER_PIXEL("SPECTRAL_WIDTH_PER_PIXEL") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("SPECTRAL_WIDTH_PER_PIXEL");
@@ -2115,13 +2114,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(157.3046875);
+            param.setValue(195.625);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    SQUARE_PIXEL {
+    SQUARE_PIXEL("SQUARE_PIXEL") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("SQUARE_PIXEL");
@@ -2135,7 +2134,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    STATION_NAME {
+    STATION_NAME("STATION_NAME") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("STATION_NAME");
@@ -2150,7 +2149,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SUBJECT_POSITION {
+    SUBJECT_POSITION("SUBJECT_POSITION") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("SUBJECT_POSITION");
@@ -2166,7 +2165,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    SWITCH_READ_PHASE {
+    SWITCH_READ_PHASE("SWITCH_READ_PHASE") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("SWITCH_READ_PHASE");
@@ -2180,7 +2179,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TRANSFORM_PLUGIN {
+    TRANSFORM_PLUGIN("TRANSFORM_PLUGIN") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("TRANSFORM_PLUGIN");
@@ -2189,13 +2188,29 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setGroup(EnumGroup.Scan);
             param.setCategory(Category.Acquisition);
             param.setValue("Centered2DRot");
-            param.setDefaultValue("Centered2D");
-            param.setSuggestedValues(asList("Centered2D", "Centered2DRot", "Bordered2D", "Sequential4D", "Sequential2D"));
+            param.setDefaultValue("Centered2DRot");
+            param.setSuggestedValues(asList("Centered2DRot", "Bordered2D", "Sequential4D", "Sequential2D"));
             return param;
         }
     },
 
-    TRIGGER_EXTERNAL {
+    TRIGGER_CHANEL("TRIGGER_CHANEL") {
+        public Param build() {
+            TextParam param = new TextParam();
+            param.setName("TRIGGER_CHANEL");
+            param.setDisplayedName("Trigger Channel");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Delay);
+            param.setCategory(Category.Acquisition);
+            param.setValue("Ext1_XOR_Ext2");
+            param.setDefaultValue("Ext1_XOR_Ext2");
+            param.setSuggestedValues(asList("Ext1", "Ext2", "Ext1_AND_Ext2", "Ext1_XOR_Ext2"));
+            param.setRestrictedToSuggested(true);
+            return param;
+        }
+    },
+
+    TRIGGER_EXTERNAL("TRIGGER_EXTERNAL") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("TRIGGER_EXTERNAL");
@@ -2209,7 +2224,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TRIGGER_TIME {
+    TRIGGER_TIME("TRIGGER_TIME") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("TRIGGER_TIME");
@@ -2226,7 +2241,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TX_AMP_180 {
+    TX_AMP_180("TX_AMP_180") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("TX_AMP_180");
@@ -2237,13 +2252,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAmp);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(86.47025438397532);
+            param.setValue(89.2697162132732);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    TX_AMP_90 {
+    TX_AMP_90("TX_AMP_90") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("TX_AMP_90");
@@ -2254,13 +2269,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAmp);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(43.42166312414569);
+            param.setValue(44.5547338292634);
             param.setDefaultValue(0.0);
             return param;
         }
     },
 
-    TX_AMP_ATT_AUTO {
+    TX_AMP_ATT_AUTO("TX_AMP_ATT_AUTO") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("TX_AMP_ATT_AUTO");
@@ -2274,7 +2289,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TX_ATT {
+    TX_ATT("TX_ATT") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("TX_ATT");
@@ -2285,13 +2300,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAtt);
             param.setMinValue(0.0);
             param.setMaxValue(63.0);
-            param.setValue(30.0);
+            param.setValue(29.0);
             param.setDefaultValue(36.0);
             return param;
         }
     },
 
-    TX_BANDWIDTH_FACTOR {
+    TX_BANDWIDTH_FACTOR("TX_BANDWIDTH_FACTOR") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("TX_BANDWIDTH_FACTOR");
@@ -2302,13 +2317,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
-            param.setValue(asListNumber(0.8, 1.45, 2.55, 3.9, 8.5152, 4.2576));
+            param.setValue(asListNumber(0.75, 1.35, 2.55, 4.25));
             param.setDefaultValue(asListNumber(0.8, 1.45, 2.55, 3.9));
             return param;
         }
     },
 
-    TX_BANDWIDTH_FACTOR_3D {
+    TX_BANDWIDTH_FACTOR_3D("TX_BANDWIDTH_FACTOR_3D") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("TX_BANDWIDTH_FACTOR_3D");
@@ -2319,13 +2334,13 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
             param.setNumberEnum(NumberEnum.Double);
-            param.setValue(asListNumber(1.1, 3.2, 5.0, 7.3, 8.5152, 4.2576));
+            param.setValue(asListNumber(1.9, 2.7, 5.1, 8.5));
             param.setDefaultValue(asListNumber(1.1, 3.2, 5.0, 7.3));
             return param;
         }
     },
 
-    TX_LENGTH_180 {
+    TX_LENGTH_180("TX_LENGTH_180") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("TX_LENGTH_180");
@@ -2342,7 +2357,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TX_LENGTH_90 {
+    TX_LENGTH_90("TX_LENGTH_90") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("TX_LENGTH_90");
@@ -2359,7 +2374,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TX_ROUTE {
+    TX_ROUTE("TX_ROUTE") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("TX_ROUTE");
@@ -2375,7 +2390,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TX_SHAPE_180 {
+    TX_SHAPE_180("TX_SHAPE_180") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("TX_SHAPE_180");
@@ -2389,7 +2404,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    TX_SHAPE_90 {
+    TX_SHAPE_90("TX_SHAPE_90") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("TX_SHAPE_90");
@@ -2404,7 +2419,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_MATRIX_DIMENSION_1D {
+    USER_MATRIX_DIMENSION_1D("USER_MATRIX_DIMENSION_1D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_MATRIX_DIMENSION_1D");
@@ -2421,7 +2436,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_MATRIX_DIMENSION_2D {
+    USER_MATRIX_DIMENSION_2D("USER_MATRIX_DIMENSION_2D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_MATRIX_DIMENSION_2D");
@@ -2432,17 +2447,34 @@ public enum SpinEchoParams implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(1);
             param.setMaxValue(65536);
-            param.setValue(256);
+            param.setValue(128);
             param.setDefaultValue(1);
             return param;
         }
     },
 
-    USER_MATRIX_DIMENSION_3D {
+    USER_MATRIX_DIMENSION_3D("USER_MATRIX_DIMENSION_3D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_MATRIX_DIMENSION_3D");
             param.setDisplayedName("USER_ACQUISITION_MATRIX_DIMENSION_3D");
+            param.setDescription("");
+            param.setGroup(EnumGroup.User);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Scan);
+            param.setMinValue(1);
+            param.setMaxValue(65536);
+            param.setValue(12);
+            param.setDefaultValue(1);
+            return param;
+        }
+    },
+
+    USER_MATRIX_DIMENSION_4D("USER_MATRIX_DIMENSION_4D") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("USER_MATRIX_DIMENSION_4D");
+            param.setDisplayedName("USER_ACQUISITION_MATRIX_DIMENSION_4D");
             param.setDescription("");
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
@@ -2455,24 +2487,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_MATRIX_DIMENSION_4D {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("USER_MATRIX_DIMENSION_4D");
-            param.setDisplayedName("USER_ACQUISITION_MATRIX_DIMENSION_4D");
-            param.setDescription("");
-            param.setGroup(EnumGroup.User);
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.Scan);
-            param.setMinValue(1);
-            param.setMaxValue(65536);
-            param.setValue(6);
-            param.setDefaultValue(1);
-            return param;
-        }
-    },
-
-    USER_PARTIAL_PHASE {
+    USER_PARTIAL_PHASE("USER_PARTIAL_PHASE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_PARTIAL_PHASE");
@@ -2489,7 +2504,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_PARTIAL_SLICE {
+    USER_PARTIAL_SLICE("USER_PARTIAL_SLICE") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_PARTIAL_SLICE");
@@ -2506,20 +2521,20 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_TMP_PARAM_BOOL_1 {
+    USER_TMP_PARAM_BOOL_1("USER_TMP_PARAM_BOOL_1") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("USER_TMP_PARAM_BOOL_1");
             param.setDisplayedName("USER_TMP_PARAM_BOOL_1");
             param.setDescription("");
             param.setCategory(Category.Acquisition);
-            param.setValue(true);
+            param.setValue(false);
             param.setDefaultValue(false);
             return param;
         }
     },
 
-    USER_TMP_PARAM_BOOL_2 {
+    USER_TMP_PARAM_BOOL_2("USER_TMP_PARAM_BOOL_2") {
         public Param build() {
             BooleanParam param = new BooleanParam();
             param.setName("USER_TMP_PARAM_BOOL_2");
@@ -2532,7 +2547,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_TMP_PARAM_LIST_1 {
+    USER_TMP_PARAM_LIST_1("USER_TMP_PARAM_LIST_1") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("USER_TMP_PARAM_LIST_1");
@@ -2546,7 +2561,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_TMP_PARAM_LIST_2 {
+    USER_TMP_PARAM_LIST_2("USER_TMP_PARAM_LIST_2") {
         public Param build() {
             ListNumberParam param = new ListNumberParam();
             param.setName("USER_TMP_PARAM_LIST_2");
@@ -2560,7 +2575,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_TMP_PARAM_NUM_1 {
+    USER_TMP_PARAM_NUM_1("USER_TMP_PARAM_NUM_1") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_TMP_PARAM_NUM_1");
@@ -2576,7 +2591,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_TMP_PARAM_NUM_2 {
+    USER_TMP_PARAM_NUM_2("USER_TMP_PARAM_NUM_2") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_TMP_PARAM_NUM_2");
@@ -2592,7 +2607,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_TMP_PARAM_STR_1 {
+    USER_TMP_PARAM_STR_1("USER_TMP_PARAM_STR_1") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("USER_TMP_PARAM_STR_1");
@@ -2605,7 +2620,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_TMP_PARAM_STR_2 {
+    USER_TMP_PARAM_STR_2("USER_TMP_PARAM_STR_2") {
         public Param build() {
             TextParam param = new TextParam();
             param.setName("USER_TMP_PARAM_STR_2");
@@ -2618,7 +2633,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_ZERO_FILLING_2D {
+    USER_ZERO_FILLING_2D("USER_ZERO_FILLING_2D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_ZERO_FILLING_2D");
@@ -2635,7 +2650,7 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     },
 
-    USER_ZERO_FILLING_3D {
+    USER_ZERO_FILLING_3D("USER_ZERO_FILLING_3D") {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("USER_ZERO_FILLING_3D");
@@ -2652,7 +2667,20 @@ public enum SpinEchoParams implements GeneratorParamEnum {
         }
     };
 
-    public abstract Param build();
+    //--
+
+    private final String name;
+
+    private U(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    //--
 
     private static List<Number> asListNumber(Number ... numbers) {
         return asList(numbers);
