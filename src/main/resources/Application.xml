@@ -2347,7 +2347,7 @@
                     <value>-0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Offset in the slice direction</description>
-                    <displayedName>Location Z</displayedName>
+                    <displayedName>Location 3D</displayedName>
                     <locked>true</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <restrictedToSuggested>false</restrictedToSuggested>

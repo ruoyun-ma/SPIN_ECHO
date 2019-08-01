@@ -1558,7 +1558,7 @@ public enum U implements GeneratorParamEnum {
         public Param build() {
             NumberParam param = new NumberParam();
             param.setName("OFF_CENTER_FIELD_OF_VIEW_3D");
-            param.setDisplayedName("Location Z");
+            param.setDisplayedName("Location 3D");
             param.setDescription("Offset in the slice direction");
             param.setLocked(true);
             param.setGroup(EnumGroup.Gradient);

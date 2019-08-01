@@ -66,7 +66,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version7.15";
+    private String sequenceVersion = "Version8.1";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -596,7 +596,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         nb_scan_4d = numberOfTrigger * numberOfInversionRecovery * numberOfDynamicAcquisition;
         acquisitionMatrixDimension4D = nb_scan_4d * numberOfEcho;
-        getParam(USER_MATRIX_DIMENSION_4D).setValue(nb_scan_4d);
+        getParam(USER_MATRIX_DIMENSION_4D).setValue(acquisitionMatrixDimension4D);
 
 
         // -----------------------------------------------
@@ -1063,16 +1063,25 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         //double new_te = te;
         // calculate echo time depending on image contrast and transform plugin
-        if (te < te_min) {
-            if (te_min > TE_TR_lim[1]) {
-                notifyOutOfRangeParam(ECHO_TIME, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "(1):TE too short for the User Mx1D and SW (2):as TE increases, T1-weighted or PD-weighted imaging is not guaranteed");
-                //getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST).setValue( "Custom");
-            } else {
-                notifyOutOfRangeParam(ECHO_TIME, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "TE too short for the User Mx1D and SW");
-                //te = te_min;
+        if (("Custom".equalsIgnoreCase((String) (getParam(IMAGE_CONTRAST).getValue()))) && echoTrainLength != 1 && is_FSE_vs_MultiEcho) {
+            if (echo_spacing < te_min) {
+                getUnreachParamExceptionManager().addParam(ECHO_SPACING.name(), echo_spacing, te_min, ((NumberParam) getParam(ECHO_SPACING)).getMaxValue(), "Echo_Spacing too short for the User Mx1D and SW");
+                echo_spacing = te_min;
+                te = te_min;
             }
-            te = te_min;
+        } else {
+            if (te < te_min) {
+                if (te_min > TE_TR_lim[1]) {
+                    getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "(1):TE too short for the User Mx1D and SW (2):as TE increases, T1-weighted or PD-weighted imaging is not guaranteed");
+                    //setParamValue(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST, "Custom");
+                } else {
+                    getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "TE too short for the User Mx1D and SW");
+                    //te = te_min;
+                }
+                te = te_min;
+            }
         }
+
 
         if (is_FSE_vs_MultiEcho) {
             if (!("Custom".equalsIgnoreCase((String) (getParam(IMAGE_CONTRAST).getValue())))) {
