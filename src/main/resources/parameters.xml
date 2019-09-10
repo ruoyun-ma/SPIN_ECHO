@@ -149,7 +149,7 @@
             <key>BASE_FREQ_1</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>BASE_FREQ_1</name>
-                <value>1.2818100000000001E8</value>
+                <value>1.27552944E8</value>
                 <defaultValue>1.27552944E8</defaultValue>
                 <description>The base frequency of the first sequence channel</description>
                 <displayedName>Base Freq 1</displayedName>
@@ -929,9 +929,9 @@
             <key>HARDWARE_DC</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_DC</name>
-                <value>0.2869</value>
-                <value>0.003052</value>
-                <value>-0.647</value>
+                <value>-0.174</value>
+                <value>0.2686</value>
+                <value>-0.1862</value>
                 <value>0.0</value>
                 <description></description>
                 <displayedName>HARDWARE_DC</displayedName>
@@ -2028,7 +2028,7 @@
             <key>OBSERVED_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>OBSERVED_FREQUENCY</name>
-                <value>1.2818100000000001E8</value>
+                <value>1.27552944E8</value>
                 <defaultValue>6.3E7</defaultValue>
                 <description>The frequency of the acquisition</description>
                 <displayedName>Observed frequency</displayedName>
