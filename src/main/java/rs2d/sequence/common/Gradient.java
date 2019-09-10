@@ -1,6 +1,6 @@
 package rs2d.sequence.common;
 
-import rs2d.sequence.spinecho.S;
+
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.hardware.devices.DeviceManager;
 import rs2d.spinlab.instrument.util.GradientMath;
@@ -8,10 +8,12 @@ import rs2d.spinlab.sequence.Sequence;
 import rs2d.spinlab.sequence.table.Shape;
 import rs2d.spinlab.sequence.table.Table;
 import rs2d.spinlab.sequence.table.Utility;
+import rs2d.spinlab.sequenceGenerator.GeneratorSequenceParamEnum;
 import rs2d.spinlab.tools.table.Order;
 
 /**
  * Class Gradient
+ * V2.6 constructor with generatorSequenceParam .name() V2019.06
  * V2.5- getNearestSW Sup Inf for Cam4
  * V2.4- 2019-06-06 JR from TOF Flow compensation
  * V2.3- 2019-06-06 JR from DW EPI
@@ -72,14 +74,14 @@ public class Gradient {
         init();
     }
 
-    public static Gradient createGradient(Sequence sequence, S amplitudeTab, S flat_TimeTab, S shapeUpTab, S shapeDownTab, S rampTimeTab) {
-        return new Gradient(sequence.getPublicTable(amplitudeTab.toString()),sequence.getTable(flat_TimeTab.toString()), (Shape) sequence.getTable(shapeUpTab.toString()),
-                (Shape) sequence.getPublicTable(shapeDownTab.toString()),sequence.getTable(rampTimeTab.toString()),sequence.getTable(rampTimeTab.toString()));
+    public static Gradient createGradient(Sequence sequence, GeneratorSequenceParamEnum amplitudeTab, GeneratorSequenceParamEnum flat_TimeTab, GeneratorSequenceParamEnum shapeUpTab, GeneratorSequenceParamEnum shapeDownTab, GeneratorSequenceParamEnum rampTimeTab) {
+        return new Gradient(sequence.getPublicTable(amplitudeTab.name()), sequence.getTable(flat_TimeTab.name()), (Shape) sequence.getTable(shapeUpTab.name()),
+                (Shape) sequence.getPublicTable(shapeDownTab.name()), sequence.getTable(rampTimeTab.name()), sequence.getTable(rampTimeTab.name()));
     }
 
-    public static Gradient createGradient(Sequence sequence, S amplitudeTab, S flat_TimeTab, S shapeUpTab, S shapeDownTab, S rampTimeUpTab, S rampTimeDownTab) {
-        return new Gradient(sequence.getPublicTable(amplitudeTab.toString()),sequence.getTable(flat_TimeTab.toString()), (Shape) sequence.getTable(shapeUpTab.toString()),
-                (Shape) sequence.getPublicTable(shapeDownTab.toString()),sequence.getTable(rampTimeUpTab.toString()),sequence.getTable(rampTimeDownTab.toString()));
+    public static Gradient createGradient(Sequence sequence, GeneratorSequenceParamEnum amplitudeTab, GeneratorSequenceParamEnum flat_TimeTab, GeneratorSequenceParamEnum shapeUpTab, GeneratorSequenceParamEnum shapeDownTab, GeneratorSequenceParamEnum rampTimeUpTab, GeneratorSequenceParamEnum rampTimeDownTab) {
+        return new Gradient(sequence.getPublicTable(amplitudeTab.name()), sequence.getTable(flat_TimeTab.name()), (Shape) sequence.getTable(shapeUpTab.name()),
+                (Shape) sequence.getPublicTable(shapeDownTab.name()), sequence.getTable(rampTimeUpTab.name()), sequence.getTable(rampTimeDownTab.name()));
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -744,13 +746,13 @@ public class Gradient {
         return amplitudeArray;
     }
 
-    public double[] refocalizePhaseEncodingGradientSEEPI(Gradient grad, Gradient gradBlip, int echoTrainLength) {
+    public double[] refocalizePhaseEncodingGradientSEEPI(Gradient grad, Gradient gradBlip, int echoTrainLength, boolean isPrephasingBefore180) {
         steps = grad.getSteps();
         if (steps > 0) {
             order = grad.getOrder();
             amplitudeArray = new double[steps];
             for (int i = 0; i < steps; i++) {
-                amplitudeArray[i] = -(-grad.getAmplitudeArray(i) * grad.getEquivalentTime()
+                amplitudeArray[i] = -((isPrephasingBefore180 ? -1 : 1) * grad.getAmplitudeArray(i) * grad.getEquivalentTime()
                         + gradBlip.getAmplitude() * gradBlip.getEquivalentTime() * echoTrainLength) / equivalentTime;
             }
         }
@@ -769,6 +771,32 @@ public class Gradient {
         }
         amplitudeArray = newTable;
         steps = new_steps;
+    }
+
+    public void reoderPhaseEncodingForSEEPIplus2() {
+        // flow Comp
+        int new_steps = steps + 2;
+        double[] newTable = new double[new_steps];
+        newTable[0] = 0;
+        for (int i = 0; i < steps; i++) {
+            newTable[i + 1] = -amplitudeArray[i];
+        }
+        newTable[steps + 1] = 0;
+        amplitudeArray = newTable;
+        steps = new_steps;
+    }
+
+    public void inversePolarity() {
+        if (!Double.isNaN(amplitude)) {
+            amplitude = -amplitude;
+        }
+        if (amplitudeArray != null) {
+            // flow Comp
+            for (int i = 0; i < steps; i++) {
+                amplitudeArray[i] = -amplitudeArray[i];
+            }
+        }
+
     }
 
 
@@ -1184,7 +1212,7 @@ public class Gradient {
             decimationRef = 1;
             SWmax = SysClock / 32 / decimationRef;
         }
-        double decim = (Math.round(SWmax * decimationRef / spectralWidth) );
+        double decim = (Math.round(SWmax * decimationRef / spectralWidth));
         return (SWmax * decimationRef) / (decim);
     }
 
@@ -1200,7 +1228,7 @@ public class Gradient {
             decimationRef = 1;
             SWmax = SysClock / 32 / decimationRef;
         }
-        double decim = (Math.ceil(SWmax * decimationRef / spectralWidth)-1 );
+        double decim = (Math.ceil(SWmax * decimationRef / spectralWidth) - 1);
         return (SWmax * decimationRef) / (decim);
 
     }

@@ -1,6 +1,5 @@
 package rs2d.sequence.common;
 
-import rs2d.sequence.spinecho.S;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.instrument.Instrument;
 import rs2d.spinlab.instrument.InstrumentTxChannel;
@@ -15,6 +14,7 @@ import rs2d.spinlab.sequence.table.Shape;
 import rs2d.spinlab.sequence.table.Table;
 import rs2d.spinlab.sequence.table.Utility;
 import rs2d.spinlab.sequence.table.generator.TableGeneratorInterface;
+import rs2d.spinlab.sequenceGenerator.GeneratorSequenceParamEnum;
 import rs2d.spinlab.tools.param.NumberParam;
 import rs2d.spinlab.tools.param.Param;
 import rs2d.spinlab.tools.table.Order;
@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * Class RFPulse
+ * V2.6 constructor with generatorSequenceParam .name() V2019.06
  * V2.5- getNearestSW Sup Inf for Cam4
  * V2.3- 2019-06-06 JR
  * V2.2- 2018-12-19 JR
@@ -94,18 +95,18 @@ public class RFPulse {
     }
 
 
-    public static RFPulse createRFPulse(Sequence sequence, S txAttParam, S amplitudeTab, S txPhaseTab,
-                                        S timeTab, S shape, S shapePhaseShape, S offsetTab) {
-        return new RFPulse(sequence.getPublicParam(txAttParam.toString()),sequence.getTable(amplitudeTab.toString()),sequence.getTable(txPhaseTab.toString()),
-                sequence.getPublicTable(timeTab.toString()),(Shape) sequence.getTable(shape.toString()),(Shape) sequence.getTable(shapePhaseShape.toString()),sequence.getTable(offsetTab.toString()));
+    public static RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum txAttParam, GeneratorSequenceParamEnum amplitudeTab, GeneratorSequenceParamEnum txPhaseTab,
+                                        GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum shape, GeneratorSequenceParamEnum shapePhaseShape, GeneratorSequenceParamEnum offsetTab) {
+        return new RFPulse(sequence.getPublicParam(txAttParam.name()), sequence.getTable(amplitudeTab.name()), sequence.getTable(txPhaseTab.name()),
+                sequence.getPublicTable(timeTab.name()), (Shape) sequence.getTable(shape.name()), (Shape) sequence.getTable(shapePhaseShape.name()), sequence.getTable(offsetTab.name()));
     }
 
-    public static RFPulse createRFPulse(Sequence sequence, S timeTab, S offsetTab) {
-        return new RFPulse(sequence.getPublicTable(timeTab.toString()),sequence.getTable(offsetTab.toString()));
+    public static RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum offsetTab) {
+        return new RFPulse(sequence.getPublicTable(timeTab.name()), sequence.getTable(offsetTab.name()));
     }
 
-    public static RFPulse createRFPulse(Sequence sequence, S timeTab, S offsetTab, S txPhaseTab) {
-        return new RFPulse(sequence.getPublicTable(timeTab.toString()),sequence.getTable(offsetTab.toString()),sequence.getTable(txPhaseTab.toString()));
+    public static RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum offsetTab, GeneratorSequenceParamEnum txPhaseTab) {
+        return new RFPulse(sequence.getPublicTable(timeTab.name()), sequence.getTable(offsetTab.name()), sequence.getTable(txPhaseTab.name()));
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
