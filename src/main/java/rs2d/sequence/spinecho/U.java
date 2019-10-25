@@ -138,7 +138,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.005111821086261981);
+            param.setValue(0.0051183616);
             param.setDefaultValue(1.0);
             return param;
         }
@@ -155,7 +155,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(1.27552944E8);
+            param.setValue(3.0E8);
             param.setDefaultValue(1.27552944E8);
             return param;
         }
@@ -615,7 +615,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Double);
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(5.567078717420658E-5);
+            param.setValue(1.3082634985938545E-5);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -632,7 +632,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Double);
             param.setMinValue(-1.7976931348623157E308);
             param.setMaxValue(1.7976931348623157E308);
-            param.setValue(2.369905410005974);
+            param.setValue(0.5569277713514039);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -933,7 +933,7 @@ public enum U implements GeneratorParamEnum {
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
             param.setNumberEnum(NumberEnum.Time);
-            param.setValue(asListNumber(0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+            param.setValue(asListNumber(0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02));
             return param;
         }
     },
@@ -1028,8 +1028,8 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(2.051E7);
-            param.setDefaultValue(2.051E7);
+            param.setValue(1.25E7);
+            param.setDefaultValue(1.25E7);
             return param;
         }
     },
@@ -1289,6 +1289,20 @@ public enum U implements GeneratorParamEnum {
         }
     },
 
+    MULTISLICE_PACKED("MULTISLICE_PACKED") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("MULTISLICE_PACKED");
+            param.setDisplayedName("MULTISLICE_PACKED");
+            param.setDescription("acquier all interleaved multislices at the begining of TR");
+            param.setGroup(EnumGroup.Scan);
+            param.setCategory(Category.Acquisition);
+            param.setValue(false);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
     MULTI_PLANAR_EXCITATION("MULTI_PLANAR_EXCITATION") {
         public Param build() {
             BooleanParam param = new BooleanParam();
@@ -1429,7 +1443,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(1.27552944E8);
+            param.setValue(3.0E8);
             param.setDefaultValue(6.3E7);
             return param;
         }
@@ -1945,7 +1959,7 @@ public enum U implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version8.1");
+            param.setValue("Version8.2");
             param.setDefaultValue("");
             return param;
         }
@@ -2083,7 +2097,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(50080.0);
+            param.setValue(50016.005121638926);
             param.setDefaultValue(12500.0);
             return param;
         }
@@ -2114,7 +2128,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.SW);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E8);
-            param.setValue(195.625);
+            param.setValue(195.37502000640205);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2252,7 +2266,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAmp);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(89.2697162132732);
+            param.setValue(100.0);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2269,7 +2283,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAmp);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(44.5547338292634);
+            param.setValue(100.0);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2300,7 +2314,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAtt);
             param.setMinValue(0.0);
             param.setMaxValue(63.0);
-            param.setValue(29.0);
+            param.setValue(0.0);
             param.setDefaultValue(36.0);
             return param;
         }

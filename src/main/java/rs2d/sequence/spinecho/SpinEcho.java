@@ -66,7 +66,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version8.1";
+    private String sequenceVersion = "Version8.2";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -1304,7 +1304,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         min_flush_delay = Math.max(CameleonVersion105 ? min_flush_delay : 0, minInstructionDelay);
 
         double time_seq_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler) * slices_acquired_in_single_scan);
-        double tr_min = time_seq_to_end_spoiler + defaultInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 defaultInstructionDelay: Events.event 22 +(20&21
+        double tr_min = time_seq_to_end_spoiler + minInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 defaultInstructionDelay: Events.event 22 +(20&21
         tr_min = ceilToSubDecimal(tr_min, 4);
 
         switch (getText(IMAGE_CONTRAST)) {
@@ -1339,24 +1339,35 @@ public class SpinEcho extends BaseSequenceGenerator {
         // set  TR delay to compensate and trigger delays
         double last_delay = minInstructionDelay;
         double tr_delay;
-        Table time_tr_delay = setSequenceTableValues(Time_TR_delay, Order.Four);
-        if (number_of_IR_acquisition != 1) {
-            for (int i = 0; i < number_of_IR_acquisition; i++) {
-                double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler + (time_TI_delay.get(i).doubleValue() - time_IR_delay_max) * slices_acquired_in_single_scan;
-                tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
+        boolean isSlicePacked = getBoolean(MULTISLICE_PACKED);
+        if (!isSlicePacked || (number_of_IR_acquisition != 1) || (numberOfTrigger != 1)) {
+            Table time_tr_delay = setSequenceTableValues(Time_TR_delay, Order.Four);
+            if (number_of_IR_acquisition != 1) {
+                for (int i = 0; i < number_of_IR_acquisition; i++) {
+                    double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler + (time_TI_delay.get(i).doubleValue() - time_IR_delay_max) * slices_acquired_in_single_scan;
+                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
+                    time_tr_delay.add(tr_delay);
+                }
+            } else if (numberOfTrigger != 1) {
+                for (int i = 0; i < numberOfTrigger; i++) {
+                    double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler - time_external_trigger_delay_max + triggerdelay.get(i).doubleValue();
+                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
+                    time_tr_delay.add(tr_delay);
+                }
+            } else {
+                tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
                 time_tr_delay.add(tr_delay);
             }
-        } else if (numberOfTrigger != 1) {
-            for (int i = 0; i < numberOfTrigger; i++) {
-                double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler - time_external_trigger_delay_max + triggerdelay.get(i).doubleValue();
-                tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
-                time_tr_delay.add(tr_delay);
-            }
+            setSequenceTableSingleValue(Time_last_delay, last_delay);
         } else {
-            tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
-            time_tr_delay.add(tr_delay);
+            Table time_last_delay = setSequenceTableValues(Time_last_delay, Order.Four);
+
+            tr_delay = minInstructionDelay;
+            last_delay = (tr - (time_seq_to_end_spoiler + slices_acquired_in_single_scan * (tr_delay + minInstructionDelay) - minInstructionDelay));
+            time_last_delay.add(last_delay);
+            setSequenceTableSingleValue(Time_TR_delay, tr_delay);
+
         }
-        setSequenceTableSingleValue(Time_last_delay, last_delay);
         setSequenceTableSingleValue(Time_flush_delay, min_flush_delay);
 
         //----------------------------------------------------------------------

@@ -131,7 +131,7 @@
             <key>ACQUISITION_TIME_PER_SCAN</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ACQUISITION_TIME_PER_SCAN</name>
-                <value>0.005111821086261981</value>
+                <value>0.0051183616</value>
                 <defaultValue>1.0</defaultValue>
                 <description>The acquisition time per scan</description>
                 <displayedName>Acq Time</displayedName>
@@ -149,7 +149,7 @@
             <key>BASE_FREQ_1</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>BASE_FREQ_1</name>
-                <value>1.27552944E8</value>
+                <value>3.0E8</value>
                 <defaultValue>1.27552944E8</defaultValue>
                 <description>The base frequency of the first sequence channel</description>
                 <displayedName>Base Freq 1</displayedName>
@@ -634,7 +634,7 @@
             <key>GRADIENT_AREA_CRUSHER</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER</name>
-                <value>5.567078717420658E-5</value>
+                <value>1.3082634985938545E-5</value>
                 <defaultValue>0.0</defaultValue>
                 <description>For info: Area of the crusher gradient!</description>
                 <displayedName>GRADIENT_AREA_CRUSHER</displayedName>
@@ -652,7 +652,7 @@
             <key>GRADIENT_AREA_CRUSHER_PI</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER_PI</name>
-                <value>2.369905410005974</value>
+                <value>0.5569277713514039</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Number of pi dephasing by the crusher</description>
                 <displayedName>GRADIENT_AREA_CRUSHER_PI</displayedName>
@@ -989,15 +989,15 @@
                 <value>0.02</value>
                 <value>0.02</value>
                 <value>0.02</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
+                <value>0.02</value>
+                <value>0.02</value>
+                <value>0.02</value>
+                <value>0.02</value>
+                <value>0.02</value>
+                <value>0.02</value>
+                <value>0.02</value>
+                <value>0.02</value>
+                <value>0.02</value>
                 <description></description>
                 <displayedName>HARDWARE_PREEMPHASIS_T</displayedName>
                 <locked>true</locked>
@@ -1117,8 +1117,8 @@
             <key>INTERMEDIATE_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>INTERMEDIATE_FREQUENCY</name>
-                <value>2.051E7</value>
-                <defaultValue>2.051E7</defaultValue>
+                <value>1.25E7</value>
+                <defaultValue>1.25E7</defaultValue>
                 <description>INTERMEDIATE_FREQUENCY.description</description>
                 <displayedName>INTERMEDIATE_FREQUENCY.name</displayedName>
                 <locked>false</locked>
@@ -1401,6 +1401,20 @@
                 <minValue>-1.7976931348623157E308</minValue>
                 <maxValue>1.7976931348623157E308</maxValue>
                 <group>Miscellaneous</group>
+                <category>Acquisition</category>
+            </value>
+        </entry>
+        <entry>
+            <key>MULTISLICE_PACKED</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
+                <name>MULTISLICE_PACKED</name>
+                <value>false</value>
+                <defaultValue>false</defaultValue>
+                <description>acquier all interleaved multislices at the begining of TR</description>
+                <displayedName>MULTISLICE_PACKED</displayedName>
+                <locked>false</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <group>Scan</group>
                 <category>Acquisition</category>
             </value>
         </entry>
@@ -2028,7 +2042,7 @@
             <key>OBSERVED_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>OBSERVED_FREQUENCY</name>
-                <value>1.27552944E8</value>
+                <value>3.0E8</value>
                 <defaultValue>6.3E7</defaultValue>
                 <description>The frequency of the acquisition</description>
                 <displayedName>Observed frequency</displayedName>
@@ -2695,7 +2709,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version8.1</value>
+                <value>Version8.2</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_VERSION</displayedName>
@@ -2837,7 +2851,7 @@
             <key>SPECTRAL_WIDTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SPECTRAL_WIDTH</name>
-                <value>50080.0</value>
+                <value>50016.005121638926</value>
                 <defaultValue>12500.0</defaultValue>
                 <description>The spectral width of the reception</description>
                 <displayedName>SW</displayedName>
@@ -2869,7 +2883,7 @@
             <key>SPECTRAL_WIDTH_PER_PIXEL</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SPECTRAL_WIDTH_PER_PIXEL</name>
-                <value>195.625</value>
+                <value>195.37502000640205</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Spectral Width per pixel in Hz / Pix</description>
                 <displayedName>SPECTRAL_WIDTH_PER_PIXEL</displayedName>
@@ -3018,7 +3032,7 @@
             <key>TX_AMP_180</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_180</name>
-                <value>89.2697162132732</value>
+                <value>100.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>The magnitude of the RF pulse 180</description>
                 <displayedName>TX_AMP_180</displayedName>
@@ -3036,7 +3050,7 @@
             <key>TX_AMP_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
-                <value>44.5547338292634</value>
+                <value>100.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude of the transmitter</description>
                 <displayedName>TX_AMP</displayedName>
@@ -3068,7 +3082,7 @@
             <key>TX_ATT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_ATT</name>
-                <value>29.0</value>
+                <value>0.0</value>
                 <defaultValue>36.0</defaultValue>
                 <description>The emission attenuation</description>
                 <displayedName>TX_ATT</displayedName>
