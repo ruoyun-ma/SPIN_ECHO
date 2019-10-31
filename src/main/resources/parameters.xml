@@ -912,9 +912,9 @@
             <key>HARDWARE_A0</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_A0</name>
-                <value>27.69</value>
-                <value>28.58</value>
-                <value>22.43</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
                 <description></description>
                 <displayedName>HARDWARE_A0</displayedName>
                 <locked>true</locked>
@@ -929,9 +929,9 @@
             <key>HARDWARE_DC</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_DC</name>
-                <value>-0.174</value>
-                <value>0.2686</value>
-                <value>-0.1862</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
                 <value>0.0</value>
                 <description></description>
                 <displayedName>HARDWARE_DC</displayedName>
@@ -980,24 +980,24 @@
             <key>HARDWARE_PREEMPHASIS_T</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_PREEMPHASIS_T</name>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
-                <value>0.02</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
+                <value>0.0</value>
                 <description></description>
                 <displayedName>HARDWARE_PREEMPHASIS_T</displayedName>
                 <locked>true</locked>
@@ -1014,14 +1014,6 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>HARDWARE_SHIM</name>
                 <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
                 <description></description>
                 <displayedName>HARDWARE_SHIM</displayedName>
                 <locked>true</locked>
@@ -1036,7 +1028,7 @@
             <key>HARDWARE_SHIM_LABEL</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>HARDWARE_SHIM_LABEL</name>
-                <value>YZ XY XZ X2-Y2 Z0 Z2 X Y Z</value>
+                <value>NotConnected</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>HARDWARE_SHIM_LABEL</displayedName>
@@ -2709,7 +2701,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version8.2</value>
+                <value>Version8.3</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_VERSION</displayedName>
