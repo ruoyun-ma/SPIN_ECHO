@@ -1,22 +1,51 @@
 package rs2d.sequence.spinecho;
 
-public interface Events {
-    int Start = 0;
-    int TriggerDelay = 1;
-    int LoopMultiPlanarStart = 2;
-    int IR = 4;
-    int IRDelay = 9;
 
-    int TX90 = 11;
-    int Delay1 = 16;
+import rs2d.spinlab.sequence.Sequence;
+import rs2d.spinlab.sequence.element.TimeElement;
 
-    int LoopStartEcho = 24;
-    int TX180 = 26;
-    int Delay2 = 32;
-    int Delay3 = 42;
-    int Acq = 37;
-    int LoopEndEcho = 46;
+public enum Events {
+    Start (0,"Time6"),
+    TriggerDelay (1, S.Time_trigger_delay.name()),
+    LoopMultiPlanarStart (2,S.Time_min_instruction.name()),
+    IR (4,S.Time_tx_IR_length.name()),
+    IRDelay (9,S.Time_TI_delay.name()),
 
-    int Delay4 = 50;
-    int LoopMultiPlanarEnd = 51;
-}
+    TX90 (11,S.Time_tx_90.name()),
+    Delay1 (16,S.Time_TE_delay1.name()),
+
+    LoopStartEcho (24,S.Time_min_instruction.name()),
+    TX180 (26,S.Time_tx_180.name()),
+    Delay2 (32,S.Time_TE_delay2.name()),
+    Delay3 (42,S.Time_TE_delay3.name()),
+    Acq (37,S.Time_rx.name()),
+    LoopEndEcho (46,S.Time_min_instruction.name()),
+
+    Delay4 (50,S.Time_TR_delay.name()),
+    LoopMultiPlanarEnd (51,S.Time_min_instruction.name());
+
+    public final int ID;
+    public final String shortcutName;
+
+    Events(int id, String sname) {
+        this.shortcutName = sname;
+        ID = id;
+    }
+
+    static boolean  checkEventShortcut(Sequence sequence)throws Exception{
+        Events[] interfaceFields = Events.values();
+        for (Events f : interfaceFields) {
+
+            if ( !f.shortcutName.equals(((TimeElement) sequence.getTimeChannel().get(f.ID)).getTime().getName()) ){
+
+                String message = "PSD Event Error\n" +
+                        " Shortcut of time ID#" + f.ID + " is not " + f.shortcutName+ "   but is "+((TimeElement) sequence.getTimeChannel().get(f.ID)).getTime().getName()
+                        + " \n Check PSD Events and Events-Class";
+                System.out.println(message);
+                throw new Exception( message);
+            }
+        }
+        return false;
+    }
+}
+

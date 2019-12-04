@@ -770,7 +770,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         // delays for sequence instructions
         // ------------------------------------------
-        setSequenceTableSingleValue(Time_min_instruction, minInstructionDelay);
+        set(Time_min_instruction, minInstructionDelay);
 
         // -----------------------------------------------
         // calculate gradient equivalent rise time
@@ -784,7 +784,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             notifyOutOfRangeParam(GRADIENT_RISE_TIME, new_grad_rise_time, ((NumberParam) getParam(GRADIENT_RISE_TIME)).getMaxValue(), "Gradient ramp time too short ");
             grad_rise_time = new_grad_rise_time;
         }
-        setSequenceTableSingleValue(Time_grad_ramp, grad_rise_time);
+        set(Time_grad_ramp, grad_rise_time);
 
         double grad_shape_rise_factor_up = Utility.voltageFillingFactor(getSequenceTable(Grad_shape_rise_up));
         double grad_shape_rise_factor_down = Utility.voltageFillingFactor(getSequenceTable(Grad_shape_rise_down));
@@ -900,9 +900,11 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         // calculate ADC observation time
         // -----------------------------------------------
-        setSequenceTableSingleValue(Time_rx, observation_time);
+        set(Time_rx, observation_time);
         double grad_crusher_read_time = getDouble(GRADIENT_CRUSHER_READ_TOP_TIME);
-        setSequenceTableSingleValue(Time_grad_read_crusher, grad_crusher_read_time);
+        set(Time_grad_read_crusher, grad_crusher_read_time);
+
+        set(LO_att, Instrument.instance().getLoAttenuation());
 
         // -----------------------------------------------
         // calculate READ gradient amplitude
@@ -925,7 +927,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -------------------------------------------------------------------------------------------------
         double grad_read_prep_application_time = getDouble(GRADIENT_READ_PREPHASING_APPLICATION_TIME);
         double grad_read_prep_offset = getDouble(GRADIENT_READ_OFFSET);
-        setSequenceTableSingleValue(Time_grad_read_prep_top, grad_read_prep_application_time);
+        set(Time_grad_read_prep_top, grad_read_prep_application_time);
 
         // pre-calculate READ_prephasing max area
         Gradient gradReadPrep = Gradient.createGradient(getSequence(), Grad_amp_read_prep, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
@@ -949,7 +951,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             double grad_read_prep_application_time_min = ceilToSubDecimal(grad_area_max / 100.0 - grad_shape_rise_time, 5);
             notifyOutOfRangeParam(GRADIENT_READ_PREPHASING_APPLICATION_TIME, grad_read_prep_application_time_min, ((NumberParam) getParam(GRADIENT_READ_PREPHASING_APPLICATION_TIME)).getMaxValue(), "Gradient application time too short to reach this pixel dimension");
             grad_read_prep_application_time = grad_read_prep_application_time_min;
-            setSequenceTableSingleValue(Time_grad_read_prep_top, grad_read_prep_application_time);
+            set(Time_grad_read_prep_top, grad_read_prep_application_time);
             gradSliceRef.rePrepare();
             gradReadPrep.rePrepare();
         }
@@ -961,7 +963,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -------------------------------------------------------------------------------------------------
         double grad_phase_application_time = getDouble(GRADIENT_PHASE_APPLICATION_TIME);
         boolean is_k_s_centred = getBoolean(KS_CENTERED);  // symetrique around 0 or go through k0
-        setSequenceTableSingleValue(Time_grad_phase_top, grad_phase_application_time);
+        set(Time_grad_phase_top, grad_phase_application_time);
 
         // pre-calculate PHASE_3D
         Gradient gradSlicePhase3D = Gradient.createGradient(getSequence(), Grad_amp_phase_3D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
@@ -983,7 +985,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             double grad_phase_application_time_min = ceilToSubDecimal(grad_area_max / 100.0 - grad_shape_rise_time, 5);
             notifyOutOfRangeParam(GRADIENT_PHASE_APPLICATION_TIME, grad_phase_application_time_min, ((NumberParam) getParam(GRADIENT_PHASE_APPLICATION_TIME)).getMaxValue(), "Gradient application time too short to reach this pixel dimension");
             grad_phase_application_time = grad_phase_application_time_min;
-            setSequenceTableSingleValue(Time_grad_phase_top, grad_phase_application_time);
+            set(Time_grad_phase_top, grad_phase_application_time);
             gradPhase2D.rePrepare();
             gradSlicePhase3D.rePrepare();
         }
@@ -1006,7 +1008,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -------------------------------------------------------------------------------------------------
         double grad_amp_crusher = getDouble(GRADIENT_AMP_CRUSHER);
         double time_grad_crusher_top = getDouble(GRADIENT_CRUSHER_TOP_TIME);
-        setSequenceTableSingleValue(Time_grad_crusher_top, time_grad_crusher_top);
+        set(Time_grad_crusher_top, time_grad_crusher_top);
 
         Gradient gradSliceCrusher = Gradient.createGradient(getSequence(), Grad_amp_slice_crush, Time_grad_crusher_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         gradSliceCrusher.addSpoiler(grad_amp_crusher);
@@ -1018,7 +1020,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // --------------------------------------------------------------------------------------------------------------------------------------------
         // TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING
         // --------------------------------------------------------------------------------------------------------------------------------------------
-
+        Events.checkEventShortcut(getSequence());
         // ------------------------------------------
         // delays for FIR
         // ------------------------------------------
@@ -1032,25 +1034,26 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------+
 
         // calculate actual delays between pulses: time1 ,time2, (time3 + time3bis)
-        double time1 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX90 + 1, Events.Delay1 - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay1 + 4, Events.TX180 - 1);
+        double time1 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX90.ID + 1, Events.Delay1.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay1.ID + 4, Events.TX180.ID - 1);
         time1 = time1 + txLength90 / 2.0 + (txLength180) / 2.0;
         time1 += 3 * minInstructionDelay;
 
-        double time2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX180 + 1, Events.Delay2 - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq - 2, Events.Acq - 1);
+        double time2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX180.ID + 1, Events.Delay2.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 2, Events.Acq.ID - 1);
         time2 = time2 + txLength180 / 2.0 + observation_time / 2.0; // time sans le PE gradient et la pause
         double time2_min = time2 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
-        System.out.println("getTimeBetweenEvents" + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq - 2, Events.Acq - 1));
+        System.out.println("getTimeBetweenEvents" + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 2, Events.Acq.ID - 1));
 
-        double time3 = (TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq, Events.Acq + 1) - observation_time) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3 + 2, Events.LoopEndEcho);
+        double time3 = (TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID, Events.Acq.ID + 1) - observation_time) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 2, Events.LoopEndEcho.ID);
         time3 = time3 + observation_time / 2.0;
 //        time3 = time3 + (isMultiplanar ? (-TimeEvents.getTimeBetweenEvents(getSequence(),Events.Acq + 2, Events.Acq + 4) + 3 * minInstructionDelay) : 0) + minInstructionDelay;
         time3 = time3 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
 
-        double time3_for_min_FIR_delay = min_FIR_4pts_delay + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho, Events.LoopEndEcho) + observation_time / 2.0;
+        double time3_for_min_FIR_delay = min_FIR_4pts_delay + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID,
+        Events.LoopEndEcho.ID) + observation_time / 2.0;
         double time3_min = Math.max(time3, time3_for_min_FIR_delay);
 //        System.out.println(" + + + + + + ");
 //        System.out.println( time3_min+" +  "+time3 + "  D3 ="+delay3);
-        double time3bis = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho, Events.TX180 - 1);
+        double time3bis = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.TX180.ID - 1);
         time3bis = time3bis + txLength180 / 2.0;
 
         // FIR delay from one ETL to the next
@@ -1136,11 +1139,11 @@ public class SpinEcho extends BaseSequenceGenerator {
             grad_read_prep_application_time_2 = grad_read_prep_application_time;
             enable_read_prep_2 = true;
         }
-        setSequenceTableSingleValue(Time_grad_ramp_read_2, grad_rise_time_read_2);
-        setSequenceTableSingleValue(Time_grad_read_prep_top_2, grad_read_prep_application_time_2);
+        set(Time_grad_ramp_read_2, grad_rise_time_read_2);
+        set(Time_grad_read_prep_top_2, grad_read_prep_application_time_2);
         set(Grad_enable_read_prep_1, (!enable_read_prep_2 && isEnableRead));
         set(Grad_enable_read_prep_2, (enable_read_prep_2 && isEnableRead));
-        setSequenceTableSingleValue(Time_TE_delay1, delay1);
+        set(Time_TE_delay1, delay1);
 
         // set calculated the delay2 and delay3
         double delay2 = echo_spacing / 2.0 - time2_min;
@@ -1163,12 +1166,12 @@ public class SpinEcho extends BaseSequenceGenerator {
             delay3 = minInstructionDelay;
         }
 
-        setSequenceTableSingleValue(Time_grad_ramp_phase, grad_rise_time_phase_2);
-        setSequenceTableSingleValue(Time_grad_phase_top, grad_phase_application_time_2);
+        set(Time_grad_ramp_phase, grad_rise_time_phase_2);
+        set(Time_grad_phase_top, grad_phase_application_time_2);
         set(Grad_enable_phase_2D, enable_phase_2 && isEnablePhase);
         set(Grad_enable_phase_bis, !enable_phase_2 && isEnablePhase);
-        setSequenceTableSingleValue(Time_TE_delay2, delay2);
-        setSequenceTableSingleValue(Time_TE_delay3, delay3);
+        set(Time_TE_delay2, delay2);
+        set(Time_TE_delay3, delay3);
 
         // calculate Effective echo time
         double effective_te = echo_spacing; //  in case of Sequential4D and Centered2D
@@ -1189,7 +1192,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // SPoiler Gradient
         // -------------------------------------------------------------------------------------------------
         double time_grad_crusher_end_top = getDouble(GRADIENT_CRUSHER_END_TOP_TIME);
-        setSequenceTableSingleValue(Time_grad_crusher_top2, time_grad_crusher_end_top);
+        set(Time_grad_crusher_top2, time_grad_crusher_end_top);
 
         Gradient gradSliceSpoiler = Gradient.createGradient(getSequence(), Grad_amp_spoiler_slice, Time_grad_crusher_top2, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         boolean is_spoiler = getBoolean(GRADIENT_ENABLE_SPOILER);
@@ -1229,20 +1232,20 @@ public class SpinEcho extends BaseSequenceGenerator {
 
                 // IR Crusher:
                 double grad_amp_crusher_IR = getDouble(GRADIENT_AMP_CRUSHER_IR);
-                setSequenceTableSingleValue(Grad_amp_crusher_IR, grad_amp_crusher_IR);
-                setSequenceTableSingleValue(Time_grad_IR_crusher_top, time_grad_IR_tmp_top);
-                setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, grad_rise_time);
+                set(Grad_amp_crusher_IR, grad_amp_crusher_IR);
+                set(Time_grad_IR_crusher_top, time_grad_IR_tmp_top);
+                set(Time_grad_IR_crusher_ramp, grad_rise_time);
             } else {
-                setSequenceTableSingleValue(Time_grad_IR_crusher_top, defaultInstructionDelay);
-                setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
+                set(Time_grad_IR_crusher_top, defaultInstructionDelay);
+                set(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
             }
-            setSequenceTableSingleValue(Time_tx_IR_length, txLength180);
-            setSequenceTableSingleValue(Time_grad_IR_ramp, grad_rise_time);
+            set(Time_tx_IR_length, txLength180);
+            set(Time_grad_IR_ramp, grad_rise_time);
         } else {
-            setSequenceTableSingleValue(Time_tx_IR_length, defaultInstructionDelay);
-            setSequenceTableSingleValue(Time_grad_IR_ramp, defaultInstructionDelay);
-            setSequenceTableSingleValue(Time_grad_IR_crusher_top, defaultInstructionDelay);
-            setSequenceTableSingleValue(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
+            set(Time_tx_IR_length, defaultInstructionDelay);
+            set(Time_grad_IR_ramp, defaultInstructionDelay);
+            set(Time_grad_IR_crusher_top, defaultInstructionDelay);
+            set(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
         }
 
         // ------------------------------------------
@@ -1257,7 +1260,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         //  double time_TI_delay;
         if (isInversionRecovery) {
             //TI
-            double time0 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.IR + 1, Events.IRDelay - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.IRDelay + 1, Events.TX90 - 1);
+            double time0 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.IR.ID + 1, Events.IRDelay.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.IRDelay.ID + 1, Events.TX90.ID - 1);
             time0 = time0 + txLength90 / 2.0 + txLength180 / 2.0;
             boolean increaseTI = false;
             // ArrayList<Number> arrayListTI = new ArrayList<Number>();
@@ -1297,15 +1300,21 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         int nb_planar_excitation = (isMultiplanar ? acquisitionMatrixDimension3D : 1);
         int slices_acquired_in_single_scan = (nb_planar_excitation > 1) ? (nbOfInterleavedSlice) : 1;
-        double delay_before_multi_planar_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Start, Events.TriggerDelay - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.TriggerDelay + 1, Events.LoopMultiPlanarStart - 1) + time_external_trigger_delay_max;
-        double delay_before_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopMultiPlanarStart, Events.IRDelay - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.IRDelay + 1, Events.LoopStartEcho - 1) + time_IR_delay_max;
-        double delay_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho, Events.LoopEndEcho);
-        double delay_spoiler = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho + 1, Events.LoopMultiPlanarEnd - 2);// grad_phase_application_time + grad_rise_time * 2;
+        double delay_before_multi_planar_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Start.ID,
+        Events.TriggerDelay.ID - 1)
+        +TimeEvents.getTimeBetweenEvents(getSequence(), Events.TriggerDelay.ID + 1, Events.LoopMultiPlanarStart.ID - 1) + time_external_trigger_delay_max;
+        double delay_before_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopMultiPlanarStart.ID,
+        Events.IRDelay.ID - 1)
+        +TimeEvents.getTimeBetweenEvents(getSequence(), Events.IRDelay.ID + 1, Events.LoopStartEcho.ID - 1) + time_IR_delay_max;
+        double delay_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID,
+        Events.LoopEndEcho.ID);
+
+        double delay_spoiler = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID + 1, Events.LoopMultiPlanarEnd.ID - 2);// grad_phase_application_time + grad_rise_time * 2;
         double min_flush_delay = min_time_per_acq_point * acquisitionMatrixDimension1D * echoTrainLength * slices_acquired_in_single_scan * 2;   // minimal time to flush Chameleon buffer (this time is doubled to avoid hidden delays);
         min_flush_delay = Math.max(CameleonVersion105 ? min_flush_delay : 0, minInstructionDelay);
 
         double time_seq_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler) * slices_acquired_in_single_scan);
-        double tr_min = time_seq_to_end_spoiler + minInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 defaultInstructionDelay: Events.event 22 +(20&21
+        double tr_min = time_seq_to_end_spoiler + minInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 defaultInstructionDelay: Events.event.ID 22 +(20&21
         tr_min = ceilToSubDecimal(tr_min, 4);
 
         switch (getText(IMAGE_CONTRAST)) {
@@ -1359,17 +1368,17 @@ public class SpinEcho extends BaseSequenceGenerator {
                 tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
                 time_tr_delay.add(tr_delay);
             }
-            setSequenceTableSingleValue(Time_last_delay, last_delay);
+            set(Time_last_delay, last_delay);
         } else {
             Table time_last_delay = setSequenceTableValues(Time_last_delay, Order.Four);
 
             tr_delay = minInstructionDelay;
             last_delay = (tr - (time_seq_to_end_spoiler + slices_acquired_in_single_scan * (tr_delay + minInstructionDelay) - minInstructionDelay));
             time_last_delay.add(last_delay);
-            setSequenceTableSingleValue(Time_TR_delay, tr_delay);
+            set(Time_TR_delay, tr_delay);
 
         }
-        setSequenceTableSingleValue(Time_flush_delay, min_flush_delay);
+        set(Time_flush_delay, min_flush_delay);
 
         //----------------------------------------------------------------------
         // DYNAMIC SEQUENCE
@@ -1418,7 +1427,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Phase_reset, PHASE_RESET);
 
         // ----------- init Freq offset---------------------
-        setSequenceTableSingleValue(Frequency_offset_init, 0.0);// PSD should start with a zero offset frequency pulse
+        set(Frequency_offset_init, 0.0);// PSD should start with a zero offset frequency pulse
 
         // ------------------------------------------------------------------
         //calculate TX FREQUENCY offsets tables for slice positionning
@@ -1481,8 +1490,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         //----------------------------------------------------------------------
         // modify RX FREQUENCY Prep and comp
         //----------------------------------------------------------------------
-        double timeADC1 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq - 1, Events.Acq - 1) + observation_time / 2.0;
-        double timeADC2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq, Events.LoopEndEcho - 1) - observation_time + observation_time / 2.0;
+        double timeADC1 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 1, Events.Acq.ID - 1) + observation_time / 2.0;
+        double timeADC2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID, Events.LoopEndEcho.ID - 1)
+        -observation_time + observation_time / 2.0;
 
         RFPulse pulseRXPrep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_rx_1D_3Dprep);
         pulseRXPrep.setCompensationFrequencyOffsetWithTime(pulseRX, timeADC1);
@@ -1584,13 +1594,13 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(MULTISERIES_PARAMETER_NAME).setValue(multiseries_parametername);
 
         ArrayList<Number> acquisition_timesList = new ArrayList<>();
-        int dummy_scans = getInt(DUMMY_SCAN);
+
         double acqusition_time;
         for (int i = 0; i < numberOfDynamicAcquisition; i++) {
             for (int j = 0; j < number_of_MultiSeries; j++) {
                 acqusition_time = (i * time_between_frames + j * time_between_MultiSeries);
                 if (i > 0) { // only the first dynamic phase has dummy scans
-                    acqusition_time = acqusition_time + dummy_scans * tr;
+                    acqusition_time = acqusition_time + preScan * tr;
                 }
                 acqusition_time = roundToDecimal(acqusition_time, 3);
                 acquisition_timesList.add(acqusition_time);
@@ -1611,7 +1621,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             System.out.println((((NumberParam) getSequenceParam(Nb_interleaved_slice)).getValue().intValue()));
             System.out.println("");
 
-            for (int i = 0; i < Events.LoopMultiPlanarEnd; i++) {
+            for (int i = 0; i < Events.LoopMultiPlanarEnd.ID; i++) {
                 System.out.println((((TimeElement) getSequence().getTimeChannel().get(i)).getTime().getFirst().doubleValue() * 1000000));
             }
         }
@@ -1666,7 +1676,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         return Math.round(numberToBeRounded * Math.pow(10, order)) / Math.pow(10, order);
     }
 
-    private void setSequenceTableSingleValue(S tableName, double... values) {
+    private void set(S tableName, double... values) {
         // uses Order.One because there are no tables in this dimension: compilation issue
         setSequenceTableValues(tableName, Order.FourLoop, values);
     }

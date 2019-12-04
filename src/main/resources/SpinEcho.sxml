@@ -3278,7 +3278,7 @@
             <key>key40</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Tx_frequency</name>
-                <value>3.0E8</value>
+                <value>3.00001E8</value>
                 <defaultValue>6.35E7</defaultValue>
                 <displayedName>Frequency0</displayedName>
                 <locked>true</locked>
@@ -3339,16 +3339,17 @@
             <count>1</count>
             <key>key44</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>TxAtt1</name>
-                <value>0.0</value>
+                <name>LO_att</name>
+                <value>30.0</value>
                 <defaultValue>0.0</defaultValue>
-                <displayedName>TxAtt1</displayedName>
+                <displayedName>LO_att</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>TxAtt</numberEnum>
                 <minValue>0.0</minValue>
                 <maxValue>63.0</maxValue>
+                <group>Reception</group>
             </value>
         </Entry>
         <Entry>
@@ -18102,7 +18103,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>1.5E-4</list>
             </value>
@@ -18116,7 +18117,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>1.5E-4</list>
             </value>
@@ -18143,7 +18144,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>8</address>
                 <list>4.158189379398604E-4</list>
             </value>
@@ -18170,7 +18171,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>10</address>
                 <list>0.005118362124120281</list>
             </value>
@@ -18184,7 +18185,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>5.0E-6</list>
             </value>
@@ -18627,7 +18628,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>12</address>
                 <list>5.0E-6</list>
             </value>
@@ -18682,7 +18683,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>5</address>
                 <list>0.0010900000000000011</list>
             </value>
@@ -19208,7 +19209,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>7</address>
                 <list>5.0E-6</list>
             </value>
@@ -19222,9 +19223,9 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>8</address>
-                <list>7.158189379398603E-4</list>
+                <list>7.208189379398601E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -19571,7 +19572,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>4</address>
                 <list>3.9999999999999996E-4</list>
             </value>
@@ -19654,7 +19655,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>11</address>
-                <list>0.0040345833333333145</list>
+                <list>0.004029583333333319</list>
             </value>
         </Entry>
         <Entry>
@@ -19666,7 +19667,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>1.0E-5</list>
             </value>
@@ -20075,7 +20076,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>1.0E-5</list>
             </value>
@@ -20328,7 +20329,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>4</address>
                 <list>3.9999999999999996E-4</list>
             </value>
@@ -20381,7 +20382,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>1.0E-5</list>
             </value>
@@ -20395,7 +20396,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>1.0E-5</list>
             </value>
@@ -20409,7 +20410,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>6</address>
                 <list>4.0E-4</list>
             </value>
@@ -21009,7 +21010,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0.0</list>
             </value>
@@ -21375,7 +21376,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>5.0E-6</list>
             </value>
@@ -21428,7 +21429,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>4</address>
                 <list>5.0E-6</list>
             </value>
@@ -21831,7 +21832,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>-1</address>
                 <list>4.9999999999999996E-6</list>
             </value>
@@ -22105,7 +22106,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>FourLoop</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>-1</address>
                 <list>5.0E-4</list>
             </value>
