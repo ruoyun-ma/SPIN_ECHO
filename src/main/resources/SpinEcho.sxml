@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sequenceIO>
-    <sequence rxGainKey="key34" ifFreqKey="key1" accuDimKey="key2" phaseModKey="key4" extTrigModeKey="key475" extTrigSourceKey="key474" dummyScanKey="key30" preScanKey="key3" firCoefSelectedKey="key388" updateDimensionKey="key1165" acqTimeModeKey="param0" gradRotPhiKey="key31" gradRotThetaKey="key32" gradRotPsiKey="key33">
+    <sequence rxGainKey="key34" ifFreqKey="key1" accuDimKey="key2" phaseModKey="key4" extTrigModeKey="key475" extTrigSourceKey="key474" dummyScanKey="key30" preScanKey="key3" firCoefSelectedKey="key388" updateDimensionKey="key1165" gradRotPhiKey="key31" gradRotThetaKey="key32" gradRotPsiKey="key33">
         <acquChannel swKey="key46" nameKey="key45">
             <keyList></keyList>
             <keyList></keyList>
@@ -1893,7 +1893,7 @@
         <Entry>
             <count>1</count>
             <key>key256</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="key788" nameKey="key786" enabledKey="key787"/>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="key409" nameKey="key786" enabledKey="key787"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -1918,7 +1918,7 @@
         <Entry>
             <count>1</count>
             <key>key261</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="key804" nameKey="key802" enabledKey="key803"/>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="key409" nameKey="key802" enabledKey="key803"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -3295,7 +3295,7 @@
             <key>key41</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Tx_att</name>
-                <value>0.0</value>
+                <value>10.0</value>
                 <defaultValue>30.0</defaultValue>
                 <displayedName>TxAtt0</displayedName>
                 <locked>false</locked>
@@ -3370,7 +3370,7 @@
             <key>key46</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Spectral_width</name>
-                <value>50016.005121638926</value>
+                <value>50016.0</value>
                 <defaultValue>12500.0</defaultValue>
                 <displayedName>SW0</displayedName>
                 <locked>true</locked>
@@ -8021,7 +8021,7 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>3</count>
             <key>key409</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>Tx_enable_IR</name>
@@ -12930,19 +12930,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>key788</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>state126</name>
-                <value>true</value>
-                <defaultValue>false</defaultValue>
-                <description>State of the element</description>
-                <displayedName>state126</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key789</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>name261</name>
@@ -13138,19 +13125,6 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled226</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>key804</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>state129</name>
-                <value>true</value>
-                <defaultValue>false</defaultValue>
-                <description>State of the element</description>
-                <displayedName>state129</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
             </value>
@@ -18171,7 +18145,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>8</address>
-                <list>4.158192000000005E-4</list>
+                <list>4.158189379398604E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -18198,7 +18172,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>10</address>
-                <list>0.0051183616</list>
+                <list>0.005118362124120281</list>
             </value>
         </Entry>
         <Entry>
@@ -18241,7 +18215,7 @@
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>2</address>
-                <list>100</list>
+                <list>15.036417869583435</list>
             </value>
         </Entry>
         <Entry>
@@ -18850,7 +18824,7 @@
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>1</address>
-                <list>100</list>
+                <list>80.69861911032363</list>
             </value>
         </Entry>
         <Entry>
@@ -19250,7 +19224,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>8</address>
-                <list>7.158192000000004E-4</list>
+                <list>7.158189379398603E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -19626,7 +19600,7 @@
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>89.44239916156671</list>
+                <list>89.442398828226</list>
             </value>
         </Entry>
         <Entry>
@@ -19680,7 +19654,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>11</address>
-                <list>9.179166666666579E-4</list>
+                <list>0.0040345833333333145</list>
             </value>
         </Entry>
         <Entry>
@@ -19809,7 +19783,7 @@
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>1</address>
-                <list>19.90267682395489</list>
+                <list>19.902674785920787</list>
             </value>
         </Entry>
         <Entry>

@@ -2,7 +2,6 @@
 <application>
     <name>SPIN_ECHO_master</name>
     <description></description>
-    <usage></usage>
     <generatorName>seqdev-temp</generatorName>
     <durationTime>0</durationTime>
     <setUpQueue>
@@ -285,7 +284,7 @@
                 <key>ACQUISITION_TIME_PER_SCAN</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_TIME_PER_SCAN</name>
-                    <value>0.0051183616</value>
+                    <value>0.005118362124120281</value>
                     <defaultValue>1.0</defaultValue>
                     <description>The acquisition time per scan</description>
                     <displayedName>Acq Time</displayedName>
@@ -1168,6 +1167,14 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>HARDWARE_SHIM</name>
                     <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
                     <description></description>
                     <displayedName>HARDWARE_SHIM</displayedName>
                     <locked>true</locked>
@@ -1182,7 +1189,7 @@
                 <key>HARDWARE_SHIM_LABEL</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>HARDWARE_SHIM_LABEL</name>
-                    <value>NotConnected</value>
+                    <value>YZ XY XZ X2-Y2 Z0 Z2 X Y Z</value>
                     <defaultValue></defaultValue>
                     <description></description>
                     <displayedName>HARDWARE_SHIM_LABEL</displayedName>
@@ -2750,7 +2757,7 @@
                 <key>REPETITION_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>REPETITION_TIME</name>
-                    <value>0.522</value>
+                    <value>0.5594</value>
                     <defaultValue>0.2</defaultValue>
                     <description>The repetition time  ( TR ) </description>
                     <displayedName>TR</displayedName>
@@ -2837,7 +2844,7 @@
                 <key>SEQUENCE_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SEQUENCE_TIME</name>
-                    <value>134.676005</value>
+                    <value>144.32520499999998</value>
                     <defaultValue>0.0</defaultValue>
                     <description></description>
                     <displayedName>SEQUENCE_TIME</displayedName>
@@ -2855,7 +2862,7 @@
                 <key>SEQUENCE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQUENCE_VERSION</name>
-                    <value>Version8.3</value>
+                    <value>Version8.4</value>
                     <defaultValue></defaultValue>
                     <description></description>
                     <displayedName>SEQUENCE_VERSION</displayedName>
@@ -2997,7 +3004,7 @@
                 <key>SPECTRAL_WIDTH</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH</name>
-                    <value>50016.005121638926</value>
+                    <value>50016.0</value>
                     <defaultValue>12500.0</defaultValue>
                     <description>The spectral width of the reception</description>
                     <displayedName>SW</displayedName>
@@ -3029,7 +3036,7 @@
                 <key>SPECTRAL_WIDTH_PER_PIXEL</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH_PER_PIXEL</name>
-                    <value>195.37502000640205</value>
+                    <value>195.375</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Spectral Width per pixel in Hz / Pix</description>
                     <displayedName>SPECTRAL_WIDTH_PER_PIXEL</displayedName>
@@ -3178,7 +3185,7 @@
                 <key>TX_AMP_180</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_AMP_180</name>
-                    <value>100.0</value>
+                    <value>80.69861911032363</value>
                     <defaultValue>0.0</defaultValue>
                     <description>The magnitude of the RF pulse 180</description>
                     <displayedName>TX_AMP_180</displayedName>
@@ -3196,7 +3203,7 @@
                 <key>TX_AMP_90</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_AMP_90</name>
-                    <value>100.0</value>
+                    <value>15.036417869583435</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Amplitude of the transmitter</description>
                     <displayedName>TX_AMP</displayedName>
@@ -3228,7 +3235,7 @@
                 <key>TX_ATT</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_ATT</name>
-                    <value>0.0</value>
+                    <value>10.0</value>
                     <defaultValue>36.0</defaultValue>
                     <description>The emission attenuation</description>
                     <displayedName>TX_ATT</displayedName>

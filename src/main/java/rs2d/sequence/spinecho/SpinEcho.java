@@ -66,7 +66,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version8.3";
+    private String sequenceVersion = "Version8.4";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -703,7 +703,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // activate gradient rotation matrix
         // -----------------------------------------------
         GradientRotation.setSequenceGradientRotation(this);
-
+/*
         HardwarePreemphasis hardwarePreemphasis = new HardwarePreemphasis();
         getParam(HARDWARE_PREEMPHASIS_A).setValue(hardwarePreemphasis.getAmplitude());
         getParam(HARDWARE_PREEMPHASIS_T).setValue(hardwarePreemphasis.getTime());
@@ -713,6 +713,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         HardwareShim hardwareShim = new HardwareShim();
         getParam(HARDWARE_SHIM).setValue(hardwareShim.getValue());
         getParam(HARDWARE_SHIM_LABEL).setValue(hardwareShim.getLabel());
+        */
     }
 
     private int floorEven(double value) {
