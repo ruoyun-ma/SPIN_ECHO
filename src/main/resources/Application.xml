@@ -787,7 +787,7 @@
                 <key>GRADIENT_AREA_CRUSHER</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER</name>
-                    <value>1.3082634985938545E-5</value>
+                    <value>4.579158479007452E-5</value>
                     <defaultValue>0.0</defaultValue>
                     <description>For info: Area of the crusher gradient!</description>
                     <displayedName>GRADIENT_AREA_CRUSHER</displayedName>
@@ -805,7 +805,7 @@
                 <key>GRADIENT_AREA_CRUSHER_PI</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER_PI</name>
-                    <value>0.5569277713514039</value>
+                    <value>1.9493477645134725</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Number of pi dephasing by the crusher</description>
                     <displayedName>GRADIENT_AREA_CRUSHER_PI</displayedName>
@@ -3203,7 +3203,7 @@
                 <key>TX_AMP_90</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_AMP_90</name>
-                    <value>15.036417869583435</value>
+                    <value>9.975096690137075</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Amplitude of the transmitter</description>
                     <displayedName>TX_AMP</displayedName>
