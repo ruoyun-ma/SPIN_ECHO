@@ -828,8 +828,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         RFPulse pulseTX180 = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_180, Tx_phase_180, Time_tx_180, Tx_shape_180, Tx_shape_phase_180, Tx_freq_offset_180);
 
         int nb_shape_points = 128;
-        pulseTX90.setShape((getText(TX_SHAPE_90)), nb_shape_points, "Hamming");
-        pulseTX180.setShape((getText(TX_SHAPE_180)), nb_shape_points, "Hamming");
+        pulseTX90.setShape((getText(TX_SHAPE_90)), nb_shape_points,"90 degree"  );
+        pulseTX180.setShape((getText(TX_SHAPE_180)), nb_shape_points, "Refocusing (spin-echo)");
 
         // -----------------------------------------------
         // Calculation RF pulse parameters  2/3 : RF pulse & attenuation
