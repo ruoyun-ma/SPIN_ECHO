@@ -22985,7 +22985,7 @@
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>-0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -23143,7 +23143,7 @@
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -23698,7 +23698,7 @@
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>-0.0</list>
             </value>
         </Entry>
         <Entry>

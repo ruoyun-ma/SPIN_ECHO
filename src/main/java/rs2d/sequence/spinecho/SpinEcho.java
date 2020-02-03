@@ -1267,7 +1267,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         boolean enable_phase_2 = !isMultiplanar;
         System.out.println("time2_min" + time2_min);
         // in 2D if the delay is loong pack the Phase close to the redaout
-        if ((delay2 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time + grad_rise_time) && (delay3 + (2 * minInstructionDelay - defaultInstructionDelay) > grad_phase_application_time + grad_rise_time)) {
+        if ((delay2 + (2 * minInstructionDelay - minInstructionDelay) > grad_phase_application_time + grad_rise_time) && (delay3 + (2 * minInstructionDelay - minInstructionDelay) > grad_phase_application_time + grad_rise_time)) {
             System.out.println("Bug");
             delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
             delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
@@ -1381,16 +1381,16 @@ public class SpinEcho extends BaseSequenceGenerator {
                 set(Time_grad_IR_crusher_top, time_grad_IR_tmp_top);
                 set(Time_grad_IR_crusher_ramp, grad_rise_time);
             } else {
-                set(Time_grad_IR_crusher_top, defaultInstructionDelay);
-                set(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
+                set(Time_grad_IR_crusher_top, minInstructionDelay);
+                set(Time_grad_IR_crusher_ramp, minInstructionDelay);
             }
             set(Time_tx_IR_length, txLength180);
             set(Time_grad_IR_ramp, grad_rise_time);
         } else {
-            set(Time_tx_IR_length, defaultInstructionDelay);
-            set(Time_grad_IR_ramp, defaultInstructionDelay);
-            set(Time_grad_IR_crusher_top, defaultInstructionDelay);
-            set(Time_grad_IR_crusher_ramp, defaultInstructionDelay);
+            set(Time_tx_IR_length, minInstructionDelay);
+            set(Time_grad_IR_ramp, minInstructionDelay);
+            set(Time_grad_IR_crusher_top, minInstructionDelay);
+            set(Time_grad_IR_crusher_ramp, minInstructionDelay);
         }
 
         // ------------------------------------------
@@ -1420,8 +1420,8 @@ public class SpinEcho extends BaseSequenceGenerator {
                 // arrayListTI.add(IR_time);
                 double delay0 = IR_time - time0_IR_90;
 
-                if ((delay0 < defaultInstructionDelay)) {
-                    double ti_min = ceilToSubDecimal((time0_IR_90 + defaultInstructionDelay), 4);
+                if ((delay0 < minInstructionDelay)) {
+                    double ti_min = ceilToSubDecimal((time0_IR_90 + minInstructionDelay), 4);
 //                    System.out.println("IR_time-" + IR_time + " -- >" + ti_min + " car " + delay0);
                     IR_time = ti_min;
                     increaseTI = true;
@@ -1441,8 +1441,8 @@ public class SpinEcho extends BaseSequenceGenerator {
             time_TI_delay.setOrder(Order.Four);
             time_TI_delay.setLocked(true);
         } else {
-            time_IR_delay_max = defaultInstructionDelay;
-            time_TI_delay.add(defaultInstructionDelay);
+            time_IR_delay_max = minInstructionDelay;
+            time_TI_delay.add(minInstructionDelay);
         }
 
         // ------------------------------------------
@@ -1469,7 +1469,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         //  = = = = =  = = = = = = = = = = = = = =
         double time_seq_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler) * slices_acquired_in_single_scan);
 
-        double tr_min = time_seq_to_end_spoiler + minInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 defaultInstructionDelay: Events.event.ID 22 +(20&21
+        double tr_min = time_seq_to_end_spoiler + minInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 minInstructionDelay: Events.event.ID 22 +(20&21
         tr_min = ceilToSubDecimal(tr_min, 4);
 
         switch (getText(IMAGE_CONTRAST)) {
@@ -1510,17 +1510,17 @@ public class SpinEcho extends BaseSequenceGenerator {
             if (number_of_IR_acquisition != 1) {
                 for (int i = 0; i < number_of_IR_acquisition; i++) {
                     double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler + (time_TI_delay.get(i).doubleValue() - time_IR_delay_max) * slices_acquired_in_single_scan;
-                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
+                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - minInstructionDelay;
                     time_tr_delay.add(tr_delay);
                 }
             } else if (numberOfTrigger != 1) {
                 for (int i = 0; i < numberOfTrigger; i++) {
                     double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler - time_external_trigger_delay_max + triggerdelay.get(i).doubleValue();
-                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
+                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - minInstructionDelay;
                     time_tr_delay.add(tr_delay);
                 }
             } else {
-                tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - defaultInstructionDelay;
+                tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - minInstructionDelay;
                 time_tr_delay.add(tr_delay);
             }
             set(Time_last_delay, last_delay);
@@ -1920,6 +1920,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         //--------------------------------------------------------------------------------------
         // Comments
         //--------------------------------------------------------------------------------------
+
         if (false) { // Show the comments
             System.out.println("");
             System.out.println(((NumberParam) getSequenceParam(Nb_1d)).intValue());
@@ -1929,7 +1930,6 @@ public class SpinEcho extends BaseSequenceGenerator {
             System.out.println((((NumberParam) getSequenceParam(Nb_echo)).getValue().intValue()));
             System.out.println((((NumberParam) getSequenceParam(Nb_interleaved_slice)).getValue().intValue()));
             System.out.println("");
-
             for (int i = 0; i < Events.LoopMultiPlanarEnd.ID; i++) {
                 System.out.println((((TimeElement) getSequence().getTimeChannel().get(i)).getTime().getFirst().doubleValue() * 1000000));
             }
