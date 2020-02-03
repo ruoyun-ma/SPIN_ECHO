@@ -654,14 +654,14 @@
             <keyList>key270</keyList>
             <keyList>key282</keyList>
             <keyList>elem21</keyList>
-            <keyList>elem16</keyList>
+            <keyList>elem11</keyList>
             <keyList>elem11</keyList>
             <keyList>elem6</keyList>
             <keyList>elem51</keyList>
             <keyList>elem46</keyList>
             <keyList>elem41</keyList>
             <keyList>elem36</keyList>
-            <keyList>elem61</keyList>
+            <keyList>elem56</keyList>
             <keyList>elem56</keyList>
             <keyList>elem31</keyList>
             <keyList>elem26</keyList>
@@ -891,9 +891,9 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="timeElement" timeKey="key205" triggerKey="key125" nameKey="key74" enabledKey="key124"/>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>elem11</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="param40" nameKey="param38" enabledKey="param39"/>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="param248" nameKey="param38" enabledKey="param39"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -934,11 +934,6 @@
             <count>1</count>
             <key>key16</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="key89" nameKey="key87" enabledKey="key88"/>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>elem16</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="param57" nameKey="param55" enabledKey="param56"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -1275,9 +1270,9 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="key210" nameKey="key208" enabledKey="key209"/>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>elem56</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="param193" nameKey="param191" enabledKey="param192"/>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="param255" nameKey="param191" enabledKey="param192"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -1315,11 +1310,6 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="txElement" offsetKey="key24" phaseKey="key25" ampKey="key26" shapeKey="key27" shapePhaseKey="key28" attKey="key193" nameKey="key221" enabledKey="key222">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>elem61</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanElement" stateKey="param210" nameKey="param208" enabledKey="param209"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -3181,7 +3171,7 @@
                 <defaultValue>1H</defaultValue>
                 <description>The nucleus used for the first sequence channel</description>
                 <displayedName>Nucleus 1</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>true</restrictedToSuggested>
                 <suggestedValues>Y</suggestedValues>
@@ -3337,7 +3327,7 @@
                 <value>1.25E7</value>
                 <defaultValue>1.0</defaultValue>
                 <displayedName>IF</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Frequency</numberEnum>
@@ -3372,7 +3362,7 @@
                 <defaultValue>0</defaultValue>
                 <description>PreScan</description>
                 <displayedName>PS</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Scan</numberEnum>
@@ -3806,7 +3796,7 @@
                 <value>8</value>
                 <defaultValue>1</defaultValue>
                 <displayedName>Nb 1D</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Scan</numberEnum>
@@ -3855,7 +3845,7 @@
                 <value>32</value>
                 <defaultValue>1</defaultValue>
                 <displayedName>Nb 2D</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Scan</numberEnum>
@@ -3944,7 +3934,7 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <displayedName>Nb 3D</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Scan</numberEnum>
@@ -4033,7 +4023,7 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <displayedName>Nb 4D</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Scan</numberEnum>
@@ -4158,7 +4148,7 @@
                 <value>270.0</value>
                 <defaultValue>0.0</defaultValue>
                 <displayedName>Gradient Angle Phi</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Angle</numberEnum>
@@ -4187,7 +4177,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <displayedName>Gradient Angle Theta</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Angle</numberEnum>
@@ -4218,7 +4208,7 @@
                 <value>180.0</value>
                 <defaultValue>0.0</defaultValue>
                 <displayedName>Gradient Angle Psi</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Angle</numberEnum>
@@ -4248,7 +4238,7 @@
                 <value>42.0</value>
                 <defaultValue>1.0</defaultValue>
                 <displayedName>Rx Gain</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>RxGain</numberEnum>
@@ -4372,26 +4362,13 @@
                 <value>3.00001E8</value>
                 <defaultValue>6.35E7</defaultValue>
                 <displayedName>Frequency0</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Frequency</numberEnum>
                 <minValue>0.0</minValue>
                 <maxValue>3.0E9</maxValue>
                 <group>Emission</group>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>param40</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>state121</name>
-                <value>false</value>
-                <defaultValue>false</defaultValue>
-                <description>State of the element</description>
-                <displayedName>state1</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
             </value>
         </Entry>
         <Entry>
@@ -4545,7 +4522,7 @@
                 <value>50016.0</value>
                 <defaultValue>12500.0</defaultValue>
                 <displayedName>SW0</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>SW</numberEnum>
@@ -4761,20 +4738,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>param55</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
-                <name>name236</name>
-                <value>Bool141</value>
-                <defaultValue>Elem</defaultValue>
-                <description>The name of the element</description>
-                <displayedName>name4</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key56</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>name5</name>
@@ -4789,19 +4752,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>param56</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>enabled240</name>
-                <value>true</value>
-                <defaultValue>true</defaultValue>
-                <description>The state of the element</description>
-                <displayedName>enabled4</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key57</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled5</name>
@@ -4809,19 +4759,6 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled5</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>param57</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>state138</name>
-                <value>false</value>
-                <defaultValue>false</defaultValue>
-                <description>State of the element</description>
-                <displayedName>state1</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
             </value>
@@ -8016,19 +7953,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>param193</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>state162</name>
-                <value>false</value>
-                <defaultValue>false</defaultValue>
-                <description>State of the element</description>
-                <displayedName>state1</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key193</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled49</name>
@@ -8394,20 +8318,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>param208</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
-                <name>name324</name>
-                <value>Bool168</value>
-                <defaultValue>Elem</defaultValue>
-                <description>The name of the element</description>
-                <displayedName>name4</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key209</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled54</name>
@@ -8421,19 +8331,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>param209</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>enabled285</name>
-                <value>true</value>
-                <defaultValue>true</defaultValue>
-                <description>The state of the element</description>
-                <displayedName>enabled4</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key210</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>state30</name>
@@ -8441,19 +8338,6 @@
                 <defaultValue>false</defaultValue>
                 <description>State of the element</description>
                 <displayedName>state30</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>param210</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>state165</name>
-                <value>false</value>
-                <defaultValue>false</defaultValue>
-                <description>State of the element</description>
-                <displayedName>state1</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
             </value>
@@ -9093,7 +8977,7 @@
             <key>param236</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled11111111111111111111111111111</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled11111111111111111111111111111</displayedName>
@@ -9146,7 +9030,7 @@
             <key>param238</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled11111111111111111111111111110</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled11111111111111111111111111110</displayedName>
@@ -9199,7 +9083,7 @@
             <key>param240</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled11111111111111111111111118</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled11111111111111111111111118</displayedName>
@@ -9253,7 +9137,7 @@
             <key>param242</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled11111111111111111111111113</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled11111111111111111111111113</displayedName>
@@ -9269,7 +9153,7 @@
                 <value>256</value>
                 <defaultValue>128</defaultValue>
                 <displayedName>Nb Point</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>AcquPoint</numberEnum>
@@ -9300,7 +9184,7 @@
                 <value xsi:type="gradientAxe">P</value>
                 <defaultValue xsi:type="gradientAxe">R</defaultValue>
                 <displayedName>GradientAxePhase</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -9310,7 +9194,7 @@
             <key>param244</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled1111111111111111111111117</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled1111111111111111111111117</displayedName>
@@ -9354,7 +9238,7 @@
                 <value xsi:type="gradientAxe">R</value>
                 <defaultValue xsi:type="gradientAxe">R</defaultValue>
                 <displayedName>GradientAxeRead</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -9364,7 +9248,7 @@
             <key>param246</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled1111111111111111111111116</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled1111111111111111111111116</displayedName>
@@ -9415,7 +9299,7 @@
             </value>
         </Entry>
         <Entry>
-            <count>19</count>
+            <count>20</count>
             <key>param248</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>Enable_sb</name>
@@ -9423,7 +9307,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Enable_sb</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>User</group>
             </value>
@@ -9479,7 +9363,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_slice</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -9594,7 +9478,7 @@
             </value>
         </Entry>
         <Entry>
-            <count>10</count>
+            <count>11</count>
             <key>param255</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>Enable_fs</name>
@@ -9602,7 +9486,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Enable_fs</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>User</group>
             </value>
@@ -9941,7 +9825,7 @@
                 <value>3</value>
                 <defaultValue>0</defaultValue>
                 <displayedName>Datafield</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Integer</numberEnum>
@@ -11865,7 +11749,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_read</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -12166,7 +12050,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_slice_crush</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -12425,7 +12309,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>enabled115</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Emission</group>
             </value>
@@ -13555,7 +13439,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_phase</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -13879,7 +13763,7 @@
                 <value>11</value>
                 <defaultValue>0</defaultValue>
                 <displayedName>Datafield</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Integer</numberEnum>
@@ -16295,7 +16179,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_spoiler</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -16351,7 +16235,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_phase_3D</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -16740,7 +16624,7 @@
                 <value xsi:type="trigger">Timer</value>
                 <defaultValue xsi:type="trigger">Timer</defaultValue>
                 <displayedName>Synchro_trigger</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Delay</group>
             </value>
@@ -16821,7 +16705,7 @@
                 <defaultValue>false</defaultValue>
                 <description>State of the element</description>
                 <displayedName>state121</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Emission</group>
             </value>
@@ -16996,7 +16880,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_Slice_180</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -17750,7 +17634,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_IR</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -18447,7 +18331,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_crush_IR</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -20422,7 +20306,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_read_prep_2</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -20464,7 +20348,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_read_prep_1</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -20641,7 +20525,7 @@
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_phase_bis</displayedName>
-                <locked>true</locked>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
             </value>
@@ -22400,7 +22284,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>ThreeLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <generator>
                     <name>Span</name>
@@ -22594,7 +22478,7 @@
                 <numberEnum>Phase</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0.0</list>
                 <list>180.0</list>
@@ -22609,7 +22493,7 @@
                 <numberEnum>TxAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>9.975096690137075</list>
             </value>
@@ -22969,7 +22853,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoopB</order>
                 <group>Reception</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>34</address>
                 <list>-0.0</list>
             </value>
@@ -22983,7 +22867,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>-0.0</list>
             </value>
@@ -22997,7 +22881,7 @@
                 <numberEnum>Phase</numberEnum>
                 <order>One</order>
                 <group>Reception</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0.0</list>
                 <list>180.0</list>
@@ -23103,7 +22987,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -23141,7 +23025,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0.0</list>
             </value>
@@ -23197,7 +23081,7 @@
                 <numberEnum>TxAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>0.0</list>
             </value>
@@ -23211,7 +23095,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>23.192213907092007</list>
             </value>
@@ -23584,7 +23468,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>ThreeLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>17</address>
                 <generator>
                     <name>Span</name>
@@ -23682,7 +23566,7 @@
                 <numberEnum>Phase</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>90.0</list>
             </value>
@@ -23696,7 +23580,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>-0.0</list>
             </value>
@@ -23710,7 +23594,7 @@
                 <numberEnum>TxAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>80.69861911032363</list>
             </value>
@@ -24173,9 +24057,9 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoopB</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
-                <list>220.0</list>
+                <list>-526.75</list>
             </value>
         </Entry>
         <Entry>
@@ -24214,7 +24098,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>3</address>
                 <list>30.0</list>
             </value>
@@ -24241,7 +24125,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>5</address>
                 <list>20.0</list>
             </value>
@@ -24394,9 +24278,9 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoopB</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
-                <list>-440.0</list>
+                <list>1053.5</list>
             </value>
         </Entry>
         <Entry>
@@ -24408,7 +24292,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>23.192213907092007</list>
             </value>
@@ -24449,7 +24333,7 @@
                 <numberEnum>TxAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>3</address>
                 <list>0.0</list>
             </value>
@@ -24668,7 +24552,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0</list>
             </value>
@@ -24785,7 +24669,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>4</address>
                 <generator>
                     <name>Span</name>
@@ -24859,9 +24743,9 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoopB</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
-                <list>220.0</list>
+                <list>-526.75</list>
             </value>
         </Entry>
         <Entry>
@@ -24926,7 +24810,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>25.553652739925486</list>
             </value>
@@ -24977,7 +24861,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>-23.41526454918946</list>
             </value>
@@ -25017,9 +24901,9 @@
                 <numberEnum>Time</numberEnum>
                 <order>Four</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>11</address>
-                <list>0.0039695833333333146</list>
+                <list>8.929166666666557E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -25046,7 +24930,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -25070,7 +24954,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoopB</order>
                 <group>Reception</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>33</address>
                 <list>0.0</list>
             </value>
@@ -25110,7 +24994,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>4</address>
                 <generator>
                     <name>Span</name>
@@ -25196,7 +25080,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>5.686185150868207</list>
             </value>
@@ -25313,7 +25197,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>TwoLoopB</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <generator>
                     <name>Span</name>
@@ -25567,7 +25451,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -25629,7 +25513,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>TwoLoopB</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>160</address>
                 <generator>
                     <name>Span</name>
@@ -25830,7 +25714,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>0.0</list>
             </value>
@@ -26064,7 +25948,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>3</address>
                 <list>0.0</list>
             </value>
@@ -26106,7 +25990,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26118,7 +26002,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>2</address>
                 <list>0.0</list>
             </value>
@@ -26134,7 +26018,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26173,7 +26057,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0.0</list>
             </value>
@@ -26187,7 +26071,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>Four</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>12</address>
                 <list>5.0E-6</list>
             </value>
@@ -26228,7 +26112,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>0.0</list>
             </value>
@@ -26281,7 +26165,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0.0</list>
             </value>
@@ -26333,7 +26217,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0.0</list>
             </value>
@@ -26386,7 +26270,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>0.0</list>
             </value>
@@ -26438,7 +26322,7 @@
                 <numberEnum>GradAmp</numberEnum>
                 <order>FourLoop</order>
                 <group>Gradient</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>0.0</list>
             </value>
@@ -26542,7 +26426,7 @@
                 <numberEnum>Time</numberEnum>
                 <order>Four</order>
                 <group>Delay</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>1</address>
                 <list>5.0E-6</list>
             </value>
@@ -26865,7 +26749,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>0</list>
             </value>
@@ -26942,7 +26826,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>ThreeLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>-2766.666666666673</list>
                 <list>-2366.6666666666697</list>
@@ -26967,7 +26851,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>FourLoopB</order>
                 <group>Reception</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>33</address>
                 <list>0.0</list>
             </value>
@@ -27538,7 +27422,7 @@
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>ThreeLoop</order>
                 <group>Emission</group>
-                <locked>true</locked>
+                <locked>false</locked>
                 <address>0</address>
                 <list>-2766.666666666673</list>
                 <list>-2366.6666666666697</list>

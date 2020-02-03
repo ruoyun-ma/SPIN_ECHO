@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Class RFPulse
- * V2.7 SLR pulse V2019.06
+ * V2.9 SLR pulse & constructor V2019.06
  * V2.6 constructor with generatorSequenceParam .name() V2019.06
  * V2.5- getNearestSW Sup Inf for Cam4
  * V2.3- 2019-06-06 JR
@@ -67,7 +67,11 @@ public class RFPulse {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                  Constructor
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    public RFPulse(Param attPar, Table amplitudeTab, Table phaseTab,
+    public RFPulse(){
+
+    }
+
+            public RFPulse(Param attPar, Table amplitudeTab, Table phaseTab,
                    Table timeTab, Shape shape, Shape shapePhase, Table offsetFreqTab) {
         amplitudeTable = amplitudeTab;
         attParam = attPar;

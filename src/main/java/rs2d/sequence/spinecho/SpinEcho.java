@@ -205,6 +205,11 @@ public class SpinEcho extends BaseSequenceGenerator {
         //List<String> tx_shape = Arrays.asList("HARD", "GAUSSIAN", "SIN3", "xSINC5");
         ((TextParam) getParam(SATBAND_ORIENTATION)).setSuggestedValues(satbandOrientationAllowed);
         ((TextParam) getParam(SATBAND_ORIENTATION)).setRestrictedToSuggested(true);
+
+        protonFrequency = Math.ceil(Instrument.instance().getDevices().getMagnet().getProtonFrequency() / Math.pow(10, 6));
+        double fatFreq = protonFrequency * 3.5;
+        ((NumberParam) getParam(FATSAT_BANDWIDTH)).setDefaultValue(fatFreq);
+        ((NumberParam) getParam(FATSAT_OFFSET_FREQ)).setDefaultValue(fatFreq);
     }
 
     // ==============================
@@ -801,6 +806,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         boolean isEnableCrusherIR = getBoolean(GRADIENT_ENABLE_CRUSHER_IR);
         set(Grad_enable_crush_IR, isInversionRecovery ? isEnableCrusherIR : false);
         set(Enable_sb, is_satband_enabled);
+        set(Enable_fs, is_fatsat_enabled);
 
         // ------------------------------------------
         // delays for sequence instructions
@@ -932,7 +938,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
 //                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
             }
-            if (!pulseTXSatBand.checkPower(flip_angle_satband, observeFrequency + tx_frequency_offset_90_fs, nucleus)) {
+            if (!pulseTXSatBand.checkPower(flip_angle_satband, observeFrequency, nucleus)) {
 //                double tx_length_sb = pulseTXSatBand.getPulseDuration();
 //                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
                 set(Time_tx_sb, pulseTXSatBand.getPulseDuration());
@@ -1348,12 +1354,26 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (is_fatsat_enabled) {
             double pixel_dimension_ph = getDouble(RESOLUTION_PHASE);
             double pixel_dimension_sl = getDouble(RESOLUTION_SLICE);
-            boolean test_grad = gradFatsatRead.addSpoiler(pixelDimension, 2);
-            test_grad = gradFatsatPhase.addSpoiler(pixel_dimension_ph, 2) && test_grad;
-            test_grad = gradFatsatSlice.addSpoiler(pixel_dimension_sl, 2) && test_grad;
-//
+
+            int pixmax = (pixelDimension > pixel_dimension_ph) ? 1 : 2;
+            pixmax = (Math.max(pixelDimension, pixel_dimension_ph) > pixel_dimension_sl) ? pixmax : 3;
+            boolean test_grad;
+            double min_fatsat_application_time;
+            switch (pixmax) {
+                case 1:
+                    test_grad = gradFatsatRead.addSpoiler(pixelDimension, 3);
+                    min_fatsat_application_time = gradFatsatRead.getMinTopTime();
+                    break;
+                case 2:
+                    test_grad = gradFatsatPhase.addSpoiler(pixel_dimension_ph, 3);
+                    min_fatsat_application_time = gradFatsatPhase.getMinTopTime();
+                    break;
+                default:
+                    test_grad = gradFatsatSlice.addSpoiler(pixel_dimension_sl, 3);
+                    min_fatsat_application_time = gradFatsatSlice.getMinTopTime();
+            }
+
             if (!test_grad) {
-                double min_fatsat_application_time = Math.max(gradFatsatRead.getMinTopTime(), Math.max(gradFatsatPhase.getMinTopTime(), gradFatsatSlice.getMinTopTime()));
                 notifyOutOfRangeParam(FATSAT_GRAD_APP_TIME, min_fatsat_application_time, ((NumberParam) getParam(FATSAT_GRAD_APP_TIME)).getMaxValue(), "FATSAT_GRAD_APP_TIME too short to get correct Spoiling");
                 grad_fatsat_application_time = min_fatsat_application_time;
                 set(Time_grad_fatsat, grad_fatsat_application_time);
@@ -1396,7 +1416,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         // calculate delays adapted to current TI
         // ------------------------------------------
-        int number_of_IR_acquisition = isInversionRecovery ? inversionRecoveryTime.size() : 1;
+
         double time_IR_delay_max = 0.00001;
 
         Table time_TI_delay = getSequenceTable(Time_TI_delay);
@@ -1415,14 +1435,15 @@ public class SpinEcho extends BaseSequenceGenerator {
             boolean increaseTI = false;
             // ArrayList<Number> arrayListTI = new ArrayList<Number>();
             Collection<Double> arrayListTI_min = new ArrayList<Double>();
-            for (int i = 0; i < number_of_IR_acquisition; i++) {
+            for (int i = 0; i < numberOfInversionRecovery; i++) {
                 double IR_time = inversionRecoveryTime.get(i);
                 // arrayListTI.add(IR_time);
                 double delay0 = IR_time - time0_IR_90;
+                System.out.println("delay0 " + delay0);
 
                 if ((delay0 < minInstructionDelay)) {
                     double ti_min = ceilToSubDecimal((time0_IR_90 + minInstructionDelay), 4);
-//                    System.out.println("IR_time-" + IR_time + " -- >" + ti_min + " car " + delay0);
+                    System.out.println("IR_time-" + IR_time + " -- >" + ti_min + " car " + delay0);
                     IR_time = ti_min;
                     increaseTI = true;
                 }
@@ -1431,12 +1452,15 @@ public class SpinEcho extends BaseSequenceGenerator {
                 delay0 = IR_time - time0_IR_90;
                 time_TI_delay.add(delay0);
             }
+
+
             if (increaseTI) {
                 System.out.println(" --- -- -- - - - increaseTI-------------------- ");
 
                 inversionRecoveryTime.clear();
                 inversionRecoveryTime.addAll(arrayListTI_min);
                 //this.notifyOutOfRangeParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.INVERSION_TIME_MULTI.name(), arrayListTI, arrayListTI_min, ((NumberParam) getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.INVERSION_TIME_MULTI")).getMaxValue(), "TI too short");
+                getParam(INVERSION_TIME_MULTI).setValue(inversionRecoveryTime);
             }
             time_TI_delay.setOrder(Order.Four);
             time_TI_delay.setLocked(true);
@@ -1505,10 +1529,10 @@ public class SpinEcho extends BaseSequenceGenerator {
         double last_delay = minInstructionDelay;
         double tr_delay;
         boolean isSlicePacked = getBoolean(MULTISLICE_PACKED);
-        if (!isSlicePacked || (number_of_IR_acquisition != 1) || (numberOfTrigger != 1)) {
+        if (!isSlicePacked || (numberOfInversionRecovery != 1) || (numberOfTrigger != 1)) {
             Table time_tr_delay = setSequenceTableValues(Time_TR_delay, Order.Four);
-            if (number_of_IR_acquisition != 1) {
-                for (int i = 0; i < number_of_IR_acquisition; i++) {
+            if (numberOfInversionRecovery != 1) {
+                for (int i = 0; i < numberOfInversionRecovery; i++) {
                     double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler + (time_TI_delay.get(i).doubleValue() - time_IR_delay_max) * slices_acquired_in_single_scan;
                     tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - minInstructionDelay;
                     time_tr_delay.add(tr_delay);
@@ -1543,7 +1567,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         Table dyn_delay = setSequenceTableValues(Time_btw_dyn_frames, Order.Four);
         double frame_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
-        double time_between_frames_min = ceilToSubDecimal((frame_acquisition_time * number_of_IR_acquisition + minInstructionDelay * (number_of_IR_acquisition)), 1);
+        double time_between_frames_min = ceilToSubDecimal((frame_acquisition_time * numberOfInversionRecovery + minInstructionDelay * (numberOfInversionRecovery)), 1);
         double time_between_frames = time_between_frames_min;
         double interval_between_frames_delay = min_flush_delay;
 
@@ -1557,9 +1581,9 @@ public class SpinEcho extends BaseSequenceGenerator {
                 this.notifyOutOfRangeParam(DYN_TIME_BTW_FRAMES, time_between_frames_min, ((NumberParam) getParam(DYN_TIME_BTW_FRAMES)).getMaxValue(), "Minimum frame acquisition time ");
                 time_between_frames = time_between_frames_min;
             }
-            interval_between_frames_delay = Math.max(time_between_frames - frame_acquisition_time * number_of_IR_acquisition - minInstructionDelay * (number_of_IR_acquisition - 1), minInstructionDelay);
-            if (number_of_IR_acquisition != 1) {
-                for (int i = 0; i < number_of_IR_acquisition - 1; i++) {
+            interval_between_frames_delay = Math.max(time_between_frames - frame_acquisition_time * numberOfInversionRecovery - minInstructionDelay * (numberOfInversionRecovery - 1), minInstructionDelay);
+            if (numberOfInversionRecovery != 1) {
+                for (int i = 0; i < numberOfInversionRecovery - 1; i++) {
                     dyn_delay.add(minInstructionDelay);
                 }
                 dyn_delay.add(interval_between_frames_delay);
@@ -1573,7 +1597,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------------------------------
         // Total Acquisition Time
         // ------------------------------------------------------------------
-        double total_acquisition_time = (frame_acquisition_time * number_of_IR_acquisition + minInstructionDelay * (number_of_IR_acquisition - 1) + interval_between_frames_delay) * numberOfDynamicAcquisition + tr * preScan;
+        double total_acquisition_time = (frame_acquisition_time * numberOfInversionRecovery + minInstructionDelay * (numberOfInversionRecovery - 1) + interval_between_frames_delay) * numberOfDynamicAcquisition + tr * preScan;
         getParam(SEQUENCE_TIME).setValue(total_acquisition_time);
 
         // -----------------------------------------------
@@ -1671,7 +1695,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                     gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
                     gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
                     double off_center_pos = off_center_distance_3D + fov3d / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
-                    offsetFreqSBTable[n] = new RFPulse(null, null).calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
+                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
                     n += 1;
                 }
                 if (position_sli_ph_rea[1] == 1) {
@@ -1682,7 +1706,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                     gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
                     gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
                     double off_center_neg = off_center_distance_3D - (fov3d / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
-                    offsetFreqSBTable[n] = new RFPulse(null, null).calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
+                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
                     n += 1;
                 }
                 if (position_sli_ph_rea[2] == 1) {
@@ -1693,7 +1717,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                     gradAmpSBPhaseSpoilerTable[n] = 0;
                     gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
                     double off_center_pos = off_center_distance_2D + fovPhase / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
-                    offsetFreqSBTable[n] = new RFPulse(null, null).calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
+                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
                     n += 1;
                 }
                 if (position_sli_ph_rea[3] == 1) {
@@ -1704,7 +1728,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                     gradAmpSBPhaseSpoilerTable[n] = 0;
                     gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
                     double off_center_neg = off_center_distance_2D - (fovPhase / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
-                    offsetFreqSBTable[n] = new RFPulse(null, null).calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
+                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
                     n += 1;
                 }
                 if (position_sli_ph_rea[4] == 1) {
@@ -1715,7 +1739,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                     gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
                     gradAmpSBReadSpoilerTable[n] = 0;
                     double off_center_pos = off_center_distance_1D + fov / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
-                    offsetFreqSBTable[n] = new RFPulse(null, null).calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
+                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
                     n += 1;
                 }
                 if (position_sli_ph_rea[5] == 1) {
@@ -1726,12 +1750,11 @@ public class SpinEcho extends BaseSequenceGenerator {
                     gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
                     gradAmpSBReadSpoilerTable[n] = 0;
                     double off_center_neg = off_center_distance_1D - (fov / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
-                    offsetFreqSBTable[n] = new RFPulse(null, null).calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
+                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
                     n += 1;
                 }
             }
         }
-
 
 
         // Apply values ot Gradient
@@ -1774,7 +1797,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         //calculate TX FREQUENCY FATSAT and compensation
         // ------------------------------------------------------------------
         pulseTXFatSat.setFrequencyOffset(is_fatsat_enabled ? tx_frequency_offset_90_fs : 0.0);
-        pulseTXFatSat.setFrequencyOffset(tx_frequency_offset_90_fs);
 
         RFPulse pulseTXFatSatPrep = RFPulse.createRFPulse(getSequence(), Time_before_fatsat_pulse, Freq_offset_tx_fatsat_prep);
         pulseTXFatSatPrep.setCompensationFrequencyOffset(pulseTXFatSat, 0.5);
@@ -1832,9 +1854,9 @@ public class SpinEcho extends BaseSequenceGenerator {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
                     arrayListTrigger.add(Math.floor(i / (double) echoTrainLength) * time_between_frames);
                 }
-            } else if (isInversionRecovery && number_of_IR_acquisition != 1) {
+            } else if (isInversionRecovery && numberOfInversionRecovery != 1) {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
-                    arrayListTrigger.add(Math.floor(i / (double) number_of_IR_acquisition) * time_between_frames);
+                    arrayListTrigger.add(Math.floor(i / (double) numberOfInversionRecovery) * time_between_frames);
                 }
             } else {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
@@ -1860,7 +1882,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (isInversionRecovery) {
             ArrayList<Number> arrayListIR = new ArrayList<>();
             for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
-                arrayListIR.add(inversionRecoveryTime.get((i % number_of_IR_acquisition)));
+                arrayListIR.add(inversionRecoveryTime.get((i % numberOfInversionRecovery)));
             }
             ListNumberParam list = new ListNumberParam(MriDefaultParams.INVERSION_TIME.name(), arrayListIR, NumberEnum.Time);       // associate TE to images for DICOM export
             putVariableParameter(list, (4));
@@ -1882,8 +1904,8 @@ public class SpinEcho extends BaseSequenceGenerator {
                 double multiseries_value = roundToDecimal(te + i * te, 5) * 1e3;
                 multiseries_valuesList.add(multiseries_value);
             }
-        } else if (isInversionRecovery && number_of_IR_acquisition != 1) {
-            number_of_MultiSeries = number_of_IR_acquisition;
+        } else if (isInversionRecovery && numberOfInversionRecovery != 1) {
+            number_of_MultiSeries = numberOfInversionRecovery;
             time_between_MultiSeries = frame_acquisition_time;
             multiseries_parametername = "TI";
             for (int i = 0; i < number_of_MultiSeries; i++) {
@@ -2242,7 +2264,8 @@ public class SpinEcho extends BaseSequenceGenerator {
     }
 
 
-    private double getOff_center_distance_X_Y_Z(int dim, double off_center_distance_1D, double off_center_distance_2D, double off_center_distance_3D) {
+    private double getOff_center_distance_X_Y_Z(int dim, double off_center_distance_1D,
+                                                double off_center_distance_2D, double off_center_distance_3D) {
         List<Double> image_orientation = getListDouble(IMAGE_ORIENTATION_SUBJECT);
         double[] direction_index = new double[9];
         direction_index[0] = image_orientation.get(0);
