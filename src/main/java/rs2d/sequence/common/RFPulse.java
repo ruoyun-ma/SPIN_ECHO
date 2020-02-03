@@ -1,5 +1,6 @@
 package rs2d.sequence.common;
 
+import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.instrument.Instrument;
 import rs2d.spinlab.instrument.InstrumentTxChannel;
@@ -411,7 +412,7 @@ public class RFPulse {
      *
      * @param pulseName     :GAUSSIAN , SINC3 , SINC5 , HARD
      * @param numberOfPoint The number of point of the generated shape
-     * @param P90or180      or "90 degree" "Refocusing (spin-echo)"
+     * @param type      or "90 degree" "Refocusing (spin-echo)"
      */
     public void setShape(String pulseName, int numberOfPoint, String type) throws Exception {
         shapePhase.clear();
@@ -443,7 +444,6 @@ public class RFPulse {
             shape.clear();
             shapePhase.clear();
             String bw = "8.5152";
-
             setTableValuesFromSLRGen(shape, numberOfPoint, 0, 0, type, true, bw);
             setTableValuesFromSLRPhaseGen(shapePhase, numberOfPoint, 0, 0, type, false, bw);
             isSlr = true;
@@ -462,7 +462,11 @@ public class RFPulse {
 
     private void setTableValuesFromSLRGen(Table table, int nbpoint, int bw, double amp, String type, boolean abs, String bwstring) throws Exception {
         TableGeneratorInterface gen = null;
-        gen = loadTableGenerator("SLR");
+       gen = loadTableGenerator("SLR");
+        if  ( gen == null) {
+            System.out.println( " no SLR Generator instaled");
+            Log.error(getClass(), " no SLR Generator instaled" );
+        }
         gen.getParams().get(0).setValue(nbpoint);
         gen.getParams().get(1).setValue(bwstring);
         gen.getParams().get(2).setValue(amp);
@@ -481,6 +485,10 @@ public class RFPulse {
     private void setTableValuesFromSLRPhaseGen(Table table, int nbpoint, int bw, double amp, String type, boolean abs, String bwstring) throws Exception {
         TableGeneratorInterface gen = null;
         gen = loadTableGenerator("SLRPhase");
+        if  ( gen == null) {
+            System.out.println( " no SLR Generator instaled");
+            Log.error(getClass(), " no SLR Generator instaled" );
+        }
         gen.getParams().get(0).setValue(nbpoint);
         gen.getParams().get(1).setValue(bwstring);
         gen.getParams().get(2).setValue(amp);

@@ -525,7 +525,7 @@
             <keyList>elem113</keyList>
             <keyList>elem114</keyList>
             <keyList>elem115</keyList>
-            <keyList>elem0</keyList>
+            <keyList>elem114</keyList>
             <keyList>key240</keyList>
             <keyList>key8</keyList>
             <keyList>key9</keyList>
@@ -792,11 +792,6 @@
             <count>1</count>
             <key>key0</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="opcode" paramCodeKey="key7" paramDataFieldKey="key8" paramSecondaryFieldKey="key1227" nameKey="key5" enabledKey="key6"/>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>elem0</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="timeElement" timeKey="table0" triggerKey="param3" nameKey="param1" enabledKey="param2"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -1376,7 +1371,7 @@
         <Entry>
             <count>1</count>
             <key>elem66</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="txElement" offsetKey="table19" phaseKey="table20" ampKey="table21" shapeKey="table22" shapePhaseKey="table23" attKey="table24" nameKey="param225" enabledKey="param226">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="txElement" offsetKey="table19" phaseKey="table20" ampKey="table21" shapeKey="table22" shapePhaseKey="table23" attKey="table24" nameKey="param225" enabledKey="param248">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1412,7 +1407,7 @@
         <Entry>
             <count>1</count>
             <key>elem69</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="txElement" offsetKey="table37" phaseKey="table38" ampKey="table39" shapeKey="table40" shapePhaseKey="table41" attKey="table42" nameKey="param231" enabledKey="param232">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="txElement" offsetKey="table37" phaseKey="table38" ampKey="table39" shapeKey="table40" shapePhaseKey="table41" attKey="table42" nameKey="param231" enabledKey="param255">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1436,7 +1431,7 @@
         <Entry>
             <count>1</count>
             <key>elem71</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table49" phaseKey="table50" shapePhaseKey="table51" nameKey="param235" enabledKey="param236">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table13" phaseKey="table50" shapePhaseKey="table51" nameKey="param235" enabledKey="param236">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1448,7 +1443,7 @@
         <Entry>
             <count>1</count>
             <key>elem72</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table52" phaseKey="table53" shapePhaseKey="table54" nameKey="param237" enabledKey="param238">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table19" phaseKey="table53" shapePhaseKey="table54" nameKey="param237" enabledKey="param238">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1460,7 +1455,7 @@
         <Entry>
             <count>1</count>
             <key>elem73</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table55" phaseKey="table56" shapePhaseKey="table57" nameKey="param239" enabledKey="param240">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table25" phaseKey="table56" shapePhaseKey="table57" nameKey="param239" enabledKey="param240">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1472,7 +1467,7 @@
         <Entry>
             <count>1</count>
             <key>elem74</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table58" phaseKey="table59" shapePhaseKey="table60" nameKey="param241" enabledKey="param242">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table31" phaseKey="table59" shapePhaseKey="table60" nameKey="param241" enabledKey="param242">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1484,7 +1479,7 @@
         <Entry>
             <count>1</count>
             <key>elem75</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table61" phaseKey="table62" shapePhaseKey="table63" nameKey="param243" enabledKey="param244">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table37" phaseKey="table62" shapePhaseKey="table63" nameKey="param243" enabledKey="param244">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1496,7 +1491,7 @@
         <Entry>
             <count>1</count>
             <key>elem76</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table64" phaseKey="table65" shapePhaseKey="table66" nameKey="param245" enabledKey="param246">
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="loElement" offsetKey="table43" phaseKey="table65" shapePhaseKey="table66" nameKey="param245" enabledKey="param246">
                 <phaseModEnabled>false</phaseModEnabled>
             </value>
         </Entry>
@@ -1773,7 +1768,7 @@
         <Entry>
             <count>1</count>
             <key>elem104</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="timeElement" timeKey="table87" triggerKey="param281" nameKey="param279" enabledKey="param280"/>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="timeElement" timeKey="key31" triggerKey="param281" nameKey="param279" enabledKey="param280"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -1843,7 +1838,7 @@
         <Entry>
             <count>1</count>
             <key>elem111</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="timeElement" timeKey="table91" triggerKey="param302" nameKey="param300" enabledKey="param301"/>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="timeElement" timeKey="key31" triggerKey="param302" nameKey="param300" enabledKey="param301"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -1871,7 +1866,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="gradElement" ampKey="key22" shapeKey="key56" nameKey="key389" enabledKey="key763"/>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>elem114</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="timeElement" timeKey="table94" triggerKey="param311" nameKey="param309" enabledKey="param310"/>
         </Entry>
@@ -3353,20 +3348,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>param1</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
-                <name>name59</name>
-                <value>Time11</value>
-                <defaultValue>Elem</defaultValue>
-                <description>The name of the element</description>
-                <displayedName>name2</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key2</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Accu Dim</name>
@@ -3380,19 +3361,6 @@
                 <numberEnum>Integer</numberEnum>
                 <minValue>0</minValue>
                 <maxValue>4</maxValue>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>param2</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>enabled59</name>
-                <value>true</value>
-                <defaultValue>true</defaultValue>
-                <description>The state of the element</description>
-                <displayedName>enabled2</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
             </value>
         </Entry>
         <Entry>
@@ -3411,18 +3379,6 @@
                 <minValue>0</minValue>
                 <maxValue>65536</maxValue>
                 <group>Dimension</group>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>param3</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="enumParam">
-                <name>Trigger11</name>
-                <value xsi:type="trigger">Timer</value>
-                <defaultValue xsi:type="trigger">Timer</defaultValue>
-                <displayedName>Trigger0</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
             </value>
         </Entry>
         <Entry>
@@ -5424,16 +5380,17 @@
             <count>1</count>
             <key>param80</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Datafield47</name>
+                <name>Nb_sb_loop</name>
                 <value>0</value>
                 <defaultValue>0</defaultValue>
-                <displayedName>Datafield</displayedName>
+                <displayedName>Nb_sb_loop</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Integer</numberEnum>
                 <minValue>0</minValue>
                 <maxValue>65536</maxValue>
+                <group>Dimension</group>
             </value>
         </Entry>
         <Entry>
@@ -8889,20 +8846,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>param226</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>Enable_satband</name>
-                <value>false</value>
-                <defaultValue>true</defaultValue>
-                <description>The state of the element</description>
-                <displayedName>Enable_satband</displayedName>
-                <locked>true</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <group>User</group>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key227</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled60</name>
@@ -9047,20 +8990,6 @@
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>param232</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>Enable_fs</name>
-                <value>false</value>
-                <defaultValue>true</defaultValue>
-                <description>The state of the element</description>
-                <displayedName>Enable_fs</displayedName>
-                <locked>true</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <group>User</group>
             </value>
         </Entry>
         <Entry>
@@ -9486,14 +9415,14 @@
             </value>
         </Entry>
         <Entry>
-            <count>18</count>
+            <count>19</count>
             <key>param248</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>Enable_satband2</name>
+                <name>Enable_sb</name>
                 <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
-                <displayedName>Enable_satband</displayedName>
+                <displayedName>Enable_sb</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>User</group>
@@ -9665,10 +9594,10 @@
             </value>
         </Entry>
         <Entry>
-            <count>9</count>
+            <count>10</count>
             <key>param255</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>Enable_fs2</name>
+                <name>Enable_fs</name>
                 <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
@@ -22463,19 +22392,6 @@
     <tables>
         <name>TableRepos</name>
         <Entry>
-            <count>1</count>
-            <key>table0</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time1</name>
-                <description></description>
-                <numberEnum>Time</numberEnum>
-                <order>One</order>
-                <locked>false</locked>
-                <address>-1</address>
-                <list>1.0E-5</list>
-            </value>
-        </Entry>
-        <Entry>
             <count>2</count>
             <key>key0</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
@@ -23059,10 +22975,10 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>table13</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>FreqOffset_tx_prep_sat</name>
+                <name>Freq_offset_tx_sb_prep</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>Loop</order>
@@ -23217,17 +23133,17 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>table19</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Tx_freq_offset_sat</name>
+                <name>Freq_offset_tx_sb</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>Loop</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -23248,14 +23164,14 @@
             <count>1</count>
             <key>table20</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Tx_phase_sat</name>
+                <name>Tx_phase_sb</name>
                 <description></description>
                 <numberEnum>Phase</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>2</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -23276,14 +23192,14 @@
             <count>1</count>
             <key>table21</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Tx_amp_sat</name>
+                <name>Tx_amp_sb</name>
                 <description></description>
                 <numberEnum>TxAmp</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>2</address>
-                <list>71.07689508521726</list>
+                <list>71.076895085217</list>
             </value>
         </Entry>
         <Entry>
@@ -23304,7 +23220,7 @@
             <count>1</count>
             <key>table22</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
-                <name>Tx_shape_sat</name>
+                <name>Tx_shape_sb</name>
                 <description></description>
                 <numberEnum>TxShape</numberEnum>
                 <order>One</order>
@@ -23458,7 +23374,7 @@
             <count>1</count>
             <key>table23</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
-                <name>Tx_shape_phase_sat</name>
+                <name>Tx_shape_phase_sb</name>
                 <description></description>
                 <numberEnum>Phase</numberEnum>
                 <order>One</order>
@@ -23708,17 +23624,17 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>table25</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>FreqOffset_tx_comp_sat</name>
+                <name>Freq_offset_tx_sb_comp</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>Loop</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -24171,7 +24087,7 @@
             </value>
         </Entry>
         <Entry>
-            <count>5</count>
+            <count>7</count>
             <key>key31</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
                 <name>Time_min_instruction</name>
@@ -24185,17 +24101,17 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>table31</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Txfs_freq_offset_prep</name>
+                <name>Freq_offset_tx_fatsat_prep</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -24406,17 +24322,17 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>table37</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Txfs_freq_offset</name>
+                <name>Freq_offset_tx_fatsat</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -24437,13 +24353,14 @@
             <count>1</count>
             <key>table38</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Phase111113</name>
+                <name>Tx_phase_fatsat</name>
                 <description></description>
                 <numberEnum>Phase</numberEnum>
                 <order>One</order>
+                <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -24463,14 +24380,14 @@
             <count>1</count>
             <key>table39</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Txfs_amp</name>
+                <name>Tx_amp_fatsat</name>
                 <description></description>
                 <numberEnum>TxAmp</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>3</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -24490,7 +24407,7 @@
             <count>1</count>
             <key>table40</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
-                <name>Txfs_shape</name>
+                <name>Tx_shape_fatsat</name>
                 <description></description>
                 <numberEnum>TxShape</numberEnum>
                 <order>One</order>
@@ -24696,7 +24613,7 @@
             <count>1</count>
             <key>table41</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
-                <name>Tx_shape_phase_fs</name>
+                <name>Tx_shape_phase_fatsat</name>
                 <description></description>
                 <numberEnum>Phase</numberEnum>
                 <order>One</order>
@@ -24870,17 +24787,17 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>table43</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Txfs_freq_offset_comp</name>
+                <name>Freq_offset_tx_fatsat_comp</name>
                 <description></description>
                 <numberEnum>FrequencyOffset</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -25029,20 +24946,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>table49</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>FreqOffset_tx_prep_sat2</name>
-                <description></description>
-                <numberEnum>FrequencyOffset</numberEnum>
-                <order>Loop</order>
-                <group>Emission</group>
-                <locked>false</locked>
-                <address>0</address>
-                <list>0</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key50</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
                 <name>Time_TR_delay</name>
@@ -25106,20 +25009,6 @@
                 <locked>true</locked>
                 <address>33</address>
                 <list>0.0</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>table52</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Tx_freq_offset_sat2</name>
-                <description></description>
-                <numberEnum>FrequencyOffset</numberEnum>
-                <order>Loop</order>
-                <group>Emission</group>
-                <locked>false</locked>
-                <address>0</address>
-                <list>0</list>
             </value>
         </Entry>
         <Entry>
@@ -25250,20 +25139,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>table55</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>FreqOffset_tx_comp_sat2</name>
-                <description></description>
-                <numberEnum>FrequencyOffset</numberEnum>
-                <order>Loop</order>
-                <group>Emission</group>
-                <locked>false</locked>
-                <address>0</address>
-                <list>0</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key56</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
                 <name>GradShape1</name>
@@ -25324,20 +25199,6 @@
                 <locked>false</locked>
                 <address>64</address>
                 <list>100</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>table58</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Txfs_freq_offset_prep2</name>
-                <description></description>
-                <numberEnum>FrequencyOffset</numberEnum>
-                <order>One</order>
-                <group>Emission</group>
-                <locked>false</locked>
-                <address>0</address>
-                <list>0</list>
             </value>
         </Entry>
         <Entry>
@@ -25582,20 +25443,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>table61</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Txfs_freq_offset2</name>
-                <description></description>
-                <numberEnum>FrequencyOffset</numberEnum>
-                <order>One</order>
-                <group>Emission</group>
-                <locked>false</locked>
-                <address>0</address>
-                <list>0</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key61</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
                 <name>GradShape4</name>
@@ -25657,20 +25504,6 @@
                 <locked>false</locked>
                 <address>1</address>
                 <list>1.0E-5</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>table64</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Txfs_freq_offset_comp2</name>
-                <description></description>
-                <numberEnum>FrequencyOffset</numberEnum>
-                <order>One</order>
-                <group>Emission</group>
-                <locked>false</locked>
-                <address>0</address>
-                <list>0</list>
             </value>
         </Entry>
         <Entry>
@@ -25928,7 +25761,7 @@
             <count>3</count>
             <key>table67</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Grad_amp_sat_slice</name>
+                <name>Grad_amp_sb_slice</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
                 <order>Loop</order>
@@ -26163,7 +25996,7 @@
             <count>3</count>
             <key>table71</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Grad_amp_sat_slice_spoiler</name>
+                <name>Grad_amp_sb_slice_spoiler</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
                 <order>Loop</order>
@@ -26273,7 +26106,7 @@
             <count>3</count>
             <key>table75</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Grad_amp_sat_phase</name>
+                <name>Grad_amp_sb_phase</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
                 <order>Loop</order>
@@ -26329,7 +26162,7 @@
             <count>3</count>
             <key>table77</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Grad_amp_sat_phase_spoiler</name>
+                <name>Grad_amp_sb_phase_spoiler</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
                 <order>Loop</order>
@@ -26435,7 +26268,7 @@
             <count>3</count>
             <key>table81</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Grad_amp_sat_read</name>
+                <name>Grad_amp_sb_read</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
                 <order>Loop</order>
@@ -26489,7 +26322,7 @@
             <count>3</count>
             <key>table83</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Grad_amp_sat_read_spoiler</name>
+                <name>Grad_amp_sb_read_spoiler</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
                 <order>Loop</order>
@@ -26592,19 +26425,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>table87</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time17</name>
-                <description></description>
-                <numberEnum>Time</numberEnum>
-                <order>One</order>
-                <locked>false</locked>
-                <address>1</address>
-                <list>1.0E-5</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key87</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
                 <name>TxShape0</name>
@@ -26645,14 +26465,14 @@
             <count>1</count>
             <key>table89</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time_txsb</name>
+                <name>Time_tx_sb</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>9.999999999999999E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26673,14 +26493,14 @@
             <count>1</count>
             <key>table90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Grad_satband_app_time</name>
+                <name>Time_grad_sb</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>9.999999999999999E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26694,19 +26514,6 @@
                 <locked>false</locked>
                 <address>0</address>
                 <list>0</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>table91</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time18</name>
-                <description></description>
-                <numberEnum>Time</numberEnum>
-                <order>One</order>
-                <locked>false</locked>
-                <address>1</address>
-                <list>1.0E-5</list>
             </value>
         </Entry>
         <Entry>
@@ -26726,14 +26533,14 @@
             <count>1</count>
             <key>table92</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time_before_fs_pulse</name>
+                <name>Time_before_fatsat_pulse</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>9.999999999999999E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26752,14 +26559,14 @@
             <count>1</count>
             <key>table93</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time_txfs</name>
+                <name>Time_tx_fatsat</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>9.999999999999999E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26778,14 +26585,14 @@
             <count>1</count>
             <key>table94</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time_grad_ramp_fs</name>
+                <name>Time_grad_ramp_fatsat</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>9.999999999999999E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26805,14 +26612,14 @@
             <count>1</count>
             <key>table95</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Gradient_fatsat_application_time</name>
+                <name>Time_grad_fatsat</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
                 <order>One</order>
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.0E-5</list>
+                <list>9.999999999999999E-6</list>
             </value>
         </Entry>
         <Entry>

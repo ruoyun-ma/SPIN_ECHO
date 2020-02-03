@@ -423,6 +423,172 @@ public enum U implements GeneratorParamEnum {
         }
     },
 
+    FATSAT_BANDWIDTH("FATSAT_BANDWIDTH") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_BANDWIDTH");
+            param.setDisplayedName("FATSAT_BANDWIDTH");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.FrequencyOffset);
+            param.setMinValue(0.0);
+            param.setMaxValue(2000.0);
+            param.setValue(180.0);
+            param.setDefaultValue(250.0);
+            return param;
+        }
+    },
+
+    FATSAT_FLIP_ANGLE("FATSAT_FLIP_ANGLE") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_FLIP_ANGLE");
+            param.setDisplayedName("FATSAT_FLIP_ANGLE");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Angle);
+            param.setMinValue(0.0);
+            param.setMaxValue(360.0);
+            param.setValue(0.0);
+            param.setDefaultValue(90.0);
+            return param;
+        }
+    },
+
+    FATSAT_GRAD_APP_TIME("FATSAT_GRAD_APP_TIME") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_GRAD_APP_TIME");
+            param.setDisplayedName("FATSAT_GRAD_APP_TIME");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Delay);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setValue(1.0E-5);
+            param.setDefaultValue(0.001);
+            return param;
+        }
+    },
+
+    FATSAT_OFFSET_FREQ("FATSAT_OFFSET_FREQ") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_OFFSET_FREQ");
+            param.setDisplayedName("FATSAT_OFFSET_FREQ");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.FrequencyOffset);
+            param.setMinValue(-1500.0);
+            param.setMaxValue(1500.0);
+            param.setValue(-440.0);
+            param.setDefaultValue(-440.0);
+            return param;
+        }
+    },
+
+    FATSAT_PERIODE("FATSAT_PERIODE") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_PERIODE");
+            param.setDisplayedName("FATSAT_PERIODE");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Delay);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setValue(0.07);
+            param.setDefaultValue(0.05);
+            return param;
+        }
+    },
+
+    FATSAT_PERIODE_EFF("FATSAT_PERIODE_EFF") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_PERIODE_EFF");
+            param.setDisplayedName("FATSAT_PERIODE_EFF");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Delay);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setValue(0.06207235200000001);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    FATSAT_TX_AMP_90("FATSAT_TX_AMP_90") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_TX_AMP_90");
+            param.setDisplayedName("FATSAT_TX_AMP_90");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.TxAmp);
+            param.setMinValue(0.0);
+            param.setMaxValue(100.0);
+            param.setValue(100.0);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    FATSAT_TX_LENGTH("FATSAT_TX_LENGTH") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("FATSAT_TX_LENGTH");
+            param.setDisplayedName("FATSAT_TX_LENGTH");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setValue(5.0E-6);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    FATSAT_TX_SHAPE("FATSAT_TX_SHAPE") {
+        public Param build() {
+            TextParam param = new TextParam();
+            param.setName("FATSAT_TX_SHAPE");
+            param.setDisplayedName("FATSAT_TX_SHAPE");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setValue("GAUSSIAN");
+            param.setDefaultValue("HARD");
+            param.setSuggestedValues(asList("HARD", "GAUSSIAN", "SINC3", "SINC5", "SLR_8_5152", "SLR_4_2576"));
+            param.setRestrictedToSuggested(true);
+            return param;
+        }
+    },
+
+    FAT_SATURATION_ENABLED("FAT_SATURATION_ENABLED") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("FAT_SATURATION_ENABLED");
+            param.setDisplayedName("FAT_SATURATION_ENABLED");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setValue(false);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
     FIELD_OF_VIEW("FIELD_OF_VIEW") {
         public Param build() {
             NumberParam param = new NumberParam();
@@ -1919,6 +2085,150 @@ public enum U implements GeneratorParamEnum {
         }
     },
 
+    SATBAND_DISTANCE_FROM_FOV("SATBAND_DISTANCE_FROM_FOV") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("SATBAND_DISTANCE_FROM_FOV");
+            param.setDisplayedName("SATBAND_DISTANCE_FROM_FOV");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Dimension);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Location);
+            param.setMinValue(-0.1);
+            param.setMaxValue(0.1);
+            param.setValue(0.003);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    SATBAND_ENABLED("SATBAND_ENABLED") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("SATBAND_ENABLED");
+            param.setDisplayedName("SATBAND_ENABLED");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setValue(false);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
+    SATBAND_GRAD_AMP_SPOILER("SATBAND_GRAD_AMP_SPOILER") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("SATBAND_GRAD_AMP_SPOILER");
+            param.setDisplayedName("SATBAND_GRAD_AMP_SPOILER");
+            param.setDescription("Amplitude of the spoiler gradient after saturation pulse");
+            param.setGroup(EnumGroup.Gradient);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.PERCENT);
+            param.setMinValue(30.0);
+            param.setMaxValue(100.0);
+            param.setValue(40.0);
+            param.setDefaultValue(40.0);
+            return param;
+        }
+    },
+
+    SATBAND_ORIENTATION("SATBAND_ORIENTATION") {
+        public Param build() {
+            TextParam param = new TextParam();
+            param.setName("SATBAND_ORIENTATION");
+            param.setDisplayedName("SATBAND_ORIENTATION");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Dimension);
+            param.setCategory(Category.Acquisition);
+            param.setValue("CRANIAL");
+            param.setDefaultValue("CRANIAL");
+            param.setSuggestedValues(asList("CRANIAL", "CAUDAL", "CRANIAL AND CAUDAL", "ANTERIOR", "POSTERIOR", "ANTERIOR AND POSTERIOR", "RIGHT", "LEFT", "RIGHT AND LEFT", "ALL"));
+            return param;
+        }
+    },
+
+    SATBAND_T1("SATBAND_T1") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("SATBAND_T1");
+            param.setDisplayedName("SATBAND_T1");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Millis);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setValue(500.0);
+            param.setDefaultValue(500.0);
+            return param;
+        }
+    },
+
+    SATBAND_THICKNESS("SATBAND_THICKNESS") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("SATBAND_THICKNESS");
+            param.setDisplayedName("SATBAND_THICKNESS");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Dimension);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Length);
+            param.setMinValue(0.001);
+            param.setMaxValue(0.1);
+            param.setValue(0.01);
+            param.setDefaultValue(0.01);
+            return param;
+        }
+    },
+
+    SATBAND_TX_AMP("SATBAND_TX_AMP") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("SATBAND_TX_AMP");
+            param.setDisplayedName("SATBAND_TX_AMP");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.TxAmp);
+            param.setMinValue(0.0);
+            param.setMaxValue(100.0);
+            param.setValue(0.0);
+            param.setDefaultValue(0.0);
+            return param;
+        }
+    },
+
+    SATBAND_TX_SHAPE("SATBAND_TX_SHAPE") {
+        public Param build() {
+            TextParam param = new TextParam();
+            param.setName("SATBAND_TX_SHAPE");
+            param.setDisplayedName("SATBAND_TX_SHAPE");
+            param.setDescription("");
+            param.setGroup(EnumGroup.Emission);
+            param.setCategory(Category.Acquisition);
+            param.setValue("SINC3");
+            param.setDefaultValue("HARD");
+            param.setSuggestedValues(asList("HARD", "GAUSSIAN", "SINC3", "SINC5", "SLR_8_5152", "SLR_4_2576"));
+            param.setRestrictedToSuggested(true);
+            return param;
+        }
+    },
+
+    SATURATION_RECOVERY("SATURATION_RECOVERY") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("SATURATION_RECOVERY");
+            param.setDisplayedName("");
+            param.setDescription("Use saturation before acquisition");
+            param.setGroup(EnumGroup.Miscellaneous);
+            param.setCategory(Category.Acquisition);
+            param.setValue(false);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
     SEQUENCE_NAME("SEQUENCE_NAME") {
         public Param build() {
             TextParam param = new TextParam();
@@ -1959,7 +2269,7 @@ public enum U implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version8.4");
+            param.setValue("Version8.5");
             param.setDefaultValue("");
             return param;
         }
@@ -2413,7 +2723,7 @@ public enum U implements GeneratorParamEnum {
             param.setCategory(Category.Acquisition);
             param.setValue("SINC3");
             param.setDefaultValue("HARD");
-            param.setSuggestedValues(asList("HARD", "GAUSSIAN", "SINC3", "SINC5"));
+            param.setSuggestedValues(asList("HARD", "GAUSSIAN", "SINC3", "SINC5", "SLR_8_5152", "SLR_4_2576"));
             return param;
         }
     },
@@ -2428,7 +2738,7 @@ public enum U implements GeneratorParamEnum {
             param.setCategory(Category.Acquisition);
             param.setValue("SINC3");
             param.setDefaultValue("HARD");
-            param.setSuggestedValues(asList("HARD", "GAUSSIAN", "SINC3", "SINC5"));
+            param.setSuggestedValues(asList("HARD", "GAUSSIAN", "SINC3", "SINC5", "SLR_8_5152", "SLR_4_2576"));
             return param;
         }
     },
@@ -2531,118 +2841,6 @@ public enum U implements GeneratorParamEnum {
             param.setMaxValue(100.0);
             param.setValue(100.0);
             param.setDefaultValue(100.0);
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_BOOL_1("USER_TMP_PARAM_BOOL_1") {
-        public Param build() {
-            BooleanParam param = new BooleanParam();
-            param.setName("USER_TMP_PARAM_BOOL_1");
-            param.setDisplayedName("USER_TMP_PARAM_BOOL_1");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setValue(false);
-            param.setDefaultValue(false);
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_BOOL_2("USER_TMP_PARAM_BOOL_2") {
-        public Param build() {
-            BooleanParam param = new BooleanParam();
-            param.setName("USER_TMP_PARAM_BOOL_2");
-            param.setDisplayedName("USER_TMP_PARAM_BOOL_2");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setValue(false);
-            param.setDefaultValue(false);
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_LIST_1("USER_TMP_PARAM_LIST_1") {
-        public Param build() {
-            ListNumberParam param = new ListNumberParam();
-            param.setName("USER_TMP_PARAM_LIST_1");
-            param.setDisplayedName("USER_TMP_PARAM_LIST_1");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setMinValue(-1.7976931348623157E308);
-            param.setMaxValue(1.7976931348623157E308);
-            param.setNumberEnum(NumberEnum.Double);
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_LIST_2("USER_TMP_PARAM_LIST_2") {
-        public Param build() {
-            ListNumberParam param = new ListNumberParam();
-            param.setName("USER_TMP_PARAM_LIST_2");
-            param.setDisplayedName("USER_TMP_PARAM_LIST_2");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setMinValue(-1.7976931348623157E308);
-            param.setMaxValue(1.7976931348623157E308);
-            param.setNumberEnum(NumberEnum.Double);
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_NUM_1("USER_TMP_PARAM_NUM_1") {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("USER_TMP_PARAM_NUM_1");
-            param.setDisplayedName("USER_TMP_PARAM_NUM_1");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.Double);
-            param.setMinValue(-1.7976931348623157E308);
-            param.setMaxValue(1.7976931348623157E308);
-            param.setValue(0.0);
-            param.setDefaultValue(0.0);
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_NUM_2("USER_TMP_PARAM_NUM_2") {
-        public Param build() {
-            NumberParam param = new NumberParam();
-            param.setName("USER_TMP_PARAM_NUM_2");
-            param.setDisplayedName("USER_TMP_PARAM_NUM_2");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setNumberEnum(NumberEnum.Double);
-            param.setMinValue(-1.7976931348623157E308);
-            param.setMaxValue(1.7976931348623157E308);
-            param.setValue(0.0);
-            param.setDefaultValue(0.0);
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_STR_1("USER_TMP_PARAM_STR_1") {
-        public Param build() {
-            TextParam param = new TextParam();
-            param.setName("USER_TMP_PARAM_STR_1");
-            param.setDisplayedName("USER_TMP_PARAM_STR_1");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setValue("");
-            param.setDefaultValue("");
-            return param;
-        }
-    },
-
-    USER_TMP_PARAM_STR_2("USER_TMP_PARAM_STR_2") {
-        public Param build() {
-            TextParam param = new TextParam();
-            param.setName("USER_TMP_PARAM_STR_2");
-            param.setDisplayedName("USER_TMP_PARAM_STR_2");
-            param.setDescription("");
-            param.setCategory(Category.Acquisition);
-            param.setValue("");
-            param.setDefaultValue("");
             return param;
         }
     },

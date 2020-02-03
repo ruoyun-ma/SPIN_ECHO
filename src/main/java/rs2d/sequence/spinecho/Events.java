@@ -8,8 +8,17 @@ public enum Events {
     Start (0,"Time6"),
     TriggerDelay (1, S.Time_trigger_delay.name()),
     LoopMultiPlanarStart (2,S.Time_min_instruction.name()),
+
     IR (4,S.Time_tx_IR_length.name()),
     IRDelay (22,S.Time_TI_delay.name()),
+
+
+    LoopSatBandStart (9,S.Time_min_instruction.name()),
+    SatBandpulse (11,S.Time_tx_sb.name()),
+    LoopSatBandEnd (16,S.Time_min_instruction.name()),
+
+    FatSatPulse (18,S.Time_tx_fatsat.name()),
+
 
     TX90 (24,S.Time_tx_90.name()),
     Delay1 (16+13,S.Time_TE_delay1.name()),
