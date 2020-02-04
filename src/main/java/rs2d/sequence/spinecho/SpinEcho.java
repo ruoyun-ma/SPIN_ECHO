@@ -60,7 +60,6 @@ import rs2d.sequence.common.*;
 import static rs2d.sequence.spinecho.S.*;
 import static rs2d.sequence.spinecho.U.*;
 
-
 // **************************************************************************************************
 // *************************************** SEQUENCE GENERATOR ***************************************
 // **************************************************************************************************
@@ -1682,77 +1681,76 @@ public class SpinEcho extends BaseSequenceGenerator {
         double[] gradAmpSBPhaseSpoilerTable = new double[nb_satband];
         double[] gradAmpSBReadSpoilerTable = new double[nb_satband];
         double[] offsetFreqSBTable = new double[nb_satband];
+
+        double grad_amp_sat_spoiler = getDouble(SATBAND_GRAD_AMP_SPOILER);
         if (is_satband_enabled) {
-            double grad_amp_sat_spoiler = getDouble(SATBAND_GRAD_AMP_SPOILER);
-            if (is_satband_enabled) {
-                position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
-                int n = 0;
-                if (position_sli_ph_rea[0] == 1) { // SB  in slice position Sup
-                    gradAmpSBSliceTable[n] = grad_amp_satband;
-                    gradAmpSBPhaseTable[n] = 0;
-                    gradAmpSBReadTable[n] = 0;
-                    gradAmpSBSliceSpoilerTable[n] = 0;
-                    gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
-                    double off_center_pos = off_center_distance_3D + fov3d / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
-                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
-                    n += 1;
-                }
-                if (position_sli_ph_rea[1] == 1) {
-                    gradAmpSBSliceTable[n] = grad_amp_satband;
-                    gradAmpSBPhaseTable[n] = 0;
-                    gradAmpSBReadTable[n] = 0;
-                    gradAmpSBSliceSpoilerTable[n] = 0;
-                    gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
-                    double off_center_neg = off_center_distance_3D - (fov3d / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
-                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
-                    n += 1;
-                }
-                if (position_sli_ph_rea[2] == 1) {
-                    gradAmpSBSliceTable[n] = 0;
-                    gradAmpSBPhaseTable[n] = grad_amp_satband;
-                    gradAmpSBReadTable[n] = 0;
-                    gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBPhaseSpoilerTable[n] = 0;
-                    gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
-                    double off_center_pos = off_center_distance_2D + fovPhase / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
-                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
-                    n += 1;
-                }
-                if (position_sli_ph_rea[3] == 1) {
-                    gradAmpSBSliceTable[n] = 0;
-                    gradAmpSBPhaseTable[n] = grad_amp_satband;
-                    gradAmpSBReadTable[n] = 0;
-                    gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBPhaseSpoilerTable[n] = 0;
-                    gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
-                    double off_center_neg = off_center_distance_2D - (fovPhase / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
-                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
-                    n += 1;
-                }
-                if (position_sli_ph_rea[4] == 1) {
-                    gradAmpSBSliceTable[n] = 0;
-                    gradAmpSBPhaseTable[n] = 0;
-                    gradAmpSBReadTable[n] = grad_amp_satband;
-                    gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBReadSpoilerTable[n] = 0;
-                    double off_center_pos = off_center_distance_1D + fov / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
-                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
-                    n += 1;
-                }
-                if (position_sli_ph_rea[5] == 1) {
-                    gradAmpSBSliceTable[n] = 0;
-                    gradAmpSBPhaseTable[n] = 0;
-                    gradAmpSBReadTable[n] = grad_amp_satband;
-                    gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
-                    gradAmpSBReadSpoilerTable[n] = 0;
-                    double off_center_neg = off_center_distance_1D - (fov / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
-                    offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
-                    n += 1;
-                }
+            position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
+            int n = 0;
+            if (position_sli_ph_rea[0] == 1) { // SB  in slice position Sup
+                gradAmpSBSliceTable[n] = grad_amp_satband;
+                gradAmpSBPhaseTable[n] = 0;
+                gradAmpSBReadTable[n] = 0;
+                gradAmpSBSliceSpoilerTable[n] = 0;
+                gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
+                double off_center_pos = off_center_distance_3D + fov3d / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
+                offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
+                n += 1;
+            }
+            if (position_sli_ph_rea[1] == 1) {
+                gradAmpSBSliceTable[n] = grad_amp_satband;
+                gradAmpSBPhaseTable[n] = 0;
+                gradAmpSBReadTable[n] = 0;
+                gradAmpSBSliceSpoilerTable[n] = 0;
+                gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
+                double off_center_neg = off_center_distance_3D - (fov3d / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
+                offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
+                n += 1;
+            }
+            if (position_sli_ph_rea[2] == 1) {
+                gradAmpSBSliceTable[n] = 0;
+                gradAmpSBPhaseTable[n] = grad_amp_satband;
+                gradAmpSBReadTable[n] = 0;
+                gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBPhaseSpoilerTable[n] = 0;
+                gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
+                double off_center_pos = off_center_distance_2D + fovPhase / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
+                offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
+                n += 1;
+            }
+            if (position_sli_ph_rea[3] == 1) {
+                gradAmpSBSliceTable[n] = 0;
+                gradAmpSBPhaseTable[n] = grad_amp_satband;
+                gradAmpSBReadTable[n] = 0;
+                gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBPhaseSpoilerTable[n] = 0;
+                gradAmpSBReadSpoilerTable[n] = grad_amp_sat_spoiler;
+                double off_center_neg = off_center_distance_2D - (fovPhase / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
+                offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
+                n += 1;
+            }
+            if (position_sli_ph_rea[4] == 1) {
+                gradAmpSBSliceTable[n] = 0;
+                gradAmpSBPhaseTable[n] = 0;
+                gradAmpSBReadTable[n] = grad_amp_satband;
+                gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBReadSpoilerTable[n] = 0;
+                double off_center_pos = off_center_distance_1D + fov / 2.0 + satband_distance_from_fov + satband_thickness / 2.0;
+                offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_pos);
+                n += 1;
+            }
+            if (position_sli_ph_rea[5] == 1) {
+                gradAmpSBSliceTable[n] = 0;
+                gradAmpSBPhaseTable[n] = 0;
+                gradAmpSBReadTable[n] = grad_amp_satband;
+                gradAmpSBSliceSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBPhaseSpoilerTable[n] = grad_amp_sat_spoiler;
+                gradAmpSBReadSpoilerTable[n] = 0;
+                double off_center_neg = off_center_distance_1D - (fov / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
+                offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
+                n += 1;
             }
         }
 
