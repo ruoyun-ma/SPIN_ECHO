@@ -3,6 +3,7 @@ package rs2d.sequence.common;
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.instrument.Instrument;
+
 import rs2d.spinlab.instrument.InstrumentTxChannel;
 import rs2d.spinlab.instrument.probe.Probe;
 import rs2d.spinlab.instrument.probe.ProbeChannelPower;

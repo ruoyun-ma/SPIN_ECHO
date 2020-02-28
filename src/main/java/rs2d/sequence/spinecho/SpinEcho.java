@@ -57,6 +57,7 @@ import static java.util.Arrays.asList;
 
 import rs2d.sequence.common.*;
 
+
 import static rs2d.sequence.spinecho.S.*;
 import static rs2d.sequence.spinecho.U.*;
 
@@ -72,6 +73,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     private double min_time_per_acq_point;
     private double gMax;
     private TransformPlugin plugin;
+    private String transformplugin;
     private Nucleus nucleus;
 
     private boolean isMultiplanar;
@@ -134,6 +136,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     private int[] position_sli_ph_rea;
 
     private boolean isKSCenterMode;
+    private boolean isFSETrainTest;
 
     private boolean isEnablePhase;
     private boolean isEnablePhase3D;
@@ -185,7 +188,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         transformPlugin.setSuggestedValues(asList("Centered2DRot",
                 "Bordered2D",
                 "Sequential4D",
-                "Sequential2D"));
+                "Sequential2D",
+                "Sequential2D_FSE_TEST"));
         transformPlugin.setRestrictedToSuggested(true);
 
         //List<String> tx_shape = Arrays.asList("HARD", "GAUSSIAN", "SIN3", "xSINC5");
@@ -230,6 +234,8 @@ public class SpinEcho extends BaseSequenceGenerator {
 
     private void initUserParam() {
         isMultiplanar = getBoolean(MULTI_PLANAR_EXCITATION);
+
+        transformplugin = getText(TRANSFORM_PLUGIN);
 
 //        acquisitionMatrixDimension1D = getInt(ACQUISITION_MATRIX_DIMENSION_1D);
         acquisitionMatrixDimension2D = getInt(ACQUISITION_MATRIX_DIMENSION_2D);
@@ -285,9 +291,10 @@ public class SpinEcho extends BaseSequenceGenerator {
         nb_satband = is_satband_enabled ? (int) Arrays.stream(position_sli_ph_rea).filter(item -> item == 1).count() : 1;
 
         isKSCenterMode = getBoolean(KS_CENTER_MODE);
+        isFSETrainTest = !isKSCenterMode && (transformplugin.equalsIgnoreCase ("Sequential2D_FSE_TEST"));
 
-        isEnablePhase3D = !isKSCenterMode && getBoolean(GRADIENT_ENABLE_PHASE_3D);
-        isEnablePhase = !isKSCenterMode && getBoolean(GRADIENT_ENABLE_PHASE);
+        isEnablePhase3D = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE_3D);
+        isEnablePhase = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE);
         isEnableSlice = getBoolean(GRADIENT_ENABLE_SLICE);
         isEnableRead = getBoolean(GRADIENT_ENABLE_READ);
 
@@ -366,7 +373,8 @@ public class SpinEcho extends BaseSequenceGenerator {
 //            ListNumberParam contrast_TE_TR_lim;
             switch (getText(IMAGE_CONTRAST)) {
                 case "T1-weighted":
-                    getParam(TRANSFORM_PLUGIN).setValue("Centered2D"); // first echo should be the significant echo
+                    getParam(TRANSFORM_PLUGIN).setValue("Centered2DRot"); // first echo should be the significant echo
+                    echoEffective = 1;
 //                    contrast_TE_TR_lim = (ListNumberParam) getParam(LIM_T1_WEIGHTED);
                     if (echoTrainLength > 4) { // echo train should be lower than 4 because of blurring
                         echoTrainLength = 4;
@@ -374,7 +382,9 @@ public class SpinEcho extends BaseSequenceGenerator {
                     }
                     break;
                 case "PD-weighted":
-                    getParam(TRANSFORM_PLUGIN).setValue("Centered2D"); // first echo should be the significant echo
+//                    getParam(TRANSFORM_PLUGIN).setValue("Centered2D"); // first echo should be the significant echo
+                    getParam(TRANSFORM_PLUGIN).setValue("Centered2DRot"); // first echo should be the significant echo
+                    echoEffective = 1;
 //                    contrast_TE_TR_lim = (ListNumberParam) getParam(LIM_PD_WEIGHTED);
                     if (echoTrainLength > 6) {  // echo train should be lower than 6 because of blurring
                         echoTrainLength = 6;
@@ -382,7 +392,9 @@ public class SpinEcho extends BaseSequenceGenerator {
                     }
                     break;
                 case "T2-weighted":
-                    getParam(TRANSFORM_PLUGIN).setValue("Bordered2D"); // last echo should be the significant echo
+//                    getParam(TRANSFORM_PLUGIN).setValue("Bordered2D"); // last echo should be the significant echo
+                    getParam(TRANSFORM_PLUGIN).setValue("Centered2DRot"); // first echo should be the significant echo
+                    echoEffective = echoTrainLength;
 //                    contrast_TE_TR_lim = (ListNumberParam) getParam(LIM_T2_WEIGHTED);
                     break;
                 default: // Custom
@@ -391,6 +403,10 @@ public class SpinEcho extends BaseSequenceGenerator {
                         case "Sequential2D":
                             getParam(TRANSFORM_PLUGIN).setValue(echoTrainLength == 1 ? "Sequential2D" : "Centered2D");
                             break;
+                        case "Sequential2D_FSE_TEST":
+                            isFSETrainTest = !isKSCenterMode;
+                            getParam(FSE_TRAIN_TEST).setValue(isFSETrainTest);
+
                         default: // Custom
                             break;
                     }
@@ -639,13 +655,23 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(ACQUISITION_MATRIX_DIMENSION_3D).setValue(acquisitionMatrixDimension3D);
         getParam(ACQUISITION_MATRIX_DIMENSION_4D).setValue(acquisitionMatrixDimension4D);
 
-        // set Nb_scan  Values
         if (isKSCenterMode) { // Do only the center of the k-space for auto RG
             nb_scan_1d = 1;
             nb_scan_2d = 2;
             nb_scan_3d = !isMultiplanar ? 1 : nb_scan_3d;
+            getParam(ACQUISITION_MATRIX_DIMENSION_3D).setValue(!isMultiplanar ? 1 : acquisitionMatrixDimension3D);
             nb_scan_4d = 1;
         }
+        if (isFSETrainTest) { // Do only the center of the k-space for auto RG
+            getParam(ACQUISITION_MATRIX_DIMENSION_1D).setValue(acquisitionMatrixDimension1D * echoTrainLength);
+            getParam(ACQUISITION_MATRIX_DIMENSION_2D).setValue(nb_scan_2d);
+            nb_scan_1d = 1;
+            nb_scan_3d = !isMultiplanar ? 1 : nb_scan_3d;
+            getParam(ACQUISITION_MATRIX_DIMENSION_3D).setValue(!isMultiplanar ? 1 : acquisitionMatrixDimension3D);
+            nb_scan_4d = 1;
+
+        }
+        // set Nb_scan  Values
         set(Pre_scan, preScan); // Do the prescan
         set(Nb_point, acquisitionMatrixDimension1D);
         set(Nb_1d, nb_scan_1d);
@@ -1091,7 +1117,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // pre-calculate PHASE_2D
         Gradient gradPhase2D = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         gradPhase2D.preparePhaseEncodingForCheck(acquisitionMatrixDimension2D, acquisitionMatrixDimension2D, fovPhase, is_k_s_centred);
-        if (is_FSE_vs_MultiEcho && echoTrainLength != 1) {
+        if (is_FSE_vs_MultiEcho && echoTrainLength != 1 && !isKSCenterMode && !isFSETrainTest ) {
             gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
         }
 

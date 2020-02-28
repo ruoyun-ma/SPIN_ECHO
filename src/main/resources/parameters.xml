@@ -354,7 +354,7 @@
             <key>ECHO_EFFECTIVE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_EFFECTIVE</name>
-                <value>1</value>
+                <value>2</value>
                 <defaultValue>1</defaultValue>
                 <description></description>
                 <displayedName>ECHO_EFFECTIVE</displayedName>
@@ -390,7 +390,7 @@
             <key>ECHO_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME</name>
-                <value>0.009000000000000001</value>
+                <value>0.018000000000000002</value>
                 <defaultValue>0.005</defaultValue>
                 <description>The echo time ( TE ) </description>
                 <displayedName>TE</displayedName>
@@ -408,7 +408,7 @@
             <key>ECHO_TIME_EFFECTIVE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME_EFFECTIVE</name>
-                <value>0.009000000000000001</value>
+                <value>0.018000000000000002</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Effective echo time in Fast Spin Echo sequence</description>
                 <displayedName>EFFECTIVE_ECHO_TIME</displayedName>
@@ -444,7 +444,7 @@
             <key>FATSAT_BANDWIDTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_BANDWIDTH</name>
-                <value>500.0</value>
+                <value>250.0</value>
                 <defaultValue>1053.5</defaultValue>
                 <description>Fat: 3.5ppm</description>
                 <displayedName>FATSAT_BANDWIDTH</displayedName>
@@ -498,7 +498,7 @@
             <key>FATSAT_OFFSET_FREQ</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_OFFSET_FREQ</name>
-                <value>1053.5</value>
+                <value>-440.0</value>
                 <defaultValue>1053.5</defaultValue>
                 <description>Fat: 3.5ppm </description>
                 <displayedName>FATSAT_OFFSET_FREQ</displayedName>
@@ -752,6 +752,19 @@
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Dimension</group>
+                <category>Acquisition</category>
+            </value>
+        </entry>
+        <entry>
+            <key>FSE_TRAIN_TEST</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
+                <name>FSE_TRAIN_TEST</name>
+                <value>true</value>
+                <defaultValue>false</defaultValue>
+                <description></description>
+                <displayedName>FSE_TRAIN_TEST</displayedName>
+                <locked>false</locked>
+                <lockedToDefault>false</lockedToDefault>
                 <category>Acquisition</category>
             </value>
         </entry>
@@ -2747,7 +2760,7 @@
             <key>RECEIVER_COUNT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>RECEIVER_COUNT</name>
-                <value>1</value>
+                <value>4</value>
                 <defaultValue>1</defaultValue>
                 <description>The number of receivers</description>
                 <displayedName>Receiver Count</displayedName>
@@ -2984,7 +2997,7 @@
             <key>SATBAND_TX_SHAPE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SATBAND_TX_SHAPE</name>
-                <value>SINC3</value>
+                <value>GAUSSIAN</value>
                 <defaultValue>HARD</defaultValue>
                 <description></description>
                 <displayedName>SATBAND_TX_SHAPE</displayedName>
@@ -3317,6 +3330,7 @@
                 <suggestedValues>Bordered2D</suggestedValues>
                 <suggestedValues>Sequential4D</suggestedValues>
                 <suggestedValues>Sequential2D</suggestedValues>
+                <suggestedValues>Sequential2D_FSE_TEST</suggestedValues>
                 <group>Scan</group>
                 <category>Acquisition</category>
             </value>
@@ -3375,7 +3389,7 @@
             <key>TX_AMP_180</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_180</name>
-                <value>80.69861911032363</value>
+                <value>94.09399968698172</value>
                 <defaultValue>0.0</defaultValue>
                 <description>The magnitude of the RF pulse 180</description>
                 <displayedName>TX_AMP_180</displayedName>
@@ -3393,7 +3407,7 @@
             <key>TX_AMP_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
-                <value>9.975096690137075</value>
+                <value>96.540371033474</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude of the transmitter</description>
                 <displayedName>TX_AMP</displayedName>
@@ -3425,7 +3439,7 @@
             <key>TX_ATT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_ATT</name>
-                <value>10.0</value>
+                <value>0.0</value>
                 <defaultValue>36.0</defaultValue>
                 <description>The emission attenuation</description>
                 <displayedName>TX_ATT</displayedName>
