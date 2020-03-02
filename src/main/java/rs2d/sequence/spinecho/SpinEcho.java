@@ -66,7 +66,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version8.5";
+    private String sequenceVersion = "Version8.6";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -289,7 +289,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         is_satband_enabled = getBoolean(SATBAND_ENABLED);
         position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
         nb_satband = is_satband_enabled ? (int) Arrays.stream(position_sli_ph_rea).filter(item -> item == 1).count() : 1;
-
+ // bug on the loop 
+ nb_satband = 1;
         isKSCenterMode = getBoolean(KS_CENTER_MODE);
         isFSETrainTest = !isKSCenterMode && (transformplugin.equalsIgnoreCase ("Sequential2D_FSE_TEST"));
 
@@ -681,7 +682,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // set the calculated Loop dimensions
         set(Nb_echo, echoTrainLength - 1);
         set(Nb_interleaved_slice, nbOfInterleavedSlice - 1);
-        set(Nb_sb_loop, nb_satband - 1);
+        // bug on the loop  set(Nb_sb_loop, nb_satband - 1);
 
         // -----------------------------------------------
         // SEQ_DESCRIPTION
