@@ -66,7 +66,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version8.6";
+    private String sequenceVersion = "Version8.7";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -189,7 +189,8 @@ public class SpinEcho extends BaseSequenceGenerator {
                 "Bordered2D",
                 "Sequential4D",
                 "Sequential2D",
-                "Sequential2D_FSE_TEST"));
+                "Sequential2D_FSE_TEST",
+                "Sequential2DInterleaved"));
         transformPlugin.setRestrictedToSuggested(true);
 
         //List<String> tx_shape = Arrays.asList("HARD", "GAUSSIAN", "SIN3", "xSINC5");
@@ -289,10 +290,10 @@ public class SpinEcho extends BaseSequenceGenerator {
         is_satband_enabled = getBoolean(SATBAND_ENABLED);
         position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
         nb_satband = is_satband_enabled ? (int) Arrays.stream(position_sli_ph_rea).filter(item -> item == 1).count() : 1;
- // bug on the loop 
- nb_satband = 1;
+        // bug on the loop
+        nb_satband = 1;
         isKSCenterMode = getBoolean(KS_CENTER_MODE);
-        isFSETrainTest = !isKSCenterMode && (transformplugin.equalsIgnoreCase ("Sequential2D_FSE_TEST"));
+        isFSETrainTest = !isKSCenterMode && (transformplugin.equalsIgnoreCase("Sequential2D_FSE_TEST"));
 
         isEnablePhase3D = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE_3D);
         isEnablePhase = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE);
@@ -433,6 +434,9 @@ public class SpinEcho extends BaseSequenceGenerator {
                 break;
             case "Sequential4D":
             case "Sequential2D":
+                echoEffective = Math.round(echoTrainLength / 2);
+                break;
+            case "Sequential2DInterleaved":
                 echoEffective = Math.round(echoTrainLength / 2);
                 break;
         }
@@ -1118,7 +1122,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // pre-calculate PHASE_2D
         Gradient gradPhase2D = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp);
         gradPhase2D.preparePhaseEncodingForCheck(acquisitionMatrixDimension2D, acquisitionMatrixDimension2D, fovPhase, is_k_s_centred);
-        if (is_FSE_vs_MultiEcho && echoTrainLength != 1 && !isKSCenterMode && !isFSETrainTest ) {
+        if (is_FSE_vs_MultiEcho && echoTrainLength != 1 && !isKSCenterMode && !isFSETrainTest) {
             gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
         }
 

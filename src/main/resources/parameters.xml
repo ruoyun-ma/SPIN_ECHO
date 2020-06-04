@@ -41,7 +41,7 @@
             <key>ACQUISITION_MATRIX_DIMENSION_2D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ACQUISITION_MATRIX_DIMENSION_2D</name>
-                <value>128</value>
+                <value>120</value>
                 <defaultValue>128</defaultValue>
                 <description>The acquisition size of the second dimension</description>
                 <displayedName>Acquisition 2D</displayedName>
@@ -426,7 +426,7 @@
             <key>ECHO_TRAIN_LENGTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TRAIN_LENGTH</name>
-                <value>4</value>
+                <value>5</value>
                 <defaultValue>1</defaultValue>
                 <description>The echo train lentgth</description>
                 <displayedName>ETL</displayedName>
@@ -2796,7 +2796,7 @@
             <key>REPETITION_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>REPETITION_TIME</name>
-                <value>0.522</value>
+                <value>0.623</value>
                 <defaultValue>0.2</defaultValue>
                 <description>The repetition time  ( TR ) </description>
                 <displayedName>TR</displayedName>
@@ -2832,7 +2832,7 @@
             <key>RESOLUTION_PHASE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>RESOLUTION_PHASE</name>
-                <value>3.125E-4</value>
+                <value>3.333333333333333E-4</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Pixe truel dimension in the phase encoding direction (FOV / acquisition_matrix_dimension_2D) </description>
                 <displayedName>RESOLUTION_PHASE</displayedName>
@@ -3047,7 +3047,7 @@
             <key>SEQUENCE_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SEQUENCE_TIME</name>
-                <value>134.676005</value>
+                <value>120.862005</value>
                 <defaultValue>0.0</defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_TIME</displayedName>
@@ -3065,7 +3065,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version8.6</value>
+                <value>Version8.7</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_VERSION</displayedName>
@@ -3080,7 +3080,7 @@
             <key>SEQ_DESCRIPTION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQ_DESCRIPTION</name>
-                <value>SE_2D_SAG_256x128x12_ETL=4</value>
+                <value>SE_2D_SAG_256x120x12_ETL=5</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQ_DESCRIPTION</displayedName>
@@ -3319,7 +3319,7 @@
             <key>TRANSFORM_PLUGIN</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>TRANSFORM_PLUGIN</name>
-                <value>Centered2DRot</value>
+                <value>Sequential2DInterleaved</value>
                 <defaultValue>Centered2DRot</defaultValue>
                 <description>Transform the acquisition space to the k space</description>
                 <displayedName>Transform plugin</displayedName>
@@ -3331,6 +3331,7 @@
                 <suggestedValues>Sequential4D</suggestedValues>
                 <suggestedValues>Sequential2D</suggestedValues>
                 <suggestedValues>Sequential2D_FSE_TEST</suggestedValues>
+                <suggestedValues>Sequential2DInterleaved</suggestedValues>
                 <group>Scan</group>
                 <category>Acquisition</category>
             </value>
@@ -3704,7 +3705,7 @@
             <key>USER_ZERO_FILLING_2D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>USER_ZERO_FILLING_2D</name>
-                <value>0.0</value>
+                <value>6.25</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Percentage of zero filling</description>
                 <displayedName>ZERO_FILING_2D</displayedName>
