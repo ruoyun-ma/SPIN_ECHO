@@ -10,28 +10,28 @@ public enum Events {
     LoopMultiPlanarStart (2,S.Time_min_instruction.name()),
 
     IR (4,S.Time_tx_IR_length.name()),
-    IRDelay (22,S.Time_TI_delay.name()),
+    IRDelay (25,S.Time_TI_delay.name()),
 
 
     LoopSatBandStart (9,S.Time_min_instruction.name()),
     SatBandpulse (11,S.Time_tx_sb.name()),
     LoopSatBandEnd (16,S.Time_min_instruction.name()),
 
-    FatSatPulse (18,S.Time_tx_fatsat.name()),
+    FatSatPulse (21,S.Time_tx_fatsat.name()),
 
 
-    TX90 (24,S.Time_tx_90.name()),
-    Delay1 (16+13,S.Time_TE_delay1.name()),
+    TX90 (27 ,S.Time_tx_90.name()),
+    Delay1 (16+16 ,S.Time_TE_delay1.name()),
 
-    LoopStartEcho (24+13,S.Time_min_instruction.name()),
-    TX180 (39,S.Time_tx_180.name()),
-    Delay2 (45,S.Time_TE_delay2.name()),
-    Acq (50,S.Time_rx.name()),
-    Delay3 (55,S.Time_TE_delay3.name()),
-    LoopEndEcho (59,S.Time_min_instruction.name()),
+    LoopStartEcho (24+16 ,S.Time_min_instruction.name()),
+    TX180 (42,S.Time_tx_180.name()),
+    Delay2 (48 ,S.Time_TE_delay2.name()),
+    Acq (53,S.Time_rx.name()),
+    Delay3 (58 ,S.Time_TE_delay3.name()),
+    LoopEndEcho (62,S.Time_min_instruction.name()),
 
-    Delay4 (63,S.Time_TR_delay.name()),
-    LoopMultiPlanarEnd (64,S.Time_min_instruction.name());
+    Delay4 (66 ,S.Time_TR_delay.name()),
+    LoopMultiPlanarEnd (67 ,S.Time_min_instruction.name());
 
     public final int ID;
     public final String shortcutName;

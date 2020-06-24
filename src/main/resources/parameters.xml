@@ -149,7 +149,7 @@
             <key>BASE_FREQ_1</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>BASE_FREQ_1</name>
-                <value>3.00001E8</value>
+                <value>1.28E8</value>
                 <defaultValue>1.27552944E8</defaultValue>
                 <description>The base frequency of the first sequence channel</description>
                 <displayedName>Base Freq 1</displayedName>
@@ -372,7 +372,7 @@
             <key>ECHO_SPACING</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_SPACING</name>
-                <value>0.009000000000000001</value>
+                <value>0.00923</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Time between consecutive echoes when ETL is greater than 1</description>
                 <displayedName>ECHO_SPACING</displayedName>
@@ -390,7 +390,7 @@
             <key>ECHO_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME</name>
-                <value>0.018000000000000002</value>
+                <value>0.01846</value>
                 <defaultValue>0.005</defaultValue>
                 <description>The echo time ( TE ) </description>
                 <displayedName>TE</displayedName>
@@ -408,7 +408,7 @@
             <key>ECHO_TIME_EFFECTIVE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME_EFFECTIVE</name>
-                <value>0.018000000000000002</value>
+                <value>0.01846</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Effective echo time in Fast Spin Echo sequence</description>
                 <displayedName>EFFECTIVE_ECHO_TIME</displayedName>
@@ -444,8 +444,8 @@
             <key>FATSAT_BANDWIDTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_BANDWIDTH</name>
-                <value>250.0</value>
-                <defaultValue>1053.5</defaultValue>
+                <value>220.0</value>
+                <defaultValue>0.0</defaultValue>
                 <description>Fat: 3.5ppm</description>
                 <displayedName>FATSAT_BANDWIDTH</displayedName>
                 <locked>false</locked>
@@ -480,7 +480,7 @@
             <key>FATSAT_GRAD_APP_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_GRAD_APP_TIME</name>
-                <value>1.0E-5</value>
+                <value>7.7E-4</value>
                 <defaultValue>0.001</defaultValue>
                 <description></description>
                 <displayedName>FATSAT_GRAD_APP_TIME</displayedName>
@@ -499,7 +499,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_OFFSET_FREQ</name>
                 <value>-440.0</value>
-                <defaultValue>1053.5</defaultValue>
+                <defaultValue>-448.0</defaultValue>
                 <description>Fat: 3.5ppm </description>
                 <displayedName>FATSAT_OFFSET_FREQ</displayedName>
                 <locked>false</locked>
@@ -549,13 +549,13 @@
             </value>
         </entry>
         <entry>
-            <key>FATSAT_TX_AMP_90</key>
+            <key>FATSAT_TX_AMP</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>FATSAT_TX_AMP_90</name>
-                <value>100.0</value>
+                <name>FATSAT_TX_AMP</name>
+                <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
-                <description></description>
-                <displayedName>FATSAT_TX_AMP_90</displayedName>
+                <description>90° for FS; 45° for WEP</description>
+                <displayedName>FATSAT_TX_AMP</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -570,7 +570,7 @@
             <key>FATSAT_TX_LENGTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_TX_LENGTH</name>
-                <value>5.0E-6</value>
+                <value>0.006136363636363637</value>
                 <defaultValue>0.0</defaultValue>
                 <description></description>
                 <displayedName>FATSAT_TX_LENGTH</displayedName>
@@ -606,6 +606,24 @@
             </value>
         </entry>
         <entry>
+            <key>FATSAT_WEP_TX_LENGTH</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                <name>FATSAT_WEP_TX_LENGTH</name>
+                <value>2.9E-4</value>
+                <defaultValue>0.0</defaultValue>
+                <description></description>
+                <displayedName>FATSAT_WEP_TX_LENGTH</displayedName>
+                <locked>false</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <restrictedToSuggested>false</restrictedToSuggested>
+                <numberEnum>Time</numberEnum>
+                <minValue>0.0</minValue>
+                <maxValue>1.0E9</maxValue>
+                <group>Delay</group>
+                <category>Acquisition</category>
+            </value>
+        </entry>
+        <entry>
             <key>FAT_SATURATION_ENABLED</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>FAT_SATURATION_ENABLED</name>
@@ -616,6 +634,20 @@
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Miscellaneous</group>
+                <category>Acquisition</category>
+            </value>
+        </entry>
+        <entry>
+            <key>FAT_SATURATION_WEP_ENABLED</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
+                <name>FAT_SATURATION_WEP_ENABLED</name>
+                <value>true</value>
+                <defaultValue>false</defaultValue>
+                <description>Use Water Excitation Pulses </description>
+                <displayedName>FAT_SATURATION_WEP_ENABLED</displayedName>
+                <locked>false</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <group>Emission</group>
                 <category>Acquisition</category>
             </value>
         </entry>
@@ -826,7 +858,7 @@
             <key>GRADIENT_AREA_CRUSHER</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER</name>
-                <value>4.579158479007452E-5</value>
+                <value>1.3082634985938545E-5</value>
                 <defaultValue>0.0</defaultValue>
                 <description>For info: Area of the crusher gradient!</description>
                 <displayedName>GRADIENT_AREA_CRUSHER</displayedName>
@@ -844,7 +876,7 @@
             <key>GRADIENT_AREA_CRUSHER_PI</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER_PI</name>
-                <value>1.9493477645134725</value>
+                <value>0.5569277713514039</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Number of pi dephasing by the crusher</description>
                 <displayedName>GRADIENT_AREA_CRUSHER_PI</displayedName>
@@ -2234,7 +2266,7 @@
             <key>OBSERVED_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>OBSERVED_FREQUENCY</name>
-                <value>3.00001E8</value>
+                <value>1.28E8</value>
                 <defaultValue>6.3E7</defaultValue>
                 <description>The frequency of the acquisition</description>
                 <displayedName>Observed frequency</displayedName>
@@ -2760,7 +2792,7 @@
             <key>RECEIVER_COUNT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>RECEIVER_COUNT</name>
-                <value>4</value>
+                <value>2</value>
                 <defaultValue>1</defaultValue>
                 <description>The number of receivers</description>
                 <displayedName>Receiver Count</displayedName>
@@ -2796,7 +2828,7 @@
             <key>REPETITION_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>REPETITION_TIME</name>
-                <value>0.623</value>
+                <value>0.7187</value>
                 <defaultValue>0.2</defaultValue>
                 <description>The repetition time  ( TR ) </description>
                 <displayedName>TR</displayedName>
@@ -3047,7 +3079,7 @@
             <key>SEQUENCE_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SEQUENCE_TIME</name>
-                <value>120.862005</value>
+                <value>139.42780499999998</value>
                 <defaultValue>0.0</defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_TIME</displayedName>
@@ -3390,7 +3422,7 @@
             <key>TX_AMP_180</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_180</name>
-                <value>94.09399968698172</value>
+                <value>89.82780310080393</value>
                 <defaultValue>0.0</defaultValue>
                 <description>The magnitude of the RF pulse 180</description>
                 <displayedName>TX_AMP_180</displayedName>
@@ -3408,7 +3440,7 @@
             <key>TX_AMP_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
-                <value>96.540371033474</value>
+                <value>100.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude of the transmitter</description>
                 <displayedName>TX_AMP</displayedName>
@@ -3504,7 +3536,7 @@
             <key>TX_LENGTH_180</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_LENGTH_180</name>
-                <value>0.001</value>
+                <value>0.0020350000000000004</value>
                 <defaultValue>0.0</defaultValue>
                 <description>The duration of the 180 RF pulse</description>
                 <displayedName>TX_LENGTH_180</displayedName>
@@ -3522,7 +3554,7 @@
             <key>TX_LENGTH_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_LENGTH_90</name>
-                <value>0.001</value>
+                <value>0.001018</value>
                 <defaultValue>0.0</defaultValue>
                 <description>length of RF pulse</description>
                 <displayedName>TX_LENGTH_90</displayedName>

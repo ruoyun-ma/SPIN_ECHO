@@ -130,6 +130,8 @@ public class SpinEcho extends BaseSequenceGenerator {
     private int numberOfTrigger;
 
     boolean is_fatsat_enabled;
+    boolean is_fatsat_wep_enabled;
+    double fatFreq;
 
     private int nb_satband;
     private boolean is_satband_enabled;
@@ -211,7 +213,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         ((TextParam) getParam(SATBAND_ORIENTATION)).setRestrictedToSuggested(true);
 
         protonFrequency = Math.ceil(Instrument.instance().getDevices().getMagnet().getProtonFrequency() / Math.pow(10, 6));
-        double fatFreq = protonFrequency * 3.5;
+        fatFreq = -protonFrequency * 3.5;
         ((NumberParam) getParam(FATSAT_BANDWIDTH)).setDefaultValue(fatFreq);
         ((NumberParam) getParam(FATSAT_OFFSET_FREQ)).setDefaultValue(fatFreq);
     }
@@ -286,7 +288,12 @@ public class SpinEcho extends BaseSequenceGenerator {
         isTrigger = isTrigger && (numberOfTrigger > 0);
 
         is_fatsat_enabled = getBoolean(FAT_SATURATION_ENABLED);
+        System.out.println("---- sTART ");
+        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
 
+        is_fatsat_wep_enabled = getBoolean(FAT_SATURATION_WEP_ENABLED);
+        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
+        System.out.println("  ");
         is_satband_enabled = getBoolean(SATBAND_ENABLED);
         position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
         nb_satband = is_satband_enabled ? (int) Arrays.stream(position_sli_ph_rea).filter(item -> item == 1).count() : 1;
@@ -331,6 +338,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         nucleus = Nucleus.getNucleusForName(getText(NUCLEUS_1));
         protonFrequency = Instrument.instance().getDevices().getMagnet().getProtonFrequency();
+        fatFreq = - protonFrequency * 3.5;
+        System.out.println(protonFrequency);
+        System.out.println(fatFreq);
         double freq_offset1 = getDouble(OFFSET_FREQ_1);
         observeFrequency = nucleus.getFrequency(protonFrequency) + freq_offset1;
         getParam(BASE_FREQ_1).setValue(nucleus.getFrequency(protonFrequency));
@@ -441,6 +451,15 @@ public class SpinEcho extends BaseSequenceGenerator {
                 break;
         }
         getParam(ECHO_EFFECTIVE).setValue(echoEffective);
+
+        // only fatsat or fatsat_wep
+        System.out.println("is_fatsat_enabled " + is_fatsat_enabled);
+        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
+        is_fatsat_wep_enabled = is_fatsat_enabled ? false : is_fatsat_wep_enabled;
+        getParam(FAT_SATURATION_WEP_ENABLED).setValue(is_fatsat_enabled ? false : isFSETrainTest);
+        System.out.println("V");
+        System.out.println("is_fatsat_enabled " + is_fatsat_enabled);
+        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
 
         // -----------------------------------------------
         // 1stD managment
@@ -730,6 +749,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (is_fatsat_enabled) {
             seqDescription += "_FATSAT";
         }
+        if (is_fatsat_wep_enabled) {
+            seqDescription += "_FATSATWEP";
+        }
         getParam(SEQ_DESCRIPTION).setValue(seqDescription);
 
         // -----------------------------------------------
@@ -836,7 +858,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         boolean isEnableCrusherIR = getBoolean(GRADIENT_ENABLE_CRUSHER_IR);
         set(Grad_enable_crush_IR, isInversionRecovery ? isEnableCrusherIR : false);
         set(Enable_sb, is_satband_enabled);
-        set(Enable_fs, is_fatsat_enabled);
+        set(Enable_fs, is_fatsat_enabled | is_fatsat_wep_enabled);
+        set(Enable_fs_wep, is_fatsat_wep_enabled);
 
         // ------------------------------------------
         // delays for sequence instructions
@@ -901,17 +924,29 @@ public class SpinEcho extends BaseSequenceGenerator {
         // Fat SAT RF pulse
         double tx_bandwidth_90_fs = getDouble(FATSAT_BANDWIDTH);
         double tx_bandwidth_factor_90_fs = getTx_bandwidth_factor(FATSAT_TX_SHAPE, TX_BANDWIDTH_FACTOR, TX_BANDWIDTH_FACTOR_3D);
-        double tx_length_90_fs = is_fatsat_enabled ? tx_bandwidth_factor_90_fs / tx_bandwidth_90_fs : minInstructionDelay;
-        getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
+        double tx_length_90_fs = minInstructionDelay;
+        double tx_length_90_fs_wep = minInstructionDelay;
+        if (is_fatsat_enabled) {
+
+            tx_length_90_fs = tx_bandwidth_factor_90_fs / tx_bandwidth_90_fs;
+            getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
+
+        } else if (is_fatsat_wep_enabled) {
+            tx_length_90_fs = getDouble(FATSAT_WEP_TX_LENGTH);
+            tx_length_90_fs_wep = tx_length_90_fs;
+        }
         set(Time_tx_fatsat, tx_length_90_fs);
+        set(Time_tx_fatsat_wep, tx_length_90_fs_wep);
+
 
         // FatSAT timing seting needed for Flip Angle calculation
         double grad_fatsat_application_time = getDouble(FATSAT_GRAD_APP_TIME);
-        set(Time_grad_fatsat, is_fatsat_enabled ? grad_fatsat_application_time : minInstructionDelay);
+        set(Time_grad_fatsat, is_fatsat_enabled | is_fatsat_wep_enabled ? grad_fatsat_application_time : minInstructionDelay);
         set(Time_before_fatsat_pulse, minInstructionDelay); //    <<<<<<<<<<<<<<<<<<<<<<<<<<< blanking ON
-        set(Time_grad_ramp_fatsat, is_fatsat_enabled ? grad_rise_time : minInstructionDelay);
+        set(Time_grad_ramp_fatsat, is_fatsat_enabled | is_fatsat_wep_enabled ? grad_rise_time : minInstructionDelay);
         //
         RFPulse pulseTXFatSat = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat, Time_tx_fatsat, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat);
+        RFPulse pulseTXFatSatWep = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat_wep, Time_tx_fatsat_wep, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat_wep);
 
         // SAT Band  RF pulse
         set(Time_grad_ramp_sb, is_satband_enabled ? grad_rise_time : minInstructionDelay);
@@ -968,6 +1003,14 @@ public class SpinEcho extends BaseSequenceGenerator {
                 getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
 //                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
             }
+            if (!pulseTXFatSat.checkPower(is_fatsat_wep_enabled ? 45.0 : 0.0, observeFrequency + tx_frequency_offset_90_fs, nucleus)) {
+                tx_length_90_fs = pulseTXFatSat.getPulseDuration();
+                tx_length_90_fs_wep = tx_length_90_fs;
+                System.out.println(" tx_length_90_fs: " + tx_length_90_fs);
+                set(Time_tx_fatsat, tx_length_90_fs);
+                set(Time_tx_fatsat_wep, tx_length_90_fs_wep);
+                getParam(FATSAT_WEP_TX_LENGTH).setValue(tx_length_90_fs_wep);
+            }
             if (!pulseTXSatBand.checkPower(flip_angle_satband, observeFrequency, nucleus)) {
 //                double tx_length_sb = pulseTXSatBand.getPulseDuration();
 //                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
@@ -989,17 +1032,17 @@ public class SpinEcho extends BaseSequenceGenerator {
             this.getParam(TX_ATT).setValue(pulseTX90.getAtt());            // display PULSE_ATT
             this.getParam(TX_AMP_90).setValue(pulseTX90.getAmp90());     // display 90° amplitude
             this.getParam(TX_AMP_180).setValue(pulseTX180.getAmp180());   // display 180° amplitude
-            this.getParam(FATSAT_TX_AMP_90).setValue(pulseTXFatSat.getAmp90());   // display 180° amplitude
+            this.getParam(FATSAT_TX_AMP).setValue(pulseTXFatSat.getAmp());   // display 180° amplitude
             this.getParam(SATBAND_TX_AMP).setValue(pulseTXSatBand.getAmp180());   // display 180° amplitude
 
         } else {
             pulseTX90.setAtt(getParam(TX_ATT));
             pulseTX90.setAmp(getParam(TX_AMP_90));
             pulseTX180.setAmp(getParam(TX_AMP_180));
-            pulseTXFatSat.setAmp(getParam(FATSAT_TX_AMP_90));
+            pulseTXFatSat.setAmp(getParam(FATSAT_TX_AMP));
             pulseTXSatBand.setAmp(getParam(SATBAND_TX_AMP));
         }
-        this.getParam(FATSAT_FLIP_ANGLE).setValue(is_fatsat_enabled ? 90 : 0);
+        this.getParam(FATSAT_FLIP_ANGLE).setValue(is_fatsat_enabled ? 90 - (is_fatsat_wep_enabled ? 45 : 0) : 0);
 
         // -----------------------------------------------
         // Calculation RF pulse parameters  4/4: bandwidth
@@ -1374,6 +1417,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         //  Sat-Band Fat-Sat timing
         //--------------------------------------------------------------------------------------
         //Calculated in RF pulse calculation because needed for Flip angle calculation
+//        double timeFatSatWepDelay =
 
 
         //  Fat-Sat gradient
@@ -1381,7 +1425,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         Gradient gradFatsatPhase = Gradient.createGradient(getSequence(), Grad_amp_fatsat_phase, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat);
         Gradient gradFatsatSlice = Gradient.createGradient(getSequence(), Grad_amp_fatsat_slice, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat);
 
-        if (is_fatsat_enabled) {
+        if (is_fatsat_enabled | is_fatsat_wep_enabled) {
             double pixel_dimension_ph = getDouble(RESOLUTION_PHASE);
             double pixel_dimension_sl = getDouble(RESOLUTION_SLICE);
 
@@ -1985,6 +2029,9 @@ public class SpinEcho extends BaseSequenceGenerator {
                 System.out.println((((TimeElement) getSequence().getTimeChannel().get(i)).getTime().getFirst().doubleValue() * 1000000));
             }
         }
+        System.out.println("  ");
+        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
+        System.out.println("  END ");
 
     }
     // --------------------------------------------------------------------------------------------------------------------------------------------
