@@ -33,6 +33,8 @@ package rs2d.sequence.spinecho;
 //  V5.6
 //  double minInstructionDelay = 0.000005;
 
+// to do time befor wep pulse
+
 
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
@@ -66,7 +68,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version8.7";
+    private String sequenceVersion = "Version8.8";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -288,11 +290,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         isTrigger = isTrigger && (numberOfTrigger > 0);
 
         is_fatsat_enabled = getBoolean(FAT_SATURATION_ENABLED);
-        System.out.println("---- sTART ");
-        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
 
         is_fatsat_wep_enabled = getBoolean(FAT_SATURATION_WEP_ENABLED);
-        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
         System.out.println("  ");
         is_satband_enabled = getBoolean(SATBAND_ENABLED);
         position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
@@ -330,6 +329,8 @@ public class SpinEcho extends BaseSequenceGenerator {
     // --------------------------------------------------------------------------------------------------------------------------------------------
     private void beforeRouting() throws Exception {
         Log.debug(getClass(), "------------ BEFORE ROUTING -------------");
+        //  System.out.println(" BEFORE ROUTING ");
+
         getParam(SEQUENCE_VERSION).setValue(sequenceVersion);
         getParam(MODALITY).setValue("MRI");
 
@@ -338,7 +339,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         nucleus = Nucleus.getNucleusForName(getText(NUCLEUS_1));
         protonFrequency = Instrument.instance().getDevices().getMagnet().getProtonFrequency();
-        fatFreq = - protonFrequency * 3.5;
+        fatFreq = -protonFrequency * 3.5;
         System.out.println(protonFrequency);
         System.out.println(fatFreq);
         double freq_offset1 = getDouble(OFFSET_FREQ_1);
@@ -454,12 +455,9 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         // only fatsat or fatsat_wep
         System.out.println("is_fatsat_enabled " + is_fatsat_enabled);
-        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
         is_fatsat_wep_enabled = is_fatsat_enabled ? false : is_fatsat_wep_enabled;
-        getParam(FAT_SATURATION_WEP_ENABLED).setValue(is_fatsat_enabled ? false : isFSETrainTest);
-        System.out.println("V");
-        System.out.println("is_fatsat_enabled " + is_fatsat_enabled);
-        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
+        getParam(FAT_SATURATION_WEP_ENABLED).setValue(is_fatsat_enabled ? false : is_fatsat_wep_enabled);
+
 
         // -----------------------------------------------
         // 1stD managment
@@ -805,6 +803,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(HARDWARE_SHIM).setValue(hardwareShim.getValue());
         getParam(HARDWARE_SHIM_LABEL).setValue(hardwareShim.getLabel());
         */
+        //     System.out.println(" BEFORE ROUTING end");
+
+
     }
 
     private int floorEven(double value) {
@@ -996,20 +997,23 @@ public class SpinEcho extends BaseSequenceGenerator {
                 notifyOutOfRangeParam(TX_LENGTH_90, pulseTX90.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH_90)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
                 txLength90 = pulseTX90.getPulseDuration();
             }
-            if (!pulseTXFatSat.checkPower(is_fatsat_enabled ? 90.0 : 0.0, observeFrequency + tx_frequency_offset_90_fs, nucleus)) {
-                tx_length_90_fs = pulseTXFatSat.getPulseDuration();
-                System.out.println(" tx_length_90_fs: " + tx_length_90_fs);
-                set(Time_tx_fatsat, tx_length_90_fs);
-                getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
+            if (is_fatsat_enabled) {
+                if (!pulseTXFatSat.checkPower(is_fatsat_enabled ? 90.0 : 0.0, observeFrequency + tx_frequency_offset_90_fs, nucleus)) {
+                    tx_length_90_fs = pulseTXFatSat.getPulseDuration();
+                    System.out.println(" tx_length_90_fs: " + tx_length_90_fs);
+                    set(Time_tx_fatsat, tx_length_90_fs);
+                    getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
 //                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
-            }
-            if (!pulseTXFatSat.checkPower(is_fatsat_wep_enabled ? 45.0 : 0.0, observeFrequency + tx_frequency_offset_90_fs, nucleus)) {
-                tx_length_90_fs = pulseTXFatSat.getPulseDuration();
-                tx_length_90_fs_wep = tx_length_90_fs;
-                System.out.println(" tx_length_90_fs: " + tx_length_90_fs);
-                set(Time_tx_fatsat, tx_length_90_fs);
-                set(Time_tx_fatsat_wep, tx_length_90_fs_wep);
-                getParam(FATSAT_WEP_TX_LENGTH).setValue(tx_length_90_fs_wep);
+                }
+            } else if (is_fatsat_wep_enabled) {
+                if (!pulseTXFatSat.checkPower(is_fatsat_wep_enabled ? 45.0 : 0.0, observeFrequency, nucleus)) {
+                    tx_length_90_fs = pulseTXFatSat.getPulseDuration();
+                    tx_length_90_fs_wep = tx_length_90_fs;
+                    System.out.println(" tx_length_90_fs: " + tx_length_90_fs);
+                    set(Time_tx_fatsat, tx_length_90_fs);
+                    set(Time_tx_fatsat_wep, tx_length_90_fs_wep);
+                    getParam(FATSAT_WEP_TX_LENGTH).setValue(tx_length_90_fs_wep);
+                }
             }
             if (!pulseTXSatBand.checkPower(flip_angle_satband, observeFrequency, nucleus)) {
 //                double tx_length_sb = pulseTXSatBand.getPulseDuration();
@@ -1042,7 +1046,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             pulseTXFatSat.setAmp(getParam(FATSAT_TX_AMP));
             pulseTXSatBand.setAmp(getParam(SATBAND_TX_AMP));
         }
-        this.getParam(FATSAT_FLIP_ANGLE).setValue(is_fatsat_enabled ? 90 - (is_fatsat_wep_enabled ? 45 : 0) : 0);
+        this.getParam(FATSAT_FLIP_ANGLE).setValue(is_fatsat_enabled ? 90 : (is_fatsat_wep_enabled ? 45 : 0));
 
         // -----------------------------------------------
         // Calculation RF pulse parameters  4/4: bandwidth
@@ -1418,6 +1422,25 @@ public class SpinEcho extends BaseSequenceGenerator {
         //--------------------------------------------------------------------------------------
         //Calculated in RF pulse calculation because needed for Flip angle calculation
 //        double timeFatSatWepDelay =
+        double timeFatSatWepDelay = minInstructionDelay;
+        double phaseFatSat = 0.0;
+        if (is_fatsat_wep_enabled) {
+            double timeFatSatWepBtwPulse = TimeEvents.getTimeForEvents(getSequence(), Events.FatSatPulseWep.ID, Events.FatSatPulse.ID) / 2
+                    + TimeEvents.getTimeForEvents(getSequence(), Events.FatSatPulse.ID - 1);
+
+            int nbFatWaterRotation = (int) Math.round(timeFatSatWepBtwPulse / (1 / Math.abs(tx_frequency_offset_90_fs)));
+            timeFatSatWepDelay = (1 / Math.abs(tx_frequency_offset_90_fs)) * (nbFatWaterRotation + 1 / 2.0)
+                    - timeFatSatWepBtwPulse;
+
+            phaseFatSat = 180;
+        }
+        set(Time_wep_delay, timeFatSatWepDelay);
+
+
+        set(Tx_phase_fatsat_wep, 0);
+        set(Tx_phase_fatsat, phaseFatSat);
+
+
 
 
         //  Fat-Sat gradient
@@ -2029,9 +2052,8 @@ public class SpinEcho extends BaseSequenceGenerator {
                 System.out.println((((TimeElement) getSequence().getTimeChannel().get(i)).getTime().getFirst().doubleValue() * 1000000));
             }
         }
-        System.out.println("  ");
-        System.out.println("is_fatsat_wep_enabled " + is_fatsat_wep_enabled);
-        System.out.println("  END ");
+
+//        System.out.println("  END ");
 
     }
     // --------------------------------------------------------------------------------------------------------------------------------------------

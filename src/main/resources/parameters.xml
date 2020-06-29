@@ -462,7 +462,7 @@
             <key>FATSAT_FLIP_ANGLE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_FLIP_ANGLE</name>
-                <value>0.0</value>
+                <value>45.0</value>
                 <defaultValue>90.0</defaultValue>
                 <description></description>
                 <displayedName>FATSAT_FLIP_ANGLE</displayedName>
@@ -498,7 +498,7 @@
             <key>FATSAT_OFFSET_FREQ</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_OFFSET_FREQ</name>
-                <value>-440.0</value>
+                <value>-448.0</value>
                 <defaultValue>-448.0</defaultValue>
                 <description>Fat: 3.5ppm </description>
                 <displayedName>FATSAT_OFFSET_FREQ</displayedName>
@@ -552,7 +552,7 @@
             <key>FATSAT_TX_AMP</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_TX_AMP</name>
-                <value>0.0</value>
+                <value>50.419420764613974</value>
                 <defaultValue>0.0</defaultValue>
                 <description>90° for FS; 45° for WEP</description>
                 <displayedName>FATSAT_TX_AMP</displayedName>
@@ -609,7 +609,7 @@
             <key>FATSAT_WEP_TX_LENGTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_WEP_TX_LENGTH</name>
-                <value>2.9E-4</value>
+                <value>5.0E-4</value>
                 <defaultValue>0.0</defaultValue>
                 <description></description>
                 <displayedName>FATSAT_WEP_TX_LENGTH</displayedName>
@@ -2828,7 +2828,7 @@
             <key>REPETITION_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>REPETITION_TIME</name>
-                <value>0.7187</value>
+                <value>0.7981</value>
                 <defaultValue>0.2</defaultValue>
                 <description>The repetition time  ( TR ) </description>
                 <displayedName>TR</displayedName>
@@ -3079,7 +3079,7 @@
             <key>SEQUENCE_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SEQUENCE_TIME</name>
-                <value>139.42780499999998</value>
+                <value>154.83140500000002</value>
                 <defaultValue>0.0</defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_TIME</displayedName>
@@ -3097,7 +3097,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version8.7</value>
+                <value>Version8.8</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_VERSION</displayedName>
@@ -3112,7 +3112,7 @@
             <key>SEQ_DESCRIPTION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQ_DESCRIPTION</name>
-                <value>SE_2D_SAG_256x120x12_ETL=5</value>
+                <value>SE_2D_SAG_256x120x12_ETL=5_FATSATWEP</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQ_DESCRIPTION</displayedName>
@@ -3422,7 +3422,7 @@
             <key>TX_AMP_180</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_180</name>
-                <value>89.82780310080393</value>
+                <value>87.166959040919</value>
                 <defaultValue>0.0</defaultValue>
                 <description>The magnitude of the RF pulse 180</description>
                 <displayedName>TX_AMP_180</displayedName>
@@ -3440,7 +3440,7 @@
             <key>TX_AMP_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
-                <value>100.0</value>
+                <value>44.30025851993182</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude of the transmitter</description>
                 <displayedName>TX_AMP</displayedName>
@@ -3472,7 +3472,7 @@
             <key>TX_ATT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_ATT</name>
-                <value>0.0</value>
+                <value>25.0</value>
                 <defaultValue>36.0</defaultValue>
                 <description>The emission attenuation</description>
                 <displayedName>TX_ATT</displayedName>
@@ -3554,7 +3554,7 @@
             <key>TX_LENGTH_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_LENGTH_90</name>
-                <value>0.001018</value>
+                <value>0.002</value>
                 <defaultValue>0.0</defaultValue>
                 <description>length of RF pulse</description>
                 <displayedName>TX_LENGTH_90</displayedName>

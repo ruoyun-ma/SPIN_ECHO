@@ -17,6 +17,8 @@ public enum Events {
     SatBandpulse (11,S.Time_tx_sb.name()),
     LoopSatBandEnd (16,S.Time_min_instruction.name()),
 
+    FatSatPulseWep (18,S.Time_tx_fatsat_wep.name()),
+    FatSatWepDelay (19,S.Time_wep_delay.name()),
     FatSatPulse (21,S.Time_tx_fatsat.name()),
 
 
