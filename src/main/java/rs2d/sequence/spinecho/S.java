@@ -93,6 +93,7 @@ public enum S implements GeneratorSequenceParamEnum {
     Rx_freq_offset("Rx_freq_offset"),
     Rx_phase("Rx_phase"),
     Time_before_fatsat_pulse("Time_before_fatsat_pulse"),
+    Time_before_fatsat_wep_pulse("Time_before_fatsat_wep_pulse"),
     Time_btw_dyn_frames("Time_btw_dyn_frames"),
     Time_flush_delay("Time_flush_delay"),
     Time_grad_crusher_top("Time_grad_crusher_top"),

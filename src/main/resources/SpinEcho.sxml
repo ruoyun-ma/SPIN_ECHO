@@ -542,10 +542,10 @@
             <keyList>elem109</keyList>
             <keyList>elem110</keyList>
             <keyList>elem111</keyList>
-            <keyList>elem112</keyList>
+            <keyList>elem8</keyList>
             <keyList>elem38</keyList>
             <keyList>elem50</keyList>
-            <keyList>elem8</keyList>
+            <keyList>elem112</keyList>
             <keyList>elem113</keyList>
             <keyList>elem114</keyList>
             <keyList>elem115</keyList>
@@ -23259,13 +23259,14 @@
             <count>1</count>
             <key>table0</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Time1</name>
+                <name>Time_before_fatsat_wep_pulse</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
                 <order>One</order>
+                <group>Delay</group>
                 <locked>false</locked>
                 <address>-1</address>
-                <list>1.0E-5</list>
+                <list>4.0E-5</list>
             </value>
         </Entry>
         <Entry>
@@ -23320,7 +23321,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>-1</address>
-                <list>6.060714285714285E-4</list>
+                <list>5.760714285714285E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -25777,7 +25778,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>11</address>
-                <list>0.010687678571428555</list>
+                <list>0.010652678571428556</list>
             </value>
         </Entry>
         <Entry>
@@ -27390,7 +27391,7 @@
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>5.0E-6</list>
+                <list>4.0E-5</list>
             </value>
         </Entry>
         <Entry>

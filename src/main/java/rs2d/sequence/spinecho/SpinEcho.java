@@ -39,6 +39,7 @@ package rs2d.sequence.spinecho;
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.instrument.Instrument;
+import rs2d.spinlab.instrument.InstrumentTxChannel;
 import rs2d.spinlab.instrument.util.GradientMath;
 import rs2d.spinlab.sequence.SequenceTool;
 import rs2d.spinlab.sequence.element.TimeElement;
@@ -867,6 +868,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         set(Time_min_instruction, minInstructionDelay);
 
+        InstrumentTxChannel txCh = Instrument.instance().getTxChannels().get( getListInt(TX_ROUTE).get(0));
+        double blankingDelay  = Math.max(minInstructionDelay,txCh.getRfAmpChannel().getBlankingDelay());
+
         // -----------------------------------------------
         // calculate gradient equivalent rise time
         // -----------------------------------------------
@@ -877,6 +881,11 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (grad_rise_time < min_rise_time_sinus) {
             double new_grad_rise_time = ceilToSubDecimal(min_rise_time_sinus, 5);
             notifyOutOfRangeParam(GRADIENT_RISE_TIME, new_grad_rise_time, ((NumberParam) getParam(GRADIENT_RISE_TIME)).getMaxValue(), "Gradient ramp time too short ");
+            grad_rise_time = new_grad_rise_time;
+        }
+        if (grad_rise_time < blankingDelay) {
+            double new_grad_rise_time = ceilToSubDecimal(blankingDelay, 5);
+            notifyOutOfRangeParam(GRADIENT_RISE_TIME, new_grad_rise_time, ((NumberParam) getParam(GRADIENT_RISE_TIME)).getMaxValue(), "Gradient ramp time too short because of blanking delay ");
             grad_rise_time = new_grad_rise_time;
         }
         set(Time_grad_ramp, grad_rise_time);
@@ -917,6 +926,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // Calculation RF pulse parameters  1/4 : Pulse declaration & Fatsat Flip angle calculation
         // -----------------------------------------------
 
+
         set(Time_tx_90, TX_LENGTH_90);     // set RF pulse length to sequence
         set(Time_tx_180, TX_LENGTH_180);   // set 180° RF pulse length to sequence
         RFPulse pulseTX90 = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_90, Tx_phase_90, Time_tx_90, Tx_shape_90, Tx_shape_phase_90, Tx_freq_offset_90);
@@ -943,7 +953,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         // FatSAT timing seting needed for Flip Angle calculation
         double grad_fatsat_application_time = getDouble(FATSAT_GRAD_APP_TIME);
         set(Time_grad_fatsat, is_fatsat_enabled | is_fatsat_wep_enabled ? grad_fatsat_application_time : minInstructionDelay);
-        set(Time_before_fatsat_pulse, minInstructionDelay); //    <<<<<<<<<<<<<<<<<<<<<<<<<<< blanking ON
+        set(Time_before_fatsat_pulse, blankingDelay);
+        set(Time_before_fatsat_wep_pulse, blankingDelay);
         set(Time_grad_ramp_fatsat, is_fatsat_enabled | is_fatsat_wep_enabled ? grad_rise_time : minInstructionDelay);
         //
         RFPulse pulseTXFatSat = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat, Time_tx_fatsat, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat);
