@@ -4779,7 +4779,7 @@
             <key>param45</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>Enable_fs_wep</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Enable_fs_wep</displayedName>
@@ -10256,7 +10256,7 @@
             <key>param255</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>Enable_fs</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Enable_fs</displayedName>
@@ -23293,7 +23293,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>-1</address>
-                <list>5.0E-4</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -23321,7 +23321,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>-1</address>
-                <list>5.760714285714285E-4</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -25183,7 +25183,7 @@
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>180.0</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -25210,7 +25210,7 @@
                 <group>Emission</group>
                 <locked>true</locked>
                 <address>3</address>
-                <list>50.419420764613974</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -25778,7 +25778,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>11</address>
-                <list>0.010652678571428556</list>
+                <list>0.013268749999999982</list>
             </value>
         </Entry>
         <Entry>
@@ -26903,7 +26903,7 @@
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>2</address>
-                <list>99.38046739277243</list>
+                <list>0.0</list>
             </value>
         </Entry>
         <Entry>
@@ -27417,7 +27417,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>5.0E-4</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -27444,7 +27444,7 @@
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>1.5E-4</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -27471,7 +27471,7 @@
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>7.7E-4</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>

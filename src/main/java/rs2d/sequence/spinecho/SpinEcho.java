@@ -866,8 +866,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         set(Time_min_instruction, minInstructionDelay);
 
-        InstrumentTxChannel txCh = Instrument.instance().getTxChannels().get( getListInt(TX_ROUTE).get(0));
-        double blankingDelay  = Math.max(minInstructionDelay,txCh.getRfAmpChannel().getBlankingDelay());
+        InstrumentTxChannel txCh = Instrument.instance().getTxChannels().get(getListInt(TX_ROUTE).get(0));
+        double blankingDelay = Math.max(minInstructionDelay, txCh.getRfAmpChannel().getBlankingDelay());
 
         // -----------------------------------------------
         // calculate gradient equivalent rise time
@@ -1006,20 +1006,16 @@ public class SpinEcho extends BaseSequenceGenerator {
                 notifyOutOfRangeParam(TX_LENGTH_90, pulseTX90.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH_90)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
                 txLength90 = pulseTX90.getPulseDuration();
             }
-            if (is_fatsat_enabled) {
-                if (!pulseTXFatSat.checkPower(is_fatsat_enabled ? 90.0 : 0.0, observeFrequency + tx_frequency_offset_90_fs, nucleus)) {
-                    tx_length_90_fs = pulseTXFatSat.getPulseDuration();
-                    System.out.println(" tx_length_90_fs: " + tx_length_90_fs);
-                    set(Time_tx_fatsat, tx_length_90_fs);
+
+            double FlipAngleFatSat = is_fatsat_enabled ? 90.0 : (is_fatsat_wep_enabled ? 45.0 : 0.0);
+            double FreqFatSat = observeFrequency + (is_fatsat_enabled ? tx_frequency_offset_90_fs : 0.0);
+            if (!pulseTXFatSat.checkPower(FlipAngleFatSat, FreqFatSat, nucleus)) {
+                tx_length_90_fs = pulseTXFatSat.getPulseDuration();
+                set(Time_tx_fatsat, tx_length_90_fs);
+                if (is_fatsat_wep_enabled) {
                     getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
-//                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
-                }
-            } else if (is_fatsat_wep_enabled) {
-                if (!pulseTXFatSat.checkPower(is_fatsat_wep_enabled ? 45.0 : 0.0, observeFrequency, nucleus)) {
-                    tx_length_90_fs = pulseTXFatSat.getPulseDuration();
+                } else if (is_fatsat_wep_enabled) {
                     tx_length_90_fs_wep = tx_length_90_fs;
-                    System.out.println(" tx_length_90_fs: " + tx_length_90_fs);
-                    set(Time_tx_fatsat, tx_length_90_fs);
                     set(Time_tx_fatsat_wep, tx_length_90_fs_wep);
                     getParam(FATSAT_WEP_TX_LENGTH).setValue(tx_length_90_fs_wep);
                 }
@@ -1448,8 +1444,6 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         set(Tx_phase_fatsat_wep, 0);
         set(Tx_phase_fatsat, phaseFatSat);
-
-
 
 
         //  Fat-Sat gradient

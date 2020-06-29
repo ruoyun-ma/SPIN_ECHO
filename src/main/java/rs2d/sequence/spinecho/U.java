@@ -451,7 +451,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Angle);
             param.setMinValue(0.0);
             param.setMaxValue(360.0);
-            param.setValue(45.0);
+            param.setValue(0.0);
             param.setDefaultValue(90.0);
             return param;
         }
@@ -536,7 +536,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.TxAmp);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(50.419420764613974);
+            param.setValue(0.0);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -614,7 +614,7 @@ public enum U implements GeneratorParamEnum {
             param.setDescription("Use Water Excitation Pulses ");
             param.setGroup(EnumGroup.Emission);
             param.setCategory(Category.Acquisition);
-            param.setValue(true);
+            param.setValue(false);
             param.setDefaultValue(false);
             return param;
         }
@@ -2326,7 +2326,7 @@ public enum U implements GeneratorParamEnum {
             param.setDisplayedName("SEQ_DESCRIPTION");
             param.setDescription("");
             param.setCategory(Category.Acquisition);
-            param.setValue("SE_2D_SAG_256x120x12_ETL=5_FATSATWEP");
+            param.setValue("SE_2D_SAG_256x120x12_ETL=5");
             param.setDefaultValue("");
             return param;
         }
