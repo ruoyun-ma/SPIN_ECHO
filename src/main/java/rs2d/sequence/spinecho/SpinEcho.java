@@ -33,8 +33,6 @@ package rs2d.sequence.spinecho;
 //  V5.6
 //  double minInstructionDelay = 0.000005;
 
-// to do time befor wep pulse
-
 
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
