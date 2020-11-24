@@ -520,10 +520,17 @@ public class Gradient {
     public boolean calculateReadoutGradient(double spectralWidth, double fov) throws Exception {
         boolean testSpectralWidth = true;
         this.spectralWidth = spectralWidth;
+<<<<<<< HEAD
+        amplitude = spectralWidth / ((GradientMath.GAMMA * nucleus.getRatio()) * fov) * 100.0 / gMax;                 // amplitude in T/m
+        if (Math.abs(amplitude) > 100.0) {
+            this.spectralWidth = solveSpectralWidthMax(fov);
+            amplitude = this.spectralWidth / ((GradientMath.GAMMA * nucleus.getRatio()) * fov) * 100.0 / gMax;                 // amplitude in T/m
+=======
         amplitude = spectralWidth / ((GradientMath.GAMMA / nucleus.getRatio()) * fov) * 100.0 / gMax;                 // amplitude in T/m
         if (Math.abs(amplitude) > 100.0) {
             this.spectralWidth = solveSpectralWidthMax(fov);
             amplitude = this.spectralWidth / ((GradientMath.GAMMA / nucleus.getRatio()) * fov) * 100.0 / gMax;                 // amplitude in T/m
+>>>>>>> 5d8b817... V9.0 Modify gradient for multi nucleus
             testSpectralWidth = false;
         }
         calculateStaticArea();
@@ -615,10 +622,17 @@ public class Gradient {
         boolean testSliceThickness = true;
         txBandwidth = tx_bandwidth;
         this.sliceThicknessExcitation = slice_thickness_excitation;
+<<<<<<< HEAD
+        amplitude = (tx_bandwidth / ((GradientMath.GAMMA * nucleus.getRatio()) * sliceThicknessExcitation)) * 100.0 / gMax;                 // amplitude in T/m
+        if (Math.abs(amplitude) > 100.0) {
+            sliceThicknessExcitation = ceilToSubDecimal(tx_bandwidth / ((GradientMath.GAMMA * nucleus.getRatio()) * gMax), 6);
+            amplitude = (tx_bandwidth / ((GradientMath.GAMMA * nucleus.getRatio()) * sliceThicknessExcitation)) * 100.0 / gMax;                 // amplitude in T/m
+=======
         amplitude = (tx_bandwidth / ((GradientMath.GAMMA / nucleus.getRatio()) * sliceThicknessExcitation)) * 100.0 / gMax;                 // amplitude in T/m
         if (Math.abs(amplitude) > 100.0) {
             sliceThicknessExcitation = ceilToSubDecimal(tx_bandwidth / ((GradientMath.GAMMA / nucleus.getRatio()) * gMax), 6);
             amplitude = (tx_bandwidth / ((GradientMath.GAMMA / nucleus.getRatio()) * sliceThicknessExcitation)) * 100.0 / gMax;                 // amplitude in T/m
+>>>>>>> 5d8b817... V9.0 Modify gradient for multi nucleus
             testSliceThickness = false;
         }
         calculateStaticArea();
@@ -741,7 +755,11 @@ public class Gradient {
     }
 
     public double prepPhaseGradTotalArea(int matrixDimension, double fovPhase) {
+<<<<<<< HEAD
+        return ((matrixDimension - 1) / ((GradientMath.GAMMA * nucleus.getRatio()) * fovPhase)) * 100.0 / gMax;
+=======
         return ((matrixDimension - 1) / ((GradientMath.GAMMA / nucleus.getRatio()) * fovPhase)) * 100.0 / gMax;
+>>>>>>> 5d8b817... V9.0 Modify gradient for multi nucleus
     }
 
     public double prepPhaseGradIndexMax(boolean isKSCentred) {
@@ -949,7 +967,11 @@ public class Gradient {
 
     public boolean addSpoiler(double pixel_dimension, double factor) {
         bStaticGradient = true;
+<<<<<<< HEAD
+        double grad_area_spoiler = factor / ((GradientMath.GAMMA * nucleus.getRatio()) * pixel_dimension);//GradientMath.GAMMA: gamma/2pi  Hz/T-tour
+=======
         double grad_area_spoiler = factor / ((GradientMath.GAMMA / nucleus.getRatio()) * pixel_dimension);//GradientMath.GAMMA: gamma/2pi  Hz/T-tour
+>>>>>>> 5d8b817... V9.0 Modify gradient for multi nucleus
         double grad_amp_spoiler = (grad_area_spoiler / equivalentTime) / gMax * 100.0;//
         return (addSpoiler(grad_amp_spoiler));
     }
