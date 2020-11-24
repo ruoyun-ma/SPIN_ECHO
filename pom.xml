@@ -17,12 +17,12 @@
     <dependency>
       <groupId>rs2d</groupId>
       <artifactId>spinlab</artifactId>
-      <version>2020.01</version>
+      <version>2019.06.2</version>
     </dependency>
     <dependency>
       <groupId>rs2d</groupId>
       <artifactId>rs2d-commons</artifactId>
-      <version>2020.01</version>
+      <version>2019.06.2</version>
     </dependency>
   </dependencies>
   <build>
@@ -36,7 +36,7 @@
               <RS2D-Sequence-Name>SPIN_ECHO</RS2D-Sequence-Name>
               <RS2D-Sequence-File>SpinEcho.sxml</RS2D-Sequence-File>
               <RS2D-Sequence-Generator>rs2d.sequence.spinecho.SpinEcho</RS2D-Sequence-Generator>
-              <RS2D-Spinlab-Version>2020.01</RS2D-Spinlab-Version>
+              <RS2D-Spinlab-Version>2019.06.2</RS2D-Spinlab-Version>
               <RS2D-Compiler-Version>1210-2019.06.2</RS2D-Compiler-Version>
               <RS2D-Java-Version>11.0.1+13 (OpenJDK Runtime Environment)</RS2D-Java-Version>
               <RS2D-Java-Version>11.0.1+13 (OpenJDK Runtime Environment)</RS2D-Java-Version>
