@@ -67,7 +67,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version9.0";
+    private String sequenceVersion = "Version9.1";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -666,7 +666,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         acquisitionMatrixDimension4D = nb_scan_4d * numberOfEcho;
         getParam(USER_MATRIX_DIMENSION_4D).setValue(acquisitionMatrixDimension4D);
 
-
         // -----------------------------------------------
         // set the ACQUISITION_MATRIX and Nb XD
         // -----------------------------------------------        // set the calculated acquisition matrix
@@ -1083,8 +1082,8 @@ public class SpinEcho extends BaseSequenceGenerator {
             slice_thickness_excitation_180 = slice_thickness_excitation;
         }
 
-        Gradient gradSlice90 = Gradient.createGradient(getSequence(), Grad_amp_slice_90, Time_tx_90, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
-        Gradient gradSlice180 = Gradient.createGradient(getSequence(), Grad_amp_slice_180, Time_tx_180, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradSlice90 = Gradient.createGradient(getSequence(), Grad_amp_slice_90, Time_tx_90, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
+        Gradient gradSlice180 = Gradient.createGradient(getSequence(), Grad_amp_slice_180, Time_tx_180, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         if (isEnableSlice) {
             boolean test90 = gradSlice90.prepareSliceSelection(tx_bandwidth_90, slice_thickness_excitation);
             boolean test180 = gradSlice180.prepareSliceSelection(tx_bandwidth_180, slice_thickness_excitation_180);
@@ -1110,7 +1109,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         // calculate READ gradient amplitude
         // -----------------------------------------------
-        Gradient gradReadout = Gradient5Event.createGradient(getSequence(), Grad_amp_read_read, Time_grad_read_crusher, Time_rx, Time_grad_read_crusher, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradReadout = Gradient5Event.createGradient(getSequence(), Grad_amp_read_read, Time_grad_read_crusher, Time_rx, Time_grad_read_crusher, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         if (isEnableRead && !gradReadout.calculateReadoutGradient(spectralWidth, pixelDimension * acquisitionMatrixDimension1D)) {
             double spectral_width_max = gradReadout.getSpectralWidth();
             if (isSW) {
@@ -1131,7 +1130,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Time_grad_read_prep_top, grad_read_prep_application_time);
 
         // pre-calculate READ_prephasing max area
-        Gradient gradReadPrep = Gradient.createGradient(getSequence(), Grad_amp_read_prep, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradReadPrep = Gradient.createGradient(getSequence(), Grad_amp_read_prep, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         if (isEnableRead)
             gradReadPrep.refocalizeGradient(gradReadout, -getDouble(PREPHASING_READ_GRADIENT_RATIO));
         if (!gradReadPrep.addSpoiler(grad_read_prep_offset))
@@ -1140,7 +1139,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // pre-calculate SLICE_refocusing
         double grad_ratio_slice_refoc = 0.5;   // get slice refocussing ratio
         this.getParam(SLICE_REFOCUSING_GRADIENT_RATIO).setValue(grad_ratio_slice_refoc);   // display 180° amplitude
-        Gradient gradSliceRef = Gradient.createGradient(getSequence(), Grad_amp_slice_refoc, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradSliceRef = Gradient.createGradient(getSequence(), Grad_amp_slice_refoc, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         if (isEnableSlice) {
             gradSliceRef.refocalizeGradient(gradSlice90, grad_ratio_slice_refoc);
         }
@@ -1167,12 +1166,12 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Time_grad_phase_top, grad_phase_application_time);
 
         // pre-calculate PHASE_3D
-        Gradient gradSlicePhase3D = Gradient.createGradient(getSequence(), Grad_amp_phase_3D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradSlicePhase3D = Gradient.createGradient(getSequence(), Grad_amp_phase_3D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         if (!isMultiplanar && isEnablePhase3D)
             gradSlicePhase3D.preparePhaseEncodingForCheck(acquisitionMatrixDimension3D, acquisitionMatrixDimension3D, slice_thickness_excitation, is_k_s_centred);
 
         // pre-calculate PHASE_2D
-        Gradient gradPhase2D = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradPhase2D = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         gradPhase2D.preparePhaseEncodingForCheck(acquisitionMatrixDimension2D, acquisitionMatrixDimension2D, fovPhase, is_k_s_centred);
         if (is_FSE_vs_MultiEcho && echoTrainLength != 1 && !isKSCenterMode && !isFSETrainTest) {
             gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
@@ -1194,8 +1193,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         gradPhase2D.applyAmplitude((is_FSE_vs_MultiEcho && echoTrainLength != 1) ? Order.TwoLoopB : Order.Two);
 
         // Reorder Phase Encoding
-        Gradient gradSlicePhase3D_comp = Gradient.createGradient(getSequence(), Grad_amp_phase_3D_comp, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
-        Gradient gradPhase2D_comp = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_comp, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradSlicePhase3D_comp = Gradient.createGradient(getSequence(), Grad_amp_phase_3D_comp, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
+        Gradient gradPhase2D_comp = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_comp, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
 
         if (!isMultiplanar && isEnablePhase3D)
             gradSlicePhase3D_comp.refocalizePhaseEncodingGradient(gradSlicePhase3D);
@@ -1211,7 +1210,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         double time_grad_crusher_top = getDouble(GRADIENT_CRUSHER_TOP_TIME);
         set(Time_grad_crusher_top, time_grad_crusher_top);
 
-        Gradient gradSliceCrusher = Gradient.createGradient(getSequence(), Grad_amp_slice_crush, Time_grad_crusher_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradSliceCrusher = Gradient.createGradient(getSequence(), Grad_amp_slice_crush, Time_grad_crusher_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         gradSliceCrusher.addSpoiler(grad_amp_crusher);
         gradSliceCrusher.applyAmplitude();
         double grad_area_crusher = (time_grad_crusher_top + grad_shape_rise_time) * grad_amp_crusher * gMax / 100.0;
@@ -1236,24 +1235,23 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         // calculate actual delays between pulses: time1 ,time2, (time3 + time3bis)
         double time1 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX90.ID + 1, Events.Delay1.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay1.ID + 4, Events.TX180.ID - 1);
-        time1 = time1 + txLength90 / 2.0 + (txLength180) / 2.0;
-        time1 += 3 * minInstructionDelay;
+        time1 += txLength90 / 2.0 + (txLength180) / 2.0;
+        time1 += 3 * minInstructionDelay; //gradient off
+
+        double time1_min = time1 + minInstructionDelay; // delay
 
         double time2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX180.ID + 1, Events.Delay2.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 2, Events.Acq.ID - 1);
-        time2 = time2 + txLength180 / 2.0 + observation_time / 2.0; // time sans le PE gradient et la pause
-        double time2_min = time2 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
-        System.out.println("getTimeBetweenEvents" + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 2, Events.Acq.ID - 1));
+        time2 += txLength180 / 2.0 + observation_time / 2.0;
+        time2 += (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);// time sans la pause
+        double time2_min = time2 + minInstructionDelay;
 
-        double time3 = (TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID, Events.Acq.ID + 1) - observation_time) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 2, Events.LoopEndEcho.ID);
-        time3 = time3 + observation_time / 2.0;
-//        time3 = time3 + (isMultiplanar ? (-TimeEvents.getTimeBetweenEvents(getSequence(),Events.Acq + 2, Events.Acq + 4) + 3 * minInstructionDelay) : 0) + minInstructionDelay;
-        time3 = time3 + (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
+        double time3 = (TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID, Events.Acq.ID + 2) - observation_time) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 1, Events.LoopEndEcho.ID);
+        time3 += observation_time / 2.0;
+        time3 += (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
+        double time3_min = time3 + minInstructionDelay;
+        double time3_for_min_FIR_delay = min_FIR_4pts_delay + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID, Events.LoopEndEcho.ID) + observation_time / 2.0;
+        time3_min = Math.max(time3_min, time3_for_min_FIR_delay);
 
-        double time3_for_min_FIR_delay = min_FIR_4pts_delay + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID,
-                Events.LoopEndEcho.ID) + observation_time / 2.0;
-        double time3_min = Math.max(time3, time3_for_min_FIR_delay);
-//        System.out.println(" + + + + + + ");
-//        System.out.println( time3_min+" +  "+time3 + "  D3 ="+delay3);
         double time3bis = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.TX180.ID - 1);
         time3bis = time3bis + txLength180 / 2.0;
 
@@ -1262,8 +1260,9 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         // get minimal TE value & search for incoherence
 
-        double max_time = ceilToSubDecimal(Math.max(time1, Math.max(time2_min, (time3_min + time3bis))), 5);
-        double te_min = Math.max(2 * (max_time + minInstructionDelay), time4_for_min_FIR_delay);
+
+        double max_time = ceilToSubDecimal(Math.max(time1_min, Math.max(time2_min, (time3_min + time3bis))), 5);
+        double te_min = Math.max(2 * max_time, time4_for_min_FIR_delay);
         te_min = ceilToSubDecimal(te_min, 5);
 
         //double new_te = te;
@@ -1347,16 +1346,14 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Time_TE_delay1, delay1);
 
         // set calculated the delay2 and delay3
-        double delay2 = echo_spacing / 2.0 - time2_min;
-        double delay3 = echo_spacing / 2.0 - (time3_min + time3bis);
+        double delay2 = echo_spacing / 2.0 - time2;
+        double delay3 = echo_spacing / 2.0 - (time3 + time3bis);
 
         double grad_phase_application_time_2 = isMultiplanar ? minInstructionDelay : grad_phase_application_time;
         double grad_rise_time_phase_2 = isMultiplanar ? minInstructionDelay : grad_rise_time;
         boolean enable_phase_2 = !isMultiplanar;
-        System.out.println("time2_min" + time2_min);
         // in 2D if the delay is loong pack the Phase close to the redaout
-        if ((delay2 + (2 * minInstructionDelay - minInstructionDelay) > grad_phase_application_time + grad_rise_time) && (delay3 + (2 * minInstructionDelay - minInstructionDelay) > grad_phase_application_time + grad_rise_time)) {
-            System.out.println("Bug");
+        if ((delay2 + 2 * minInstructionDelay > grad_phase_application_time + grad_rise_time + minInstructionDelay) && (delay3 + (2 * minInstructionDelay) > grad_phase_application_time + grad_rise_time + minInstructionDelay)) {
             delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
             delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
             grad_rise_time_phase_2 = grad_rise_time;
@@ -1395,7 +1392,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         double time_grad_crusher_end_top = getDouble(GRADIENT_CRUSHER_END_TOP_TIME);
         set(Time_grad_crusher_top2, time_grad_crusher_end_top);
 
-        Gradient gradSliceSpoiler = Gradient.createGradient(getSequence(), Grad_amp_spoiler_slice, Time_grad_crusher_top2, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp,nucleus);
+        Gradient gradSliceSpoiler = Gradient.createGradient(getSequence(), Grad_amp_spoiler_slice, Time_grad_crusher_top2, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         boolean is_spoiler = getBoolean(GRADIENT_ENABLE_SPOILER);
         if (is_spoiler) {
             gradSliceSpoiler.addSpoiler(getDouble(GRADIENT_AMP_SPOILER));
@@ -1447,9 +1444,9 @@ public class SpinEcho extends BaseSequenceGenerator {
 
 
         //  Fat-Sat gradient
-        Gradient gradFatsatRead = Gradient.createGradient(getSequence(), Grad_amp_fatsat_read, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat,nucleus);
-        Gradient gradFatsatPhase = Gradient.createGradient(getSequence(), Grad_amp_fatsat_phase, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat,nucleus);
-        Gradient gradFatsatSlice = Gradient.createGradient(getSequence(), Grad_amp_fatsat_slice, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat,nucleus);
+        Gradient gradFatsatRead = Gradient.createGradient(getSequence(), Grad_amp_fatsat_read, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat, nucleus);
+        Gradient gradFatsatPhase = Gradient.createGradient(getSequence(), Grad_amp_fatsat_phase, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat, nucleus);
+        Gradient gradFatsatSlice = Gradient.createGradient(getSequence(), Grad_amp_fatsat_slice, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat, nucleus);
 
         if (is_fatsat_enabled | is_fatsat_wep_enabled) {
             double pixel_dimension_ph = getDouble(RESOLUTION_PHASE);
@@ -1583,7 +1580,12 @@ public class SpinEcho extends BaseSequenceGenerator {
                 + time_IR_delay_max
                 + TimeEvents.getTimeBetweenEvents(getSequence(), Events.IRDelay.ID + 1, Events.LoopStartEcho.ID - 1);
 
-        double delay_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.LoopEndEcho.ID);
+        double delay_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.Delay2.ID - 1)
+                + delay2
+                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay2.ID + 1, Events.Delay3.ID - 1) +
+                +delay3
+                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay2.ID + 1, Events.Delay3.ID - 1) +
+                TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 1, Events.LoopEndEcho.ID);
 
         double delay_spoiler = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID + 1, Events.LoopMultiPlanarEnd.ID - 2);// grad_phase_application_time + grad_rise_time * 2;
 
@@ -1762,7 +1764,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         double grad_amp_satband_mTpm = 0;
 
         if (is_satband_enabled) {
-            Gradient gradSB = Gradient.createGradient(getSequence(), Grad_amp_sb_read, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb,nucleus);
+            Gradient gradSB = Gradient.createGradient(getSequence(), Grad_amp_sb_read, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
             if (!gradSB.prepareSliceSelection(tx_bandwidth_sb, satband_thickness)) {
                 double satband_thickness_mod = gradSB.getSliceThickness();
                 notifyOutOfRangeParam(SATBAND_THICKNESS, satband_thickness_mod, ((NumberParam) getParam(SATBAND_THICKNESS)).getMaxValue(), "Pulse length too short to reach this satband slice thickness");
@@ -1857,27 +1859,27 @@ public class SpinEcho extends BaseSequenceGenerator {
 
 
         // Apply values ot Gradient
-        Gradient gradSatBandSlice = Gradient.createGradient(getSequence(), Grad_amp_sb_slice, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb,nucleus);
+        Gradient gradSatBandSlice = Gradient.createGradient(getSequence(), Grad_amp_sb_slice, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
         gradSatBandSlice.setAmplitude(gradAmpSBSliceTable);
         gradSatBandSlice.applyAmplitude(is_satband_enabled ? Order.LoopB : Order.FourLoop);
 
-        Gradient gradSatBandPhase = Gradient.createGradient(getSequence(), Grad_amp_sb_phase, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb,nucleus);
+        Gradient gradSatBandPhase = Gradient.createGradient(getSequence(), Grad_amp_sb_phase, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
         gradSatBandPhase.setAmplitude(gradAmpSBPhaseTable);
         gradSatBandPhase.applyAmplitude(is_satband_enabled ? Order.LoopB : Order.FourLoop);
 
-        Gradient gradSatBandRead = Gradient.createGradient(getSequence(), Grad_amp_sb_read, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb,nucleus);
+        Gradient gradSatBandRead = Gradient.createGradient(getSequence(), Grad_amp_sb_read, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
         gradSatBandRead.setAmplitude(gradAmpSBReadTable);
         gradSatBandRead.applyAmplitude(is_satband_enabled ? Order.LoopB : Order.FourLoop);
 
-        Gradient gradSatBandSpoilerSlice = Gradient.createGradient(getSequence(), Grad_amp_sb_slice_spoiler, Time_grad_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb,nucleus);
+        Gradient gradSatBandSpoilerSlice = Gradient.createGradient(getSequence(), Grad_amp_sb_slice_spoiler, Time_grad_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
         gradSatBandSpoilerSlice.setAmplitude(gradAmpSBSliceSpoilerTable);
         gradSatBandSpoilerSlice.applyAmplitude(is_satband_enabled ? Order.LoopB : Order.FourLoop);
 
-        Gradient gradSatBandSpoilerPhase = Gradient.createGradient(getSequence(), Grad_amp_sb_phase_spoiler, Time_grad_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb,nucleus);
+        Gradient gradSatBandSpoilerPhase = Gradient.createGradient(getSequence(), Grad_amp_sb_phase_spoiler, Time_grad_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
         gradSatBandSpoilerPhase.setAmplitude(gradAmpSBPhaseSpoilerTable);
         gradSatBandSpoilerPhase.applyAmplitude(is_satband_enabled ? Order.LoopB : Order.FourLoop);
 
-        Gradient gradSatBandSpoilerRead = Gradient.createGradient(getSequence(), Grad_amp_sb_read_spoiler, Time_grad_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb,nucleus);
+        Gradient gradSatBandSpoilerRead = Gradient.createGradient(getSequence(), Grad_amp_sb_read_spoiler, Time_grad_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
         gradSatBandSpoilerRead.setAmplitude(gradAmpSBReadSpoilerTable);
         gradSatBandSpoilerRead.applyAmplitude(is_satband_enabled ? Order.LoopB : Order.FourLoop);
 
