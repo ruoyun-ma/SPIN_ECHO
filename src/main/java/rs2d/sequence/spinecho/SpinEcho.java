@@ -751,6 +751,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (isDynamic) {
             seqDescription += "_DYN=" + numberOfDynamicAcquisition;
         }
+        if (isDixon) {
+            seqDescription += "_3PTS_DIXON(-PI_0+PI)";
+        }
         if (is_satband_enabled) {
             seqDescription += "_SATBAND";
         }
@@ -1694,27 +1697,26 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         Table dyn_delay = setSequenceTableValues(Time_btw_dyn_frames, Order.Four);
         double frame_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
-        double time_between_frames_min = ceilToSubDecimal((frame_acquisition_time * numberOfInversionRecovery + minInstructionDelay * (numberOfInversionRecovery)), 1);
+        double time_between_frames_min = (frame_acquisition_time * numberOfInversionRecovery * (isDixon ? 3 : 1) + minInstructionDelay * (numberOfInversionRecovery * (isDixon ? 3 : 1)));
         double time_between_frames = time_between_frames_min;
         double interval_between_frames_delay = min_flush_delay;
-
         if (isDynamic) {
             //Dynamic Sequence
             time_between_frames = getDouble(DYN_TIME_BTW_FRAMES);
             if (isDynamicMinTime) {
-                time_between_frames = time_between_frames_min;
-                getParam(DYN_TIME_BTW_FRAMES).setValue(time_between_frames_min);
+                time_between_frames = ceilToSubDecimal(time_between_frames_min, 3);
+                getParam(DYN_TIME_BTW_FRAMES).setValue(ceilToSubDecimal(time_between_frames_min, 3));
             } else if (time_between_frames < (time_between_frames_min)) {
-                this.notifyOutOfRangeParam(DYN_TIME_BTW_FRAMES, time_between_frames_min, ((NumberParam) getParam(DYN_TIME_BTW_FRAMES)).getMaxValue(), "Minimum frame acquisition time ");
+                this.notifyOutOfRangeParam(DYN_TIME_BTW_FRAMES, ceilToSubDecimal(time_between_frames_min, 3), ((NumberParam) getParam(DYN_TIME_BTW_FRAMES)).getMaxValue(), "Minimum frame acquisition time ");
                 time_between_frames = time_between_frames_min;
             }
-            interval_between_frames_delay = Math.max(time_between_frames - frame_acquisition_time * numberOfInversionRecovery - minInstructionDelay * (numberOfInversionRecovery - 1), minInstructionDelay);
+            interval_between_frames_delay = roundToDecimal(Math.max(time_between_frames - time_between_frames_min + minInstructionDelay, minInstructionDelay), 7);
             if (numberOfInversionRecovery != 1) {
                 for (int i = 0; i < numberOfInversionRecovery - 1; i++) {
                     dyn_delay.add(minInstructionDelay);
                 }
             } else if (isDixon) {
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 3 - 1; i++) {
                     dyn_delay.add(minInstructionDelay);
                 }
             }
@@ -2054,7 +2056,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         ArrayList<Number> acquisition_timesList = new ArrayList<>();
 
         double acqusition_time;
-        for (int i = 0; i < numberOfDynamicAcquisition; i++) {
+        for (
+                int i = 0;
+                i < numberOfDynamicAcquisition; i++) {
             for (int j = 0; j < number_of_MultiSeries; j++) {
                 acqusition_time = (i * time_between_frames + j * time_between_MultiSeries);
                 if (i > 0) { // only the first dynamic phase has dummy scans
