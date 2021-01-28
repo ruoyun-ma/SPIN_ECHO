@@ -277,7 +277,7 @@ public enum U implements GeneratorParamEnum {
             NumberParam param = new NumberParam();
             param.setName("DIXON_FAT_PERIODE");
             param.setDisplayedName("DIXON_FAT_PERIODE");
-            param.setDescription("2.2ppm = 3.55ms at 3T (281Hz)");
+            param.setDescription("3.5ppm = 2.2ms at 3T (448Hz)");
             param.setCategory(Category.Acquisition);
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);

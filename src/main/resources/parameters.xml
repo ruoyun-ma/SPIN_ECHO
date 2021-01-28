@@ -287,7 +287,7 @@
                 <name>DIXON_FAT_PERIODE</name>
                 <value>0.002232142857142857</value>
                 <defaultValue>0.0035499999999999998</defaultValue>
-                <description>2.2ppm = 3.55ms at 3T (281Hz)</description>
+                <description>3.5ppm = 2.2ms at 3T (448Hz)</description>
                 <displayedName>DIXON_FAT_PERIODE</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
