@@ -285,7 +285,7 @@
             <key>DIXON_FAT_PERIODE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>DIXON_FAT_PERIODE</name>
-                <value>0.003551136363636364</value>
+                <value>0.002232142857142857</value>
                 <defaultValue>0.0035499999999999998</defaultValue>
                 <description>2.2ppm = 3.55ms at 3T (281Hz)</description>
                 <displayedName>DIXON_FAT_PERIODE</displayedName>

@@ -671,7 +671,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (numberOfTrigger != 1 && (numberOfInversionRecovery != 1 || (numberOfEcho != 1))) {
             isDixon = false;
         }
-        dixonPeriode = 1 / (2.2 * observeFrequency * 1e-6);
+        dixonPeriode = 1 / (3.5 * observeFrequency * 1e-6);
         getParam(DIXON_FAT_PERIODE).setValue(dixonPeriode);
 
         nb_scan_4d = numberOfTrigger * numberOfInversionRecovery * numberOfDynamicAcquisition * (isDixon ? 3 : 1);
