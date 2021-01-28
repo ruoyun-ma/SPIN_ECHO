@@ -121,6 +121,8 @@ public class SpinEcho extends BaseSequenceGenerator {
     private boolean isDynamic;
     private int numberOfDynamicAcquisition;
     private boolean isDynamicMinTime;
+    private boolean isDixon;
+    private double dixonPeriode;
 
     private boolean isInversionRecovery;
     private List<Double> inversionRecoveryTime;
@@ -278,6 +280,10 @@ public class SpinEcho extends BaseSequenceGenerator {
         isDynamic = isDynamic && (numberOfDynamicAcquisition > 1);
         isDynamicMinTime = getBoolean(DYNAMIC_MIN_TIME);
 
+
+        isDixon = getBoolean(DIXON_3PTS);
+        dixonPeriode = getDouble(DIXON_FAT_PERIODE);
+
         isInversionRecovery = getBoolean(INVERSION_RECOVERY);
         inversionRecoveryTime = getListDouble(INVERSION_TIME_MULTI);
         numberOfInversionRecovery = isInversionRecovery ? inversionRecoveryTime.size() : 1;
@@ -339,8 +345,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         nucleus = Nucleus.getNucleusForName(getText(NUCLEUS_1));
         protonFrequency = Instrument.instance().getDevices().getMagnet().getProtonFrequency();
         fatFreq = -protonFrequency * 3.5;
-        System.out.println(protonFrequency);
-        System.out.println(fatFreq);
+
         double freq_offset1 = getDouble(OFFSET_FREQ_1);
         observeFrequency = nucleus.getFrequency(protonFrequency) + freq_offset1;
         getParam(BASE_FREQ_1).setValue(nucleus.getFrequency(protonFrequency));
@@ -481,6 +486,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(SPECTRAL_WIDTH_PER_PIXEL).setValue(spectralWidthPerPixel);
         getParam(SPECTRAL_WIDTH).setValue(spectralWidthUP);
         observation_time = acquisitionMatrixDimension1D / spectralWidth;
+        System.out.println("spectralWidth " + spectralWidth);
         getParam(ACQUISITION_TIME_PER_SCAN).setValue(observation_time);   // display observation time
 
         nb_scan_1d = number_of_averages;
@@ -654,15 +660,21 @@ public class SpinEcho extends BaseSequenceGenerator {
             numberOfInversionRecovery = 1;
         }
 
-        // Avoid multi trigger time when multi Inversion time or Multi echo or dynamic
-        if (numberOfTrigger != 1 && (numberOfInversionRecovery != 1 || isDynamic || (numberOfEcho != 1))) {
+        // Avoid multi trigger time when multi Inversion time or Multi echo or dynamic or Dixon
+        if (numberOfTrigger != 1 && (numberOfInversionRecovery != 1 || isDynamic || isDixon || (numberOfEcho != 1))) {
             double tmp = triggerTime.get(0);
             triggerTime.clear();
             triggerTime.add(tmp);
             numberOfTrigger = 1;
         }
+        // Avoid Dixon  when multi Inversion time or Multi echo
+        if (numberOfTrigger != 1 && (numberOfInversionRecovery != 1 || (numberOfEcho != 1))) {
+            isDixon = false;
+        }
+        dixonPeriode = 1 / (2.2 * observeFrequency * 1e-6);
+        getParam(DIXON_FAT_PERIODE).setValue(dixonPeriode);
 
-        nb_scan_4d = numberOfTrigger * numberOfInversionRecovery * numberOfDynamicAcquisition;
+        nb_scan_4d = numberOfTrigger * numberOfInversionRecovery * numberOfDynamicAcquisition * (isDixon ? 3 : 1);
         acquisitionMatrixDimension4D = nb_scan_4d * numberOfEcho;
         getParam(USER_MATRIX_DIMENSION_4D).setValue(acquisitionMatrixDimension4D);
 
@@ -1243,12 +1255,12 @@ public class SpinEcho extends BaseSequenceGenerator {
         double time2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX180.ID + 1, Events.Delay2.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 2, Events.Acq.ID - 1);
         time2 += txLength180 / 2.0 + observation_time / 2.0;
         time2 += (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);// time sans la pause
-        double time2_min = time2 + minInstructionDelay;
+        double time2_min = time2 + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0);
 
         double time3 = (TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID, Events.Acq.ID + 2) - observation_time) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 1, Events.LoopEndEcho.ID);
         time3 += observation_time / 2.0;
         time3 += (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
-        double time3_min = time3 + minInstructionDelay;
+        double time3_min = time3 + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0);
         double time3_for_min_FIR_delay = min_FIR_4pts_delay + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID, Events.LoopEndEcho.ID) + observation_time / 2.0;
         time3_min = Math.max(time3_min, time3_for_min_FIR_delay);
 
@@ -1353,7 +1365,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         double grad_rise_time_phase_2 = isMultiplanar ? minInstructionDelay : grad_rise_time;
         boolean enable_phase_2 = !isMultiplanar;
         // in 2D if the delay is loong pack the Phase close to the redaout
-        if ((delay2 + 2 * minInstructionDelay > grad_phase_application_time + grad_rise_time + minInstructionDelay) && (delay3 + (2 * minInstructionDelay) > grad_phase_application_time + grad_rise_time + minInstructionDelay)) {
+        if ((delay2 + 2 * minInstructionDelay > grad_phase_application_time + grad_rise_time + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0)) && (delay3 + (2 * minInstructionDelay) > grad_phase_application_time + grad_rise_time + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0))) {
             delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
             delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
             grad_rise_time_phase_2 = grad_rise_time;
@@ -1368,8 +1380,21 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Time_grad_phase_top, grad_phase_application_time_2);
         set(Grad_enable_phase_2D, enable_phase_2 && isEnablePhase);
         set(Grad_enable_phase_bis, !enable_phase_2 && isEnablePhase);
-        set(Time_TE_delay2, delay2);
-        set(Time_TE_delay3, delay3);
+
+        Table tableDelay2 = setSequenceTableValues(Time_TE_delay2, Order.Four);
+        Table tableDelay3 = setSequenceTableValues(Time_TE_delay3, Order.Four);
+
+        if (isDixon) {
+            tableDelay2.add(delay2 - dixonPeriode / 2);
+            tableDelay3.add(delay3 + dixonPeriode / 2);
+            tableDelay2.add(delay2);
+            tableDelay3.add(delay3);
+            tableDelay2.add(delay2 + dixonPeriode / 2);
+            tableDelay3.add(delay3 - dixonPeriode / 2);
+        } else {
+            tableDelay2.add(delay2);
+            tableDelay3.add(delay3);
+        }
 
         // calculate Effective echo time
         double effective_te = echo_spacing; //  in case of Sequential4D and Centered2D
@@ -1688,13 +1713,14 @@ public class SpinEcho extends BaseSequenceGenerator {
                 for (int i = 0; i < numberOfInversionRecovery - 1; i++) {
                     dyn_delay.add(minInstructionDelay);
                 }
-                dyn_delay.add(interval_between_frames_delay);
-            } else {
-                dyn_delay.add(interval_between_frames_delay);
+            } else if (isDixon) {
+                for (int i = 0; i < 3; i++) {
+                    dyn_delay.add(minInstructionDelay);
+                }
             }
-        } else {
-            dyn_delay.add(interval_between_frames_delay);
+
         }
+        dyn_delay.add(interval_between_frames_delay);
 
         // ------------------------------------------------------------------
         // Total Acquisition Time

@@ -259,6 +259,35 @@ public enum U implements GeneratorParamEnum {
         }
     },
 
+    DIXON_3PTS("DIXON_3PTS") {
+        public Param build() {
+            BooleanParam param = new BooleanParam();
+            param.setName("DIXON_3PTS");
+            param.setDisplayedName("DIXON_3PTS");
+            param.setDescription("Activate 3point Dixon measurement");
+            param.setCategory(Category.Acquisition);
+            param.setValue(false);
+            param.setDefaultValue(false);
+            return param;
+        }
+    },
+
+    DIXON_FAT_PERIODE("DIXON_FAT_PERIODE") {
+        public Param build() {
+            NumberParam param = new NumberParam();
+            param.setName("DIXON_FAT_PERIODE");
+            param.setDisplayedName("DIXON_FAT_PERIODE");
+            param.setDescription("2.2ppm = 3.55ms at 3T (281Hz)");
+            param.setCategory(Category.Acquisition);
+            param.setNumberEnum(NumberEnum.Time);
+            param.setMinValue(0.0);
+            param.setMaxValue(1.0E9);
+            param.setValue(0.003551136363636364);
+            param.setDefaultValue(0.0035499999999999998);
+            return param;
+        }
+    },
+
     DUMMY_SCAN("DUMMY_SCAN") {
         public Param build() {
             NumberParam param = new NumberParam();
@@ -2072,7 +2101,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(0.7595000000000001);
+            param.setValue(0.7595);
             param.setDefaultValue(0.2);
             return param;
         }
@@ -2299,7 +2328,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(195.951005);
+            param.setValue(195.95100499999998);
             param.setDefaultValue(0.0);
             return param;
         }

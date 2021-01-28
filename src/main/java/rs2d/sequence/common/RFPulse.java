@@ -788,7 +788,7 @@ public class RFPulse {
         numberOfFreqOffset = ETL;
         FrequencyOffsetOrder = tableorder;
         double grad_amp_read_read_mTpm = grad.getAmplitude_mTpm();// amplitude in T/m
-        System.out.println("numberOfFreqOffset " + numberOfFreqOffset);
+  //      System.out.println("numberOfFreqOffset " + numberOfFreqOffset);
         txFrequencyOffsetTable = new double[numberOfFreqOffset];
         for (int i = 0; i < numberOfFreqOffset; i++) {
             if (i % 2 == 0) {
