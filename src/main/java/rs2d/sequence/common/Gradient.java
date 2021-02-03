@@ -1008,9 +1008,9 @@ public class Gradient {
 
     public double[] getEquivalentTimeBlock(int blockID) {
         switch (blockID) {
-            case 1:
+            case 1: // shape up
                 return getEquivalentTimeBlock(shapeUpTable, rampTimeUpTable);
-            case 3:
+            case 3:// shape down
                 return getEquivalentTimeBlock(shapeDownTable, rampTimeDownTable);
             default:
                 return getEquivalentTimeBlock(null, flatTimeTable);

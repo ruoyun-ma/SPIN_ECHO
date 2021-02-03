@@ -1267,8 +1267,8 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Frequency);
             param.setMinValue(0.0);
             param.setMaxValue(3.0E9);
-            param.setValue(1.25E7);
-            param.setDefaultValue(1.25E7);
+            param.setValue(1.251E7);
+            param.setDefaultValue(1.251E7);
             return param;
         }
     },
@@ -2342,7 +2342,7 @@ public enum U implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version9.1");
+            param.setValue("Version9.2");
             param.setDefaultValue("");
             return param;
         }

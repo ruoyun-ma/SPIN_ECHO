@@ -3455,7 +3455,7 @@
             <key>key1</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Intermediate_frequency</name>
-                <value>1.25E7</value>
+                <value>1.251E7</value>
                 <defaultValue>1.0</defaultValue>
                 <displayedName>IF</displayedName>
                 <locked>false</locked>
@@ -25846,7 +25846,7 @@
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>0</address>
-                <list>89.44239916156671</list>
+                <list>89.61078726219151</list>
             </value>
         </Entry>
         <Entry>
