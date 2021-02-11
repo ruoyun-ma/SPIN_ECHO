@@ -2385,7 +2385,7 @@ public enum U implements GeneratorParamEnum {
             param.setCategory(Category.Acquisition);
             param.setValue("FSE");
             param.setDefaultValue("FSE");
-            param.setSuggestedValues(asList("MultiEcho"));
+            param.setSuggestedValues(asList("MultiEcho", "FSE"));
             return param;
         }
     },

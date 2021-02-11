@@ -3178,6 +3178,7 @@
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <suggestedValues>MultiEcho</suggestedValues>
+                <suggestedValues>FSE</suggestedValues>
                 <group>Scan</group>
                 <category>Acquisition</category>
             </value>

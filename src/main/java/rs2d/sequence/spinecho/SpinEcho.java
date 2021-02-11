@@ -121,6 +121,9 @@ public class SpinEcho extends BaseSequenceGenerator {
     private boolean isDynamic;
     private int numberOfDynamicAcquisition;
     private boolean isDynamicMinTime;
+
+    private boolean is_FSE_vs_MultiEcho;
+
     private boolean isDixon;
     private double dixonPeriode;
 
@@ -132,9 +135,9 @@ public class SpinEcho extends BaseSequenceGenerator {
     private List<Double> triggerTime;
     private int numberOfTrigger;
 
-    boolean is_fatsat_enabled;
-    boolean is_fatsat_wep_enabled;
-    double fatFreq;
+    private boolean is_fatsat_enabled;
+    private boolean is_fatsat_wep_enabled;
+    private double fatFreq;
 
     private int nb_satband;
     private boolean is_satband_enabled;
@@ -194,7 +197,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 "Bordered2D",
                 "Sequential4D",
                 "Sequential2D",
-                "Sequential2D_FSE_TEST",
+                "Sequential2D_FSE_TRAIN_1D",
                 "Sequential2DInterleaved"));
         transformPlugin.setRestrictedToSuggested(true);
 
@@ -254,6 +257,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         userMatrixDimension2D = getInt(USER_MATRIX_DIMENSION_2D);
         userMatrixDimension3D = getInt(USER_MATRIX_DIMENSION_3D);
 
+        is_FSE_vs_MultiEcho = getText(SE_TYPE).equalsIgnoreCase("FSE");
         echoTrainLength = getInt(ECHO_TRAIN_LENGTH);
 
         spectralWidth = getDouble(SPECTRAL_WIDTH);            // get user defined spectral width
@@ -301,10 +305,10 @@ public class SpinEcho extends BaseSequenceGenerator {
         is_satband_enabled = getBoolean(SATBAND_ENABLED);
         position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
         nb_satband = is_satband_enabled ? (int) Arrays.stream(position_sli_ph_rea).filter(item -> item == 1).count() : 1;
-        // bug on the loop
-        nb_satband = 1;
+
         isKSCenterMode = getBoolean(KS_CENTER_MODE);
-        isFSETrainTest = !isKSCenterMode && (transformplugin.equalsIgnoreCase("Sequential2D_FSE_TEST"));
+
+        isFSETrainTest = getBoolean(FSE_TRAIN_TEST);
 
         isEnablePhase3D = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE_3D);
         isEnablePhase = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE);
@@ -368,92 +372,72 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         //      CONTRAST
         // -----------------------------------------------
+
+
+        isFSETrainTest = !isKSCenterMode && isFSETrainTest;
+
+        isEnablePhase3D = !isKSCenterMode && !isFSETrainTest && isEnablePhase3D;
+        isEnablePhase = !isKSCenterMode && !isFSETrainTest && isEnablePhase;
+
         int echoEffective = getInt(ECHO_EFFECTIVE);
+        echoEffective = Math.min(echoTrainLength, echoEffective);
 
-        if (echoEffective > echoTrainLength) {
-            echoEffective = echoTrainLength;
-            getParam(ECHO_EFFECTIVE).setValue(echoEffective);
-        }
 
-        boolean is_FSE_vs_MultiEcho;
         if (echoTrainLength == 1) {
             getParam(ECHO_SPACING).setValue(0);
-        }
-        //  adapt the TRANSFORM_PLUGIN and the TE/TR depending on the IMAGE_CONTRAST
-        if (("FSE".equalsIgnoreCase((String) (getParam(SE_TYPE).getValue())))) {
-            is_FSE_vs_MultiEcho = true;
+        } //??? ToDo: see if it is relevant
 
-            if (("Sequential4D".equalsIgnoreCase((String) (getParam(TRANSFORM_PLUGIN).getValue())))) {
-                getParam(TRANSFORM_PLUGIN).setValue(("Centered4D"));
+        //  adapt the TRANSFORM_PLUGIN and the TE/TR depending on the IMAGE_CONTRAST
+
+        if (isKSCenterMode) {
+            transformplugin = "Sequential2D";
+        } else if (isFSETrainTest) {
+            transformplugin = "Sequential2D_FSE_TRAIN_1D";
+
+        } else if (is_FSE_vs_MultiEcho) {
+            if (transformplugin.equalsIgnoreCase("Sequential4D")) { // Sequential4D is for MultiEcho
+                transformplugin = "Centered2DRot";
+                echoEffective = 1;
+            }
+            if (transformplugin.equalsIgnoreCase("Sequential2D_FSE_TRAIN_1D") ||  // not isFSETrainTest anymore, restor FSE
+                    transformplugin.equalsIgnoreCase("Sequential2D") && echoTrainLength != 1) { // not isKSCenterMode anymore, restor FSE
+                transformplugin = "Centered2DRot";
             }
 
-//            ListNumberParam contrast_TE_TR_lim;
+
             switch (getText(IMAGE_CONTRAST)) {
                 case "T1-weighted":
-                    getParam(TRANSFORM_PLUGIN).setValue("Centered2DRot"); // first echo should be the significant echo
-                    echoEffective = 1;
-//                    contrast_TE_TR_lim = (ListNumberParam) getParam(LIM_T1_WEIGHTED);
-                    if (echoTrainLength > 4) { // echo train should be lower than 4 because of blurring
-                        echoTrainLength = 4;
-                        getParam(ECHO_TRAIN_LENGTH).setValue(echoTrainLength);
-                    }
-                    break;
                 case "PD-weighted":
-//                    getParam(TRANSFORM_PLUGIN).setValue("Centered2D"); // first echo should be the significant echo
-                    getParam(TRANSFORM_PLUGIN).setValue("Centered2DRot"); // first echo should be the significant echo
+                    transformplugin = "Centered2DRot"; // first echo should be the significant echo
                     echoEffective = 1;
-//                    contrast_TE_TR_lim = (ListNumberParam) getParam(LIM_PD_WEIGHTED);
-                    if (echoTrainLength > 6) {  // echo train should be lower than 6 because of blurring
-                        echoTrainLength = 6;
-                        getParam(ECHO_TRAIN_LENGTH).setValue(echoTrainLength);
-                    }
                     break;
                 case "T2-weighted":
-//                    getParam(TRANSFORM_PLUGIN).setValue("Bordered2D"); // last echo should be the significant echo
-                    getParam(TRANSFORM_PLUGIN).setValue("Centered2DRot"); // first echo should be the significant echo
-                    echoEffective = echoTrainLength;
-//                    contrast_TE_TR_lim = (ListNumberParam) getParam(LIM_T2_WEIGHTED);
+                    transformplugin = "Centered2DRot"; // first echo should be the significant echo
+                    echoEffective = Math.max((int) Math.ceil(echoTrainLength / 2), echoEffective);
                     break;
                 default: // Custom
-
-                    switch (getText(TRANSFORM_PLUGIN)) {
-                        case "Sequential2D":
-                            getParam(TRANSFORM_PLUGIN).setValue(echoTrainLength == 1 ? "Sequential2D" : "Centered2D");
+                    switch (transformplugin) {
+                        case "Centered2D": // not used anymore, replace by Centered2DRot
+                            transformplugin = "Centered2DRot";
+                            echoEffective = 1;
                             break;
-                        case "Sequential2D_FSE_TEST":
-                            isFSETrainTest = !isKSCenterMode;
-                            getParam(FSE_TRAIN_TEST).setValue(isFSETrainTest);
-
+                        case "Bordered2D": // not used anymore, replace by Centered2DRot
+                            transformplugin = "Centered2DRot";
+                            echoEffective = echoTrainLength;
+                            break;
+                        case "Sequential2D":
+                            echoEffective = Math.round(echoTrainLength / 2);
+                            break;
                         default: // Custom
                             break;
                     }
                     break;
             }
-        } else {
+
+        } else { // multi echo
             is_FSE_vs_MultiEcho = false;
-            if (!("Sequential4D".equalsIgnoreCase((String) (getParam(TRANSFORM_PLUGIN).getValue())))) {
-                getParam(TRANSFORM_PLUGIN).setValue("Sequential4D");
-            }
-            if (!("Custom".equalsIgnoreCase((String) (getParam(IMAGE_CONTRAST).getValue())))) {
-                echoTrainLength = 1;
-                getParam(ECHO_TRAIN_LENGTH).setValue(echoTrainLength);
-            }
-            //getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST).setValue( "Custom");
-        }
-        switch (getText(TRANSFORM_PLUGIN)) {
-            case "Centered2D":
-                echoEffective = 1;
-                break;
-            case "Bordered2D":
-                echoEffective = echoTrainLength;
-                break;
-            case "Sequential4D":
-            case "Sequential2D":
-                echoEffective = Math.round(echoTrainLength / 2);
-                break;
-            case "Sequential2DInterleaved":
-                echoEffective = Math.round(echoTrainLength / 2);
-                break;
+            transformplugin = "Sequential4D";
+            getParam(IMAGE_CONTRAST).setValue("T2-weighted");
         }
         getParam(ECHO_EFFECTIVE).setValue(echoEffective);
 
@@ -525,7 +509,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             echoTrainLength = getInferiorDivisorToGetModulusZero(echoTrainLength, acquisitionMatrixDimension2D / 2);
             getParam(ECHO_TRAIN_LENGTH).setValue(echoTrainLength);
             nb_scan_2d = Math.floorDiv(acquisitionMatrixDimension2D, echoTrainLength);
-            if (!("Sequential2D".equalsIgnoreCase((String) (getParam(TRANSFORM_PLUGIN).getValue())))) {
+            if (!(transformplugin.equalsIgnoreCase("Sequential2D"))) {
                 nb_scan_2d = floorEven(nb_scan_2d); // Centred or bordered skim need to be multiple of 2
             }
             acquisitionMatrixDimension2D = nb_scan_2d * echoTrainLength;
@@ -912,7 +896,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         //  get limits for the image contrast
         double[] TE_TR_lim = {0, 10000, 0, 10000}; // limite {TEmin TEmax, TRmin TRmax}
-        boolean is_FSE_vs_MultiEcho = ("FSE".equalsIgnoreCase((String) (getParam(SE_TYPE).getValue())));
+
         //if (is_FSE_vs_MultiEcho) {
         switch (getText(IMAGE_CONTRAST)) {
             case "T1-weighted":
@@ -1282,7 +1266,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         //double new_te = te;
         // calculate echo time depending on image contrast and transform plugin
-        if (("Custom".equalsIgnoreCase((String) (getParam(IMAGE_CONTRAST).getValue()))) && echoTrainLength != 1 && is_FSE_vs_MultiEcho) {
+        if (("Custom".equalsIgnoreCase(getText(IMAGE_CONTRAST))) && echoTrainLength != 1 && is_FSE_vs_MultiEcho) {
             if (echo_spacing < te_min) {
                 getUnreachParamExceptionManager().addParam(ECHO_SPACING.name(), echo_spacing, te_min, ((NumberParam) getParam(ECHO_SPACING)).getMaxValue(), "Echo_Spacing too short for the User Mx1D and SW");
                 echo_spacing = te_min;
@@ -1303,7 +1287,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
 
         if (is_FSE_vs_MultiEcho) {
-            if (!("Custom".equalsIgnoreCase((String) (getParam(IMAGE_CONTRAST).getValue())))) {
+            if (!("Custom".equalsIgnoreCase(getText(IMAGE_CONTRAST)))) {
                 echo_spacing = te_min; // echo spacing should be minimal for FSE if not "Custom"
             } else { // if "Custom" FSE, user can change echo spacing
                 if (echo_spacing < te_min) {
