@@ -652,7 +652,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             numberOfTrigger = 1;
         }
         // Avoid Dixon  when multi Inversion time or Multi echo
-        if (numberOfTrigger != 1 && (numberOfInversionRecovery != 1 || (numberOfEcho != 1))) {
+        if (isDixon && (numberOfInversionRecovery != 1 || (numberOfEcho != 1))) {
             isDixon = false;
         }
         dixonPeriode = 1 / (3.5 * observeFrequency * 1e-6);
