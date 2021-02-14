@@ -195,7 +195,7 @@
                 <key>ACQUISITION_MATRIX_DIMENSION_2D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_2D</name>
-                    <value>128</value>
+                    <value>120</value>
                     <defaultValue>128</defaultValue>
                     <description>The acquisition size of the second dimension</description>
                     <displayedName>Acquisition 2D</displayedName>
@@ -213,7 +213,7 @@
                 <key>ACQUISITION_MATRIX_DIMENSION_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_3D</name>
-                    <value>12</value>
+                    <value>8</value>
                     <defaultValue>1</defaultValue>
                     <description>The acquisition size of the third dimension</description>
                     <displayedName>Acquisition 3D</displayedName>
@@ -538,7 +538,7 @@
                 <key>ECHO_EFFECTIVE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_EFFECTIVE</name>
-                    <value>2</value>
+                    <value>1</value>
                     <defaultValue>1</defaultValue>
                     <description></description>
                     <displayedName>ECHO_EFFECTIVE</displayedName>
@@ -556,7 +556,7 @@
                 <key>ECHO_SPACING</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_SPACING</name>
-                    <value>0.009000000000000001</value>
+                    <value>0.00818</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Time between consecutive echoes when ETL is greater than 1</description>
                     <displayedName>ECHO_SPACING</displayedName>
@@ -574,7 +574,7 @@
                 <key>ECHO_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME</name>
-                    <value>0.018000000000000002</value>
+                    <value>0.00818</value>
                     <defaultValue>0.005</defaultValue>
                     <description>The echo time ( TE ) </description>
                     <displayedName>TE</displayedName>
@@ -592,7 +592,7 @@
                 <key>ECHO_TIME_EFFECTIVE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME_EFFECTIVE</name>
-                    <value>0.018000000000000002</value>
+                    <value>0.00818</value>
                     <defaultValue>0.01</defaultValue>
                     <description>Effective echo time in Fast Spin Echo sequence</description>
                     <displayedName>EFFECTIVE_ECHO_TIME</displayedName>
@@ -610,7 +610,7 @@
                 <key>ECHO_TRAIN_LENGTH</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TRAIN_LENGTH</name>
-                    <value>4</value>
+                    <value>12</value>
                     <defaultValue>1</defaultValue>
                     <description>The echo train lentgth</description>
                     <displayedName>ETL</displayedName>
@@ -664,7 +664,7 @@
                 <key>FATSAT_GRAD_APP_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FATSAT_GRAD_APP_TIME</name>
-                    <value>1.0E-5</value>
+                    <value>7.7E-4</value>
                     <defaultValue>0.001</defaultValue>
                     <description></description>
                     <displayedName>FATSAT_GRAD_APP_TIME</displayedName>
@@ -857,7 +857,7 @@
                 <key>FIELD_OF_VIEW_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FIELD_OF_VIEW_3D</name>
-                    <value>0.0142</value>
+                    <value>0.0094</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Total coverage in the third dim. FOV</description>
                     <displayedName>FOV 3D</displayedName>
@@ -968,19 +968,6 @@
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <group>Dimension</group>
-                    <category>Acquisition</category>
-                </value>
-            </entry>
-            <entry>
-                <key>FSE_TRAIN_TEST</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                    <name>FSE_TRAIN_TEST</name>
-                    <value>true</value>
-                    <defaultValue>false</defaultValue>
-                    <description></description>
-                    <displayedName>FSE_TRAIN_TEST</displayedName>
-                    <locked>false</locked>
-                    <lockedToDefault>false</lockedToDefault>
                     <category>Acquisition</category>
                 </value>
             </entry>
@@ -1458,7 +1445,7 @@
                 <key>IMAGE_CONTRAST</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>IMAGE_CONTRAST</name>
-                    <value>Custom</value>
+                    <value>T1-weighted</value>
                     <defaultValue>T1-weighted</defaultValue>
                     <description>Type of image contrast</description>
                     <displayedName>IMAGE_CONTRAST</displayedName>
@@ -1643,7 +1630,7 @@
                     <value>2.0</value>
                     <defaultValue>0.02</defaultValue>
                     <defaultValue>2.0</defaultValue>
-                    <description>TE/TR limits to get Proton-Density Weighted imaging: TE (sup limit) / TR(inf limit)</description>
+                    <description>TE/TR limits to get Proton-Density Weighted imaging: minTE  / minTR</description>
                     <displayedName>Lim_PD_Weighted</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -1659,11 +1646,12 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>LIM_T1_WEIGHTED</name>
                     <value>0.02</value>
-                    <value>0.4</value>
+                    <value>0.2</value>
                     <value>0.7000000000000001</value>
                     <defaultValue>0.02</defaultValue>
-                    <defaultValue>0.7</defaultValue>
-                    <description>TE/TR limits to get T1 Weighted imaging: TE (sup. limit) / TR(sup. limit)</description>
+                    <defaultValue>0.1</defaultValue>
+                    <defaultValue>0.7000000000000001</defaultValue>
+                    <description>TE/TR limits to get T1 Weighted imaging: maxTE /  minTR / maxTR</description>
                     <displayedName>LIM_T1_WEIGHTED</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -1678,11 +1666,11 @@
                 <key>LIM_T2_WEIGHTED</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>LIM_T2_WEIGHTED</name>
-                    <value>0.08</value>
-                    <value>2.0</value>
+                    <value>0.05</value>
+                    <value>1.5</value>
                     <defaultValue>0.08</defaultValue>
                     <defaultValue>2.0</defaultValue>
-                    <description>TE/TR limits to get T2 Weighted imaging: TE (inf limit) / TR(inf limit)</description>
+                    <description>TE/TR limits to get T2 Weighted imaging : minTE  minTR</description>
                     <displayedName>LIM_T2_WEIGHTED</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -2414,7 +2402,7 @@
                 <key>NUMBER_OF_INTERLEAVED_SLICE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NUMBER_OF_INTERLEAVED_SLICE</name>
-                    <value>12</value>
+                    <value>4</value>
                     <defaultValue>0</defaultValue>
                     <description></description>
                     <displayedName>NUMBER_OF_INTERLEAVED_SLICE</displayedName>
@@ -2432,7 +2420,7 @@
                 <key>NUMBER_OF_SHOOT_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NUMBER_OF_SHOOT_3D</name>
-                    <value>1</value>
+                    <value>2</value>
                     <defaultValue>1</defaultValue>
                     <description>the number of scan 3D for transform 3D</description>
                     <displayedName>NUMBER_OF_SHOOT_3D</displayedName>
@@ -3012,7 +3000,7 @@
                 <key>REPETITION_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>REPETITION_TIME</name>
-                    <value>0.7595000000000001</value>
+                    <value>0.6746</value>
                     <defaultValue>0.2</defaultValue>
                     <description>The repetition time  ( TR ) </description>
                     <displayedName>TR</displayedName>
@@ -3048,7 +3036,7 @@
                 <key>RESOLUTION_PHASE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RESOLUTION_PHASE</name>
-                    <value>3.125E-4</value>
+                    <value>3.333333333333333E-4</value>
                     <defaultValue>5.0E-4</defaultValue>
                     <description>Pixe truel dimension in the phase encoding direction (FOV / acquisition_matrix_dimension_2D) </description>
                     <displayedName>RESOLUTION_PHASE</displayedName>
@@ -3263,7 +3251,7 @@
                 <key>SEQUENCE_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SEQUENCE_TIME</name>
-                    <value>195.951005</value>
+                    <value>109.28520499999999</value>
                     <defaultValue>0.0</defaultValue>
                     <description></description>
                     <displayedName>SEQUENCE_TIME</displayedName>
@@ -3281,7 +3269,7 @@
                 <key>SEQUENCE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQUENCE_VERSION</name>
-                    <value>Version9.2</value>
+                    <value>Version9.4</value>
                     <defaultValue></defaultValue>
                     <description></description>
                     <displayedName>SEQUENCE_VERSION</displayedName>
@@ -3296,7 +3284,7 @@
                 <key>SEQ_DESCRIPTION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQ_DESCRIPTION</name>
-                    <value>SE_2D_SAG_256x128x12_ETL=4</value>
+                    <value>SE_2D_SAG_256x120x8_ETL=12</value>
                     <defaultValue></defaultValue>
                     <description></description>
                     <displayedName>SEQ_DESCRIPTION</displayedName>
@@ -3533,6 +3521,19 @@
                 </value>
             </entry>
             <entry>
+                <key>TOOL_FSE_TRAIN_1D</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
+                    <name>TOOL_FSE_TRAIN_1D</name>
+                    <value>false</value>
+                    <defaultValue>false</defaultValue>
+                    <description></description>
+                    <displayedName>TOOL_FSE_TRAIN_1D</displayedName>
+                    <locked>false</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <category>Acquisition</category>
+                </value>
+            </entry>
+            <entry>
                 <key>TRANSFORM_PLUGIN</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>TRANSFORM_PLUGIN</name>
@@ -3547,7 +3548,7 @@
                     <suggestedValues>Bordered2D</suggestedValues>
                     <suggestedValues>Sequential4D</suggestedValues>
                     <suggestedValues>Sequential2D</suggestedValues>
-                    <suggestedValues>Sequential2D_FSE_TEST</suggestedValues>
+                    <suggestedValues>FSE_TRAIN_1D</suggestedValues>
                     <suggestedValues>Sequential2DInterleaved</suggestedValues>
                     <group>Scan</group>
                     <category>Acquisition</category>
@@ -3850,7 +3851,7 @@
                 <key>USER_MATRIX_DIMENSION_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_MATRIX_DIMENSION_3D</name>
-                    <value>12</value>
+                    <value>8</value>
                     <defaultValue>1</defaultValue>
                     <description></description>
                     <displayedName>USER_ACQUISITION_MATRIX_DIMENSION_3D</displayedName>
@@ -3922,7 +3923,7 @@
                 <key>USER_ZERO_FILLING_2D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_ZERO_FILLING_2D</name>
-                    <value>0.0</value>
+                    <value>6.25</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Percentage of zero filling</description>
                     <displayedName>ZERO_FILING_2D</displayedName>

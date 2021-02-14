@@ -59,6 +59,8 @@ import static java.util.Arrays.asList;
 import rs2d.sequence.common.*;
 
 
+import javax.vecmath.Matrix3d;
+
 import static rs2d.sequence.spinecho.S.*;
 import static rs2d.sequence.spinecho.U.*;
 
@@ -67,7 +69,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version9.2";
+    private String sequenceVersion = "Version9.4";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -103,9 +105,12 @@ public class SpinEcho extends BaseSequenceGenerator {
     private double tr;
     private double te;
     private double echo_spacing;
+    private int echoEffective;
+    private double[] TE_TR_lim = {0, 100000, 0, 100000}; // limite {TEmin TEmax, TRmin TRmax}
 
     private double sliceThickness;
     private double spacingBetweenSlice;
+    private int nb_of_shoot_3d;
     private double pixelDimension;
     private double fov;
     private double fovPhase;
@@ -197,7 +202,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 "Bordered2D",
                 "Sequential4D",
                 "Sequential2D",
-                "Sequential2D_FSE_TRAIN_1D",
+                "FSE_TRAIN_1D",
                 "Sequential2DInterleaved"));
         transformPlugin.setRestrictedToSuggested(true);
 
@@ -265,9 +270,12 @@ public class SpinEcho extends BaseSequenceGenerator {
         tr = getDouble(REPETITION_TIME);
         te = getDouble(ECHO_TIME);
         echo_spacing = getDouble(ECHO_SPACING);
+        echoEffective = getInt(ECHO_EFFECTIVE);
 
         sliceThickness = getDouble(SLICE_THICKNESS);
         spacingBetweenSlice = getDouble(SPACING_BETWEEN_SLICE);
+        nb_of_shoot_3d = getInt(NUMBER_OF_SHOOT_3D);
+
         pixelDimension = getDouble(RESOLUTION_FREQUENCY);
         fov = getDouble(FIELD_OF_VIEW);
         fovPhase = getDouble(FIELD_OF_VIEW_PHASE);
@@ -308,7 +316,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         isKSCenterMode = getBoolean(KS_CENTER_MODE);
 
-        isFSETrainTest = getBoolean(FSE_TRAIN_TEST);
+        isFSETrainTest = getBoolean(TOOL_FSE_TRAIN_1D);
 
         isEnablePhase3D = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE_3D);
         isEnablePhase = !isKSCenterMode && !isFSETrainTest && getBoolean(GRADIENT_ENABLE_PHASE);
@@ -373,38 +381,19 @@ public class SpinEcho extends BaseSequenceGenerator {
         //      CONTRAST
         // -----------------------------------------------
 
-
         isFSETrainTest = !isKSCenterMode && isFSETrainTest;
-
         isEnablePhase3D = !isKSCenterMode && !isFSETrainTest && isEnablePhase3D;
         isEnablePhase = !isKSCenterMode && !isFSETrainTest && isEnablePhase;
 
-        int echoEffective = getInt(ECHO_EFFECTIVE);
         echoEffective = Math.min(echoTrainLength, echoEffective);
-
-
-        if (echoTrainLength == 1) {
-            getParam(ECHO_SPACING).setValue(0);
-        } //??? ToDo: see if it is relevant
 
         //  adapt the TRANSFORM_PLUGIN and the TE/TR depending on the IMAGE_CONTRAST
 
         if (isKSCenterMode) {
             transformplugin = "Sequential2D";
         } else if (isFSETrainTest) {
-            transformplugin = "Sequential2D_FSE_TRAIN_1D";
-
+            transformplugin = "FSE_TRAIN_1D";
         } else if (is_FSE_vs_MultiEcho) {
-            if (transformplugin.equalsIgnoreCase("Sequential4D")) { // Sequential4D is for MultiEcho
-                transformplugin = "Centered2DRot";
-                echoEffective = 1;
-            }
-            if (transformplugin.equalsIgnoreCase("Sequential2D_FSE_TRAIN_1D") ||  // not isFSETrainTest anymore, restor FSE
-                    transformplugin.equalsIgnoreCase("Sequential2D") && echoTrainLength != 1) { // not isKSCenterMode anymore, restor FSE
-                transformplugin = "Centered2DRot";
-            }
-
-
             switch (getText(IMAGE_CONTRAST)) {
                 case "T1-weighted":
                 case "PD-weighted":
@@ -418,6 +407,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 default: // Custom
                     switch (transformplugin) {
                         case "Centered2D": // not used anymore, replace by Centered2DRot
+                        case "Sequential4D":
                             transformplugin = "Centered2DRot";
                             echoEffective = 1;
                             break;
@@ -426,26 +416,54 @@ public class SpinEcho extends BaseSequenceGenerator {
                             echoEffective = echoTrainLength;
                             break;
                         case "Sequential2D":
-                            echoEffective = Math.round(echoTrainLength / 2);
+                            if (echoTrainLength != 1)// not isKSCenterMode anymore, restor FSE
+                                transformplugin = "Centered2DRot";
                             break;
-                        default: // Custom
+                        case "FSE_TRAIN_1D":// not isFSETrainTest anymore, restor FSE
+                            transformplugin = "Centered2DRot";
+                            break;
+                        default:
                             break;
                     }
                     break;
             }
-
-        } else { // multi echo
-            is_FSE_vs_MultiEcho = false;
+            te = echoEffective * echo_spacing;
+        } else { // is_FSE_vs_MultiEcho = false  :  multi echo for T2 measurement
             transformplugin = "Sequential4D";
             getParam(IMAGE_CONTRAST).setValue("T2-weighted");
+            echo_spacing = te;
         }
+
+        getParam(ECHO_SPACING).setValue(echo_spacing);
         getParam(ECHO_EFFECTIVE).setValue(echoEffective);
+        getParam(TRANSFORM_PLUGIN).setValue(transformplugin);
+
+        //  get limits for the image contrast
+        switch (getText(IMAGE_CONTRAST)) {
+            case "T1-weighted": // Short TE, Short TR
+                ListNumberParam T1_contrast_TE_TR_lim = getParam(LIM_T1_WEIGHTED);
+                TE_TR_lim[1] = T1_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmax
+                TE_TR_lim[2] = T1_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
+                TE_TR_lim[3] = T1_contrast_TE_TR_lim.getValue().get(2).doubleValue(); //TRmax
+                break;
+            case "PD-weighted": // Short TE, Long TR
+                ListNumberParam PD_contrast_TE_TR_lim = getParam(LIM_PD_WEIGHTED);
+                TE_TR_lim[1] = PD_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmax
+                TE_TR_lim[2] = PD_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
+                break;
+            case "T2-weighted": // Long TE, Long TR
+                ListNumberParam T2_contrast_TE_TR_lim = getParam(LIM_T2_WEIGHTED);
+                TE_TR_lim[0] = T2_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmin
+                TE_TR_lim[2] = T2_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
+                break;
+            default: // Custom
+                break;
+        }
+
 
         // only fatsat or fatsat_wep
-        System.out.println("is_fatsat_enabled " + is_fatsat_enabled);
-        is_fatsat_wep_enabled = is_fatsat_enabled ? false : is_fatsat_wep_enabled;
-        getParam(FAT_SATURATION_WEP_ENABLED).setValue(is_fatsat_enabled ? false : is_fatsat_wep_enabled);
-
+        is_fatsat_wep_enabled = !is_fatsat_enabled && is_fatsat_wep_enabled;
+        getParam(FAT_SATURATION_WEP_ENABLED).setValue(is_fatsat_wep_enabled);
 
         // -----------------------------------------------
         // 1stD managment
@@ -539,16 +557,11 @@ public class SpinEcho extends BaseSequenceGenerator {
             userMatrixDimension3D = userMatrixDimension3D < acquisitionMatrixDimension3D ? acquisitionMatrixDimension3D : userMatrixDimension3D;
             getParam(USER_MATRIX_DIMENSION_3D).setValue(userMatrixDimension3D);
         } else {
-            /*if ((userMatrixDimension3D * 3 + ((is_rf_spoiling) ? 1 : 0) + 3 + 1) >= offset_channel_memory) {/// ToDO check memory
-                userMatrixDimension3D = ((int) Math.floor((offset_channel_memory - 4 - ((is_rf_spoiling) ? 1 : 0)) / 3.0));
-                getParam(USER_MATRIX_DIMENSION_3D).setValue( userMatrixDimension3D);
-            }*/
             acquisitionMatrixDimension3D = userMatrixDimension3D;
         }
 
-        int nb_of_shoot_3d = getInt(NUMBER_OF_SHOOT_3D);
         nb_of_shoot_3d = isMultiplanar ? getInferiorDivisorToGetModulusZero(nb_of_shoot_3d, userMatrixDimension3D) : 0;
-        nbOfInterleavedSlice = isMultiplanar ? (int) Math.ceil((acquisitionMatrixDimension3D / nb_of_shoot_3d)) : 1;
+        nbOfInterleavedSlice = isMultiplanar ? (int) Math.ceil(((float) acquisitionMatrixDimension3D / nb_of_shoot_3d)) : 1;
         getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_shoot_3d);
         getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(isMultiplanar ? nbOfInterleavedSlice : 0);
 
@@ -834,6 +847,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
     private void afterRouting() throws Exception {
         Log.debug(getClass(), "------------ AFTER ROUTING -------------");
+
         plugin = getTransformPlugin();
         plugin.setParameters(new ArrayList<>(getUserParams()));
 
@@ -854,7 +868,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Grad_enable_IR, isInversionRecovery);
         set(Tx_enable_IR, isInversionRecovery);
         boolean isEnableCrusherIR = getBoolean(GRADIENT_ENABLE_CRUSHER_IR);
-        set(Grad_enable_crush_IR, isInversionRecovery ? isEnableCrusherIR : false);
+        set(Grad_enable_crush_IR, isInversionRecovery && isEnableCrusherIR);
         set(Enable_sb, is_satband_enabled);
         set(Enable_fs, is_fatsat_enabled | is_fatsat_wep_enabled);
         set(Enable_fs_wep, is_fatsat_wep_enabled);
@@ -890,34 +904,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         double grad_shape_rise_factor_down = Utility.voltageFillingFactor(getSequenceTable(Grad_shape_rise_down));
         double grad_shape_rise_time = grad_shape_rise_factor_up * grad_rise_time + grad_shape_rise_factor_down * grad_rise_time;        // shape dependant equivalent rise time
 
-        // -----------------------------------------------
-        // get user defined matrix dimensions from panel
-        // -----------------------------------------------
 
-        //  get limits for the image contrast
-        double[] TE_TR_lim = {0, 10000, 0, 10000}; // limite {TEmin TEmax, TRmin TRmax}
-
-        //if (is_FSE_vs_MultiEcho) {
-        switch (getText(IMAGE_CONTRAST)) {
-            case "T1-weighted":
-                ListNumberParam T1_contrast_TE_TR_lim = getParam(LIM_T1_WEIGHTED);
-                TE_TR_lim[1] = T1_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmax
-                TE_TR_lim[2] = T1_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
-                TE_TR_lim[3] = T1_contrast_TE_TR_lim.getValue().get(2).doubleValue(); //TRmax
-                break;
-            case "PD-weighted":
-                ListNumberParam PD_contrast_TE_TR_lim = getParam(LIM_PD_WEIGHTED);
-                TE_TR_lim[1] = PD_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmax
-                TE_TR_lim[2] = PD_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
-                break;
-            case "T2-weighted":
-                ListNumberParam T2_contrast_TE_TR_lim = getParam(LIM_T2_WEIGHTED);
-                TE_TR_lim[0] = T2_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmin
-                TE_TR_lim[2] = T2_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
-                break;
-            default: // Custom
-                break;
-        }
         // -----------------------------------------------
         // Calculation RF pulse parameters  1/4 : Pulse declaration & Fatsat Flip angle calculation
         // -----------------------------------------------
@@ -954,7 +941,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Time_grad_ramp_fatsat, is_fatsat_enabled | is_fatsat_wep_enabled ? grad_rise_time : minInstructionDelay);
         //
         RFPulse pulseTXFatSat = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat, Time_tx_fatsat, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat);
-        RFPulse pulseTXFatSatWep = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat_wep, Time_tx_fatsat_wep, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat_wep);
 
         // SAT Band  RF pulse
         set(Time_grad_ramp_sb, is_satband_enabled ? grad_rise_time : minInstructionDelay);
@@ -970,7 +956,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(FLIP_ANGLE).setValue(flip_angle);
         double flip_angle_satband = 0;
         if (is_satband_enabled) {
-            flip_angle_satband = 90;
             double time_tau_sat = TimeEvents.getTimeBetweenEvents(getSequence(), Events.FatSatPulse.ID, Events.TX90.ID); /////////////////////////////////////////////////////////////////////////////////////////////////////////
             double time_t1_satband = getDouble(SATBAND_T1);
             double t1_relax_time_sat = time_t1_satband / 1000.0;   // T1_tissue = 500ms
@@ -1010,9 +995,8 @@ public class SpinEcho extends BaseSequenceGenerator {
             if (!pulseTXFatSat.checkPower(FlipAngleFatSat, FreqFatSat, nucleus)) {
                 tx_length_90_fs = pulseTXFatSat.getPulseDuration();
                 set(Time_tx_fatsat, tx_length_90_fs);
+                getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
                 if (is_fatsat_wep_enabled) {
-                    getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
-                } else if (is_fatsat_wep_enabled) {
                     tx_length_90_fs_wep = tx_length_90_fs;
                     set(Time_tx_fatsat_wep, tx_length_90_fs_wep);
                     getParam(FATSAT_WEP_TX_LENGTH).setValue(tx_length_90_fs_wep);
@@ -1258,69 +1242,64 @@ public class SpinEcho extends BaseSequenceGenerator {
         double time4_for_min_FIR_delay = Math.max(min_FIR_delay, minInstructionDelay) + observation_time;
 
         // get minimal TE value & search for incoherence
-
-
         double max_time = ceilToSubDecimal(Math.max(time1_min, Math.max(time2_min, (time3_min + time3bis))), 5);
-        double te_min = Math.max(2 * max_time, time4_for_min_FIR_delay);
-        te_min = ceilToSubDecimal(te_min, 5);
+        double echoSpacing_min = Math.max(2 * max_time, time4_for_min_FIR_delay);
+        echoSpacing_min = ceilToSubDecimal(echoSpacing_min, 5);
 
-        //double new_te = te;
-        // calculate echo time depending on image contrast and transform plugin
-        if (("Custom".equalsIgnoreCase(getText(IMAGE_CONTRAST))) && echoTrainLength != 1 && is_FSE_vs_MultiEcho) {
-            if (echo_spacing < te_min) {
-                getUnreachParamExceptionManager().addParam(ECHO_SPACING.name(), echo_spacing, te_min, ((NumberParam) getParam(ECHO_SPACING)).getMaxValue(), "Echo_Spacing too short for the User Mx1D and SW");
-                echo_spacing = te_min;
-                te = te_min;
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        //force echo_spacing to echoSpacing_min in depending on the contrast
+        if (is_FSE_vs_MultiEcho || echoTrainLength == 1) { // FSE ou SE
+            switch (getText(IMAGE_CONTRAST)) {
+                case "T1-weighted":
+                case "PD-weighted":
+                    echo_spacing = echoSpacing_min;
+                    break;
+                case "T2-weighted":
+                    if (echoTrainLength > 1)
+                        echo_spacing = echoSpacing_min;
+                    break;
+                default: // Custom
+                    break;
             }
-        } else {
-            if (te < te_min) {
-                if (te_min > TE_TR_lim[1]) {
-                    getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "(1):TE too short for the User Mx1D and SW (2):as TE increases, T1-weighted or PD-weighted imaging is not guaranteed");
-                    //setParamValue(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST, "Custom");
-                } else {
-                    getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, te_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "TE too short for the User Mx1D and SW");
-                    //te = te_min;
-                }
-                te = te_min;
-            }
+            te = echo_spacing * echoEffective;
         }
 
-
-        if (is_FSE_vs_MultiEcho) {
-            if (!("Custom".equalsIgnoreCase(getText(IMAGE_CONTRAST)))) {
-                echo_spacing = te_min; // echo spacing should be minimal for FSE if not "Custom"
-            } else { // if "Custom" FSE, user can change echo spacing
-                if (echo_spacing < te_min) {
-                    echo_spacing = te_min;
-                }
-                if (echoTrainLength == 1) {
-                    echo_spacing = te;
-                }
-            }
-        } else { // if MultiEcho, user can change echo time
-            if (echoTrainLength == 1) {
-                switch (getText(IMAGE_CONTRAST)) {
-                    case "T1-weighted":
-                    case "PD-weighted":
-                        te = te_min;
-                        break;
-                    case "T2-weighted":
-                        te = TE_TR_lim[0];
-                        if (te < te_min) {
-                            te = te_min;
-                        }
-                        break;
-                    default: // Custom
-                        break;
-                }
-            }
-            echo_spacing = te;
-        }
-
+        double previous_echo_spacing = getDouble(ECHO_SPACING);
         if (echoTrainLength > 1) {
-            double previous_echo_spacing = getDouble(ECHO_SPACING);
             if (roundToDecimal(previous_echo_spacing, 5) != roundToDecimal(echo_spacing, 5)) {
                 this.getParam(ECHO_SPACING).setValue(echo_spacing);
+            }
+        }
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // check that ECho_Spacing > echoSpacing_min
+        if (is_FSE_vs_MultiEcho) {
+            if (echo_spacing < echoSpacing_min) {
+                getUnreachParamExceptionManager().addParam(ECHO_SPACING.name(), echo_spacing, echoSpacing_min, ((NumberParam) getParam(ECHO_SPACING)).getMaxValue(), "Echo_Spacing too short for the User Mx1D and SW");
+                echo_spacing = echoSpacing_min;
+                te = echo_spacing * echoEffective;
+            }
+        } else {
+            if (te < echoSpacing_min) {
+                getUnreachParamExceptionManager().addParam(ECHO_TIME.name(), te, echoSpacing_min, ((NumberParam) getParam(ECHO_TIME)).getMaxValue(), "TE too short for the User Mx1D and SW");
+                te = echoSpacing_min;
+            }
+        }
+
+        // For FSE or SE with contrast, check the TE_min boundary, mainly for T2 contrast
+        if ((echo_spacing * echoEffective < TE_TR_lim[0])
+                && !"custom".equalsIgnoreCase(getText(IMAGE_CONTRAST))) {
+//            if (is_FSE_vs_MultiEcho || echoTrainLength == 1) {
+            if (is_FSE_vs_MultiEcho) {
+                int echoEffective_min = (int) Math.ceil(TE_TR_lim[0] / echoSpacing_min);
+                getUnreachParamExceptionManager().addParam(ECHO_EFFECTIVE.name(), echoEffective, echoEffective_min, ((NumberParam) getParam(ECHO_EFFECTIVE)).getMaxValue(), "TE too short to meet contrast : or adjust LIM_T1 T2 or PD");
+                if (echoEffective_min > echoTrainLength) {
+                    getUnreachParamExceptionManager().addParam(ECHO_TRAIN_LENGTH.name(), echoTrainLength, echoEffective_min, ((NumberParam) getParam(ECHO_TRAIN_LENGTH)).getMaxValue(), "TE too short to meet contrast : or adjust LIM_T1 T2 or PD");
+                    echoTrainLength = echoEffective_min;
+                }
+                echoEffective = echoEffective_min;
+                te = echo_spacing * echoEffective;
             }
         }
 
@@ -1543,7 +1522,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
             boolean increaseTI = false;
             // ArrayList<Number> arrayListTI = new ArrayList<Number>();
-            Collection<Double> arrayListTI_min = new ArrayList<Double>();
+            Collection<Double> arrayListTI_min = new ArrayList();
             for (int i = 0; i < numberOfInversionRecovery; i++) {
                 double IR_time = inversionRecoveryTime.get(i);
                 // arrayListTI.add(IR_time);
@@ -1605,34 +1584,95 @@ public class SpinEcho extends BaseSequenceGenerator {
         min_flush_delay = Math.max(CameleonVersion105 ? min_flush_delay : 0, minInstructionDelay);
 
         //  = = = = =  = = = = = = = = = = = = = =
-        double time_seq_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler) * slices_acquired_in_single_scan);
+        double time_1Slc_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler));
+        double tr_min_per_slice = time_1Slc_to_end_spoiler + minInstructionDelay * (2 + 1) + minInstructionDelay;// 2 +( 2 minInstructionDelay: Events.event.ID 22 +(20&21
+        double time_seq_to_end_spoiler ;
+
+        if (getText(IMAGE_CONTRAST).equalsIgnoreCase("T1-weighted") && isMultiplanar) {
+            slices_acquired_in_single_scan = (int) Math.floor(TE_TR_lim[3] / tr_min_per_slice);
+            System.out.println( " TE_TR_lim[3] " + TE_TR_lim[3]+" tr_min_per_slice " + tr_min_per_slice  + "   - > sl "+slices_acquired_in_single_scan);
+
+            slices_acquired_in_single_scan = getInferiorDivisorToGetModulusZero(slices_acquired_in_single_scan, acquisitionMatrixDimension3D);
+            nb_of_shoot_3d = userMatrixDimension3D / slices_acquired_in_single_scan;
+            time_seq_to_end_spoiler = time_1Slc_to_end_spoiler * slices_acquired_in_single_scan;
+            nbOfInterleavedSlice = slices_acquired_in_single_scan;
+
+            System.out.println( " slices_acquired_in_single_scan " + slices_acquired_in_single_scan);
+            System.out.println( " nb_of_shoot_3d " + nb_of_shoot_3d);
+            System.out.println( " time_seq_to_end_spoiler " + time_seq_to_end_spoiler);
+            System.out.println( " nbOfInterleavedSlice " + nbOfInterleavedSlice);
+
+            getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_shoot_3d);
+            getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(slices_acquired_in_single_scan);
+
+            plugin = getTransformPlugin();
+            plugin.setParameters(new ArrayList<>(getUserParams()));
+        }else {
+            time_seq_to_end_spoiler = time_1Slc_to_end_spoiler * slices_acquired_in_single_scan;
+        }
 
         double tr_min = time_seq_to_end_spoiler + minInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 minInstructionDelay: Events.event.ID 22 +(20&21
         tr_min = ceilToSubDecimal(tr_min, 4);
 
         switch (getText(IMAGE_CONTRAST)) {
-            case "Custom":
+            case "T1-weighted":
+                tr = Math.max(TE_TR_lim[2], tr_min); // TR should be not lower than the inferior limit
+                break;
+            case "PD-weighted":
+            case "T2-weighted":
+                // TR should be minimal
+                tr = Math.max(TE_TR_lim[2], tr); // TR should be not lower than the inferior limit
                 break;
             default:
-                if (tr_min < TE_TR_lim[2]) {
-                    tr = TE_TR_lim[2]; // TR should be not lower than the inferior limit
-                } else {
-                    tr = tr_min; // TR should be minimal
-                }
-                double previous_tr = getDouble(REPETITION_TIME);
-                if (roundToDecimal(previous_tr, 5) != roundToDecimal(tr, 5)) {
-                    this.getParam(REPETITION_TIME).setValue(tr);
-                }
                 break;
         }
+        double previous_tr = getDouble(REPETITION_TIME);
+        if (roundToDecimal(previous_tr, 5) != roundToDecimal(tr, 5)) {
+            getParam(REPETITION_TIME).setValue(tr);
+        }
+
+        if (tr > TE_TR_lim[3] && isMultiplanar) { // for T1w if TR_min already too large, advises ways to reduce TR
+            //     notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "(1): TR too short to reach (ETL * User Mx3D/Shoot3D) in a single scan - (2):as TR increases, T1-weighted imaging is not guaranteed");
+            int max_nb_interleaved_excitation = (int) Math.floor(TE_TR_lim[3] * ((float) userMatrixDimension3D / nb_of_shoot_3d) / tr_min);
+
+            System.out.println("- - - - - -  - ");
+            System.out.println("tr_min  > " + TE_TR_lim[3]);
+            System.out.println("tr  = " + tr);
+            System.out.println("max_nb_interleaved_excitation " + max_nb_interleaved_excitation);
+
+            max_nb_interleaved_excitation = getInferiorDivisorToGetModulusZero(max_nb_interleaved_excitation, userMatrixDimension3D);
+            int nb_of_shoot_3d_min = userMatrixDimension3D / max_nb_interleaved_excitation;
+            double TRThis = (double) nb_of_shoot_3d / nb_of_shoot_3d_min * tr_min;
+
+            System.out.println("nb_of_shoot_3d_min " + nb_of_shoot_3d_min);
+            System.out.println("TRThis " + TRThis);
+
+            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to garenty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
+        }
+//        if (tr_min < TE_TR_lim[2] && isMultiplanar) { // for T1w if TR_min already too large, advises ways to reduce TR
+//            //     notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "(1): TR too short to reach (ETL * User Mx3D/Shoot3D) in a single scan - (2):as TR increases, T1-weighted imaging is not guaranteed");
+//            int max_nb_interleaved_excitation = (int) Math.floor(TE_TR_lim[3] * ((float) userMatrixDimension3D / nb_of_shoot_3d) / tr_min);
+//
+//            System.out.println("max_nb_interleaved_excitation " + max_nb_interleaved_excitation);
+//
+//            max_nb_interleaved_excitation = getInferiorDivisorToGetModulusZero(max_nb_interleaved_excitation, userMatrixDimension3D);
+//            int nb_of_shoot_3d_min = userMatrixDimension3D / max_nb_interleaved_excitation;
+//
+//            System.out.println("max_nb_interleaved_excitation " + max_nb_interleaved_excitation);
+//            System.out.println("nb_of_shoot_3d_min " + nb_of_shoot_3d_min);
+//
+//            nb_of_shoot_3d_min = getInferiorDivisorToGetModulusZero(nb_of_shoot_3d_min, userMatrixDimension3D);
+//            double TRThis = nb_of_shoot_3d / nb_of_shoot_3d_min * tr_min;
+//
+//            System.out.println("nb_of_shoot_3d_min " + nb_of_shoot_3d_min);
+//            System.out.println("TRThis " + TRThis);
+//
+//            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to garenty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
+//        }
+
+
         if (tr < tr_min) {
-            //tr_min = Math.ceil(tr_min * Math.pow(10, 3)) / Math.pow(10, 3);
-            if (tr_min > TE_TR_lim[3]) {
-                notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "(1): TR too short to reach (ETL * User Mx3D/Shoot3D) in a singl scan - (2):as TR increases, T1-weighted imaging is not guaranteed");
-                //getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.IMAGE_CONTRAST).setValue( "Custom");
-            } else {
-                notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "TR too short to reach (ETL * User Mx3D/Shoot3D) in a singl scan");
-            }
+            notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "TR too short to reach (ETL * User Mx3D / Shoot3D) in a single scan");
             tr = tr_min;
         }
 
@@ -1865,7 +1905,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 gradAmpSBReadSpoilerTable[n] = 0;
                 double off_center_neg = off_center_distance_1D - (fov / 2.0 + satband_distance_from_fov + satband_thickness / 2.0);
                 offsetFreqSBTable[n] = new RFPulse().calculateOffsetFreq(grad_amp_satband_mTpm, off_center_neg);
-                n += 1;
+//                n += 1;
             }
         }
 
@@ -1962,12 +2002,12 @@ public class SpinEcho extends BaseSequenceGenerator {
         //--------------------------------------------------------------------------------------
         // Set  TRIGGER_TIME for dynamic or trigger acquisition
         ArrayList<Number> arrayListTrigger = new ArrayList<>();
-        if (isDynamic && (isInversionRecovery && numberOfDynamicAcquisition != 1)) {
+        if (isDynamic && isInversionRecovery && numberOfDynamicAcquisition != 1) {
             if (!is_FSE_vs_MultiEcho && echoTrainLength != 1) {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
                     arrayListTrigger.add(Math.floor(i / (double) echoTrainLength) * time_between_frames);
                 }
-            } else if (isInversionRecovery && numberOfInversionRecovery != 1) {
+            } else if (numberOfInversionRecovery != 1) {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
                     arrayListTrigger.add(Math.floor(i / (double) numberOfInversionRecovery) * time_between_frames);
                 }
@@ -1977,7 +2017,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 }
             }
             if (!isTrigger) {
-                ListNumberParam list = new ListNumberParam((NumberParam) getParam(MriDefaultParams.TRIGGER_TIME), arrayListTrigger);       // associate TE to images for DICOM export
+                ListNumberParam list = new ListNumberParam(getParam(MriDefaultParams.TRIGGER_TIME), arrayListTrigger);       // associate TE to images for DICOM export
                 putVariableParameter(list, (4));
             }
         }
@@ -1988,7 +2028,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
                 arrayListEcho.add(te * i);
             }
-            ListNumberParam list = new ListNumberParam((NumberParam) getParam(MriDefaultParams.ECHO_TIME), arrayListEcho);       // associate TE to images for DICOM export
+            ListNumberParam list = new ListNumberParam(getParam(MriDefaultParams.ECHO_TIME), arrayListEcho);       // associate TE to images for DICOM export
             putVariableParameter(list, (4));
         }
 
