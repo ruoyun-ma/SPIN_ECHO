@@ -33,6 +33,7 @@ package rs2d.sequence.spinecho;
 //  V5.6
 //  double minInstructionDelay = 0.000005;
 
+// Sat band pulse calbration
 
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
@@ -69,7 +70,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version9.4";
+    private String sequenceVersion = "Version9.5";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -710,7 +711,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // set the calculated Loop dimensions
         set(Nb_echo, echoTrainLength - 1);
         set(Nb_interleaved_slice, nbOfInterleavedSlice - 1);
-        // bug on the loop  set(Nb_sb_loop, nb_satband - 1);
+        set(Nb_sb_loop, nb_satband - 1);
 
         // -----------------------------------------------
         // SEQ_DESCRIPTION
@@ -802,19 +803,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         // activate gradient rotation matrix
         // -----------------------------------------------
         GradientRotation.setSequenceGradientRotation(this);
-/*
-        HardwarePreemphasis hardwarePreemphasis = new HardwarePreemphasis();
-        getParam(HARDWARE_PREEMPHASIS_A).setValue(hardwarePreemphasis.getAmplitude());
-        getParam(HARDWARE_PREEMPHASIS_T).setValue(hardwarePreemphasis.getTime());
-        getParam(HARDWARE_DC).setValue(hardwarePreemphasis.getDC());
-        getParam(HARDWARE_A0).setValue(hardwarePreemphasis.getA0());
-
-        HardwareShim hardwareShim = new HardwareShim();
-        getParam(HARDWARE_SHIM).setValue(hardwareShim.getValue());
-        getParam(HARDWARE_SHIM_LABEL).setValue(hardwareShim.getLabel());
-        */
-        //     System.out.println(" BEFORE ROUTING end");
-
 
     }
 
@@ -831,7 +819,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
     private void prepareFovPhase() {
         fovPhase = (getBoolean(FOV_SQUARE)) ? fov : fovPhase;
-        fovPhase = fovPhase > fov ? fov : fovPhase;
+        fovPhase = Math.min(fovPhase, fov);
         getParam(FIELD_OF_VIEW_PHASE).setValue(fovPhase);
         getParam(PHASE_FIELD_OF_VIEW_RATIO).setValue((fovPhase / fov * 100.0));    // FOV ratio for display
         getParam(FOV_RATIO_PHASE).setValue(Math.round(fovPhase / fov * 100.0));    // FOV ratio for display
@@ -1575,8 +1563,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 + delay2
                 + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay2.ID + 1, Events.Delay3.ID - 1) +
                 +delay3
-                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay2.ID + 1, Events.Delay3.ID - 1) +
-                TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 1, Events.LoopEndEcho.ID);
+                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 1, Events.LoopEndEcho.ID);
 
         double delay_spoiler = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID + 1, Events.LoopMultiPlanarEnd.ID - 2);// grad_phase_application_time + grad_rise_time * 2;
 
@@ -1586,28 +1573,28 @@ public class SpinEcho extends BaseSequenceGenerator {
         //  = = = = =  = = = = = = = = = = = = = =
         double time_1Slc_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler));
         double tr_min_per_slice = time_1Slc_to_end_spoiler + minInstructionDelay * (2 + 1) + minInstructionDelay;// 2 +( 2 minInstructionDelay: Events.event.ID 22 +(20&21
-        double time_seq_to_end_spoiler ;
+        double time_seq_to_end_spoiler;
 
         if (getText(IMAGE_CONTRAST).equalsIgnoreCase("T1-weighted") && isMultiplanar) {
             slices_acquired_in_single_scan = (int) Math.floor(TE_TR_lim[3] / tr_min_per_slice);
-            System.out.println( " TE_TR_lim[3] " + TE_TR_lim[3]+" tr_min_per_slice " + tr_min_per_slice  + "   - > sl "+slices_acquired_in_single_scan);
+            System.out.println(" TE_TR_lim[3] " + TE_TR_lim[3] + " tr_min_per_slice " + tr_min_per_slice + "   - > sl " + slices_acquired_in_single_scan);
 
             slices_acquired_in_single_scan = getInferiorDivisorToGetModulusZero(slices_acquired_in_single_scan, acquisitionMatrixDimension3D);
             nb_of_shoot_3d = userMatrixDimension3D / slices_acquired_in_single_scan;
             time_seq_to_end_spoiler = time_1Slc_to_end_spoiler * slices_acquired_in_single_scan;
             nbOfInterleavedSlice = slices_acquired_in_single_scan;
 
-            System.out.println( " slices_acquired_in_single_scan " + slices_acquired_in_single_scan);
-            System.out.println( " nb_of_shoot_3d " + nb_of_shoot_3d);
-            System.out.println( " time_seq_to_end_spoiler " + time_seq_to_end_spoiler);
-            System.out.println( " nbOfInterleavedSlice " + nbOfInterleavedSlice);
+            System.out.println(" slices_acquired_in_single_scan " + slices_acquired_in_single_scan);
+            System.out.println(" nb_of_shoot_3d " + nb_of_shoot_3d);
+            System.out.println(" time_seq_to_end_spoiler " + time_seq_to_end_spoiler);
+            System.out.println(" nbOfInterleavedSlice " + nbOfInterleavedSlice);
 
             getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_shoot_3d);
             getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(slices_acquired_in_single_scan);
 
             plugin = getTransformPlugin();
             plugin.setParameters(new ArrayList<>(getUserParams()));
-        }else {
+        } else {
             time_seq_to_end_spoiler = time_1Slc_to_end_spoiler * slices_acquired_in_single_scan;
         }
 
@@ -2104,8 +2091,9 @@ public class SpinEcho extends BaseSequenceGenerator {
             System.out.println((((NumberParam) getSequenceParam(Nb_2d)).getValue().intValue()));
             System.out.println((((NumberParam) getSequenceParam(Nb_3d)).getValue().intValue()));
             System.out.println((((NumberParam) getSequenceParam(Nb_4d)).getValue().intValue()));
-            System.out.println((((NumberParam) getSequenceParam(Nb_echo)).getValue().intValue()));
-            System.out.println((((NumberParam) getSequenceParam(Nb_interleaved_slice)).getValue().intValue()));
+            System.out.println((((Table) getSequenceTable(Nb_echo)).get(0).intValue()));
+            System.out.println((((Table) getSequenceTable(Nb_interleaved_slice)).get(0).intValue()));
+            System.out.println((((Table) getSequenceTable(Nb_sb_loop)).get(0).intValue()));
             System.out.println("");
             for (int i = 0; i < Events.LoopMultiPlanarEnd.ID; i++) {
                 System.out.println((((TimeElement) getSequence().getTimeChannel().get(i)).getTime().getFirst().doubleValue() * 1000000));

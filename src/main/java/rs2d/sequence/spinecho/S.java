@@ -90,6 +90,7 @@ public enum S implements GeneratorSequenceParamEnum {
     Grad_shape_rise_up2("Grad_shape_rise_up2"),
     Nb_echo("Nb_echo"),
     Nb_interleaved_slice("Nb_interleaved_slice"),
+    Nb_sb_loop("Nb_sb_loop"),
     Rx_freq_offset("Rx_freq_offset"),
     Rx_phase("Rx_phase"),
     Time_before_fatsat_pulse("Time_before_fatsat_pulse"),
