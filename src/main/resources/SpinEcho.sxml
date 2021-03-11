@@ -23405,7 +23405,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>8</address>
-                <list>9.380912000000009E-4</list>
+                <list>9.380912000000004E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -23480,9 +23480,9 @@
                 <name>Time_last_delay</name>
                 <description></description>
                 <numberEnum>Time</numberEnum>
-                <order>FourLoop</order>
+                <order>Four</order>
                 <group>Delay</group>
-                <locked>false</locked>
+                <locked>true</locked>
                 <address>1</address>
                 <list>5.0E-6</list>
             </value>
@@ -24154,7 +24154,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>5</address>
-                <list>0.003250000000000001</list>
+                <list>0.0032500000000000003</list>
             </value>
         </Entry>
         <Entry>
@@ -25158,7 +25158,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>8</address>
-                <list>9.380912000000009E-4</list>
+                <list>9.380912000000004E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -26001,7 +26001,7 @@
                 <group>Delay</group>
                 <locked>true</locked>
                 <address>11</address>
-                <list>0.07979624999999994</list>
+                <list>0.07979624999999999</list>
             </value>
         </Entry>
         <Entry>

@@ -2330,7 +2330,7 @@ public enum U implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version9.2_fixed");
+            param.setValue("Version9.5");
             param.setDefaultValue("");
             return param;
         }
@@ -2587,7 +2587,7 @@ public enum U implements GeneratorParamEnum {
             param.setCategory(Category.Acquisition);
             param.setValue("Centered2DRot");
             param.setDefaultValue("Centered2DRot");
-            param.setSuggestedValues(asList("Centered2DRot", "Bordered2D", "Sequential4D", "Sequential2D", "Sequential2D_FSE_TEST", "Sequential2DInterleaved"));
+            param.setSuggestedValues(asList("Centered2DRot", "Bordered2D", "Sequential4D", "Sequential2D", "FSE_TRAIN_1D", "Sequential2DInterleaved"));
             return param;
         }
     },

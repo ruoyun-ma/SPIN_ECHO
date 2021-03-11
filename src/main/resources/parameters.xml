@@ -3117,7 +3117,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version9.2_fixed</value>
+                <value>Version9.5</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_VERSION</displayedName>
@@ -3395,7 +3395,7 @@
                 <suggestedValues>Bordered2D</suggestedValues>
                 <suggestedValues>Sequential4D</suggestedValues>
                 <suggestedValues>Sequential2D</suggestedValues>
-                <suggestedValues>Sequential2D_FSE_TEST</suggestedValues>
+                <suggestedValues>FSE_TRAIN_1D</suggestedValues>
                 <suggestedValues>Sequential2DInterleaved</suggestedValues>
                 <group>Scan</group>
                 <category>Acquisition</category>

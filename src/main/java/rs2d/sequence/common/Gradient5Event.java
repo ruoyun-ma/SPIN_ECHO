@@ -1,7 +1,7 @@
 package rs2d.sequence.common;
 
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
-import rs2d.spinlab.hardware.controller.HardwareHandler;
+//import rs2d.spinlab.hardware.controller.HardwareHandler;
 import rs2d.spinlab.instrument.util.GradientMath;
 import rs2d.spinlab.sequence.Sequence;
 import rs2d.spinlab.sequence.table.Shape;

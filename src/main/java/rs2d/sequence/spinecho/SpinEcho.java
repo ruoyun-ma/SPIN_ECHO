@@ -60,7 +60,7 @@ import static java.util.Arrays.asList;
 import rs2d.sequence.common.*;
 
 
-import javax.vecmath.Matrix3d;
+//import javax.vecmath.Matrix3d;
 
 import static rs2d.sequence.spinecho.S.*;
 import static rs2d.sequence.spinecho.U.*;
@@ -70,7 +70,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version9.5";
+    private String sequenceVersion = "Version9.6";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -97,9 +97,10 @@ public class SpinEcho extends BaseSequenceGenerator {
     private int nb_scan_2d;
     private int nb_scan_3d;
     private int nb_scan_4d;
-    private int nbOfInterleavedSlice;
-
     private int echoTrainLength;
+    private int nbOfInterleavedSlice;
+    private int nb_planar_excitation;
+    private int nb_of_shoot_3d;
 
     private double spectralWidth;
     private boolean isSW;
@@ -111,7 +112,8 @@ public class SpinEcho extends BaseSequenceGenerator {
 
     private double sliceThickness;
     private double spacingBetweenSlice;
-    private int nb_of_shoot_3d;
+    private boolean isSlicePacked;
+
     private double pixelDimension;
     private double fov;
     private double fovPhase;
@@ -276,6 +278,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         sliceThickness = getDouble(SLICE_THICKNESS);
         spacingBetweenSlice = getDouble(SPACING_BETWEEN_SLICE);
         nb_of_shoot_3d = getInt(NUMBER_OF_SHOOT_3D);
+        isSlicePacked = getBoolean(MULTISLICE_PACKED);
 
         pixelDimension = getDouble(RESOLUTION_FREQUENCY);
         fov = getDouble(FIELD_OF_VIEW);
@@ -555,14 +558,18 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (!isMultiplanar) {
             acquisitionMatrixDimension3D = floorEven((1 - zero_filling_3D) * userMatrixDimension3D);
             acquisitionMatrixDimension3D = (acquisitionMatrixDimension3D < 4) && isEnablePhase3D ? 4 : acquisitionMatrixDimension3D;
-            userMatrixDimension3D = userMatrixDimension3D < acquisitionMatrixDimension3D ? acquisitionMatrixDimension3D : userMatrixDimension3D;
+            userMatrixDimension3D = Math.max(userMatrixDimension3D, acquisitionMatrixDimension3D);
             getParam(USER_MATRIX_DIMENSION_3D).setValue(userMatrixDimension3D);
+            nb_of_shoot_3d = 0;
+            nbOfInterleavedSlice = 1;
+            nb_planar_excitation = 1;
         } else {
             acquisitionMatrixDimension3D = userMatrixDimension3D;
+            nb_planar_excitation = userMatrixDimension3D;
+            nb_of_shoot_3d = getInt(NUMBER_OF_SHOOT_3D);
+            nb_of_shoot_3d = getInferiorDivisorToGetModulusZero(nb_of_shoot_3d, userMatrixDimension3D);
+            nbOfInterleavedSlice = (int) Math.ceil((float) acquisitionMatrixDimension3D / nb_of_shoot_3d);
         }
-
-        nb_of_shoot_3d = isMultiplanar ? getInferiorDivisorToGetModulusZero(nb_of_shoot_3d, userMatrixDimension3D) : 0;
-        nbOfInterleavedSlice = isMultiplanar ? (int) Math.ceil(((float) acquisitionMatrixDimension3D / nb_of_shoot_3d)) : 1;
         getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_shoot_3d);
         getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(isMultiplanar ? nbOfInterleavedSlice : 0);
 
@@ -1200,40 +1207,55 @@ public class SpinEcho extends BaseSequenceGenerator {
         double min_FIR_delay = (lo_FIR_dead_point + 2) / spectralWidth;
         double min_FIR_4pts_delay = 4 / spectralWidth;
 
+
         // ------------------------------------------
         // calculate delays adapted to current TE 1/2 :Check min TE
         // ------------------------------------------+
+        // phase encoding may be played during Crusher to save some time in 2D
+        double grad_phase_application_time_2 = isMultiplanar ? minInstructionDelay : grad_phase_application_time;
+        double grad_rise_time_phase_2 = isMultiplanar ? minInstructionDelay : grad_rise_time;
+        boolean enable_phase_2 = !isMultiplanar;
 
-        // calculate actual delays between pulses: time1 ,time2, (time3 + time3bis)
-        double time1 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX90.ID + 1, Events.Delay1.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay1.ID + 4, Events.TX180.ID - 1);
-        time1 += txLength90 / 2.0 + (txLength180) / 2.0;
-        time1 += 3 * minInstructionDelay; //gradient off
+        //  time  duration of event blocks
+        double time90toDelay1 = txLength90 / 2.0
+                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX90.ID + 1, Events.DelayTE1.ID - 1);
+        double timeCrusherToLoopEcho = TimeEvents.getTimeBetweenEvents(getSequence(), Events.CrusherStart.ID, Events.LoopStartEcho.ID - 1);
+        double timeLoopEchoTo180h2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.TX180.ID - 1)
+                + txLength180 / 2.0;
+        double time180h2ToDelay2 = txLength180 / 2.0 +
+                TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX180.ID + 1, Events.DelayTE2.ID - 1);
+        double timeADCStartToEcho = observation_time / 2.0;
+        double timeROStartToEcho = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 2, Events.Acq.ID - 1)
+                + observation_time / 2.0;
+        double timeEchoToFIR = observation_time / 2.0;
 
-        double time1_min = time1 + minInstructionDelay; // delay
+        double timeEchoToROEnd = observation_time / 2.0 +
+                TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID + 1, Events.Acq.ID + 2);
+        double timeDelay3ToLoopEchoEnd = TimeEvents.getTimeBetweenEvents(getSequence(), Events.DelayTE3.ID + 1, Events.LoopEndEcho.ID);
+        double timeFIRToLoopEchoEnd = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID, Events.LoopEndEcho.ID);
 
-        double time2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.TX180.ID + 1, Events.Delay2.ID - 1) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID - 2, Events.Acq.ID - 1);
-        time2 += txLength180 / 2.0 + observation_time / 2.0;
-        time2 += (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);// time sans la pause
-        double time2_min = time2 + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0);
+        //  time without adjustable delay
+        double time90to180_noDelayNoPrephasing_hTE = time90toDelay1 + timeCrusherToLoopEcho + timeLoopEchoTo180h2;
+        double time180toEcho_noDelayNoPhase_hTE = time180h2ToDelay2 + timeROStartToEcho;
+        double timeEchoTo180_noDelayNoPhase_hTE = timeEchoToROEnd + timeDelay3ToLoopEchoEnd + timeLoopEchoTo180h2;
 
-        double time3 = (TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID, Events.Acq.ID + 2) - observation_time) + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 1, Events.LoopEndEcho.ID);
-        time3 += observation_time / 2.0;
-        time3 += (isMultiplanar ? 2 * minInstructionDelay : grad_phase_application_time + grad_rise_time);
-        double time3_min = time3 + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0);
-        double time3_for_min_FIR_delay = min_FIR_4pts_delay + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID, Events.LoopEndEcho.ID) + observation_time / 2.0;
-        time3_min = Math.max(time3_min, time3_for_min_FIR_delay);
-
-        double time3bis = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.TX180.ID - 1);
-        time3bis = time3bis + txLength180 / 2.0;
-
-        // FIR delay from one ETL to the next
-        double time4_for_min_FIR_delay = Math.max(min_FIR_delay, minInstructionDelay) + observation_time;
+        //  min time for  90°--180° ,180°-echo, echo-180, echo-FIR4pts-180° and echo-FIR-echo°
+        double timeHalfEchoMin1 = time90to180_noDelayNoPrephasing_hTE + 4 * minInstructionDelay; // Delay 1 + GradPrephasing
+        double timeHalfEchoMin2 = time180toEcho_noDelayNoPhase_hTE + minInstructionDelay
+                + grad_phase_application_time_2 + grad_rise_time_phase_2
+                + (isDixon ? dixonPeriode / 2 : 0);// Delay 2 + GradPhase
+        double timeHalfEchoMin3 = timeEchoTo180_noDelayNoPhase_hTE + minInstructionDelay
+                + grad_phase_application_time_2 + grad_rise_time_phase_2
+                + (isDixon ? dixonPeriode / 2 : 0);// Delay 3 + GradPhase
+        double timeHalfEchoMin4 = timeEchoToFIR + min_FIR_4pts_delay + timeFIRToLoopEchoEnd + timeLoopEchoTo180h2;
+        double timeEchoMin5 = timeEchoToFIR + min_FIR_delay + timeADCStartToEcho;
 
         // get minimal TE value & search for incoherence
-        double max_time = ceilToSubDecimal(Math.max(time1_min, Math.max(time2_min, (time3_min + time3bis))), 5);
-        double echoSpacing_min = Math.max(2 * max_time, time4_for_min_FIR_delay);
-        echoSpacing_min = ceilToSubDecimal(echoSpacing_min, 5);
-
+        double echoSpacing_min = Math.max(timeHalfEchoMin1, timeHalfEchoMin2);
+        echoSpacing_min = Math.max(echoSpacing_min, timeHalfEchoMin3);
+        echoSpacing_min = Math.max(echoSpacing_min, timeHalfEchoMin4);
+        echoSpacing_min = Math.max(echoSpacing_min, timeEchoMin5 / 2);
+        echoSpacing_min = ceilToSubDecimal(echoSpacing_min * 2, 5);
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         //force echo_spacing to echoSpacing_min in depending on the contrast
@@ -1294,17 +1316,19 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         // calculate delays adapted to current TE 2/2 :calculated  delays to get the proper TE
         // ------------------------------------------
-        // set calculated the delay1
-        double delay1 = echo_spacing / 2.0 - time1;
         double grad_read_prep_application_time_2 = minInstructionDelay;
         double grad_rise_time_read_2 = minInstructionDelay;
         boolean enable_read_prep_2 = false;
-        if (delay1 + (3 * minInstructionDelay) > grad_read_prep_application_time + 2 * grad_rise_time + minInstructionDelay) {
-            delay1 = delay1 + 3 * minInstructionDelay - (grad_read_prep_application_time + 2 * grad_rise_time);
+        double delay1 = echo_spacing / 2.0 - time90to180_noDelayNoPrephasing_hTE;
+        if (delay1 > grad_read_prep_application_time + 2 * grad_rise_time + minInstructionDelay) {
+            delay1 -= (grad_read_prep_application_time + 2 * grad_rise_time);
             grad_rise_time_read_2 = grad_rise_time;
             grad_read_prep_application_time_2 = grad_read_prep_application_time;
             enable_read_prep_2 = true;
+        } else {
+            delay1 -= 3 * minInstructionDelay;
         }
+
         set(Time_grad_ramp_read_2, grad_rise_time_read_2);
         set(Time_grad_read_prep_top_2, grad_read_prep_application_time_2);
         set(Grad_enable_read_prep_1, (!enable_read_prep_2 && isEnableRead));
@@ -1312,19 +1336,20 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Time_TE_delay1, delay1);
 
         // set calculated the delay2 and delay3
-        double delay2 = echo_spacing / 2.0 - time2;
-        double delay3 = echo_spacing / 2.0 - (time3 + time3bis);
-
-        double grad_phase_application_time_2 = isMultiplanar ? minInstructionDelay : grad_phase_application_time;
-        double grad_rise_time_phase_2 = isMultiplanar ? minInstructionDelay : grad_rise_time;
-        boolean enable_phase_2 = !isMultiplanar;
-        // in 2D if the delay is loong pack the Phase close to the redaout
-        if ((delay2 + 2 * minInstructionDelay > grad_phase_application_time + grad_rise_time + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0)) && (delay3 + (2 * minInstructionDelay) > grad_phase_application_time + grad_rise_time + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0))) {
-            delay2 = delay2 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
-            delay3 = delay3 + 2 * minInstructionDelay - (grad_phase_application_time + grad_rise_time);
+        double delay2 = echo_spacing / 2.0 - time180toEcho_noDelayNoPhase_hTE;
+        double delay3 = echo_spacing / 2.0 - timeEchoTo180_noDelayNoPhase_hTE;
+        // in 2D if the delay is loong pack the Phase close to the readout
+        if (!isMultiplanar ||
+                ((delay2 > grad_phase_application_time + grad_rise_time + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0))
+                        && (delay3 > grad_phase_application_time + grad_rise_time + minInstructionDelay + (isDixon ? dixonPeriode / 2 : 0)))) {
+            delay2 -= (grad_phase_application_time + grad_rise_time);
+            delay3 -= (grad_phase_application_time + grad_rise_time);
             grad_rise_time_phase_2 = grad_rise_time;
             grad_phase_application_time_2 = grad_phase_application_time;
             enable_phase_2 = true;
+        } else {
+            delay2 -= 2 * minInstructionDelay;
+            delay3 -= 2 * minInstructionDelay;
         }
         if (echoTrainLength == 1) {
             delay3 = minInstructionDelay;
@@ -1366,7 +1391,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         }
 
         // -------------------------------------------------------------------------------------------------
-        // SPoiler Gradient
+        // Spoiler Gradient
         // -------------------------------------------------------------------------------------------------
         double time_grad_crusher_end_top = getDouble(GRADIENT_CRUSHER_END_TOP_TIME);
         set(Time_grad_crusher_top2, time_grad_crusher_end_top);
@@ -1391,7 +1416,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         } else {
             for (int i = 0; i < numberOfTrigger; i++) {
                 double time_external_trigger_delay = roundToDecimal(triggerTime.get(i), 7);
-                time_external_trigger_delay = time_external_trigger_delay < minInstructionDelay ? minInstructionDelay : time_external_trigger_delay;
+                time_external_trigger_delay = Math.max(time_external_trigger_delay, minInstructionDelay);
                 triggerdelay.add(time_external_trigger_delay);
                 time_external_trigger_delay_max = Math.max(time_external_trigger_delay_max, time_external_trigger_delay);
             }
@@ -1493,7 +1518,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // calculate delays adapted to current TI
         // ------------------------------------------
 
-        double time_IR_delay_max = 0.00001;
+        double time_IR_delay_max = minInstructionDelay;
 
         Table time_TI_delay = getSequenceTable(Time_TI_delay);
         time_TI_delay.clear();
@@ -1524,8 +1549,8 @@ public class SpinEcho extends BaseSequenceGenerator {
                     increaseTI = true;
                 }
                 arrayListTI_min.add(IR_time);
-                time_IR_delay_max = Math.max(time_IR_delay_max, IR_time);
                 delay0 = IR_time - time0_IR_90;
+                time_IR_delay_max = Math.max(time_IR_delay_max, delay0);
                 time_TI_delay.add(delay0);
             }
 
@@ -1548,59 +1573,62 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         // calculate TR & search for incoherence
         // ------------------------------------------
-        int nb_planar_excitation = (isMultiplanar ? acquisitionMatrixDimension3D : 1);
-        int slices_acquired_in_single_scan = (nb_planar_excitation > 1) ? (nbOfInterleavedSlice) : 1;
-        double delay_before_multi_planar_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Start.ID, Events.TriggerDelay.ID - 1)
-                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.TriggerDelay.ID + 1, Events.LoopMultiPlanarStart.ID - 1) + time_external_trigger_delay_max;
+        // for Cam3
+        double min_flush_delay = min_time_per_acq_point * acquisitionMatrixDimension1D * echoTrainLength * nbOfInterleavedSlice * 2;   // minimal time to flush Chameleon buffer (this time is doubled to avoid hidden delays);
+        min_flush_delay = Math.max(CameleonVersion105 ? min_flush_delay : minInstructionDelay, minInstructionDelay);
+        set(Time_flush_delay, min_flush_delay);
 
+        double last_delay = minInstructionDelay;
+
+        //  time  duration of event blocks
+        double delay_before_multi_planar_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Start.ID, Events.TriggerDelay.ID - 1)
+                + time_external_trigger_delay_max
+                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.TriggerDelay.ID + 1, Events.LoopMultiPlanarStart.ID - 1);
+        double delay_satBand_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopSatBandStart.ID, Events.LoopSatBandEnd.ID);
         double delay_before_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopMultiPlanarStart.ID, Events.LoopSatBandStart.ID - 1)
-                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopSatBandStart.ID, Events.LoopSatBandEnd.ID) * nb_satband
+                + delay_satBand_loop * nb_satband
                 + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopSatBandEnd.ID + 1, Events.IRDelay.ID - 1)
                 + time_IR_delay_max
                 + TimeEvents.getTimeBetweenEvents(getSequence(), Events.IRDelay.ID + 1, Events.LoopStartEcho.ID - 1);
 
-        double delay_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.Delay2.ID - 1)
+        double delay_echo_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopStartEcho.ID, Events.DelayTE2.ID - 1)
                 + delay2
-                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay2.ID + 1, Events.Delay3.ID - 1) +
+                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.DelayTE2.ID + 1, Events.DelayTE3.ID - 1) +
                 +delay3
-                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.Delay3.ID + 1, Events.LoopEndEcho.ID);
+                + TimeEvents.getTimeBetweenEvents(getSequence(), Events.DelayTE3.ID + 1, Events.LoopEndEcho.ID);
 
         double delay_spoiler = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID + 1, Events.LoopMultiPlanarEnd.ID - 2);// grad_phase_application_time + grad_rise_time * 2;
 
-        double min_flush_delay = min_time_per_acq_point * acquisitionMatrixDimension1D * echoTrainLength * slices_acquired_in_single_scan * 2;   // minimal time to flush Chameleon buffer (this time is doubled to avoid hidden delays);
-        min_flush_delay = Math.max(CameleonVersion105 ? min_flush_delay : 0, minInstructionDelay);
+        double delay_afterEchoLoop_noTRDelay = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopEndEcho.ID + 1, Events.DelayTR4.ID - 1) +
+                TimeEvents.getTimeBetweenEvents(getSequence(), Events.DelayTR4.ID + 1, Events.LoopMultiPlanarEnd.ID);
+        double delay_afterMultiplanarLoop_NoLastDelay = TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopMultiPlanarEnd.ID + 2, Events.TimeFlush.ID);
 
         //  = = = = =  = = = = = = = = = = = = = =
-        double time_1Slc_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler));
-        double tr_min_per_slice = time_1Slc_to_end_spoiler + minInstructionDelay * (2 + 1) + minInstructionDelay;// 2 +( 2 minInstructionDelay: Events.event.ID 22 +(20&21
+        double timeSliceLoop_noDelay = delay_before_echo_loop + delay_echo_loop * echoTrainLength + delay_afterEchoLoop_noTRDelay;
+
+        double timeSliceLoop_min = timeSliceLoop_noDelay + minInstructionDelay;
+        double timeBeforeAndAfterSlice_min = delay_before_multi_planar_loop + minInstructionDelay + delay_afterMultiplanarLoop_NoLastDelay;
+//        delay_afterMultiplanarLoop_NoLastDelay
+
+
         double time_seq_to_end_spoiler;
 
         if (getText(IMAGE_CONTRAST).equalsIgnoreCase("T1-weighted") && isMultiplanar) {
-            slices_acquired_in_single_scan = (int) Math.floor(TE_TR_lim[3] / tr_min_per_slice);
-            System.out.println(" TE_TR_lim[3] " + TE_TR_lim[3] + " tr_min_per_slice " + tr_min_per_slice + "   - > sl " + slices_acquired_in_single_scan);
-
-            slices_acquired_in_single_scan = getInferiorDivisorToGetModulusZero(slices_acquired_in_single_scan, acquisitionMatrixDimension3D);
-            nb_of_shoot_3d = userMatrixDimension3D / slices_acquired_in_single_scan;
-            time_seq_to_end_spoiler = time_1Slc_to_end_spoiler * slices_acquired_in_single_scan;
-            nbOfInterleavedSlice = slices_acquired_in_single_scan;
-
-            System.out.println(" slices_acquired_in_single_scan " + slices_acquired_in_single_scan);
-            System.out.println(" nb_of_shoot_3d " + nb_of_shoot_3d);
-            System.out.println(" time_seq_to_end_spoiler " + time_seq_to_end_spoiler);
-            System.out.println(" nbOfInterleavedSlice " + nbOfInterleavedSlice);
+            nbOfInterleavedSlice = (int) Math.floor((TE_TR_lim[3] - timeBeforeAndAfterSlice_min) / timeSliceLoop_min);
+            nbOfInterleavedSlice = getInferiorDivisorToGetModulusZero(nbOfInterleavedSlice, acquisitionMatrixDimension3D);
+            nb_of_shoot_3d = userMatrixDimension3D / nbOfInterleavedSlice;
 
             getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_shoot_3d);
-            getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(slices_acquired_in_single_scan);
-
+            getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(nbOfInterleavedSlice);
             plugin = getTransformPlugin();
             plugin.setParameters(new ArrayList<>(getUserParams()));
-        } else {
-            time_seq_to_end_spoiler = time_1Slc_to_end_spoiler * slices_acquired_in_single_scan;
         }
 
-        double tr_min = time_seq_to_end_spoiler + minInstructionDelay * (slices_acquired_in_single_scan * 2 + 1) + minInstructionDelay;// 2 +( 2 minInstructionDelay: Events.event.ID 22 +(20&21
-        tr_min = ceilToSubDecimal(tr_min, 4);
+//        double time_1Slc_to_end_spoiler = (delay_before_multi_planar_loop + (delay_before_echo_loop + (echoTrainLength * delay_echo_loop) + delay_spoiler));
+//        time_seq_to_end_spoiler = time_1Slc_to_end_spoiler * nbOfInterleavedSlice;
 
+        double tr_min = timeBeforeAndAfterSlice_min + timeSliceLoop_min * nbOfInterleavedSlice;
+        tr_min = ceilToSubDecimal(tr_min, 4);
         switch (getText(IMAGE_CONTRAST)) {
             case "T1-weighted":
                 tr = Math.max(TE_TR_lim[2], tr_min); // TR should be not lower than the inferior limit
@@ -1620,21 +1648,14 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         if (tr > TE_TR_lim[3] && isMultiplanar) { // for T1w if TR_min already too large, advises ways to reduce TR
             //     notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "(1): TR too short to reach (ETL * User Mx3D/Shoot3D) in a single scan - (2):as TR increases, T1-weighted imaging is not guaranteed");
-            int max_nb_interleaved_excitation = (int) Math.floor(TE_TR_lim[3] * ((float) userMatrixDimension3D / nb_of_shoot_3d) / tr_min);
-
-            System.out.println("- - - - - -  - ");
-            System.out.println("tr_min  > " + TE_TR_lim[3]);
-            System.out.println("tr  = " + tr);
-            System.out.println("max_nb_interleaved_excitation " + max_nb_interleaved_excitation);
-
+            int max_nb_interleaved_excitation = (int) Math.floor(
+                    (TE_TR_lim[3] - timeBeforeAndAfterSlice_min)
+                            / (tr_min - timeBeforeAndAfterSlice_min)
+                            * ((float) userMatrixDimension3D / nb_of_shoot_3d));
             max_nb_interleaved_excitation = getInferiorDivisorToGetModulusZero(max_nb_interleaved_excitation, userMatrixDimension3D);
             int nb_of_shoot_3d_min = userMatrixDimension3D / max_nb_interleaved_excitation;
-            double TRThis = (double) nb_of_shoot_3d / nb_of_shoot_3d_min * tr_min;
-
-            System.out.println("nb_of_shoot_3d_min " + nb_of_shoot_3d_min);
-            System.out.println("TRThis " + TRThis);
-
             notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to garenty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
+            nb_of_shoot_3d = nb_of_shoot_3d_min;
         }
 //        if (tr_min < TE_TR_lim[2] && isMultiplanar) { // for T1w if TR_min already too large, advises ways to reduce TR
 //            //     notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "(1): TR too short to reach (ETL * User Mx3D/Shoot3D) in a single scan - (2):as TR increases, T1-weighted imaging is not guaranteed");
@@ -1667,38 +1688,49 @@ public class SpinEcho extends BaseSequenceGenerator {
         // set calculated TR
         // ------------------------------------------
         // set  TR delay to compensate and trigger delays
-        double last_delay = minInstructionDelay;
-        double tr_delay;
-        boolean isSlicePacked = getBoolean(MULTISLICE_PACKED);
-        if (!isSlicePacked || (numberOfInversionRecovery != 1) || (numberOfTrigger != 1)) {
-            Table time_tr_delay = setSequenceTableValues(Time_TR_delay, Order.Four);
+        double tr_delay = minInstructionDelay;
+        last_delay = minInstructionDelay;
+
+        Table time_tr_delay = setSequenceTableValues(Time_TR_delay, Order.Four);
+        Table time_last_delay = setSequenceTableValues(Time_last_delay, Order.Four);
+
+        if (isSlicePacked) {
+            tr_delay = minInstructionDelay;
+            time_tr_delay.add(tr_delay);
+
+            last_delay = tr - (delay_before_multi_planar_loop + delay_afterMultiplanarLoop_NoLastDelay) - timeSliceLoop_min * nbOfInterleavedSlice;
             if (numberOfInversionRecovery != 1) {
                 for (int i = 0; i < numberOfInversionRecovery; i++) {
-                    double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler + (time_TI_delay.get(i).doubleValue() - time_IR_delay_max) * slices_acquired_in_single_scan;
-                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - minInstructionDelay;
-                    time_tr_delay.add(tr_delay);
+                    double last_delay_i = last_delay - (time_TI_delay.get(i).doubleValue() - time_IR_delay_max) * nbOfInterleavedSlice;
+                    time_last_delay.add(last_delay_i);
                 }
             } else if (numberOfTrigger != 1) {
                 for (int i = 0; i < numberOfTrigger; i++) {
-                    double tmp_time_seq_to_end_spoiler = time_seq_to_end_spoiler - time_external_trigger_delay_max + triggerdelay.get(i).doubleValue();
-                    tr_delay = (tr - (tmp_time_seq_to_end_spoiler - +last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - minInstructionDelay;
-                    time_tr_delay.add(tr_delay);
+                    double last_delay_i = last_delay - (triggerdelay.get(i).doubleValue() - time_external_trigger_delay_max);
+                    time_last_delay.add(last_delay_i);
                 }
             } else {
-                tr_delay = (tr - (time_seq_to_end_spoiler + last_delay + minInstructionDelay)) / slices_acquired_in_single_scan - minInstructionDelay;
+                time_last_delay.add(last_delay);
+            }
+        } else {
+            tr_delay = (tr - timeBeforeAndAfterSlice_min) / nbOfInterleavedSlice - timeSliceLoop_noDelay;
+            if (numberOfInversionRecovery != 1) {
+                for (int i = 0; i < numberOfInversionRecovery; i++) {
+                    double tr_delay_i = tr_delay - (time_TI_delay.get(i).doubleValue() - time_IR_delay_max);
+                    time_tr_delay.add(tr_delay_i);
+                }
+            } else if (numberOfTrigger != 1) {
+                for (int i = 0; i < numberOfTrigger; i++) {
+                    double tr_delay_i = tr_delay - (triggerdelay.get(i).doubleValue() - time_external_trigger_delay_max) / nbOfInterleavedSlice;
+                    time_tr_delay.add(tr_delay_i);
+                }
+            } else {
                 time_tr_delay.add(tr_delay);
             }
-            set(Time_last_delay, last_delay);
-        } else {
-            Table time_last_delay = setSequenceTableValues(Time_last_delay, Order.Four);
 
-            tr_delay = minInstructionDelay;
-            last_delay = (tr - (time_seq_to_end_spoiler + slices_acquired_in_single_scan * (tr_delay + minInstructionDelay) - minInstructionDelay));
+            last_delay = minInstructionDelay;
             time_last_delay.add(last_delay);
-            set(Time_TR_delay, tr_delay);
-
         }
-        set(Time_flush_delay, min_flush_delay);
 
         //----------------------------------------------------------------------
         // DYNAMIC SEQUENCE
@@ -1707,24 +1739,28 @@ public class SpinEcho extends BaseSequenceGenerator {
         //----------------------------------------------------------------------
 
         Table dyn_delay = setSequenceTableValues(Time_btw_dyn_frames, Order.Four);
-        double frame_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
-        double time_between_frames_min = (frame_acquisition_time * numberOfInversionRecovery * (isDixon ? 3 : 1) + minInstructionDelay * (numberOfInversionRecovery * (isDixon ? 3 : 1)));
-        double time_between_frames = time_between_frames_min;
-        double interval_between_frames_delay = min_flush_delay;
+        double frame3D_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
+        int nb_4d_withoutDyn = numberOfInversionRecovery * numberOfInversionRecovery * (isDixon ? 3 : 1) * numberOfTrigger;
+        double time_4DFramesNoDyn_withoutDynDelay = (frame3D_acquisition_time * nb_4d_withoutDyn
+                + min_flush_delay * (nb_4d_withoutDyn - 1));
+
+        double interval_between_dynFrames_delay = min_flush_delay;
         if (isDynamic) {
-            //Dynamic Sequence
-            time_between_frames = getDouble(DYN_TIME_BTW_FRAMES);
-            if (isDynamicMinTime) {
-                time_between_frames = ceilToSubDecimal(time_between_frames_min, 3);
-                getParam(DYN_TIME_BTW_FRAMES).setValue(ceilToSubDecimal(time_between_frames_min, 3));
-            } else if (time_between_frames < (time_between_frames_min)) {
-                this.notifyOutOfRangeParam(DYN_TIME_BTW_FRAMES, ceilToSubDecimal(time_between_frames_min, 3), ((NumberParam) getParam(DYN_TIME_BTW_FRAMES)).getMaxValue(), "Minimum frame acquisition time ");
-                time_between_frames = time_between_frames_min;
+            double time_between_dynFrames_min = ceilToSubDecimal(time_4DFramesNoDyn_withoutDynDelay + min_flush_delay, 3);
+
+            //    double time_between_frames = getDouble(DYN_TIME_BTW_FRAMES);
+            double time_between_dynFrames = isDynamicMinTime ? time_between_dynFrames_min : getDouble(DYN_TIME_BTW_FRAMES);
+            getParam(DYN_TIME_BTW_FRAMES).setValue(time_between_dynFrames_min);
+
+            if (time_between_dynFrames < (time_between_dynFrames_min)) {
+                this.notifyOutOfRangeParam(DYN_TIME_BTW_FRAMES, time_between_dynFrames_min, ((NumberParam) getParam(DYN_TIME_BTW_FRAMES)).getMaxValue(), "Minimum frame acquisition time ");
+                time_between_dynFrames = time_between_dynFrames_min;
             }
-            interval_between_frames_delay = roundToDecimal(Math.max(time_between_frames - time_between_frames_min + minInstructionDelay, minInstructionDelay), 7);
+
+            interval_between_dynFrames_delay = time_between_dynFrames - time_4DFramesNoDyn_withoutDynDelay;
             if (numberOfInversionRecovery != 1) {
                 for (int i = 0; i < numberOfInversionRecovery - 1; i++) {
-                    dyn_delay.add(minInstructionDelay);
+                    dyn_delay.add(min_flush_delay);
                 }
             } else if (isDixon) {
                 for (int i = 0; i < 3 - 1; i++) {
@@ -1733,13 +1769,13 @@ public class SpinEcho extends BaseSequenceGenerator {
             }
 
         }
-        dyn_delay.add(interval_between_frames_delay);
+        dyn_delay.add(interval_between_dynFrames_delay);
 
         // ------------------------------------------------------------------
         // Total Acquisition Time
         // ------------------------------------------------------------------
-        double total_acquisition_time = (frame_acquisition_time * numberOfInversionRecovery + minInstructionDelay * (numberOfInversionRecovery - 1) + interval_between_frames_delay) * numberOfDynamicAcquisition + tr * preScan;
-        getParam(SEQUENCE_TIME).setValue(total_acquisition_time);
+        double sequenceTime = (time_4DFramesNoDyn_withoutDynDelay + interval_between_dynFrames_delay) * numberOfDynamicAcquisition + tr * preScan;
+        getParam(SEQUENCE_TIME).setValue(sequenceTime);
 
         // -----------------------------------------------
         // Phase Reset
@@ -1757,16 +1793,16 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (isMultiplanar && nb_planar_excitation > 1 && isEnableSlice) {
             //MULTI-PLANAR case : calculation of frequency offset table
             pulseTX90.prepareOffsetFreqMultiSlice(gradSlice90, nb_planar_excitation, spacingBetweenSlice, off_center_distance_3D);
-            pulseTX90.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, slices_acquired_in_single_scan);
-            pulseTX90.setFrequencyOffset(slices_acquired_in_single_scan != 1 ? Order.ThreeLoop : Order.Three);
+            pulseTX90.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            pulseTX90.setFrequencyOffset(nbOfInterleavedSlice != 1 ? Order.ThreeLoop : Order.Three);
             pulseTX180.prepareOffsetFreqMultiSlice(gradSlice180, nb_planar_excitation, spacingBetweenSlice, off_center_distance_3D);
-            pulseTX180.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, slices_acquired_in_single_scan);
-            pulseTX180.setFrequencyOffset(slices_acquired_in_single_scan != 1 ? Order.ThreeLoop : Order.Three);
+            pulseTX180.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            pulseTX180.setFrequencyOffset(nbOfInterleavedSlice != 1 ? Order.ThreeLoop : Order.Three);
             if (isInversionRecovery) {
                 pulseTXIR.prepareOffsetFreqMultiSlice(gradSlice180, nb_planar_excitation, spacingBetweenSlice, off_center_distance_3D);
-                pulseTXIR.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, slices_acquired_in_single_scan);
+                pulseTXIR.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
             }
-            pulseTXIR.setFrequencyOffset(isInversionRecovery ? (slices_acquired_in_single_scan != 1 ? Order.ThreeLoop : Order.Three) : Order.FourLoop);
+            pulseTXIR.setFrequencyOffset(isInversionRecovery ? (nbOfInterleavedSlice != 1 ? Order.ThreeLoop : Order.Three) : Order.FourLoop);
 
         } else {
             //3D CASE :
@@ -1988,19 +2024,20 @@ public class SpinEcho extends BaseSequenceGenerator {
         //Export DICOM
         //--------------------------------------------------------------------------------------
         // Set  TRIGGER_TIME for dynamic or trigger acquisition
+
         ArrayList<Number> arrayListTrigger = new ArrayList<>();
         if (isDynamic && isInversionRecovery && numberOfDynamicAcquisition != 1) {
             if (!is_FSE_vs_MultiEcho && echoTrainLength != 1) {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
-                    arrayListTrigger.add(Math.floor(i / (double) echoTrainLength) * time_between_frames);
+                    arrayListTrigger.add(Math.floor(i / (double) echoTrainLength) * frame3D_acquisition_time);
                 }
             } else if (numberOfInversionRecovery != 1) {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
-                    arrayListTrigger.add(Math.floor(i / (double) numberOfInversionRecovery) * time_between_frames);
+                    arrayListTrigger.add(Math.floor(i / (double) numberOfInversionRecovery) * frame3D_acquisition_time);
                 }
             } else {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
-                    arrayListTrigger.add(i * time_between_frames);
+                    arrayListTrigger.add(i * frame3D_acquisition_time);
                 }
             }
             if (!isTrigger) {
@@ -2046,7 +2083,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             }
         } else if (isInversionRecovery && numberOfInversionRecovery != 1) {
             number_of_MultiSeries = numberOfInversionRecovery;
-            time_between_MultiSeries = frame_acquisition_time;
+            time_between_MultiSeries = frame3D_acquisition_time;
             multiseries_parametername = "TI";
             for (int i = 0; i < number_of_MultiSeries; i++) {
                 double IR_time = roundToDecimal(inversionRecoveryTime.get(i), 5) * 1e3;
@@ -2054,7 +2091,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             }
         } else if (isTrigger && numberOfTrigger != 1) {
             number_of_MultiSeries = numberOfTrigger;
-            time_between_MultiSeries = frame_acquisition_time;
+            time_between_MultiSeries = frame3D_acquisition_time;
             multiseries_parametername = "TRIGGER DELAY";
             for (int i = 0; i < number_of_MultiSeries; i++) {
                 double multiseries_value = roundToDecimal(triggerTime.get(i), 5) * 1e3;
@@ -2071,7 +2108,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 int i = 0;
                 i < numberOfDynamicAcquisition; i++) {
             for (int j = 0; j < number_of_MultiSeries; j++) {
-                acqusition_time = (i * time_between_frames + j * time_between_MultiSeries);
+                acqusition_time = (i * frame3D_acquisition_time + j * time_between_MultiSeries);
                 if (i > 0) { // only the first dynamic phase has dummy scans
                     acqusition_time = acqusition_time + preScan * tr;
                 }
@@ -2087,15 +2124,22 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         if (false) { // Show the comments
             System.out.println("");
-            System.out.println(((NumberParam) getSequenceParam(Nb_1d)).intValue());
-            System.out.println((((NumberParam) getSequenceParam(Nb_2d)).getValue().intValue()));
-            System.out.println((((NumberParam) getSequenceParam(Nb_3d)).getValue().intValue()));
-            System.out.println((((NumberParam) getSequenceParam(Nb_4d)).getValue().intValue()));
-            System.out.println((((Table) getSequenceTable(Nb_echo)).get(0).intValue()));
-            System.out.println((((Table) getSequenceTable(Nb_interleaved_slice)).get(0).intValue()));
-            System.out.println((((Table) getSequenceTable(Nb_sb_loop)).get(0).intValue()));
+            System.out.println(((NumberParam) getSequenceParam(Pre_scan)).intValue() + " ; Pre_scan");
+            System.out.println(((NumberParam) getSequenceParam(Nb_1d)).intValue() + " ; Nb_1d");
+            System.out.println((((NumberParam) getSequenceParam(Nb_2d)).getValue().intValue()) + " ; Nb_2d");
+            System.out.println((((NumberParam) getSequenceParam(Nb_3d)).getValue().intValue()) + " ; Nb_3d");
+            System.out.println((((NumberParam) getSequenceParam(Nb_4d)).getValue().intValue()) + " ; Nb_4d)");
+            System.out.println((((Table) getSequenceTable(Nb_echo)).get(0).intValue() + 1) + " ; Nb_echo");
+            System.out.println((((Table) getSequenceTable(Nb_interleaved_slice)).get(0).intValue() + 1) + " ; Nb_interleaved_slice");
+            System.out.println((((Table) getSequenceTable(Nb_sb_loop)).get(0).intValue() + 1) + " ; Nb_sb_loop");
             System.out.println("");
-            for (int i = 0; i < Events.LoopMultiPlanarEnd.ID; i++) {
+            System.out.println(tr + " ; TR");
+            System.out.println(te + " ; TE");
+            System.out.println(echo_spacing + " ; echo_spacing");
+            System.out.println(sequenceTime + " ; sequenceTime");
+
+            System.out.println("");
+            for (int i = 0; i < Events.TimeFlush.ID; i++) {
                 System.out.println((((TimeElement) getSequence().getTimeChannel().get(i)).getTime().getFirst().doubleValue() * 1000000));
             }
         }

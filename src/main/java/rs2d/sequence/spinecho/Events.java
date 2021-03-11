@@ -23,18 +23,19 @@ public enum Events {
 
 
     TX90 (27 ,S.Time_tx_90.name()),
-    Delay1 (16+16 ,S.Time_TE_delay1.name()),
+    DelayTE1(32 ,S.Time_TE_delay1.name()),
 
-    LoopStartEcho (24+16 ,S.Time_min_instruction.name()),
+    CrusherStart(36 ,S.Time_grad_ramp.name()),
+    LoopStartEcho (40 ,S.Time_min_instruction.name()),
     TX180 (42,S.Time_tx_180.name()),
-    Delay2 (48 ,S.Time_TE_delay2.name()),
+    DelayTE2(48 ,S.Time_TE_delay2.name()),
     Acq (53,S.Time_rx.name()),
-    Delay3 (58 ,S.Time_TE_delay3.name()),
+    DelayTE3(58 ,S.Time_TE_delay3.name()),
     LoopEndEcho (62,S.Time_min_instruction.name()),
 
-    Delay4 (66 ,S.Time_TR_delay.name()),
-    LoopMultiPlanarEnd (67 ,S.Time_min_instruction.name());
-
+    DelayTR4(66 ,S.Time_TR_delay.name()),
+    LoopMultiPlanarEnd (67 ,S.Time_min_instruction.name()),
+    TimeFlush (69, S.Time_flush_delay.name());
     public final int ID;
     public final String shortcutName;
 
