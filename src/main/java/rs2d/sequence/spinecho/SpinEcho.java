@@ -5,35 +5,7 @@ package rs2d.sequence.spinecho;
 //                 SPIN ECHO PSD 
 //
 // ---------------------------------------------------------------------
-//  last modification:
-//  V7.8 - 01-02-07 modif Sequence time when KS_CENTER_MODE
-//  V7.8 - 17-02-07
-//  V7.7 - 20-11
-//  V7.5 - 20-11
-//		new calculation for ETL ZeroFilling in FSE
-//   	update preScan SEQUENCE_TIME
-//  V7.4 - 17-11 sequenceVersion  && SWITCH_READ_PHASE
-///  V7.3 - 2-11 bugs memory
-//  V7.2 - 30-11
-//       KS_CENTER_MODE Frequency_offset_init
-//  V7 - 31-07
-//	delete min_flush_delay and replace all call with  minInstructionDelay
-//      Loop A loop B
-//      rename all the "USER_PARAM" rs2d.sequence.spinecho.SPIN_ECHO_devParams.USER_PARAM
-//      remove off_center_distance_2D and off_center_distance_3D in order to do it in the process
-// 	    bug  freqoffset_tx_prep_90 190 IR Order.ThreeLoop
-//
-//  V6
-//		SPECIMEN -> SUBJECT
-//  V5.8
-//		Delete nucleus.getRatio() dans : ((GradientMath.GAMMA / nucleus.getRatio())
-//  V5.7
-// 		   Introduce Gradient Delay on  90deg 180deg and ADC event
-//           notifyOutOfRangeParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.GRADIENT_RISE_TIME.name(), grad_rise_time, new_grad_rise_time,((NumberParam) getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.GRADIENT_RISE_TIME")).getMaxValue(), "Gradient ramp time too short ");
-//  V5.6
-//  double minInstructionDelay = 0.000005;
 
-// Sat band pulse calbration
 
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
@@ -161,13 +133,6 @@ public class SpinEcho extends BaseSequenceGenerator {
 
     private double observation_time;
 
-    // get hardware memory limit
-    private int offset_channel_memory = 512;
-    private int phase_channel_memory = 512;
-    private int amp_channel_memory = 2048;
-    private int loopIndice_memory = 2048;
-
-    private double defaultInstructionDelay = 0.000010;     // single instruction minimal duration
     private double minInstructionDelay = 0.000005;     // single instruction minimal duration
 
     public SpinEcho() {
@@ -496,6 +461,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(ACQUISITION_TIME_PER_SCAN).setValue(observation_time);   // display observation time
 
         nb_scan_1d = number_of_averages;
+
         // -----------------------------------------------
         // 2nd D managment
         // -----------------------------------------------
@@ -536,7 +502,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             }
             acquisitionMatrixDimension2D = nb_scan_2d * echoTrainLength;
         }
-        userMatrixDimension2D = userMatrixDimension2D < acquisitionMatrixDimension2D ? acquisitionMatrixDimension2D : userMatrixDimension2D;
+        userMatrixDimension2D = Math.max(userMatrixDimension2D, acquisitionMatrixDimension2D);
         getParam(USER_MATRIX_DIMENSION_2D).setValue(userMatrixDimension2D);
 
         // -----------------------------------------------
@@ -576,59 +542,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         nb_scan_3d = isMultiplanar ? nb_of_shoot_3d : acquisitionMatrixDimension3D;
 
         // -----------------------------------------------
-        // 3D managment 2/2: MEMORY LIMITATION
+        // 3D managment 2/2: FOV
         // -----------------------------------------------
 
-        if (isMultiplanar) {
-            // correct number of slices if Chameleon memory limit is reached
-            boolean memory_limit_reached = false;
-            // Check memory: PHASE GRADIENT AMPLITUDE
-            int max_nb_interleaved_excitation_for_phase_amp = nbOfInterleavedSlice;
-            if (is_FSE_vs_MultiEcho && echoTrainLength != 1) {
-                if ((acquisitionMatrixDimension2D * 2) >= (amp_channel_memory - 1)) {
-                    //  maximum_possible_phase_amp_memory = (int) ((amp_channel_memory / 2) / acquisitionMatrixDimension2D);
-                    max_nb_interleaved_excitation_for_phase_amp = (int) Math.floor((amp_channel_memory - 1) / ((double) (acquisitionMatrixDimension2D * 2)));
-                    memory_limit_reached = true;
-                }
-            }
-
-            // Check memory: TX OFFSET FREQUENCY
-            // the 180° is inside the Echo loop therefore , the slices_offset need to be repeated for each ETL
-            int max_nb_planar_excitation_for_freq_off = userMatrixDimension3D;
-            if ((1 + 1 /* F0 */ + 3 + (isMultiplanar ? /* 2D */ userMatrixDimension3D * 2 :/* 3D */ 2)) > offset_channel_memory) {
-                max_nb_planar_excitation_for_freq_off = (int) Math.floor((offset_channel_memory - 5) / (float) (2));
-                memory_limit_reached = true;
-                Log.info(getClass(), "OFFSET MEMORY ERROR : number of slices too large \n");
-//                System.out.println("OFFSET MEMORY ERROR : echo train length * number of slices too large");
-//                System.out.println("tx_180° inside the EchoLoop -> frequency offset has to be repeated for each ETL  ");
-//                System.out.println(" ");
-            }
-            if (memory_limit_reached) {
-                int max_nb_interleaved_excitation_for_freq_off = (int) Math.floor(max_nb_planar_excitation_for_freq_off / ((double) nb_scan_3d));
-                int min_max_nb_interleaved_excitation = Math.min(max_nb_interleaved_excitation_for_phase_amp, max_nb_interleaved_excitation_for_freq_off);
-                if (min_max_nb_interleaved_excitation == 0) {
-                    notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMinValue(), max_nb_planar_excitation_for_freq_off, "Memory limit (PHASE GRADIENT AMPLITUDE): ( Acq Mx2D * User Mx3D / Nb shoot 3D * 2 )too large");
-                    nb_scan_3d = max_nb_planar_excitation_for_freq_off;
-                    min_max_nb_interleaved_excitation = 1;
-                }
-                String unreach_message;
-                if (max_nb_interleaved_excitation_for_phase_amp < max_nb_interleaved_excitation_for_freq_off) {
-                    unreach_message = "Memory limit (PHASE GRADIENT AMPLITUDE): ( Acq_Mx2D * 2 ) too large";
-                } else {
-                    unreach_message = "Memory limit (TX OFFSET FREQUENCY): 4 + User_Mx3D *3 too large";
-                }
-                System.out.println(unreach_message);
-                System.out.println(nb_scan_3d);
-                System.out.println(min_max_nb_interleaved_excitation);
-                notifyOutOfRangeParam(USER_MATRIX_DIMENSION_3D, ((NumberParam) getParam(USER_MATRIX_DIMENSION_3D)).getMinValue(), (nb_scan_3d * min_max_nb_interleaved_excitation), unreach_message);
-
-                userMatrixDimension3D = nb_scan_3d * min_max_nb_interleaved_excitation;
-                nbOfInterleavedSlice = min_max_nb_interleaved_excitation;
-                acquisitionMatrixDimension3D = userMatrixDimension3D;
-            }
-        }
-
-        // FOV
         if (isMultiplanar) {
             spacingBetweenSlice = getDouble(SPACING_BETWEEN_SLICE);
         } else {
@@ -652,6 +568,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             double tmp = getDouble(GRADIENT_PHASE_APPLICATION_TIME);
             getParam(GRADIENT_CRUSHER_TOP_TIME).setValue(tmp);
         }
+
         // -----------------------------------------------
         // 4D managment:  Dynamic, MultiEcho, External triggering, Multi Echo
         // -----------------------------------------------
@@ -899,12 +816,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         double grad_shape_rise_factor_down = Utility.voltageFillingFactor(getSequenceTable(Grad_shape_rise_down));
         double grad_shape_rise_time = grad_shape_rise_factor_up * grad_rise_time + grad_shape_rise_factor_down * grad_rise_time;        // shape dependant equivalent rise time
 
-
         // -----------------------------------------------
         // Calculation RF pulse parameters  1/4 : Pulse declaration & Fatsat Flip angle calculation
         // -----------------------------------------------
-
-
         set(Time_tx_90, TX_LENGTH_90);     // set RF pulse length to sequence
         set(Time_tx_180, TX_LENGTH_180);   // set 180° RF pulse length to sequence
         RFPulse pulseTX90 = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_90, Tx_phase_90, Time_tx_90, Tx_shape_90, Tx_shape_phase_90, Tx_freq_offset_90);
@@ -963,7 +877,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         // Calculation RF pulse parameters  2/4 : Shape
         // -----------------------------------------------
-
         int nb_shape_points = 128;
         pulseTX90.setShape((getText(TX_SHAPE_90)), nb_shape_points, "90 degree");
         pulseTX180.setShape((getText(TX_SHAPE_180)), nb_shape_points, "Refocusing (spin-echo)");
@@ -1003,7 +916,6 @@ public class SpinEcho extends BaseSequenceGenerator {
                 set(Time_tx_sb, pulseTXSatBand.getPulseDuration());
             }
 
-
             RFPulse pulseMaxPower = pulseTX90.getPower() > pulseTX180.getPower() ? pulseTX90 : pulseTX180;
             pulseMaxPower = pulseMaxPower.getPower() > pulseTXSatBand.getPower() ? pulseMaxPower : pulseTXSatBand;
             pulseMaxPower = pulseMaxPower.getPower() > pulseTXFatSat.getPower() ? pulseMaxPower : pulseTXFatSat;
@@ -1041,8 +953,6 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         double tx_bandwidth_factor_sb = getTx_bandwidth_factor(SATBAND_TX_SHAPE, TX_BANDWIDTH_FACTOR, TX_BANDWIDTH_FACTOR_3D);
         double tx_bandwidth_sb = tx_bandwidth_factor_sb / tx_length_sb;
-
-        // Fat SAT RF pulse done in 1/4
 
         // ---------------------------------------------------------------------
         // calculate SLICE gradient amplitudes for RF pulses
@@ -1199,6 +1109,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING --- TIMING
         // --------------------------------------------------------------------------------------------------------------------------------------------
         Events.checkEventShortcut(getSequence());
+
         // ------------------------------------------
         // delays for FIR
         // ------------------------------------------
@@ -1206,7 +1117,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         double lo_FIR_dead_point = is_FIR ? Instrument.instance().getDevices().getCameleon().getAcquDeadPointCount() : 0;
         double min_FIR_delay = (lo_FIR_dead_point + 2) / spectralWidth;
         double min_FIR_4pts_delay = 4 / spectralWidth;
-
 
         // ------------------------------------------
         // calculate delays adapted to current TE 1/2 :Check min TE
@@ -1283,7 +1193,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         }
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        // check that ECho_Spacing > echoSpacing_min
+        // check that Echo_Spacing > echoSpacing_min
         if (is_FSE_vs_MultiEcho) {
             if (echo_spacing < echoSpacing_min) {
                 getUnreachParamExceptionManager().addParam(ECHO_SPACING.name(), echo_spacing, echoSpacing_min, ((NumberParam) getParam(ECHO_SPACING)).getMaxValue(), "Echo_Spacing too short for the User Mx1D and SW");
@@ -1526,7 +1436,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         //  double time_TI_delay;
         if (isInversionRecovery) {
             //TI
-            double time0_IR_90 = txLength180 / 2.0
+            double time_IRto90_noIRDelay = txLength180 / 2.0
                     + TimeEvents.getTimeBetweenEvents(getSequence(), Events.IR.ID + 1, Events.LoopSatBandStart.ID - 1)
                     + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopSatBandStart.ID, Events.LoopSatBandEnd.ID) * nb_satband
                     + TimeEvents.getTimeBetweenEvents(getSequence(), Events.LoopSatBandEnd.ID + 1, Events.IRDelay.ID - 1)
@@ -1535,32 +1445,28 @@ public class SpinEcho extends BaseSequenceGenerator {
 
             boolean increaseTI = false;
             // ArrayList<Number> arrayListTI = new ArrayList<Number>();
-            Collection<Double> arrayListTI_min = new ArrayList();
+            ArrayList arrayListTI_min = new ArrayList();
             for (int i = 0; i < numberOfInversionRecovery; i++) {
                 double IR_time = inversionRecoveryTime.get(i);
                 // arrayListTI.add(IR_time);
-                double delay0 = IR_time - time0_IR_90;
-                System.out.println("delay0 " + delay0);
+                double iRDelay = IR_time - time_IRto90_noIRDelay;
+                System.out.println("delay0 " + iRDelay);
 
-                if ((delay0 < minInstructionDelay)) {
-                    double ti_min = ceilToSubDecimal((time0_IR_90 + minInstructionDelay), 4);
-                    System.out.println("IR_time-" + IR_time + " -- >" + ti_min + " car " + delay0);
+                if ((iRDelay < minInstructionDelay)) {
+                    double ti_min = ceilToSubDecimal((time_IRto90_noIRDelay + minInstructionDelay), 4);
+                    System.out.println("IR_time-" + IR_time + " -- >" + ti_min);
                     IR_time = ti_min;
                     increaseTI = true;
                 }
                 arrayListTI_min.add(IR_time);
-                delay0 = IR_time - time0_IR_90;
-                time_IR_delay_max = Math.max(time_IR_delay_max, delay0);
-                time_TI_delay.add(delay0);
+                iRDelay = IR_time - time_IRto90_noIRDelay;
+                time_IR_delay_max = Math.max(time_IR_delay_max, iRDelay);
+                time_TI_delay.add(iRDelay);
             }
-
-
             if (increaseTI) {
                 System.out.println(" --- -- -- - - - increaseTI-------------------- ");
-
                 inversionRecoveryTime.clear();
                 inversionRecoveryTime.addAll(arrayListTI_min);
-                //this.notifyOutOfRangeParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.INVERSION_TIME_MULTI.name(), arrayListTI, arrayListTI_min, ((NumberParam) getParam(rs2d.sequence.spinecho.SPIN_ECHO_devParams.INVERSION_TIME_MULTI")).getMaxValue(), "TI too short");
                 getParam(INVERSION_TIME_MULTI).setValue(inversionRecoveryTime);
             }
             time_TI_delay.setOrder(Order.Four);
@@ -1577,8 +1483,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         double min_flush_delay = min_time_per_acq_point * acquisitionMatrixDimension1D * echoTrainLength * nbOfInterleavedSlice * 2;   // minimal time to flush Chameleon buffer (this time is doubled to avoid hidden delays);
         min_flush_delay = Math.max(CameleonVersion105 ? min_flush_delay : minInstructionDelay, minInstructionDelay);
         set(Time_flush_delay, min_flush_delay);
-
-        double last_delay = minInstructionDelay;
 
         //  time  duration of event blocks
         double delay_before_multi_planar_loop = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Start.ID, Events.TriggerDelay.ID - 1)
@@ -1608,10 +1512,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         double timeSliceLoop_min = timeSliceLoop_noDelay + minInstructionDelay;
         double timeBeforeAndAfterSlice_min = delay_before_multi_planar_loop + minInstructionDelay + delay_afterMultiplanarLoop_NoLastDelay;
-//        delay_afterMultiplanarLoop_NoLastDelay
 
-
-        double time_seq_to_end_spoiler;
 
         if (getText(IMAGE_CONTRAST).equalsIgnoreCase("T1-weighted") && isMultiplanar) {
             nbOfInterleavedSlice = (int) Math.floor((TE_TR_lim[3] - timeBeforeAndAfterSlice_min) / timeSliceLoop_min);
@@ -1657,27 +1558,6 @@ public class SpinEcho extends BaseSequenceGenerator {
             notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to garenty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
             nb_of_shoot_3d = nb_of_shoot_3d_min;
         }
-//        if (tr_min < TE_TR_lim[2] && isMultiplanar) { // for T1w if TR_min already too large, advises ways to reduce TR
-//            //     notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "(1): TR too short to reach (ETL * User Mx3D/Shoot3D) in a single scan - (2):as TR increases, T1-weighted imaging is not guaranteed");
-//            int max_nb_interleaved_excitation = (int) Math.floor(TE_TR_lim[3] * ((float) userMatrixDimension3D / nb_of_shoot_3d) / tr_min);
-//
-//            System.out.println("max_nb_interleaved_excitation " + max_nb_interleaved_excitation);
-//
-//            max_nb_interleaved_excitation = getInferiorDivisorToGetModulusZero(max_nb_interleaved_excitation, userMatrixDimension3D);
-//            int nb_of_shoot_3d_min = userMatrixDimension3D / max_nb_interleaved_excitation;
-//
-//            System.out.println("max_nb_interleaved_excitation " + max_nb_interleaved_excitation);
-//            System.out.println("nb_of_shoot_3d_min " + nb_of_shoot_3d_min);
-//
-//            nb_of_shoot_3d_min = getInferiorDivisorToGetModulusZero(nb_of_shoot_3d_min, userMatrixDimension3D);
-//            double TRThis = nb_of_shoot_3d / nb_of_shoot_3d_min * tr_min;
-//
-//            System.out.println("nb_of_shoot_3d_min " + nb_of_shoot_3d_min);
-//            System.out.println("TRThis " + TRThis);
-//
-//            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to garenty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
-//        }
-
 
         if (tr < tr_min) {
             notifyOutOfRangeParam(REPETITION_TIME, tr_min, ((NumberParam) getParam(REPETITION_TIME)).getMaxValue(), "TR too short to reach (ETL * User Mx3D / Shoot3D) in a single scan");
@@ -1688,8 +1568,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // set calculated TR
         // ------------------------------------------
         // set  TR delay to compensate and trigger delays
-        double tr_delay = minInstructionDelay;
-        last_delay = minInstructionDelay;
+        double tr_delay, last_delay;
 
         Table time_tr_delay = setSequenceTableValues(Time_TR_delay, Order.Four);
         Table time_last_delay = setSequenceTableValues(Time_last_delay, Order.Four);
@@ -1737,7 +1616,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         // Calculate frame acquisition time
         // Calculate delay between 4D acquisition
         //----------------------------------------------------------------------
-
         Table dyn_delay = setSequenceTableValues(Time_btw_dyn_frames, Order.Four);
         double frame3D_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
         int nb_4d_withoutDyn = numberOfInversionRecovery * numberOfInversionRecovery * (isDixon ? 3 : 1) * numberOfTrigger;
@@ -1767,7 +1645,6 @@ public class SpinEcho extends BaseSequenceGenerator {
                     dyn_delay.add(minInstructionDelay);
                 }
             }
-
         }
         dyn_delay.add(interval_between_dynFrames_delay);
 
@@ -1931,7 +1808,6 @@ public class SpinEcho extends BaseSequenceGenerator {
 //                n += 1;
             }
         }
-
 
         // Apply values ot Gradient
         Gradient gradSatBandSlice = Gradient.createGradient(getSequence(), Grad_amp_sb_slice, Time_tx_sb, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_sb, nucleus);
@@ -2129,16 +2005,16 @@ public class SpinEcho extends BaseSequenceGenerator {
             System.out.println((((NumberParam) getSequenceParam(Nb_2d)).getValue().intValue()) + " ; Nb_2d");
             System.out.println((((NumberParam) getSequenceParam(Nb_3d)).getValue().intValue()) + " ; Nb_3d");
             System.out.println((((NumberParam) getSequenceParam(Nb_4d)).getValue().intValue()) + " ; Nb_4d)");
-            System.out.println((((Table) getSequenceTable(Nb_echo)).get(0).intValue() + 1) + " ; Nb_echo");
-            System.out.println((((Table) getSequenceTable(Nb_interleaved_slice)).get(0).intValue() + 1) + " ; Nb_interleaved_slice");
-            System.out.println((((Table) getSequenceTable(Nb_sb_loop)).get(0).intValue() + 1) + " ; Nb_sb_loop");
-            System.out.println("");
+            System.out.println((getSequenceTable(Nb_echo).get(0).intValue() + 1) + " ; Nb_echo");
+            System.out.println((getSequenceTable(Nb_interleaved_slice).get(0).intValue() + 1) + " ; Nb_interleaved_slice");
+            System.out.println((getSequenceTable(Nb_sb_loop).get(0).intValue() + 1) + " ; Nb_sb_loop");
+            System.out.println(" ");
             System.out.println(tr + " ; TR");
             System.out.println(te + " ; TE");
             System.out.println(echo_spacing + " ; echo_spacing");
             System.out.println(sequenceTime + " ; sequenceTime");
 
-            System.out.println("");
+            System.out.println(" ");
             for (int i = 0; i < Events.TimeFlush.ID; i++) {
                 System.out.println((((TimeElement) getSequence().getTimeChannel().get(i)).getTime().getFirst().doubleValue() * 1000000));
             }
@@ -2161,7 +2037,6 @@ public class SpinEcho extends BaseSequenceGenerator {
 
     private int[] satBandPrep(U satbandOrientation, U orientation, U imageOrientationSubject) {
         int[] position_sli_ph_rea = new int[6];
-
         boolean cranial = false;
         boolean caudal = false;
         boolean anterior = false;
