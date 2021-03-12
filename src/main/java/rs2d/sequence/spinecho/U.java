@@ -2330,7 +2330,7 @@ public enum U implements GeneratorParamEnum {
             param.setDescription("");
             param.setGroup(EnumGroup.User);
             param.setCategory(Category.Acquisition);
-            param.setValue("Version9.5");
+            param.setValue("Version9.6");
             param.setDefaultValue("");
             return param;
         }
