@@ -1029,7 +1029,7 @@
                 <key>GRADIENT_AREA_CRUSHER</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER</name>
-                    <value>1.3082634985938545E-5</value>
+                    <value>-2.7001538080404036E-5</value>
                     <defaultValue>0.0</defaultValue>
                     <description>For info: Area of the crusher gradient!</description>
                     <displayedName>GRADIENT_AREA_CRUSHER</displayedName>
@@ -1047,7 +1047,7 @@
                 <key>GRADIENT_AREA_CRUSHER_PI</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER_PI</name>
-                    <value>2.7846388567570193</value>
+                    <value>-5.747277380413999</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Number of pi dephasing by the crusher</description>
                     <displayedName>GRADIENT_AREA_CRUSHER_PI</displayedName>
@@ -3271,7 +3271,7 @@
                 <key>SEQUENCE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQUENCE_VERSION</name>
-                    <value>Version9.6</value>
+                    <value>Version9.7</value>
                     <defaultValue></defaultValue>
                     <description></description>
                     <displayedName>SEQUENCE_VERSION</displayedName>
@@ -3759,7 +3759,7 @@
                 <key>TX_ROUTE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>TX_ROUTE</name>
-                    <value>1</value>
+                    <value>0</value>
                     <description>LogCh-&gt;PhysCh</description>
                     <displayedName>TX_ROUTE</displayedName>
                     <locked>false</locked>

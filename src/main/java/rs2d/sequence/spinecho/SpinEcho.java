@@ -42,7 +42,7 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
-    private String sequenceVersion = "Version9.6";
+    private String sequenceVersion = "Version9.7";
     private boolean CameleonVersion105 = false;
     private double protonFrequency;
     private double observeFrequency;
@@ -1618,7 +1618,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             //----------------------------------------------------------------------
             Table dyn_delay = setSequenceTableValues(Time_btw_dyn_frames, Order.Four);
             double frame3D_acquisition_time = nb_scan_1d * nb_scan_3d * nb_scan_2d * tr;
-            int nb_4d_withoutDyn = numberOfInversionRecovery * numberOfInversionRecovery * (isDixon ? 3 : 1) * numberOfTrigger;
+            int nb_4d_withoutDyn = numberOfInversionRecovery * (isDixon ? 3 : 1) * numberOfTrigger;
             double time_4DFramesNoDyn_withoutDynDelay = (frame3D_acquisition_time * nb_4d_withoutDyn
                     + min_flush_delay * (nb_4d_withoutDyn - 1));
 
