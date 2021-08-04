@@ -23,7 +23,7 @@
             <key>ACQUISITION_MATRIX_DIMENSION_1D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ACQUISITION_MATRIX_DIMENSION_1D</name>
-                <value>256</value>
+                <value>32</value>
                 <defaultValue>128</defaultValue>
                 <description>Acquisition size of the first dimension</description>
                 <displayedName>Acquisition 1D</displayedName>
@@ -41,7 +41,7 @@
             <key>ACQUISITION_MATRIX_DIMENSION_2D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ACQUISITION_MATRIX_DIMENSION_2D</name>
-                <value>224</value>
+                <value>32</value>
                 <defaultValue>128</defaultValue>
                 <description>Acquisition size of the second dimension</description>
                 <displayedName>Acquisition 2D</displayedName>
@@ -115,6 +115,37 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>ACQUISITION_TIME_OFFSET</name>
                 <value>0.0</value>
+                <value>0.005</value>
+                <value>0.011</value>
+                <value>0.016</value>
+                <value>0.022</value>
+                <value>0.027</value>
+                <value>0.033</value>
+                <value>0.038</value>
+                <value>0.044</value>
+                <value>0.049</value>
+                <value>0.055</value>
+                <value>0.06</value>
+                <value>0.066</value>
+                <value>0.071</value>
+                <value>0.076</value>
+                <value>0.082</value>
+                <value>0.087</value>
+                <value>0.093</value>
+                <value>0.098</value>
+                <value>0.104</value>
+                <value>0.109</value>
+                <value>0.115</value>
+                <value>0.12</value>
+                <value>0.126</value>
+                <value>0.131</value>
+                <value>0.137</value>
+                <value>0.142</value>
+                <value>0.147</value>
+                <value>0.153</value>
+                <value>0.158</value>
+                <value>0.164</value>
+                <value>0.169</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Relative acquisition start times in Dynamic or MultiSeries scans</description>
                 <displayedName>ACQUISITION_TIME_OFFSET</displayedName>
@@ -131,7 +162,7 @@
             <key>ACQUISITION_TIME_PER_SCAN</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ACQUISITION_TIME_PER_SCAN</name>
-                <value>0.0073138176</value>
+                <value>9.142272E-4</value>
                 <defaultValue>1.0</defaultValue>
                 <description>Acquisition time per scan</description>
                 <displayedName>Acq Time</displayedName>
@@ -384,7 +415,7 @@
             <key>ECHO_EFFECTIVE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_EFFECTIVE</name>
-                <value>5</value>
+                <value>16</value>
                 <defaultValue>1</defaultValue>
                 <description></description>
                 <displayedName>ECHO_EFFECTIVE</displayedName>
@@ -402,7 +433,7 @@
             <key>ECHO_SPACING</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_SPACING</name>
-                <value>0.01332</value>
+                <value>0.0054600000000000004</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Time between consecutive echoes when ETL is greater than 1</description>
                 <displayedName>ECHO_SPACING</displayedName>
@@ -420,7 +451,7 @@
             <key>ECHO_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME</name>
-                <value>0.0666</value>
+                <value>0.08736000000000001</value>
                 <defaultValue>0.005</defaultValue>
                 <description>Echo time ( TE ) </description>
                 <displayedName>TE</displayedName>
@@ -438,7 +469,7 @@
             <key>ECHO_TIME_EFFECTIVE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME_EFFECTIVE</name>
-                <value>0.0666</value>
+                <value>0.08736000000000001</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Effective echo time in Fast Spin Echo sequence</description>
                 <displayedName>EFFECTIVE_ECHO_TIME</displayedName>
@@ -456,7 +487,7 @@
             <key>ECHO_TRAIN_LENGTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TRAIN_LENGTH</name>
-                <value>8</value>
+                <value>32</value>
                 <defaultValue>1</defaultValue>
                 <description>Echo train lentgth</description>
                 <displayedName>ETL</displayedName>
@@ -1616,7 +1647,7 @@
             <key>MULTISERIES_PARAMETER_NAME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>MULTISERIES_PARAMETER_NAME</name>
-                <value></value>
+                <value>TE</value>
                 <defaultValue></defaultValue>
                 <description>Name of MultiSeries Parameter</description>
                 <displayedName>MULTISERIES_PARAMETER_NAME</displayedName>
@@ -1635,6 +1666,38 @@
             <key>MULTISERIES_PARAMETER_VALUE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>MULTISERIES_PARAMETER_VALUE</name>
+                <value>87.36</value>
+                <value>174.72</value>
+                <value>262.08</value>
+                <value>349.44</value>
+                <value>436.8</value>
+                <value>524.16</value>
+                <value>611.52</value>
+                <value>698.88</value>
+                <value>786.24</value>
+                <value>873.6</value>
+                <value>960.96</value>
+                <value>1048.32</value>
+                <value>1135.68</value>
+                <value>1223.04</value>
+                <value>1310.4</value>
+                <value>1397.76</value>
+                <value>1485.12</value>
+                <value>1572.48</value>
+                <value>1659.84</value>
+                <value>1747.2</value>
+                <value>1834.56</value>
+                <value>1921.92</value>
+                <value>2009.28</value>
+                <value>2096.64</value>
+                <value>2184.0</value>
+                <value>2271.36</value>
+                <value>2358.72</value>
+                <value>2446.08</value>
+                <value>2533.44</value>
+                <value>2620.8</value>
+                <value>2708.16</value>
+                <value>2795.52</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Values of MultiSeries Parameter</description>
                 <displayedName>MULTISERIES_PARAMETER_VALUE</displayedName>
@@ -2848,7 +2911,7 @@
             <key>REPETITION_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>REPETITION_TIME</name>
-                <value>2.3281</value>
+                <value>2.1414</value>
                 <defaultValue>0.2</defaultValue>
                 <description>Repetition time  ( TR ) </description>
                 <displayedName>TR</displayedName>
@@ -2866,7 +2929,7 @@
             <key>RESOLUTION_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>RESOLUTION_FREQUENCY</name>
-                <value>3.90625E-4</value>
+                <value>0.003125</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Pixel true dimension in the frequency encoding direction (FOV / acquisition_matrix_dimension_1D) </description>
                 <displayedName>RESOLUTION_FREQUENCY</displayedName>
@@ -2884,7 +2947,7 @@
             <key>RESOLUTION_PHASE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>RESOLUTION_PHASE</name>
-                <value>4.4642857142857147E-4</value>
+                <value>0.003125</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Pixe truel dimension in the phase encoding direction (FOV / acquisition_matrix_dimension_2D) </description>
                 <displayedName>RESOLUTION_PHASE</displayedName>
@@ -3099,7 +3162,7 @@
             <key>SEQUENCE_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SEQUENCE_TIME</name>
-                <value>656.524205</value>
+                <value>25.696805000000005</value>
                 <defaultValue>0.0</defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_TIME</displayedName>
@@ -3117,7 +3180,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version9.8</value>
+                <value>Version9.9</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQUENCE_VERSION</displayedName>
@@ -3132,7 +3195,7 @@
             <key>SEQ_DESCRIPTION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQ_DESCRIPTION</name>
-                <value>SE_2D_AXI_256x224x12_ETL=8</value>
+                <value>SE_2D_AXI_32x32x12_ETL=32</value>
                 <defaultValue></defaultValue>
                 <description></description>
                 <displayedName>SEQ_DESCRIPTION</displayedName>
@@ -3160,7 +3223,7 @@
             <key>SE_TYPE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SE_TYPE</name>
-                <value>FSE</value>
+                <value>OneShotFSE</value>
                 <defaultValue>FSE</defaultValue>
                 <description>chose between FSE and MultiEcho</description>
                 <displayedName>SE_TYPE</displayedName>
@@ -3168,6 +3231,8 @@
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <suggestedValues>MultiEcho</suggestedValues>
+                <suggestedValues>FSE</suggestedValues>
+                <suggestedValues>OneShotFSE</suggestedValues>
                 <group>Scan</group>
                 <category>Acquisition</category>
             </value>
@@ -3291,7 +3356,7 @@
             <key>SPECTRAL_WIDTH_PER_PIXEL</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SPECTRAL_WIDTH_PER_PIXEL</name>
-                <value>136.72750056003585</value>
+                <value>1093.8200044802868</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Spectral Width per pixel in Hz / Pix</description>
                 <displayedName>SPECTRAL_WIDTH_PER_PIXEL</displayedName>
@@ -3384,7 +3449,7 @@
             <key>TRANSFORM_PLUGIN</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>TRANSFORM_PLUGIN</name>
-                <value>Centered2DRot</value>
+                <value>Sequential2D</value>
                 <defaultValue>Centered2DRot</defaultValue>
                 <description>Transform the acquisition space to the k space</description>
                 <displayedName>Transform plugin</displayedName>
@@ -3455,7 +3520,7 @@
             <key>TX_AMP_180</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_180</name>
-                <value>88.90271226221948</value>
+                <value>86.20127284611489</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Magnitude of the RF pulse 180</description>
                 <displayedName>TX_AMP_180</displayedName>
@@ -3473,7 +3538,7 @@
             <key>TX_AMP_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
-                <value>44.405318553523024</value>
+                <value>46.54868418532411</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude of the transmitter</description>
                 <displayedName>TX_AMP</displayedName>
@@ -3505,7 +3570,7 @@
             <key>TX_ATT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_ATT</name>
-                <value>19.0</value>
+                <value>27.0</value>
                 <defaultValue>36.0</defaultValue>
                 <description>Emission attenuation</description>
                 <displayedName>TX_ATT</displayedName>
@@ -3662,7 +3727,7 @@
             <key>USER_MATRIX_DIMENSION_1D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>USER_MATRIX_DIMENSION_1D</name>
-                <value>256</value>
+                <value>32</value>
                 <defaultValue>1</defaultValue>
                 <description></description>
                 <displayedName>USER_ACQUISITION_MATRIX_DIMENSION_1D</displayedName>
@@ -3680,7 +3745,7 @@
             <key>USER_MATRIX_DIMENSION_2D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>USER_MATRIX_DIMENSION_2D</name>
-                <value>256</value>
+                <value>32</value>
                 <defaultValue>1</defaultValue>
                 <description></description>
                 <displayedName>USER_ACQUISITION_MATRIX_DIMENSION_2D</displayedName>
@@ -3734,7 +3799,7 @@
             <key>USER_PARTIAL_PHASE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>USER_PARTIAL_PHASE</name>
-                <value>85.0</value>
+                <value>100.0</value>
                 <defaultValue>100.0</defaultValue>
                 <description>Partial Fourier acquisition in the phase encoding direction</description>
                 <displayedName>PARTIAL_PHASE</displayedName>
@@ -3770,7 +3835,7 @@
             <key>USER_ZERO_FILLING_2D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>USER_ZERO_FILLING_2D</name>
-                <value>12.5</value>
+                <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Percentage of zero filling</description>
                 <displayedName>ZERO_FILING_2D</displayedName>
