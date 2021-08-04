@@ -42,8 +42,10 @@ import static rs2d.sequence.spinecho.U.*;
 // **************************************************************************************************
 //
 public class SpinEcho extends BaseSequenceGenerator {
+
     private String sequenceVersion = "Version9.8";
     private boolean CameleonVersion105 = false;
+
     private double protonFrequency;
     private double observeFrequency;
     private double min_time_per_acq_point;
@@ -384,10 +386,10 @@ public class SpinEcho extends BaseSequenceGenerator {
                             transformplugin = "Centered2DRot";
                             echoEffective = echoTrainLength;
                             break;
-                        case "Sequential2D":
-                            if (echoTrainLength != 1)// not isKSCenterMode anymore, restor FSE
-                                transformplugin = "Centered2DRot";
-                            break;
+//                        case "Sequential2D":
+//                            if (echoTrainLength != 1)// not isKSCenterMode anymore, restor FSE
+//                                transformplugin = "Centered2DRot";
+//                            break;
                         case "FSE_TRAIN_1D":// not isFSETrainTest anymore, restor FSE
                             transformplugin = "Centered2DRot";
                             break;
@@ -474,11 +476,23 @@ public class SpinEcho extends BaseSequenceGenerator {
         double partial_phase = getDouble(USER_PARTIAL_PHASE);
         double zero_filling_2D = (100 - partial_phase) / 100f;
         if (is_FSE_vs_MultiEcho) {
-            int shoot = (int) Math.round((1 - zero_filling_2D) * userMatrixDimension2D / (2.0 * echoTrainLength));
-            zero_filling_2D = 1.0 - shoot * (2.0 * echoTrainLength) / ((double) userMatrixDimension2D);
+            int shoot;
+            int acq2D = (int) Math.floor((1 - zero_filling_2D) * userMatrixDimension2D);
+            if ("Sequential2D".equalsIgnoreCase(transformplugin)) {
+                shoot = Math.round(acq2D / (echoTrainLength));
+                zero_filling_2D = 1.0 - shoot * (echoTrainLength) / ((double) userMatrixDimension2D);
+            } else {
+                echoTrainLength = Math.min(echoTrainLength, acq2D / 2);
+                shoot = (int) Math.round(acq2D / (2.0 * echoTrainLength));
+                zero_filling_2D = 1.0 - shoot * (2.0 * echoTrainLength) / ((double) userMatrixDimension2D);
+
+            }
             if (zero_filling_2D < 0)
-                zero_filling_2D = 1.0 - (shoot - 1) * (2.0 * echoTrainLength) / ((double) userMatrixDimension2D);
-            partial_phase = (100 - zero_filling_2D * 100f);
+                if ("Sequential2D".equalsIgnoreCase(transformplugin)) {
+                    zero_filling_2D = 1.0 - (shoot - 1) * (echoTrainLength) / ((double) userMatrixDimension2D);
+                } else {
+                    zero_filling_2D = 1.0 - (shoot - 1) * (2.0 * echoTrainLength) / ((double) userMatrixDimension2D);
+                }            partial_phase = (100 - zero_filling_2D * 100f);
         }
         getParam(USER_ZERO_FILLING_2D).setValue((100 - partial_phase));
 
@@ -494,7 +508,11 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         nb_scan_2d = acquisitionMatrixDimension2D;
         if (is_FSE_vs_MultiEcho) {
-            echoTrainLength = getInferiorDivisorToGetModulusZero(echoTrainLength, acquisitionMatrixDimension2D / 2);
+            if ("Sequential2D".equalsIgnoreCase(transformplugin)) {
+                echoTrainLength = getInferiorDivisorToGetModulusZero(echoTrainLength, acquisitionMatrixDimension2D);
+            } else {
+                echoTrainLength = getInferiorDivisorToGetModulusZero(echoTrainLength, acquisitionMatrixDimension2D / 2);
+            }
             getParam(ECHO_TRAIN_LENGTH).setValue(echoTrainLength);
             nb_scan_2d = Math.floorDiv(acquisitionMatrixDimension2D, echoTrainLength);
             if (!(transformplugin.equalsIgnoreCase("Sequential2D"))) {
