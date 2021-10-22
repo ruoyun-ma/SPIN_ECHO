@@ -30296,7 +30296,7 @@
                 <name>Grad_amp_phase_2D_prep</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
-                <order>Two</order>
+                <order>TwoLoopB</order>
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>0</address>
@@ -30542,7 +30542,7 @@
                 <name>Grad_amp_phase_2D_comp</name>
                 <description></description>
                 <numberEnum>GradAmp</numberEnum>
-                <order>Two</order>
+                <order>TwoLoopB</order>
                 <group>Gradient</group>
                 <locked>true</locked>
                 <address>160</address>

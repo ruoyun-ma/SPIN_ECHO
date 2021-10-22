@@ -43,7 +43,7 @@ import static rs2d.sequence.spinecho.U.*;
 //
 public class SpinEcho extends BaseSequenceGenerator {
 
-    private String sequenceVersion = "Version9.9";
+    private String sequenceVersion = "Version9.10";
     private boolean CameleonVersion105 = false;
 
     private double protonFrequency;
@@ -1107,7 +1107,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             gradSlicePhase3D.rePrepare();
         }
         gradSlicePhase3D.applyAmplitude(Order.Three);
-        gradPhase2D.applyAmplitude((sequenceSE == SE.FSE && echoTrainLength != 1) ? Order.TwoLoopB : Order.Two);
+        gradPhase2D.applyAmplitude((sequenceSE != SE.MultiEcho && echoTrainLength != 1) ? Order.TwoLoopB : Order.Two);
 
         // Reorder Phase Encoding
         Gradient gradSlicePhase3D_comp = Gradient.createGradient(getSequence(), Grad_amp_phase_3D_comp, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
