@@ -177,7 +177,7 @@
                 <key>ACQUISITION_MATRIX_DIMENSION_1D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_1D</name>
-                    <value>32</value>
+                    <value>256</value>
                     <defaultValue>128</defaultValue>
                     <description>Acquisition size of the first dimension</description>
                     <displayedName>Acquisition 1D</displayedName>
@@ -195,7 +195,7 @@
                 <key>ACQUISITION_MATRIX_DIMENSION_2D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_2D</name>
-                    <value>32</value>
+                    <value>128</value>
                     <defaultValue>128</defaultValue>
                     <description>Acquisition size of the second dimension</description>
                     <displayedName>Acquisition 2D</displayedName>
@@ -269,37 +269,9 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>ACQUISITION_TIME_OFFSET</name>
                     <value>0.0</value>
-                    <value>0.005</value>
-                    <value>0.011</value>
-                    <value>0.016</value>
-                    <value>0.022</value>
+                    <value>0.009</value>
+                    <value>0.018</value>
                     <value>0.027</value>
-                    <value>0.033</value>
-                    <value>0.038</value>
-                    <value>0.044</value>
-                    <value>0.049</value>
-                    <value>0.055</value>
-                    <value>0.06</value>
-                    <value>0.066</value>
-                    <value>0.071</value>
-                    <value>0.076</value>
-                    <value>0.082</value>
-                    <value>0.087</value>
-                    <value>0.093</value>
-                    <value>0.098</value>
-                    <value>0.104</value>
-                    <value>0.109</value>
-                    <value>0.115</value>
-                    <value>0.12</value>
-                    <value>0.126</value>
-                    <value>0.131</value>
-                    <value>0.137</value>
-                    <value>0.142</value>
-                    <value>0.147</value>
-                    <value>0.153</value>
-                    <value>0.158</value>
-                    <value>0.164</value>
-                    <value>0.169</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Relative acquisition start times in Dynamic or MultiSeries scans</description>
                     <displayedName>ACQUISITION_TIME_OFFSET</displayedName>
@@ -316,7 +288,7 @@
                 <key>ACQUISITION_TIME_PER_SCAN</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_TIME_PER_SCAN</name>
-                    <value>9.142272E-4</value>
+                    <value>0.0051183616</value>
                     <defaultValue>1.0</defaultValue>
                     <description>Acquisition time per scan</description>
                     <displayedName>Acq Time</displayedName>
@@ -569,7 +541,7 @@
                 <key>ECHO_EFFECTIVE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_EFFECTIVE</name>
-                    <value>16</value>
+                    <value>4</value>
                     <defaultValue>1</defaultValue>
                     <description></description>
                     <displayedName>ECHO_EFFECTIVE</displayedName>
@@ -587,7 +559,7 @@
                 <key>ECHO_SPACING</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_SPACING</name>
-                    <value>0.0054600000000000004</value>
+                    <value>0.009000000000000001</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Time between consecutive echoes when ETL is greater than 1</description>
                     <displayedName>ECHO_SPACING</displayedName>
@@ -605,7 +577,7 @@
                 <key>ECHO_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME</name>
-                    <value>0.08736000000000001</value>
+                    <value>0.036000000000000004</value>
                     <defaultValue>0.005</defaultValue>
                     <description>Echo time ( TE ) </description>
                     <displayedName>TE</displayedName>
@@ -623,7 +595,7 @@
                 <key>ECHO_TIME_EFFECTIVE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME_EFFECTIVE</name>
-                    <value>0.08736000000000001</value>
+                    <value>0.036000000000000004</value>
                     <defaultValue>0.01</defaultValue>
                     <description>Effective echo time in Fast Spin Echo sequence</description>
                     <displayedName>EFFECTIVE_ECHO_TIME</displayedName>
@@ -641,7 +613,7 @@
                 <key>ECHO_TRAIN_LENGTH</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TRAIN_LENGTH</name>
-                    <value>32</value>
+                    <value>4</value>
                     <defaultValue>1</defaultValue>
                     <description>Echo train lentgth</description>
                     <displayedName>ETL</displayedName>
@@ -870,7 +842,7 @@
                 <key>FIELD_OF_VIEW</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FIELD_OF_VIEW</name>
-                    <value>0.1</value>
+                    <value>0.08</value>
                     <defaultValue>0.6</defaultValue>
                     <description>Field of view</description>
                     <displayedName>FOV</displayedName>
@@ -888,7 +860,7 @@
                 <key>FIELD_OF_VIEW_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FIELD_OF_VIEW_3D</name>
-                    <value>0.0622</value>
+                    <value>0.0142</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Total coverage in the third dim. FOV</description>
                     <displayedName>FOV 3D</displayedName>
@@ -906,7 +878,7 @@
                 <key>FIELD_OF_VIEW_PHASE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FIELD_OF_VIEW_PHASE</name>
-                    <value>0.1</value>
+                    <value>0.04</value>
                     <defaultValue>0.1</defaultValue>
                     <description>FOV in phase encoding direction</description>
                     <displayedName>FOV PHASE</displayedName>
@@ -956,7 +928,7 @@
                 <key>FOV_EFF</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FOV_EFF</name>
-                    <value>0.1</value>
+                    <value>0.08</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Show the acquierd FOV when FOV doubled</description>
                     <displayedName>FOV_EFF</displayedName>
@@ -974,7 +946,7 @@
                 <key>FOV_RATIO_PHASE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FOV_RATIO_PHASE</name>
-                    <value>100.0</value>
+                    <value>50.0</value>
                     <defaultValue>100.0</defaultValue>
                     <description>Fov ratio in the phase direction</description>
                     <displayedName>Phase FOV</displayedName>
@@ -1078,7 +1050,7 @@
                 <key>GRADIENT_AREA_CRUSHER_PI</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER_PI</name>
-                    <value>9.070932203487</value>
+                    <value>1.8141864406974</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Number of pi dephasing by the crusher</description>
                     <displayedName>GRADIENT_AREA_CRUSHER_PI</displayedName>
@@ -1495,9 +1467,9 @@
                 <key>IMAGE_ORIENTATION_SUBJECT</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>IMAGE_ORIENTATION_SUBJECT</name>
-                    <value>1.0</value>
                     <value>0.0</value>
                     <value>0.0</value>
+                    <value>-1.0</value>
                     <value>0.0</value>
                     <value>-1.0</value>
                     <value>0.0</value>
@@ -1636,8 +1608,6 @@
                 <key>LAST_PUT</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>LAST_PUT</name>
-                    <value>253</value>
-                    <value>27</value>
                     <value>0</value>
                     <value>0</value>
                     <value>0</value>
@@ -1820,38 +1790,10 @@
                 <key>MULTISERIES_PARAMETER_VALUE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>MULTISERIES_PARAMETER_VALUE</name>
-                    <value>87.36</value>
-                    <value>174.72</value>
-                    <value>262.08</value>
-                    <value>349.44</value>
-                    <value>436.8</value>
-                    <value>524.16</value>
-                    <value>611.52</value>
-                    <value>698.88</value>
-                    <value>786.24</value>
-                    <value>873.6</value>
-                    <value>960.96</value>
-                    <value>1048.32</value>
-                    <value>1135.68</value>
-                    <value>1223.04</value>
-                    <value>1310.4</value>
-                    <value>1397.76</value>
-                    <value>1485.12</value>
-                    <value>1572.48</value>
-                    <value>1659.84</value>
-                    <value>1747.2</value>
-                    <value>1834.56</value>
-                    <value>1921.92</value>
-                    <value>2009.28</value>
-                    <value>2096.64</value>
-                    <value>2184.0</value>
-                    <value>2271.36</value>
-                    <value>2358.72</value>
-                    <value>2446.08</value>
-                    <value>2533.44</value>
-                    <value>2620.8</value>
-                    <value>2708.16</value>
-                    <value>2795.52</value>
+                    <value>36.0</value>
+                    <value>72.0</value>
+                    <value>108.0</value>
+                    <value>144.0</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Values of MultiSeries Parameter</description>
                     <displayedName>MULTISERIES_PARAMETER_VALUE</displayedName>
@@ -2448,7 +2390,7 @@
                 <key>NUMBER_OF_AVERAGES</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NUMBER_OF_AVERAGES</name>
-                    <value>10</value>
+                    <value>8</value>
                     <defaultValue>1</defaultValue>
                     <description>Number of average</description>
                     <displayedName>NEX</displayedName>
@@ -2766,7 +2708,7 @@
                 <key>OFF_CENTER_FIELD_OF_VIEW_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OFF_CENTER_FIELD_OF_VIEW_3D</name>
-                    <value>0.0</value>
+                    <value>-0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Offset in the slice direction</description>
                     <displayedName>Location 3D</displayedName>
@@ -2859,7 +2801,7 @@
                 <key>ORIENTATION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>ORIENTATION</name>
-                    <value>AXIAL</value>
+                    <value>SAGITTAL</value>
                     <defaultValue>AXIAL</defaultValue>
                     <description>Field of view orientation</description>
                     <displayedName>Orientation</displayedName>
@@ -2951,7 +2893,7 @@
                 <key>PHASE_FIELD_OF_VIEW_RATIO</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>PHASE_FIELD_OF_VIEW_RATIO</name>
-                    <value>100.0</value>
+                    <value>50.0</value>
                     <defaultValue>100.0</defaultValue>
                     <description>Fov ratio in the phase direction</description>
                     <displayedName>Phase FOV</displayedName>
@@ -3047,7 +2989,7 @@
                 <key>RECEIVER_GAIN</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RECEIVER_GAIN</name>
-                    <value>45.0</value>
+                    <value>42.0</value>
                     <defaultValue>10.0</defaultValue>
                     <description>Receiver gain</description>
                     <displayedName>RG</displayedName>
@@ -3065,7 +3007,7 @@
                 <key>REPETITION_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>REPETITION_TIME</name>
-                    <value>2.1414</value>
+                    <value>0.522</value>
                     <defaultValue>0.2</defaultValue>
                     <description>Repetition time  ( TR ) </description>
                     <displayedName>TR</displayedName>
@@ -3083,7 +3025,7 @@
                 <key>RESOLUTION_FREQUENCY</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RESOLUTION_FREQUENCY</name>
-                    <value>0.003125</value>
+                    <value>3.125E-4</value>
                     <defaultValue>0.01</defaultValue>
                     <description>Pixel true dimension in the frequency encoding direction (FOV / acquisition_matrix_dimension_1D) </description>
                     <displayedName>RESOLUTION_FREQUENCY</displayedName>
@@ -3101,7 +3043,7 @@
                 <key>RESOLUTION_PHASE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RESOLUTION_PHASE</name>
-                    <value>0.003125</value>
+                    <value>3.125E-4</value>
                     <defaultValue>5.0E-4</defaultValue>
                     <description>Pixe truel dimension in the phase encoding direction (FOV / acquisition_matrix_dimension_2D) </description>
                     <displayedName>RESOLUTION_PHASE</displayedName>
@@ -3119,7 +3061,7 @@
                 <key>RESOLUTION_SLICE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RESOLUTION_SLICE</name>
-                    <value>0.005</value>
+                    <value>0.001</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Pixe truel dimension in the third direction</description>
                     <displayedName>RESOLUTION_SLICE</displayedName>
@@ -3316,7 +3258,7 @@
                 <key>SEQUENCE_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SEQUENCE_TIME</name>
-                    <value>25.696805000000005</value>
+                    <value>134.676005</value>
                     <defaultValue>0.0</defaultValue>
                     <description></description>
                     <displayedName>SEQUENCE_TIME</displayedName>
@@ -3334,7 +3276,7 @@
                 <key>SEQUENCE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQUENCE_VERSION</name>
-                    <value>Version9.10</value>
+                    <value>Version9.11</value>
                     <defaultValue></defaultValue>
                     <description></description>
                     <displayedName>SEQUENCE_VERSION</displayedName>
@@ -3349,7 +3291,7 @@
                 <key>SEQ_DESCRIPTION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQ_DESCRIPTION</name>
-                    <value>SE_2D_AXI_32x32x12_ETL=32</value>
+                    <value>SE_2D_SAG_256x128x12_ETL=4</value>
                     <defaultValue></defaultValue>
                     <description></description>
                     <displayedName>SEQ_DESCRIPTION</displayedName>
@@ -3377,7 +3319,7 @@
                 <key>SE_TYPE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SE_TYPE</name>
-                    <value>OneShotFSE</value>
+                    <value>FSE</value>
                     <defaultValue>FSE</defaultValue>
                     <description>chose between FSE and MultiEcho</description>
                     <displayedName>SE_TYPE</displayedName>
@@ -3413,7 +3355,7 @@
                 <key>SLICE_THICKNESS</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SLICE_THICKNESS</name>
-                    <value>0.005</value>
+                    <value>0.001</value>
                     <defaultValue>0.005</defaultValue>
                     <description>slice thickness</description>
                     <displayedName>Slice Thickness</displayedName>
@@ -3445,7 +3387,7 @@
                 <key>SOFTWARE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SOFTWARE_VERSION</name>
-                    <value>2021.01</value>
+                    <value>1.0199</value>
                     <defaultValue>Software version</defaultValue>
                     <description>Version of the software</description>
                     <displayedName>SOFTWARE_VERSION</displayedName>
@@ -3478,7 +3420,7 @@
                 <key>SPECTRAL_WIDTH</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH</name>
-                    <value>35002.24014336918</value>
+                    <value>50016.005121638926</value>
                     <defaultValue>12500.0</defaultValue>
                     <description>Spectral width of the reception</description>
                     <displayedName>SW</displayedName>
@@ -3510,7 +3452,7 @@
                 <key>SPECTRAL_WIDTH_PER_PIXEL</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH_PER_PIXEL</name>
-                    <value>1093.8200044802868</value>
+                    <value>195.37502000640205</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Spectral Width per pixel in Hz / Pix</description>
                     <displayedName>SPECTRAL_WIDTH_PER_PIXEL</displayedName>
@@ -3603,7 +3545,7 @@
                 <key>TRANSFORM_PLUGIN</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>TRANSFORM_PLUGIN</name>
-                    <value>Sequential2D</value>
+                    <value>Centered2DRot</value>
                     <defaultValue>Centered2DRot</defaultValue>
                     <description>Transform the acquisition space to the k space</description>
                     <displayedName>Transform plugin</displayedName>
@@ -3881,7 +3823,7 @@
                 <key>USER_MATRIX_DIMENSION_1D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_MATRIX_DIMENSION_1D</name>
-                    <value>32</value>
+                    <value>256</value>
                     <defaultValue>1</defaultValue>
                     <description></description>
                     <displayedName>USER_ACQUISITION_MATRIX_DIMENSION_1D</displayedName>
@@ -3899,7 +3841,7 @@
                 <key>USER_MATRIX_DIMENSION_2D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_MATRIX_DIMENSION_2D</name>
-                    <value>32</value>
+                    <value>128</value>
                     <defaultValue>1</defaultValue>
                     <description></description>
                     <displayedName>USER_ACQUISITION_MATRIX_DIMENSION_2D</displayedName>

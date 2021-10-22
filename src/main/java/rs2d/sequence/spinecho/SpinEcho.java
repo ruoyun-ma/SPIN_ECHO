@@ -43,7 +43,7 @@ import static rs2d.sequence.spinecho.U.*;
 //
 public class SpinEcho extends BaseSequenceGenerator {
 
-    private String sequenceVersion = "Version9.10";
+    private String sequenceVersion = "Version9.11";
     private boolean CameleonVersion105 = false;
 
     private double protonFrequency;
@@ -1659,7 +1659,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
             //    double time_between_frames = getDouble(DYN_TIME_BTW_FRAMES);
             double time_between_dynFrames = isDynamicMinTime ? time_between_dynFrames_min : getDouble(DYN_TIME_BTW_FRAMES);
-            getParam(DYN_TIME_BTW_FRAMES).setValue(time_between_dynFrames_min);
+            getParam(DYN_TIME_BTW_FRAMES).setValue(time_between_dynFrames);
 
             if (time_between_dynFrames < (time_between_dynFrames_min)) {
                 this.notifyOutOfRangeParam(DYN_TIME_BTW_FRAMES, time_between_dynFrames_min, ((NumberParam) getParam(DYN_TIME_BTW_FRAMES)).getMaxValue(), "Minimum frame acquisition time ");
