@@ -75,7 +75,7 @@ public class Gradient {
         shapeDownTable = shapeDownTab;
         rampTimeUpTable = rampTimeUpTab;
         rampTimeDownTable = rampTimeDownTab;
-        gMax = GradientMath.getMaxGradientStrength();
+        gMax = Math.abs(GradientMath.getMaxGradientStrength());
         init();
     }
     public Gradient(Table amplitudeTab, Table flat_TimeTab, Shape shapeUpTab, Shape shapeDownTab, Table rampTimeUpTab, Table rampTimeDownTab, Nucleus nucleus) {
@@ -85,7 +85,7 @@ public class Gradient {
         shapeDownTable = shapeDownTab;
         rampTimeUpTable = rampTimeUpTab;
         rampTimeDownTable = rampTimeDownTab;
-        gMax = GradientMath.getMaxGradientStrength();
+        gMax = Math.abs(GradientMath.getMaxGradientStrength());
         this.nucleus = nucleus;
         init();
     }
