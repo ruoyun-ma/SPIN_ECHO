@@ -419,7 +419,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                     break;
             }
             te = echoEffective * echo_spacing;
-        } else if (sequenceSE == SE.OneShotFSE) {
+        } else if (sequenceSE == SE.OneShotFSE) { //central line in the center but Centred2DRot to do different T2 ponderation
             transformplugin = "Sequential2D";
             echoEffective = (int) Math.ceil(echoTrainLength / 2.0);
             getParam(IMAGE_CONTRAST).setValue("Custom");
@@ -433,6 +433,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(ECHO_EFFECTIVE).setValue(echoEffective);
         getParam(TRANSFORM_PLUGIN).setValue(transformplugin);
 
+        // TODO: see what can be suppress T1/PD contrast TE max can be suppressed
         //  get limits for the image contrast
         switch (getText(IMAGE_CONTRAST)) {
             case "T1-weighted": // Short TE, Short TR
@@ -918,18 +919,20 @@ public class SpinEcho extends BaseSequenceGenerator {
         boolean is_tx_amp_att_auto = getBoolean(TX_AMP_ATT_AUTO);
         double tx_frequency_offset_90_fs = getDouble(FATSAT_OFFSET_FREQ);
         if (is_tx_amp_att_auto) {
-            if (!pulseTX180.checkPower(180, observeFrequency, nucleus)) {
+            // Calculate the power to reach the target flip angle
+            // If the power exceed limit, the pulse duration is lengthened
+            if (!pulseTX180.prepPower(180, observeFrequency, nucleus)) {
                 notifyOutOfRangeParam(TX_LENGTH_180, pulseTX180.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH_180)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
                 txLength180 = pulseTX180.getPulseDuration();
             }
-            if (!pulseTX90.checkPower(flip_angle, observeFrequency, nucleus)) {
+            if (!pulseTX90.prepPower(flip_angle, observeFrequency, nucleus)) {
                 notifyOutOfRangeParam(TX_LENGTH_90, pulseTX90.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH_90)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
                 txLength90 = pulseTX90.getPulseDuration();
             }
 
             double FlipAngleFatSat = is_fatsat_enabled ? 90.0 : (is_fatsat_wep_enabled ? 45.0 : 0.0);
             double FreqFatSat = observeFrequency + (is_fatsat_enabled ? tx_frequency_offset_90_fs : 0.0);
-            if (!pulseTXFatSat.checkPower(FlipAngleFatSat, FreqFatSat, nucleus)) {
+            if (!pulseTXFatSat.prepPower(FlipAngleFatSat, FreqFatSat, nucleus)) {
                 tx_length_90_fs = pulseTXFatSat.getPulseDuration();
                 set(Time_tx_fatsat, tx_length_90_fs);
                 getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
@@ -939,7 +942,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                     getParam(FATSAT_WEP_TX_LENGTH).setValue(tx_length_90_fs_wep);
                 }
             }
-            if (!pulseTXSatBand.checkPower(flip_angle_satband, observeFrequency, nucleus)) {
+            if (!pulseTXSatBand.prepPower(flip_angle_satband, observeFrequency, nucleus)) {
 //                double tx_length_sb = pulseTXSatBand.getPulseDuration();
 //                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
                 set(Time_tx_sb, pulseTXSatBand.getPulseDuration());
@@ -957,10 +960,10 @@ public class SpinEcho extends BaseSequenceGenerator {
             pulseTXSatBand.prepTxAmp(getListInt(TX_ROUTE));
 
             this.getParam(TX_ATT).setValue(pulseTX90.getAtt());            // display PULSE_ATT
-            this.getParam(TX_AMP_90).setValue(pulseTX90.getAmp90());     // display 90° amplitude
-            this.getParam(TX_AMP_180).setValue(pulseTX180.getAmp180());   // display 180° amplitude
+            this.getParam(TX_AMP_90).setValue(pulseTX90.getAmp());     // display 90° amplitude
+            this.getParam(TX_AMP_180).setValue(pulseTX180.getAmp());   // display 180° amplitude
             this.getParam(FATSAT_TX_AMP).setValue(pulseTXFatSat.getAmp());   // display 180° amplitude
-            this.getParam(SATBAND_TX_AMP).setValue(pulseTXSatBand.getAmp180());   // display 180° amplitude
+            this.getParam(SATBAND_TX_AMP).setValue(pulseTXSatBand.getAmp());   // display 180° amplitude
 
         } else {
             pulseTX90.setAtt(getParam(TX_ATT));
