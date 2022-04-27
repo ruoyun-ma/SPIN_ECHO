@@ -200,9 +200,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         ((TextParam) getParam(SATBAND_ORIENTATION)).setRestrictedToSuggested(true);
 
         protonFrequency = Math.ceil(Instrument.instance().getDevices().getMagnet().getProtonFrequency() / Math.pow(10, 6));
-        fatFreq = -protonFrequency * 3.5;
+        fatFreq = protonFrequency * 3.5;
         ((NumberParam) getParam(FATSAT_BANDWIDTH)).setDefaultValue(fatFreq);
-        ((NumberParam) getParam(FATSAT_OFFSET_FREQ)).setDefaultValue(fatFreq);
+        ((NumberParam) getParam(FATSAT_OFFSET_FREQ)).setDefaultValue(-fatFreq);
     }
 
     // ==============================
@@ -407,10 +407,10 @@ public class SpinEcho extends BaseSequenceGenerator {
                             echoEffective = echoTrainLength;
                             break;
                         case "Sequential2D":
-                            if (echoTrainLength != 1)// not isKSCenterMode anymore, restor FSE
+                            if (echoTrainLength != 1)// not isKSCenterMode anymore, restore FSE
                                 transformplugin = "Centered2DRot";
                             break;
-                        case "FSE_TRAIN_1D":// not isFSETrainTest anymore, restor FSE
+                        case "FSE_TRAIN_1D":// not isFSETrainTest anymore, restore FSE
                             transformplugin = "Centered2DRot";
                             break;
                         default:
@@ -917,7 +917,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // Calculation RF pulse parameters  3/4 : RF pulse & attenuation
         // -----------------------------------------------
         boolean is_tx_amp_att_auto = getBoolean(TX_AMP_ATT_AUTO);
-        double tx_frequency_offset_90_fs = getDouble(FATSAT_OFFSET_FREQ);
+        double tx_frequency_offset_90_fs = -Math.abs(getDouble(FATSAT_OFFSET_FREQ));
         if (is_tx_amp_att_auto) {
             // Calculate the power to reach the target flip angle
             // If the power exceed limit, the pulse duration is lengthened
@@ -2437,7 +2437,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     }
 
     public String getVersion() {
-        return "master";
+        return "v9.14";
     }
     //</editor-fold>
 }
