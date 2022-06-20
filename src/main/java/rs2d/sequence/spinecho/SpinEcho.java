@@ -82,7 +82,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     private double te;
     private double echo_spacing;
     private int echoEffective;
-    private double[] TE_TR_lim = {0, 100000, 0, 100000}; // limite {TEmin TEmax, TRmin TRmax}
+    private double[] TE_TR_lim;
 
     private double sliceThickness;
     private double spacingBetweenSlice;
@@ -433,26 +433,25 @@ public class SpinEcho extends BaseSequenceGenerator {
         getParam(ECHO_EFFECTIVE).setValue(echoEffective);
         getParam(TRANSFORM_PLUGIN).setValue(transformplugin);
 
-        // TODO: see what can be suppress T1/PD contrast TE max can be suppressed
-        //  get limits for the image contrast
+        // TE/TR can be constrained to help the user to obtain the target contrast
+        // By default IMAGE_CONTRAST = custom : no constrain
+        TE_TR_lim = new double[]{0, 1000000, 0, 1000000}; // limit {TEmin, TEmax, TRmin TRmax}
         switch (getText(IMAGE_CONTRAST)) {
             case "T1-weighted": // Short TE, Short TR
                 ListNumberParam T1_contrast_TE_TR_lim = getParam(LIM_T1_WEIGHTED);
-                TE_TR_lim[1] = T1_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmax
-                TE_TR_lim[2] = T1_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
-                TE_TR_lim[3] = T1_contrast_TE_TR_lim.getValue().get(2).doubleValue(); //TRmax
+                TE_TR_lim[2] = T1_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TRmin
+                TE_TR_lim[3] = T1_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmax
                 break;
             case "PD-weighted": // Short TE, Long TR
                 ListNumberParam PD_contrast_TE_TR_lim = getParam(LIM_PD_WEIGHTED);
-                TE_TR_lim[1] = PD_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmax
-                TE_TR_lim[2] = PD_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
+                TE_TR_lim[2] = PD_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TRmin
                 break;
             case "T2-weighted": // Long TE, Long TR
                 ListNumberParam T2_contrast_TE_TR_lim = getParam(LIM_T2_WEIGHTED);
                 TE_TR_lim[0] = T2_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmin
                 TE_TR_lim[2] = T2_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
                 break;
-            default: // Customs
+            default: // Custom
                 break;
         }
 

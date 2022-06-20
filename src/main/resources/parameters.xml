@@ -116,9 +116,6 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>ACQUISITION_TIME_OFFSET</name>
                 <value>0.0</value>
-                <value>0.009</value>
-                <value>0.018</value>
-                <value>0.027</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Relative acquisition start times in Dynamic or MultiSeries scans</description>
                 <displayedName>Acquisition time offset</displayedName>
@@ -135,7 +132,7 @@
             <key>ACQUISITION_TIME_PER_SCAN</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ACQUISITION_TIME_PER_SCAN</name>
-                <value>0.005111808</value>
+                <value>0.005111821086261981</value>
                 <defaultValue>1.0</defaultValue>
                 <description>Info: Time during which the signal is sampled by the ADC</description>
                 <displayedName>Observation time </displayedName>
@@ -153,7 +150,7 @@
             <key>BASE_FREQ_1</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>BASE_FREQ_1</name>
-                <value>1.28E8</value>
+                <value>1.27552944E8</value>
                 <defaultValue>1.27552944E8</defaultValue>
                 <description>Info: Carrier wave frequency of the first channel</description>
                 <displayedName>Base frequency 1</displayedName>
@@ -328,7 +325,7 @@
                 <value>true</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable to use the minimum time allowed to perform dynamic acquisition </description>
-                <displayedName>Dynamic min time</displayedName>
+                <displayedName>Dyn - Min time</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Delay</group>
@@ -356,7 +353,7 @@
                 <value>5</value>
                 <defaultValue>1</defaultValue>
                 <description>Number of frames acquired in dynamic sequence</description>
-                <displayedName>Number of frames</displayedName>
+                <displayedName>Dyn - Num of frames</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -374,7 +371,7 @@
                 <value>0.001</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Time delay between frames in dynamic sequence</description>
-                <displayedName>Time between frames</displayedName>
+                <displayedName>Dyn - Time btw frames</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -497,7 +494,7 @@
             <key>FATSAT_FLIP_ANGLE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_FLIP_ANGLE</name>
-                <value>0.0</value>
+                <value>45.0</value>
                 <defaultValue>90.0</defaultValue>
                 <description>Info: Flip angle Fat Saturation (90° for FatSat, 45° for WEP)</description>
                 <displayedName>FatSat - TX flip angle</displayedName>
@@ -551,7 +548,7 @@
             <key>FATSAT_TX_AMP</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_TX_AMP</name>
-                <value>0.0</value>
+                <value>21.26032236104118</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Fat-Sat Pulse amplitude</description>
                 <displayedName>FatSat - TX amplitude</displayedName>
@@ -569,7 +566,7 @@
             <key>FATSAT_TX_LENGTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_TX_LENGTH</name>
-                <value>0.0108</value>
+                <value>0.0054</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Fat-Sat Pulse duration</description>
                 <displayedName>FatSat - TX length</displayedName>
@@ -640,7 +637,7 @@
             <key>FAT_SATURATION_WEP_ENABLED</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>FAT_SATURATION_WEP_ENABLED</name>
-                <value>false</value>
+                <value>true</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable FatSat using 2 binomial pulses (45°/-45°) that will exicte only fat (similar to WEP)</description>
                 <displayedName>FatSat - WEP like</displayedName>
@@ -844,7 +841,7 @@
             <key>GRADIENT_AREA_CRUSHER</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER</name>
-                <value>5.180999999999999E-5</value>
+                <value>5.567078717420658E-5</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Crusher gradient area</description>
                 <displayedName>Crusher gradient area</displayedName>
@@ -862,7 +859,7 @@
             <key>GRADIENT_AREA_CRUSHER_PI</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER_PI</name>
-                <value>2.2055516999999996</value>
+                <value>2.369905410005974</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Number of pi dephasing by the crusher</description>
                 <displayedName>Crusher gradient area pi</displayedName>
@@ -1189,7 +1186,7 @@
             <key>INTERMEDIATE_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>INTERMEDIATE_FREQUENCY</name>
-                <value>1.251E7</value>
+                <value>2.051E7</value>
                 <defaultValue>1.251E7</defaultValue>
                 <description>Info: Frequency from the Hardware used for the signal demodulation (ADC optimal frequency)</description>
                 <displayedName>INTERMEDIATE_FREQUENCY</displayedName>
@@ -1239,7 +1236,7 @@
             <key>INVERSION_TIME_MULTI</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>INVERSION_TIME_MULTI</name>
-                <value>0.0022</value>
+                <value>0.0</value>
                 <description>List of the Inversion Recovery Time  </description>
                 <displayedName>TI list</displayedName>
                 <locked>false</locked>
@@ -1303,11 +1300,10 @@
             <key>LIM_PD_WEIGHTED</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>LIM_PD_WEIGHTED</name>
-                <value>0.02</value>
                 <value>2.0</value>
                 <defaultValue>0.02</defaultValue>
                 <defaultValue>2.0</defaultValue>
-                <description>TE/TR limits to get Proton-Density Weighted imaging: TE (sup limit) / TR(inf limit)</description>
+                <description>TR limit to get Proton-Density Weighted imaging: TR inf. limit</description>
                 <displayedName>TE/TR limits PDw</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
@@ -1322,12 +1318,11 @@
             <key>LIM_T1_WEIGHTED</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>LIM_T1_WEIGHTED</name>
-                <value>0.02</value>
                 <value>0.4</value>
                 <value>0.7000000000000001</value>
                 <defaultValue>0.02</defaultValue>
                 <defaultValue>0.7</defaultValue>
-                <description>TE/TR limits to get T1 Weighted imaging: TE (sup. limit) / TR(sup. limit)</description>
+                <description>TR limits to get T1 Weighted imaging: (TR inf. limit, TR sup. limit)</description>
                 <displayedName>TE/TR limits T1w</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
@@ -1346,7 +1341,7 @@
                 <value>2.0</value>
                 <defaultValue>0.08</defaultValue>
                 <defaultValue>2.0</defaultValue>
-                <description>TE/TR limits to get T2 Weighted imaging: TE (inf. limit) / TR(inf. limit)</description>
+                <description>TE/TR limits to get T2 Weighted imaging: (TE inf. limit, TR inf. limit)</description>
                 <displayedName>TE/TR limits T2w</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
@@ -1445,10 +1440,10 @@
             <key>MULTISERIES_PARAMETER_NAME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>MULTISERIES_PARAMETER_NAME</name>
-                <value>TE</value>
+                <value></value>
                 <defaultValue></defaultValue>
                 <description>Info: Name of MultiSeries Parameter</description>
-                <displayedName>Multiseries parameter name</displayedName>
+                <displayedName>Multiseries param name</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1464,13 +1459,9 @@
             <key>MULTISERIES_PARAMETER_VALUE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>MULTISERIES_PARAMETER_VALUE</name>
-                <value>9.0</value>
-                <value>18.0</value>
-                <value>27.0</value>
-                <value>36.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: List of values of the incremented parameter in multiseries mode</description>
-                <displayedName>Multiseries parameter values</displayedName>
+                <displayedName>Multiseries param values</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Double</numberEnum>
@@ -2085,7 +2076,7 @@
                 <value>12</value>
                 <defaultValue>0</defaultValue>
                 <description>Info: Number of interleaved slice acquired during one TR</description>
-                <displayedName>Number of slices per TR</displayedName>
+                <displayedName>Num of slices per TR</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2102,8 +2093,8 @@
                 <name>NUMBER_OF_SHOOT_3D</name>
                 <value>1</value>
                 <defaultValue>1</defaultValue>
-                <description>Split the slices in different packs (nb of slices per TR = nb of slices / number of slice packs). This approach permits to reduce the TA but note that the TR value will be constrain by the number of slices acquired in ones. To reach lower TR, increase the number of packs</description>
-                <displayedName>Number of slice packs</displayedName>
+                <description>Split the slices in different packs (nb of slices per TR = nb of slices / number of slice packs). This approach permits to reduce the TA but note that the TR value will be constrain by the number of slices acquired in ones.</description>
+                <displayedName>Num of slice packs</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2118,7 +2109,7 @@
             <key>OBSERVED_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>OBSERVED_FREQUENCY</name>
-                <value>1.28E8</value>
+                <value>1.27552944E8</value>
                 <defaultValue>6.3E7</defaultValue>
                 <description>Info: Frequency of the acquisition</description>
                 <displayedName>Observed frequency</displayedName>
@@ -2407,7 +2398,7 @@
                 <defaultValue>0.0</defaultValue>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Off Center effective in 1D, 2D and 3D (read, phase, slice)</description>
-                <displayedName>Effective location</displayedName>
+                <displayedName>Location eff</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Location</numberEnum>
@@ -2614,21 +2605,6 @@
             </value>
         </entry>
         <entry>
-            <key>PROBE</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
-                <name>PROBE</name>
-                <value></value>
-                <defaultValue></defaultValue>
-                <description>Name of probe used for the emission</description>
-                <displayedName>Emission probe</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <group>Miscellaneous</group>
-                <category>Acquisition</category>
-            </value>
-        </entry>
-        <entry>
             <key>PROBES</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listTextParam">
                 <name>PROBES</name>
@@ -2647,7 +2623,7 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <description>Number of reception channels</description>
-                <displayedName>Number of receivers</displayedName>
+                <displayedName>Num of receivers</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2665,7 +2641,7 @@
                 <value>42.0</value>
                 <defaultValue>10.0</defaultValue>
                 <description>Receiver gain</description>
-                <displayedName>Receiver gain</displayedName>
+                <displayedName>RG</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2680,7 +2656,7 @@
             <key>REPETITION_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>REPETITION_TIME</name>
-                <value>0.5222000000000001</value>
+                <value>0.522</value>
                 <defaultValue>0.2</defaultValue>
                 <description>Repetition Time</description>
                 <displayedName>TR</displayedName>
@@ -2931,7 +2907,7 @@
             <key>SEQUENCE_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SEQUENCE_TIME</name>
-                <value>134.727605</value>
+                <value>134.676005</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Acquisition time</description>
                 <displayedName>TA</displayedName>
@@ -2949,7 +2925,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version9.11</value>
+                <value>Version8.1</value>
                 <defaultValue></defaultValue>
                 <description>Info: Sequence version</description>
                 <displayedName>Sequence version</displayedName>
@@ -2964,7 +2940,7 @@
             <key>SEQ_DESCRIPTION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQ_DESCRIPTION</name>
-                <value>SE_2D_SAG_256x128x12_ETL=4_IR=0.0022s</value>
+                <value>SE_2D_SAG_256x128x12_ETL=4</value>
                 <defaultValue></defaultValue>
                 <description>Info: Description of the sequence</description>
                 <displayedName>Sequence description</displayedName>
@@ -3093,7 +3069,7 @@
             <key>SPECTRAL_WIDTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SPECTRAL_WIDTH</name>
-                <value>50080.1282051282</value>
+                <value>50080.0</value>
                 <defaultValue>12500.0</defaultValue>
                 <description>Receiver bandwidth (SW, BW, bandwidth )</description>
                 <displayedName>BW</displayedName>
@@ -3125,7 +3101,7 @@
             <key>SPECTRAL_WIDTH_PER_PIXEL</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SPECTRAL_WIDTH_PER_PIXEL</name>
-                <value>195.62550080128204</value>
+                <value>195.625</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Bandwidth Width per pixel in Hz / Px</description>
                 <displayedName>BW/px</displayedName>
@@ -3289,7 +3265,7 @@
             <key>TX_AMP_180</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_180</name>
-                <value>73.69567183915586</value>
+                <value>89.2697162132732</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info:180 RF pulse amplitude</description>
                 <displayedName>TX 180 amplitude</displayedName>
@@ -3307,7 +3283,7 @@
             <key>TX_AMP_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
-                <value>37.115971498302386</value>
+                <value>44.5547338292634</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: 90 RF pulse amplitude</description>
                 <displayedName>TX 90 amplitude</displayedName>
@@ -3339,7 +3315,7 @@
             <key>TX_ATT</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_ATT</name>
-                <value>37.0</value>
+                <value>29.0</value>
                 <defaultValue>36.0</defaultValue>
                 <description>RF pulse attenuation</description>
                 <displayedName>TX attenuation</displayedName>
@@ -3498,8 +3474,8 @@
                 <name>USER_MATRIX_DIMENSION_1D</name>
                 <value>256</value>
                 <defaultValue>1</defaultValue>
-                <description>User 1D dimension after reconstruction</description>
-                <displayedName>User matrix dimension 1D</displayedName>
+                <description>Image size in readout direction (user matrix dimension 1D)</description>
+                <displayedName>Matrix size read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3516,8 +3492,8 @@
                 <name>USER_MATRIX_DIMENSION_2D</name>
                 <value>128</value>
                 <defaultValue>1</defaultValue>
-                <description>User 2D dimension after reconstruction</description>
-                <displayedName>User matrix dimension 2D</displayedName>
+                <description>Image size in phase encoding direction  (user matrix dimension 2D)</description>
+                <displayedName>Matrix size phase</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3534,8 +3510,8 @@
                 <name>USER_MATRIX_DIMENSION_3D</name>
                 <value>12</value>
                 <defaultValue>1</defaultValue>
-                <description>User 3D dimension after reconstruction</description>
-                <displayedName>User matrix dimension 3D</displayedName>
+                <description>Image size in the third dimension: slice or 3D PE  (user matrix dimension 3D)</description>
+                <displayedName>Matrix size 3D / num of slices</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3552,8 +3528,8 @@
                 <name>USER_MATRIX_DIMENSION_4D</name>
                 <value>1</value>
                 <defaultValue>1</defaultValue>
-                <description>User 4D dimension after reconstruction</description>
-                <displayedName>User matrix dimension 4D</displayedName>
+                <description>Info: Number of image data set (user maxtrix 4D)</description>
+                <displayedName>Num of data set</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
