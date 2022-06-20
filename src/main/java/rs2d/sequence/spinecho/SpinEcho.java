@@ -452,7 +452,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 TE_TR_lim[0] = T2_contrast_TE_TR_lim.getValue().get(0).doubleValue(); //TEmin
                 TE_TR_lim[2] = T2_contrast_TE_TR_lim.getValue().get(1).doubleValue(); //TRmin
                 break;
-            default: // Custom
+            default: // Customs
                 break;
         }
 
@@ -947,13 +947,11 @@ public class SpinEcho extends BaseSequenceGenerator {
 //                notifyOutOfRangeParam(TX_LENGTH, pulseTXFatSat.getPulseDuration(), ((NumberParam) getParam(TX_LENGTH)).getMaxValue(), "Pulse length too short to reach RF power with this pulse shape");
                 set(Time_tx_sb, pulseTXSatBand.getPulseDuration());
             }
+            // choose the attenuation that will be applied on TX_ROUTE in order to have 80% amplitude for the pulse that requires the most power
+            double referencePower = Math.max(Math.max(Math.max(pulseTX90.getPower(), pulseTX180.getPower()), pulseTXFatSat.getPower()), pulseTXSatBand.getPower());
+            pulseTX90.prepAtt(referencePower, 80, getListInt(TX_ROUTE));
 
-            RFPulse pulseMaxPower = pulseTX90.getPower() > pulseTX180.getPower() ? pulseTX90 : pulseTX180;
-            pulseMaxPower = pulseMaxPower.getPower() > pulseTXSatBand.getPower() ? pulseMaxPower : pulseTXSatBand;
-            pulseMaxPower = pulseMaxPower.getPower() > pulseTXFatSat.getPower() ? pulseMaxPower : pulseTXFatSat;
-
-            pulseMaxPower.prepAtt(80, getListInt(TX_ROUTE));
-
+            // compute the pulse amplitude knowing the channel attenuation and the pulse powers
             pulseTX90.prepTxAmp(getListInt(TX_ROUTE));
             pulseTX180.prepTxAmp(getListInt(TX_ROUTE));
             pulseTXFatSat.prepTxAmp(getListInt(TX_ROUTE));
@@ -1057,16 +1055,16 @@ public class SpinEcho extends BaseSequenceGenerator {
             getParam(GRADIENT_READ_OFFSET).setValue(grad_read_prep_offset - gradReadPrep.getSpoilerExcess());   // display observation time
 
         // pre-calculate SLICE_refocusing
-        double grad_ratio_slice_refoc = 0.5;   // get slice refocussing ratio
+        double grad_ratio_slice_refoc = 0.5;   // get slice refocusing ratio
         this.getParam(SLICE_REFOCUSING_GRADIENT_RATIO).setValue(grad_ratio_slice_refoc);   // display 180° amplitude
         Gradient gradSliceRef = Gradient.createGradient(getSequence(), Grad_amp_slice_refoc, Time_grad_read_prep_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         if (isEnableSlice) {
             gradSliceRef.refocalizeGradient(gradSlice90, grad_ratio_slice_refoc);
         }
 
-        // Check if enougth time for 2D_PHASE, 3D_PHASE SLICE_REF or READ_PREP
+        // Check if enough time for 2D_PHASE, 3D_PHASE SLICE_REF or READ_PREP
         double grad_area_sequence_max = 100 * (grad_read_prep_application_time + grad_shape_rise_time);
-        double grad_area_max = Math.max(gradReadPrep.getTotalArea(), gradSliceRef.getTotalArea());            // calculate the maximum gradient aera between SLICE REFOC & READ PREPHASING
+        double grad_area_max = Math.max(gradReadPrep.getTotalArea(), gradSliceRef.getTotalArea());            // calculate the maximum gradient area between SLICE REFOC & READ PREPHASING
         if (grad_area_max > grad_area_sequence_max) {
             double grad_read_prep_application_time_min = ceilToSubDecimal(grad_area_max / 100.0 - grad_shape_rise_time, 5);
             notifyOutOfRangeParam(GRADIENT_READ_PREPHASING_APPLICATION_TIME, grad_read_prep_application_time_min, ((NumberParam) getParam(GRADIENT_READ_PREPHASING_APPLICATION_TIME)).getMaxValue(), "Gradient application time too short to reach this pixel dimension");
@@ -1589,7 +1587,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                             * ((float) userMatrixDimension3D / nb_of_shoot_3d));
             max_nb_interleaved_excitation = getInferiorDivisorToGetModulusZero(max_nb_interleaved_excitation, userMatrixDimension3D);
             int nb_of_shoot_3d_min = userMatrixDimension3D / max_nb_interleaved_excitation;
-            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to garenty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
+            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to guaranty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
             nb_of_shoot_3d = nb_of_shoot_3d_min;
         }
 

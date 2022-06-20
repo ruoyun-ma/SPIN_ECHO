@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * Class RFPulse
+ * V3 Use Utility.complexPowerFillingFactor & modification to avoid amplitude exceed 100% (cause failure on software version 2022.03)
  * V2.9 SLR pulse & constructor V2019.06
  * V2.6 constructor with generatorSequenceParam .name() V2019.06
  * V2.5- getNearestSW Sup Inf for Cam4
