@@ -150,7 +150,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         ;
 
         // Define default, min, max and suggested values regarding the instrument
-        getParam(MAGNETIC_FIELD_STRENGTH).setDefaultValue(Hardware.getMagnetField());
+        getParam(MAGNETIC_FIELD_STRENGTH).setDefaultValue(Hardware.getMagnetFieldStrength());
         getParam(DIGITAL_FILTER_SHIFT).setDefaultValue(Hardware.getNbAcquisitionDeadPoints());
         getParam(DIGITAL_FILTER_REMOVED).setDefaultValue(Hardware.isRemoveAcquisitionDeadPoints());
 
