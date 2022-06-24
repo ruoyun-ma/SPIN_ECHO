@@ -475,7 +475,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         spectralWidth = isFovDoubled ? (spectralWidth * 2) : spectralWidth;
         spectralWidth = isSW ? spectralWidth : spectralWidthPerPixel * acquisitionMatrixDimension1D;
 
-        spectralWidth = Hardware.getSequenceCompiler().getNearestSW(spectralWidth);      // get real spectral width from Chameleon
+        spectralWidth = Hardware.getNearestSpectralWidth(spectralWidth);      // get real spectral width from Chameleon
         double spectralWidthUP = isFovDoubled ? (spectralWidth / 2) : spectralWidth;
         spectralWidthPerPixel = spectralWidth / acquisitionMatrixDimension1D;
         getParam(SPECTRAL_WIDTH_PER_PIXEL).setValue(spectralWidthPerPixel);
