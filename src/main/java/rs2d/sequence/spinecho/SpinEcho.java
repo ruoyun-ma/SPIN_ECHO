@@ -355,7 +355,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         gMax = GradientMath.getMaxGradientStrength();
 
         set(Rx_gain, RECEIVER_GAIN);
-        getParam(RECEIVER_COUNT).setValue(Hardware.getInstrumentRxIndexesFor(nucleus).size());
+        getParam(RECEIVER_COUNT).setValue(Hardware.getReceiverCount(nucleus));
 
         set(Intermediate_frequency, Hardware.getIntermediateFrequency());
         getParam(INTERMEDIATE_FREQUENCY).setValue(Hardware.getIntermediateFrequency());
