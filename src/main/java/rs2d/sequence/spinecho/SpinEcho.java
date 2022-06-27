@@ -14,7 +14,7 @@ import rs2d.spinlab.sequence.SequenceTool;
 import rs2d.spinlab.sequence.element.TimeElement;
 import rs2d.spinlab.sequenceGenerator.BaseSequenceGenerator;
 import rs2d.spinlab.sequenceGenerator.util.GradientRotation;
-import rs2d.spinlab.sequenceGenerator.util.Hardware;
+import rs2d.spinlab.api.Hardware;
 import rs2d.spinlab.sequenceGenerator.util.TimeEvents;
 import rs2d.spinlab.sequence.table.*;
 import rs2d.spinlab.tools.param.*;
