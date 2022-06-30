@@ -9,14 +9,12 @@ package rs2d.sequence.spinecho;
 
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
-import rs2d.spinlab.instrument.Instrument;
-import rs2d.spinlab.instrument.InstrumentTxChannel;
 import rs2d.spinlab.instrument.util.GradientMath;
 import rs2d.spinlab.sequence.SequenceTool;
 import rs2d.spinlab.sequence.element.TimeElement;
 import rs2d.spinlab.sequenceGenerator.BaseSequenceGenerator;
 import rs2d.spinlab.sequenceGenerator.util.GradientRotation;
-import rs2d.spinlab.sequenceGenerator.util.Hardware;
+import rs2d.spinlab.api.Hardware;
 import rs2d.spinlab.sequenceGenerator.util.TimeEvents;
 import rs2d.spinlab.sequence.table.*;
 import rs2d.spinlab.tools.param.*;
@@ -152,9 +150,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         ;
 
         // Define default, min, max and suggested values regarding the instrument
-        getParam(MAGNETIC_FIELD_STRENGTH).setDefaultValue(Instrument.instance().getDevices().getMagnet().getField());
-        getParam(DIGITAL_FILTER_SHIFT).setDefaultValue(Instrument.instance().getDevices().getCameleon().getAcquDeadPointCount());
-        getParam(DIGITAL_FILTER_REMOVED).setDefaultValue(Instrument.instance().getDevices().getCameleon().isRemoveAcquDeadPoint());
+        getParam(MAGNETIC_FIELD_STRENGTH).setDefaultValue(Hardware.getMagnetFieldStrength());
+        getParam(DIGITAL_FILTER_SHIFT).setDefaultValue(Hardware.getNbAcquisitionDeadPoints());
+        getParam(DIGITAL_FILTER_REMOVED).setDefaultValue(Hardware.isRemoveAcquisitionDeadPoints());
 
         List<String> tx_shape = asList(
                 "HARD",
@@ -199,7 +197,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         ((TextParam) getParam(SATBAND_ORIENTATION)).setSuggestedValues(satbandOrientationAllowed);
         ((TextParam) getParam(SATBAND_ORIENTATION)).setRestrictedToSuggested(true);
 
-        protonFrequency = Math.ceil(Instrument.instance().getDevices().getMagnet().getProtonFrequency() / Math.pow(10, 6));
+        protonFrequency = Math.ceil(Hardware.getProtonFrequency() / Math.pow(10, 6));
         fatFreq = protonFrequency * 3.5;
         ((NumberParam) getParam(FATSAT_BANDWIDTH)).setDefaultValue(fatFreq);
         ((NumberParam) getParam(FATSAT_OFFSET_FREQ)).setDefaultValue(-fatFreq);
@@ -346,21 +344,21 @@ public class SpinEcho extends BaseSequenceGenerator {
         // RX parameters : nucleus, RX gain & frequencies
         // -----------------------------------------------
         nucleus = Nucleus.getNucleusForName(getText(NUCLEUS_1));
-        protonFrequency = Instrument.instance().getDevices().getMagnet().getProtonFrequency();
+        protonFrequency = Hardware.getProtonFrequency();
         fatFreq = -protonFrequency * 3.5;
 
         double freq_offset1 = getDouble(OFFSET_FREQ_1);
         observeFrequency = nucleus.getFrequency(protonFrequency) + freq_offset1;
         getParam(BASE_FREQ_1).setValue(nucleus.getFrequency(protonFrequency));
 
-        min_time_per_acq_point = Hardware.getSequenceCompiler().getTransfertTimePerDataPt();
+        min_time_per_acq_point = Hardware.getTransferTimePerDataPt();
         gMax = GradientMath.getMaxGradientStrength();
 
         set(Rx_gain, RECEIVER_GAIN);
-        getParam(RECEIVER_COUNT).setValue(Instrument.instance().getObservableRxs(nucleus).size());
+        getParam(RECEIVER_COUNT).setValue(Hardware.getReceiverCount(nucleus));
 
-        set(Intermediate_frequency, Instrument.instance().getIfFrequency());
-        getParam(INTERMEDIATE_FREQUENCY).setValue(Instrument.instance().getIfFrequency());
+        set(Intermediate_frequency, Hardware.getIntermediateFrequency());
+        getParam(INTERMEDIATE_FREQUENCY).setValue(Hardware.getIntermediateFrequency());
 
         set(Tx_frequency, observeFrequency);
         getParam(OBSERVED_FREQUENCY).setValue(observeFrequency);
@@ -472,7 +470,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         spectralWidth = isFovDoubled ? (spectralWidth * 2) : spectralWidth;
         spectralWidth = isSW ? spectralWidth : spectralWidthPerPixel * acquisitionMatrixDimension1D;
 
-        spectralWidth = Hardware.getSequenceCompiler().getNearestSW(spectralWidth);      // get real spectral width from Chameleon
+        spectralWidth = Hardware.getNearestSpectralWidth(spectralWidth);      // get real spectral width from Chameleon
         double spectralWidthUP = isFovDoubled ? (spectralWidth / 2) : spectralWidth;
         spectralWidthPerPixel = spectralWidth / acquisitionMatrixDimension1D;
         getParam(SPECTRAL_WIDTH_PER_PIXEL).setValue(spectralWidthPerPixel);
@@ -813,8 +811,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         set(Time_min_instruction, minInstructionDelay);
 
-        InstrumentTxChannel txCh = Instrument.instance().getTxChannels().get(getListInt(TX_ROUTE).get(0));
-        double blankingDelay = Math.max(minInstructionDelay, txCh.getRfAmpChannel().getBlankingDelay());
+        double blankingDelay = Math.max(minInstructionDelay, Hardware.getRfAmplifierChannelBlankingDelay(getListInt(TX_ROUTE).get(0)));
 
         // -----------------------------------------------
         // calculate gradient equivalent rise time
@@ -1014,7 +1011,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         double grad_crusher_read_time = getDouble(GRADIENT_CRUSHER_READ_TOP_TIME);
         set(Time_grad_read_crusher, grad_crusher_read_time);
 
-        set(LO_att, Instrument.instance().getLoAttenuation());
+        set(LO_att, Hardware.getLoAttenuation());
 
         // -----------------------------------------------
         // calculate READ gradient amplitude
@@ -1135,8 +1132,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------
         // delays for FIR
         // ------------------------------------------
-        boolean is_FIR = Instrument.instance().getDevices().getCameleon().isRemoveAcquDeadPoint();
-        double lo_FIR_dead_point = is_FIR ? Instrument.instance().getDevices().getCameleon().getAcquDeadPointCount() : 0;
+        boolean is_FIR = Hardware.isRemoveAcquisitionDeadPoints();
+        double lo_FIR_dead_point = is_FIR ? Hardware.getNbAcquisitionDeadPoints() : 0;
         double min_FIR_delay = (lo_FIR_dead_point + 2) / spectralWidth;
         double min_FIR_4pts_delay = 4 / spectralWidth;
 
@@ -2434,7 +2431,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     }
 
     public String getVersion() {
-        return "master";
+        return "use-hardware-interface";
     }
     //</editor-fold>
 }
