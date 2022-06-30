@@ -43,7 +43,7 @@ import static rs2d.sequence.spinecho.U.*;
 //
 public class SpinEcho extends BaseSequenceGenerator {
 
-    private String sequenceVersion = "Version9.11";
+    private String sequenceVersion = "Version9.12";
     private boolean CameleonVersion105 = false;
 
     private double protonFrequency;
@@ -119,7 +119,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     private int numberOfTrigger;
 
     private boolean is_fatsat_enabled;
-    private boolean is_fatsat_wep_enabled;
+    private boolean is_fatsat_binomial;
     private double fatFreq;
 
     private int nb_satband;
@@ -297,9 +297,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         numberOfTrigger = isTrigger ? triggerTime.size() : 1;
         isTrigger = isTrigger && (numberOfTrigger > 0);
 
-        is_fatsat_enabled = getBoolean(FAT_SATURATION_ENABLED);
+        is_fatsat_enabled = !getText(FATSAT).equalsIgnoreCase("disable");
+        is_fatsat_binomial = getText(FATSAT).equalsIgnoreCase("binomial");
 
-        is_fatsat_wep_enabled = getBoolean(FAT_SATURATION_WEP_ENABLED);
         System.out.println("  ");
         is_satband_enabled = getBoolean(SATBAND_ENABLED);
         position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
@@ -454,11 +454,6 @@ public class SpinEcho extends BaseSequenceGenerator {
             default: // Custom
                 break;
         }
-
-
-        // only fatsat or fatsat_wep
-        is_fatsat_wep_enabled = !is_fatsat_enabled && is_fatsat_wep_enabled;
-        getParam(FAT_SATURATION_WEP_ENABLED).setValue(is_fatsat_wep_enabled);
 
         // -----------------------------------------------
         // 1stD managment
@@ -711,7 +706,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (is_fatsat_enabled) {
             seqDescription += "_FATSAT";
         }
-        if (is_fatsat_wep_enabled) {
+        if (is_fatsat_binomial) {
             seqDescription += "_FATSATWEP";
         }
         getParam(SEQ_DESCRIPTION).setValue(seqDescription);
@@ -775,7 +770,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         fovPhase = Math.min(fovPhase, fov);
         getParam(FIELD_OF_VIEW_PHASE).setValue(fovPhase);
         getParam(PHASE_FIELD_OF_VIEW_RATIO).setValue((fovPhase / fov * 100.0));    // FOV ratio for display
-        getParam(FOV_RATIO_PHASE).setValue(Math.round(fovPhase / fov * 100.0));    // FOV ratio for display
     }
 
     // --------------------------------------------------------------------------------------------------------------------------------------------
@@ -811,8 +805,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         boolean isEnableCrusherIR = getBoolean(GRADIENT_ENABLE_CRUSHER_IR);
         set(Grad_enable_crush_IR, isInversionRecovery && isEnableCrusherIR);
         set(Enable_sb, is_satband_enabled);
-        set(Enable_fs, is_fatsat_enabled | is_fatsat_wep_enabled);
-        set(Enable_fs_wep, is_fatsat_wep_enabled);
+        set(Enable_fs, is_fatsat_enabled );
+        set(Enable_fs_wep, is_fatsat_binomial);
 
         // ------------------------------------------
         // delays for sequence instructions
@@ -858,13 +852,13 @@ public class SpinEcho extends BaseSequenceGenerator {
         double tx_bandwidth_factor_90_fs = getTx_bandwidth_factor(FATSAT_TX_SHAPE, TX_BANDWIDTH_FACTOR, TX_BANDWIDTH_FACTOR_3D);
         double tx_length_90_fs = minInstructionDelay;
         double tx_length_90_fs_wep = minInstructionDelay;
-        if (is_fatsat_enabled) {
+        if (is_fatsat_enabled && !is_fatsat_binomial) {
 
             tx_length_90_fs = tx_bandwidth_factor_90_fs / tx_bandwidth_90_fs;
             getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
 
-        } else if (is_fatsat_wep_enabled) {
-            tx_length_90_fs = getDouble(FATSAT_WEP_TX_LENGTH);
+        } else if (is_fatsat_binomial) {
+            tx_length_90_fs = getDouble(FATSAT_TX_LENGTH);
             tx_length_90_fs_wep = tx_length_90_fs;
         }
         set(Time_tx_fatsat, tx_length_90_fs);
@@ -873,10 +867,10 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         // FatSAT timing seting needed for Flip Angle calculation
         double grad_fatsat_application_time = getDouble(FATSAT_GRAD_APP_TIME);
-        set(Time_grad_fatsat, is_fatsat_enabled | is_fatsat_wep_enabled ? grad_fatsat_application_time : minInstructionDelay);
+        set(Time_grad_fatsat, is_fatsat_enabled ? grad_fatsat_application_time : minInstructionDelay);
         set(Time_before_fatsat_pulse, blankingDelay);
         set(Time_before_fatsat_wep_pulse, blankingDelay);
-        set(Time_grad_ramp_fatsat, is_fatsat_enabled | is_fatsat_wep_enabled ? grad_rise_time : minInstructionDelay);
+        set(Time_grad_ramp_fatsat, is_fatsat_enabled ? grad_rise_time : minInstructionDelay);
         //
         RFPulse pulseTXFatSat = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat, Time_tx_fatsat, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat);
 
@@ -929,16 +923,15 @@ public class SpinEcho extends BaseSequenceGenerator {
                 txLength90 = pulseTX90.getPulseDuration();
             }
 
-            double FlipAngleFatSat = is_fatsat_enabled ? 90.0 : (is_fatsat_wep_enabled ? 45.0 : 0.0);
-            double FreqFatSat = observeFrequency + (is_fatsat_enabled ? tx_frequency_offset_90_fs : 0.0);
+            double FlipAngleFatSat = is_fatsat_enabled ? (is_fatsat_binomial ? 45.0 : 90.0) : 0.0 ;
+            double FreqFatSat = observeFrequency + (is_fatsat_enabled && !is_fatsat_binomial ? tx_frequency_offset_90_fs : 0.0);
             if (!pulseTXFatSat.prepPower(FlipAngleFatSat, FreqFatSat, nucleus)) {
                 tx_length_90_fs = pulseTXFatSat.getPulseDuration();
                 set(Time_tx_fatsat, tx_length_90_fs);
                 getParam(FATSAT_TX_LENGTH).setValue(tx_length_90_fs);
-                if (is_fatsat_wep_enabled) {
+                if (is_fatsat_binomial) {
                     tx_length_90_fs_wep = tx_length_90_fs;
                     set(Time_tx_fatsat_wep, tx_length_90_fs_wep);
-                    getParam(FATSAT_WEP_TX_LENGTH).setValue(tx_length_90_fs_wep);
                 }
             }
             if (!pulseTXSatBand.prepPower(flip_angle_satband, observeFrequency, nucleus)) {
@@ -969,7 +962,7 @@ public class SpinEcho extends BaseSequenceGenerator {
             pulseTXFatSat.setAmp(getParam(FATSAT_TX_AMP));
             pulseTXSatBand.setAmp(getParam(SATBAND_TX_AMP));
         }
-        this.getParam(FATSAT_FLIP_ANGLE).setValue(is_fatsat_enabled ? 90 : (is_fatsat_wep_enabled ? 45 : 0));
+        this.getParam(FATSAT_FLIP_ANGLE).setValue(is_fatsat_enabled ? (is_fatsat_binomial ? 45 : 90) : 0);
 
         // -----------------------------------------------
         // Calculation RF pulse parameters  4/4: bandwidth
@@ -1371,7 +1364,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 //        double timeFatSatWepDelay =
         double timeFatSatWepDelay = minInstructionDelay;
         double phaseFatSat = 0.0;
-        if (is_fatsat_wep_enabled) {
+        if (is_fatsat_binomial) {
             double timeFatSatWepBtwPulse = TimeEvents.getTimeForEvents(getSequence(), Events.FatSatPulseWep.ID, Events.FatSatPulse.ID) / 2
                     + TimeEvents.getTimeForEvents(getSequence(), Events.FatSatPulse.ID - 1);
 
@@ -1393,7 +1386,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         Gradient gradFatsatPhase = Gradient.createGradient(getSequence(), Grad_amp_fatsat_phase, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat, nucleus);
         Gradient gradFatsatSlice = Gradient.createGradient(getSequence(), Grad_amp_fatsat_slice, Time_grad_fatsat, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp_fatsat, nucleus);
 
-        if (is_fatsat_enabled | is_fatsat_wep_enabled) {
+        if (is_fatsat_enabled) {
             double pixel_dimension_ph = getDouble(RESOLUTION_PHASE);
             double pixel_dimension_sl = getDouble(RESOLUTION_SLICE);
 
@@ -1879,7 +1872,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------------------------------
         //calculate TX FREQUENCY FATSAT and compensation
         // ------------------------------------------------------------------
-        pulseTXFatSat.setFrequencyOffset(is_fatsat_enabled ? tx_frequency_offset_90_fs : 0.0);
+        pulseTXFatSat.setFrequencyOffset(is_fatsat_enabled && is_fatsat_binomial? tx_frequency_offset_90_fs : 0.0);
 
         RFPulse pulseTXFatSatPrep = RFPulse.createRFPulse(getSequence(), Time_before_fatsat_pulse, Freq_offset_tx_fatsat_prep);
         pulseTXFatSatPrep.setCompensationFrequencyOffset(pulseTXFatSat, 0.5);
@@ -1933,6 +1926,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // Set  TRIGGER_TIME for dynamic or trigger acquisition
 
         ArrayList<Number> arrayListTrigger = new ArrayList<>();
+        // todo check that condition
         if (isDynamic && isInversionRecovery && numberOfDynamicAcquisition != 1) {
             if ((sequenceSE == SE.MultiEcho) && echoTrainLength != 1) {
                 for (int i = 0; i < acquisitionMatrixDimension4D; i++) {
@@ -1977,50 +1971,56 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------------------------------
         int number_of_MultiSeries = 1;
         double time_between_MultiSeries = 0;
-        ArrayList<Number> multiseries_valuesList = new ArrayList<>();
-        String multiseries_parametername = "";
+        ArrayList<Number> multiseries_values_list = new ArrayList<>();
+        String multiseries_parameter_name = "";
 
-        if ((!(sequenceSE == SE.MultiEcho) && echoTrainLength != 1)) {
+        if ((sequenceSE == SE.MultiEcho && echoTrainLength != 1)) {
             number_of_MultiSeries = echoTrainLength;
             time_between_MultiSeries = echo_spacing;
-            multiseries_parametername = "TE";
+            multiseries_parameter_name = "TE";
             for (int i = 0; i < number_of_MultiSeries; i++) {
                 double multiseries_value = roundToDecimal(te + i * te, 5) * 1e3;
-                multiseries_valuesList.add(multiseries_value);
+                multiseries_values_list.add(multiseries_value);
             }
         } else if (isInversionRecovery && numberOfInversionRecovery != 1) {
             number_of_MultiSeries = numberOfInversionRecovery;
             time_between_MultiSeries = frame3D_acquisition_time;
-            multiseries_parametername = "TI";
+            multiseries_parameter_name = "TI";
             for (int i = 0; i < number_of_MultiSeries; i++) {
                 double IR_time = roundToDecimal(inversionRecoveryTime.get(i), 5) * 1e3;
-                multiseries_valuesList.add(IR_time);
+                multiseries_values_list.add(IR_time);
             }
         } else if (isTrigger && numberOfTrigger != 1) {
             number_of_MultiSeries = numberOfTrigger;
             time_between_MultiSeries = frame3D_acquisition_time;
-            multiseries_parametername = "TRIGGER DELAY";
+            multiseries_parameter_name = "TD";
             for (int i = 0; i < number_of_MultiSeries; i++) {
                 double multiseries_value = roundToDecimal(triggerTime.get(i), 5) * 1e3;
-                multiseries_valuesList.add(multiseries_value);
+                multiseries_values_list.add(multiseries_value);
             }
+        } else if (isDixon) {
+            number_of_MultiSeries = 3;
+            multiseries_parameter_name = "Water-Fat Phase Shift";
+            multiseries_values_list.add(-roundToDecimal(Math.PI,2));
+            multiseries_values_list.add(0);
+            multiseries_values_list.add(roundToDecimal(Math.PI,2));
         }
-        getParam(MULTISERIES_PARAMETER_VALUE).setValue(multiseries_valuesList);
-        getParam(MULTISERIES_PARAMETER_NAME).setValue(multiseries_parametername);
+        getParam(MULTISERIES_PARAMETER_VALUE).setValue(multiseries_values_list);
+        getParam(MULTISERIES_PARAMETER_NAME).setValue(multiseries_parameter_name);
 
         ArrayList<Number> acquisition_timesList = new ArrayList<>();
 
-        double acqusition_time;
+        double acquisition_time;
         for (
                 int i = 0;
                 i < numberOfDynamicAcquisition; i++) {
             for (int j = 0; j < number_of_MultiSeries; j++) {
-                acqusition_time = (i * frame3D_acquisition_time + j * time_between_MultiSeries);
+                acquisition_time = (i * frame3D_acquisition_time + j * time_between_MultiSeries);
                 if (i > 0) { // only the first dynamic phase has dummy scans
-                    acqusition_time = acqusition_time + preScan * tr;
+                    acquisition_time = acquisition_time + preScan * tr;
                 }
-                acqusition_time = roundToDecimal(acqusition_time, 3);
-                acquisition_timesList.add(acqusition_time);
+                acquisition_time = roundToDecimal(acquisition_time, 3);
+                acquisition_timesList.add(acquisition_time);
             }
         }
         getParam(ACQUISITION_TIME_OFFSET).setValue(acquisition_timesList);
@@ -2434,7 +2434,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     }
 
     public String getVersion() {
-        return "v9.14";
+        return "master";
     }
     //</editor-fold>
 }
