@@ -8,8 +8,8 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <description>Dimension of the data accumulation</description>
-                <displayedName>Accu dim</displayedName>
-                <locked>false</locked>
+                <displayedName>ACCU_DIM</displayedName>
+                <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Integer</numberEnum>
@@ -26,7 +26,7 @@
                 <value>256</value>
                 <defaultValue>128</defaultValue>
                 <description>Info: Acquisition size of the first dimension</description>
-                <displayedName>Acquisition matrix 1D</displayedName>
+                <displayedName>Acquisition Matrix 1D</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -44,7 +44,7 @@
                 <value>128</value>
                 <defaultValue>128</defaultValue>
                 <description>Info: Acquisition size of the second dimension</description>
-                <displayedName>Acquisition matrix 2D</displayedName>
+                <displayedName>Acquisition Matrix 2D</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -62,7 +62,7 @@
                 <value>12</value>
                 <defaultValue>1</defaultValue>
                 <description>Info: Acquisition size of the third dimension</description>
-                <displayedName>Acquisition matrix 3D</displayedName>
+                <displayedName>Acquisition Matrix 3D</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -80,7 +80,7 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <description>Info: Acquisition size of the fourth dimension</description>
-                <displayedName>Acquisition matrix 4D</displayedName>
+                <displayedName>Acquisition Matrix 4D</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -118,7 +118,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Relative acquisition start times in Dynamic or MultiSeries scans</description>
-                <displayedName>Acquisition time offset</displayedName>
+                <displayedName>Acquisition Time Offset</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Time</numberEnum>
@@ -135,7 +135,7 @@
                 <value>0.005111821086261981</value>
                 <defaultValue>1.0</defaultValue>
                 <description>Info: Time during which the signal is sampled by the ADC</description>
-                <displayedName>Observation time </displayedName>
+                <displayedName>Observation Time </displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -152,8 +152,8 @@
                 <name>BASE_FREQ_1</name>
                 <value>1.27552944E8</value>
                 <defaultValue>1.27552944E8</defaultValue>
-                <description>Info: Carrier wave frequency of the first channel</description>
-                <displayedName>Base frequency 1</displayedName>
+                <description>Info: Frequency of the observed nucleus</description>
+                <displayedName>Base Frequency 1</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -170,8 +170,8 @@
                 <name>BASE_FREQ_2</name>
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
-                <description>Info: Carrier wave frequency of the second channel</description>
-                <displayedName>Base frequency 2</displayedName>
+                <description>Info: Base frequency of the second channel</description>
+                <displayedName>Base Frequency 2</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -188,8 +188,8 @@
                 <name>BASE_FREQ_3</name>
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
-                <description>Info: Carrier wave frequency of the third channel</description>
-                <displayedName>Base frequency 3</displayedName>
+                <description>Info: Base frequency of the third channel</description>
+                <displayedName>Base Frequency 3</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -206,8 +206,8 @@
                 <name>BASE_FREQ_4</name>
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
-                <description>Info: Carrier wave frequency of the fourth channel</description>
-                <displayedName>Base frequency 4</displayedName>
+                <description>Info: Base frequency of the fourth channel</description>
+                <displayedName>Base Frequency 4</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -245,7 +245,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Data shift due to the digital filter are removed</description>
-                <displayedName>Digital filter removed</displayedName>
+                <displayedName>DIGITAL_FILTER_REMOVED</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>true</lockedToDefault>
                 <group>Reception</group>
@@ -259,7 +259,7 @@
                 <value>19</value>
                 <defaultValue>19</defaultValue>
                 <description>Data shift due to the digital filter</description>
-                <displayedName>Digital filter shift</displayedName>
+                <displayedName>DIGITAL_FILTER_SHIFT</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>true</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -274,7 +274,7 @@
             <key>DIXON_3PTS</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>DIXON_3PTS</name>
-                <value>false</value>
+                <value>true</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable 3-points Dixon measurement</description>
                 <displayedName>Dixon 3pts</displayedName>
@@ -290,7 +290,7 @@
                 <value>0.002232142857142857</value>
                 <defaultValue>0.0035499999999999998</defaultValue>
                 <description>Periode of the phase cycling between fat and water (3.5ppm i.e. 2.2ms at 3T, 4.4 at 1.5T)</description>
-                <displayedName>Fat-Water periode</displayedName>
+                <displayedName>Fat-Water Periode</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -325,7 +325,7 @@
                 <value>true</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable to use the minimum time allowed to perform dynamic acquisition </description>
-                <displayedName>Dyn - Min time</displayedName>
+                <displayedName>Dyn - Min Time</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Delay</group>
@@ -353,7 +353,7 @@
                 <value>5</value>
                 <defaultValue>1</defaultValue>
                 <description>Number of frames acquired in dynamic sequence</description>
-                <displayedName>Dyn - Num of frames</displayedName>
+                <displayedName>Dyn - No. Frames</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -371,7 +371,7 @@
                 <value>0.001</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Time delay between frames in dynamic sequence</description>
-                <displayedName>Dyn - Time btw frames</displayedName>
+                <displayedName>Dyn - Time btw Frames</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -389,7 +389,7 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <description>ID of the echo used for the central line encoding</description>
-                <displayedName>Echo ID k=0</displayedName>
+                <displayedName>Echo k0 Position</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -404,10 +404,10 @@
             <key>ECHO_SPACING</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_SPACING</name>
-                <value>0.009000000000000001</value>
+                <value>0.01041</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Delay between two consecutive echoes</description>
-                <displayedName>Echo spacing</displayedName>
+                <displayedName>Echo Spacing</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -442,8 +442,8 @@
                 <name>ECHO_TIME_EFFECTIVE</name>
                 <value>0.009000000000000001</value>
                 <defaultValue>0.01</defaultValue>
-                <description>Effective echo time in Fast Spin Echo sequence</description>
-                <displayedName>TE eff</displayedName>
+                <description>Info: Effective echo time in Fast Spin Echo sequence</description>
+                <displayedName>TE Eff</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -473,12 +473,30 @@
             </value>
         </entry>
         <entry>
+            <key>FATSAT</key>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
+                <name>FATSAT</name>
+                <value>Disable</value>
+                <defaultValue>Disable</defaultValue>
+                <description>Select the fat saturation pulse type: "disable" no FatSat pulse ; "spectrally selective" 90° spectrally selective pulse ; "binomial" (45°,-45°) composite non-selective pulse</description>
+                <displayedName>Fat Saturation Pulse</displayedName>
+                <locked>false</locked>
+                <lockedToDefault>false</lockedToDefault>
+                <restrictedToSuggested>true</restrictedToSuggested>
+                <suggestedValues>Disable</suggestedValues>
+                <suggestedValues>Spectrally Selective</suggestedValues>
+                <suggestedValues>Binomial</suggestedValues>
+                <group>Emission</group>
+                <category>Acquisition</category>
+            </value>
+        </entry>
+        <entry>
             <key>FATSAT_BANDWIDTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_BANDWIDTH</name>
                 <value>250.0</value>
                 <defaultValue>448.0</defaultValue>
-                <description>Fat-Sat pulse Bandwidth</description>
+                <description>Fat-Sat pulse Bandwidth (input for spectrally selective pulse)</description>
                 <displayedName>FatSat - TX BW</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
@@ -494,10 +512,10 @@
             <key>FATSAT_FLIP_ANGLE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_FLIP_ANGLE</name>
-                <value>45.0</value>
+                <value>0.0</value>
                 <defaultValue>90.0</defaultValue>
-                <description>Info: Flip angle Fat Saturation (90° for FatSat, 45° for WEP)</description>
-                <displayedName>FatSat - TX flip angle</displayedName>
+                <description>Info: Flip angle of Fat-Sat pulse (spectrally-selective: 90°, binomial: 45°)</description>
+                <displayedName>FatSat - TX Flip Angle</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -514,8 +532,8 @@
                 <name>FATSAT_GRAD_APP_TIME</name>
                 <value>8.0E-5</value>
                 <defaultValue>0.001</defaultValue>
-                <description>Top time of Fat-Sat gradient</description>
-                <displayedName>FatSat - gradient duration</displayedName>
+                <description>Top time of Fat-Sat spoiler gradient</description>
+                <displayedName>FatSat - Gradient Duration</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -533,7 +551,7 @@
                 <value>-440.0</value>
                 <defaultValue>-448.0</defaultValue>
                 <description>Separation between fat and water frequencies (at 3T ~ 420-448Hz ; at 1.5T ~ 210-224Hz)  : Default value = water frequency * 3.5 </description>
-                <displayedName>Fat-water offset</displayedName>
+                <displayedName>Fat-water Offset</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -548,10 +566,10 @@
             <key>FATSAT_TX_AMP</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_TX_AMP</name>
-                <value>21.26032236104118</value>
+                <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Fat-Sat Pulse amplitude</description>
-                <displayedName>FatSat - TX amplitude</displayedName>
+                <displayedName>FatSat - TX Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -566,10 +584,10 @@
             <key>FATSAT_TX_LENGTH</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_TX_LENGTH</name>
-                <value>0.0054</value>
+                <value>0.0108</value>
                 <defaultValue>0.0</defaultValue>
-                <description>Info: Fat-Sat Pulse duration</description>
-                <displayedName>FatSat - TX length</displayedName>
+                <description>Fat-Sat Pulse duration (input for binomial pulse)</description>
+                <displayedName>FatSat - TX Length</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -587,7 +605,7 @@
                 <value>GAUSSIAN</value>
                 <defaultValue>HARD</defaultValue>
                 <description>Fat-Sat Pulse shape</description>
-                <displayedName>FatSat - TX shape</displayedName>
+                <displayedName>FatSat - TX Shape</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>true</restrictedToSuggested>
@@ -602,59 +620,13 @@
             </value>
         </entry>
         <entry>
-            <key>FATSAT_WEP_TX_LENGTH</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>FATSAT_WEP_TX_LENGTH</name>
-                <value>5.0E-4</value>
-                <defaultValue>0.0</defaultValue>
-                <description>FatSat WEP Pulse length</description>
-                <displayedName>FatSat - WEP TX length</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Time</numberEnum>
-                <minValue>0.0</minValue>
-                <maxValue>1.0E9</maxValue>
-                <group>Delay</group>
-                <category>Acquisition</category>
-            </value>
-        </entry>
-        <entry>
-            <key>FAT_SATURATION_ENABLED</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>FAT_SATURATION_ENABLED</name>
-                <value>false</value>
-                <defaultValue>false</defaultValue>
-                <description>Enable Fat-Sat preparation pulse </description>
-                <displayedName>Fat saturation</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <group>Miscellaneous</group>
-                <category>Acquisition</category>
-            </value>
-        </entry>
-        <entry>
-            <key>FAT_SATURATION_WEP_ENABLED</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>FAT_SATURATION_WEP_ENABLED</name>
-                <value>true</value>
-                <defaultValue>false</defaultValue>
-                <description>Enable FatSat using 2 binomial pulses (45°/-45°) that will exicte only fat (similar to WEP)</description>
-                <displayedName>FatSat - WEP like</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <group>Emission</group>
-                <category>Acquisition</category>
-            </value>
-        </entry>
-        <entry>
             <key>FIELD_OF_VIEW</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FIELD_OF_VIEW</name>
                 <value>0.08</value>
                 <defaultValue>0.6</defaultValue>
                 <description>Field Of View along the frequency encoding direction</description>
-                <displayedName>FOV read</displayedName>
+                <displayedName>FOV Read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -672,7 +644,7 @@
                 <value>0.0142</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Field Of View coverage along the direction orthogonal to the phase and frequency encoding directions</description>
-                <displayedName>FOV slice/3D</displayedName>
+                <displayedName>FOV Slice/3D</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -690,7 +662,7 @@
                 <value>0.04</value>
                 <defaultValue>0.1</defaultValue>
                 <description>Field Of View along the phase encoding direction</description>
-                <displayedName>FOV phase</displayedName>
+                <displayedName>FOV Phase</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -708,7 +680,7 @@
                 <value>90.0</value>
                 <defaultValue>90.0</defaultValue>
                 <description>Excitation flip angle (FA)</description>
-                <displayedName>Flip angle</displayedName>
+                <displayedName>Flip Angle</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -726,7 +698,7 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable double the effective FOV and BW to avoid aliasing </description>
-                <displayedName>Frequency oversampling</displayedName>
+                <displayedName>Frequency Oversampling</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Dimension</group>
@@ -740,31 +712,13 @@
                 <value>0.08</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Return the acquired FOV length</description>
-                <displayedName>FOV eff</displayedName>
+                <displayedName>FOV Eff</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Length</numberEnum>
                 <minValue>0.0</minValue>
                 <maxValue>1.7976931348623156E305</maxValue>
-                <group>Dimension</group>
-                <category>Acquisition</category>
-            </value>
-        </entry>
-        <entry>
-            <key>FOV_RATIO_PHASE</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>FOV_RATIO_PHASE</name>
-                <value>50.0</value>
-                <defaultValue>100.0</defaultValue>
-                <description>Fov ratio in the phase direction</description>
-                <displayedName>FOV ratio phase</displayedName>
-                <locked>true</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>PERCENT</numberEnum>
-                <minValue>0.0</minValue>
-                <maxValue>100.0</maxValue>
                 <group>Dimension</group>
                 <category>Acquisition</category>
             </value>
@@ -790,7 +744,7 @@
                 <value>30.0</value>
                 <defaultValue>8.0</defaultValue>
                 <description>Amplitude of the crusher gradient</description>
-                <displayedName>Crusher gradient amplitude</displayedName>
+                <displayedName>Crusher Gradient Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -808,7 +762,7 @@
                 <value>12.0</value>
                 <defaultValue>8.0</defaultValue>
                 <description>Amplitude of the crusher gradient after the Inversion pulse</description>
-                <displayedName>Crusher gradient IR amplitude</displayedName>
+                <displayedName>Crusher Gradient IR Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -826,7 +780,7 @@
                 <value>20.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude of the spoiler gradient</description>
-                <displayedName>Spoiler gradient amplitude</displayedName>
+                <displayedName>Spoiler Gradient Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -844,7 +798,7 @@
                 <value>5.567078717420658E-5</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Crusher gradient area</description>
-                <displayedName>Crusher gradient area</displayedName>
+                <displayedName>Crusher Gradient Area</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -862,7 +816,7 @@
                 <value>2.369905410005974</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Number of pi dephasing by the crusher</description>
-                <displayedName>Crusher gradient area pi</displayedName>
+                <displayedName>Crusher Gradient Area Pi</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -880,7 +834,7 @@
                 <value>5.0E-4</value>
                 <defaultValue>3.0E-4</defaultValue>
                 <description>Top time of the crusher gradient played at the end of scan</description>
-                <displayedName>Crusher gradient end duration</displayedName>
+                <displayedName>Crusher Gradient End Duration</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -898,7 +852,7 @@
                 <value>3.9999999999999996E-4</value>
                 <defaultValue>3.9999999999999996E-4</defaultValue>
                 <description>Top time of the crusher gradient played after Inversion pulse</description>
-                <displayedName>Crusher gradient IR duration </displayedName>
+                <displayedName>Crusher Gradient IR Duration </displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -916,7 +870,7 @@
                 <value>4.9999999999999996E-6</value>
                 <defaultValue>4.9999999999999996E-6</defaultValue>
                 <description>Top time of the crusher gradient associated to the readout gradient </description>
-                <displayedName>Crusher gradient read duration </displayedName>
+                <displayedName>Crusher Gradient Read Duration </displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -934,7 +888,7 @@
                 <value>4.0E-4</value>
                 <defaultValue>3.9999999999999996E-4</defaultValue>
                 <description>Top time of the crusher gradients</description>
-                <displayedName>Crusher gradient duration</displayedName>
+                <displayedName>Crusher Gradient Duration</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -952,7 +906,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable IR gradient crusher</description>
-                <displayedName>Crusher gradient IR</displayedName>
+                <displayedName>Crusher Gradient IR</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -966,7 +920,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable 2D phase encoding gradient</description>
-                <displayedName>Phase-2D gradient</displayedName>
+                <displayedName>Phase-2D Gradient</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -980,7 +934,7 @@
                 <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable 3D phase encoding gradient</description>
-                <displayedName>Phase-3D gradient </displayedName>
+                <displayedName>Phase-3D Gradient </displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -994,7 +948,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable frequency encoding gradient</description>
-                <displayedName>Read gradient</displayedName>
+                <displayedName>Read Gradient</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -1008,7 +962,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable slice encoding gradient</description>
-                <displayedName>Slice gradient</displayedName>
+                <displayedName>Slice Gradient</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -1022,7 +976,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable slice encoding crusher gradients before &amp; after the 180 RF pulse</description>
-                <displayedName>Crusher gradient slice</displayedName>
+                <displayedName>Crusher Gradient Slice</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -1036,7 +990,7 @@
                 <value>true</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable gradient spoiler in the three direction</description>
-                <displayedName>Spoiler gradients</displayedName>
+                <displayedName>Spoiler Gradients</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -1050,7 +1004,7 @@
                 <value>4.0E-4</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Top time of phase encoding gradient</description>
-                <displayedName>Phase gradient duration</displayedName>
+                <displayedName>Phase Gradient Duration</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1068,7 +1022,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude added to the read prephasing gradient to have an offset </description>
-                <displayedName>Read gradient offset</displayedName>
+                <displayedName>Read Gradient Offset</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1086,7 +1040,7 @@
                 <value>3.9999999999999996E-4</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Top time application read prephasing gradient</description>
-                <displayedName>Read prephasing gradient duration</displayedName>
+                <displayedName>Read Prephasing Gradient Duration</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1104,7 +1058,7 @@
                 <value>1.5E-4</value>
                 <defaultValue>1.9999999999999998E-4</defaultValue>
                 <description>Rise time of the gradient</description>
-                <displayedName>Gradient rise time</displayedName>
+                <displayedName>Gradient Rise Time</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1122,7 +1076,7 @@
                 <value>Custom</value>
                 <defaultValue>T1-weighted</defaultValue>
                 <description>Type of image contrast</description>
-                <displayedName>Image contrast</displayedName>
+                <displayedName>Image Contrast</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1151,31 +1105,10 @@
                 <defaultValue>1.0</defaultValue>
                 <defaultValue>0.0</defaultValue>
                 <description>Direction cosines of the first row and the first column with respect to the subject</description>
-                <displayedName>Image orientation</displayedName>
+                <displayedName>Image Orientation</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Double</numberEnum>
-                <minValue>-1.7976931348623157E308</minValue>
-                <maxValue>1.7976931348623157E308</maxValue>
-                <group>Dimension</group>
-                <category>Acquisition</category>
-            </value>
-        </entry>
-        <entry>
-            <key>IMAGE_POSITION_SUBJECT</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
-                <name>IMAGE_POSITION_SUBJECT</name>
-                <value>0.0</value>
-                <value>0.0</value>
-                <value>0.0</value>
-                <defaultValue>0.0</defaultValue>
-                <defaultValue>0.0</defaultValue>
-                <defaultValue>0.0</defaultValue>
-                <description>x, y, and z coordinates of the upper left hand corner of the image</description>
-                <displayedName>Image position</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <numberEnum>Location</numberEnum>
                 <minValue>-1.7976931348623157E308</minValue>
                 <maxValue>1.7976931348623157E308</maxValue>
                 <group>Dimension</group>
@@ -1238,7 +1171,7 @@
                 <name>INVERSION_TIME_MULTI</name>
                 <value>0.0</value>
                 <description>List of the Inversion Recovery Time  </description>
-                <displayedName>TI list</displayedName>
+                <displayedName>TI</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Time</numberEnum>
@@ -1255,7 +1188,7 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>Center the k-space around k0(Checked) or go through k0 (Unchecked)</description>
-                <displayedName>k-space centered</displayedName>
+                <displayedName>k-space Centered</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -1268,9 +1201,9 @@
                 <name>KS_CENTER_MODE</name>
                 <value>false</value>
                 <defaultValue>false</defaultValue>
-                <description>Enable to turn off the phase encoding gradient and acquire two scans only</description>
-                <displayedName>1D acquisition</displayedName>
-                <locked>false</locked>
+                <description>Turn off the phase encoding gradient and acquire two scans only. Used for RG calibration setup </description>
+                <displayedName>KS_CENTER_MODE</displayedName>
+                <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <category>Acquisition</category>
             </value>
@@ -1300,11 +1233,12 @@
             <key>LIM_PD_WEIGHTED</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>LIM_PD_WEIGHTED</name>
+                <value>0.02</value>
                 <value>2.0</value>
                 <defaultValue>0.02</defaultValue>
                 <defaultValue>2.0</defaultValue>
                 <description>TR limit to get Proton-Density Weighted imaging: TR inf. limit</description>
-                <displayedName>TE/TR limits PDw</displayedName>
+                <displayedName>TE/TR Limits PDw</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Time</numberEnum>
@@ -1318,12 +1252,13 @@
             <key>LIM_T1_WEIGHTED</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>LIM_T1_WEIGHTED</name>
+                <value>0.02</value>
                 <value>0.4</value>
                 <value>0.7000000000000001</value>
                 <defaultValue>0.02</defaultValue>
                 <defaultValue>0.7</defaultValue>
                 <description>TR limits to get T1 Weighted imaging: (TR inf. limit, TR sup. limit)</description>
-                <displayedName>TE/TR limits T1w</displayedName>
+                <displayedName>TE/TR Limits T1w</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Time</numberEnum>
@@ -1342,7 +1277,7 @@
                 <defaultValue>0.08</defaultValue>
                 <defaultValue>2.0</defaultValue>
                 <description>TE/TR limits to get T2 Weighted imaging: (TE inf. limit, TR inf. limit)</description>
-                <displayedName>TE/TR limits T2w</displayedName>
+                <displayedName>TE/TR Limits T2w</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Time</numberEnum>
@@ -1359,7 +1294,7 @@
                 <value>3.0</value>
                 <defaultValue>3.0</defaultValue>
                 <description>Info: Magnetic field strength</description>
-                <displayedName>B0 strength</displayedName>
+                <displayedName>B0 Strength</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>true</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1392,7 +1327,7 @@
                 <value>90.0</value>
                 <defaultValue>90.0</defaultValue>
                 <description>Safety parameter applied on maximum gradient slew rate. Fastest at 100%</description>
-                <displayedName>Min rise time factor</displayedName>
+                <displayedName>Min Rise Time Factor</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1428,7 +1363,7 @@
                 <value>Model name</value>
                 <defaultValue>Model name</defaultValue>
                 <description>Info: Model name</description>
-                <displayedName>Model name</displayedName>
+                <displayedName>Model Name</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>true</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1442,8 +1377,8 @@
                 <name>MULTISERIES_PARAMETER_NAME</name>
                 <value></value>
                 <defaultValue></defaultValue>
-                <description>Info: Name of MultiSeries Parameter</description>
-                <displayedName>Multiseries param name</displayedName>
+                <description>Info: Name of MultiSeries Parameter: TE (multiecho), TI (multi-IR), TD (multi-trigger) or phase shift (DIXON)</description>
+                <displayedName>Multiseries Param Name</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1460,8 +1395,8 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                 <name>MULTISERIES_PARAMETER_VALUE</name>
                 <defaultValue>0.0</defaultValue>
-                <description>Info: List of values of the incremented parameter in multiseries mode</description>
-                <displayedName>Multiseries param values</displayedName>
+                <description>Info: List of values of the incremented parameter in multiseries mode (cf. Mulriseries Param Name)</description>
+                <displayedName>Multiseries Param Values</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Double</numberEnum>
@@ -1478,7 +1413,7 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>Acquire all interleaved multislices at the begining of TR</description>
-                <displayedName>Multislice packed</displayedName>
+                <displayedName>Multislice Packed</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Scan</group>
@@ -1492,7 +1427,7 @@
                 <value>true</value>
                 <defaultValue>false</defaultValue>
                 <description>Slice selection (enable) or phase encoding in the third direction (disable)</description>
-                <displayedName>2D imaging</displayedName>
+                <displayedName>2D-Imaging</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Miscellaneous</group>
@@ -2076,7 +2011,7 @@
                 <value>12</value>
                 <defaultValue>0</defaultValue>
                 <description>Info: Number of interleaved slice acquired during one TR</description>
-                <displayedName>Num of slices per TR</displayedName>
+                <displayedName>No. Slices per TR</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2093,8 +2028,8 @@
                 <name>NUMBER_OF_SHOOT_3D</name>
                 <value>1</value>
                 <defaultValue>1</defaultValue>
-                <description>Split the slices in different packs (nb of slices per TR = nb of slices / number of slice packs). This approach permits to reduce the TA but note that the TR value will be constrain by the number of slices acquired in ones.</description>
-                <displayedName>Num of slice packs</displayedName>
+                <description>To split the slices in different packs acquired in one TR (No. Slices per TR = No. Slices / No. Interleaved Packs).  To reach lower TR, increase the number of packs (must be a divisor of the No. Slices).     </description>
+                <displayedName>No. Interleaved Slice Packs</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2112,7 +2047,7 @@
                 <value>1.27552944E8</value>
                 <defaultValue>6.3E7</defaultValue>
                 <description>Info: Frequency of the acquisition</description>
-                <displayedName>Observed frequency</displayedName>
+                <displayedName>Observed Frequency</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2268,7 +2203,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Offset frequency of the first channel</description>
-                <displayedName>Frequency offset 1</displayedName>
+                <displayedName>Frequency Offset 1</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2286,7 +2221,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Offset frequency of the second channel</description>
-                <displayedName>Frequency offset 2</displayedName>
+                <displayedName>Frequency Offset 2</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2304,7 +2239,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Offset frequency of the third channel</description>
-                <displayedName>Frequency offset 3</displayedName>
+                <displayedName>Frequency Offset 3</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2322,7 +2257,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Offset frequency of the fourth channel</description>
-                <displayedName>Frequency offset 4</displayedName>
+                <displayedName>Frequency Offset 4</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2398,7 +2333,7 @@
                 <defaultValue>0.0</defaultValue>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Off Center effective in 1D, 2D and 3D (read, phase, slice)</description>
-                <displayedName>Location eff</displayedName>
+                <displayedName>Location Eff</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Location</numberEnum>
@@ -2488,7 +2423,7 @@
                 <value></value>
                 <defaultValue>PULSE_LENGTH</defaultValue>
                 <description>Name of the current optimised parameter</description>
-                <displayedName>Parameter optimised</displayedName>
+                <displayedName>Parameter Optimised</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2547,7 +2482,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable the phase cycling</description>
-                <displayedName>Phase cycling</displayedName>
+                <displayedName>Phase Cycling</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Reception</group>
@@ -2561,7 +2496,7 @@
                 <value>50.0</value>
                 <defaultValue>100.0</defaultValue>
                 <description>Info: Ratio between the phase-encoded FOV and the frequency-encoded FOV in % </description>
-                <displayedName>Phase FOV ratio </displayedName>
+                <displayedName>Phase FOV Ratio </displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2579,8 +2514,8 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable the Phase reset at the beginning of each scan</description>
-                <displayedName>Phase reset</displayedName>
-                <locked>false</locked>
+                <displayedName>PHASE_RESET</displayedName>
+                <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Emission</group>
                 <category>Acquisition</category>
@@ -2593,7 +2528,7 @@
                 <value>0.5</value>
                 <defaultValue>0.5</defaultValue>
                 <description>Prephasing reading gradient ratio</description>
-                <displayedName>Prephasing read gradient ratio</displayedName>
+                <displayedName>Prephasing Read Gradient Ratio</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2608,8 +2543,8 @@
             <key>PROBES</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listTextParam">
                 <name>PROBES</name>
-                <description>Name of probes used for the reception</description>
-                <displayedName>Reception probes</displayedName>
+                <description>Name of probes used for the transmit and reception</description>
+                <displayedName>Probes</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Miscellaneous</group>
@@ -2623,7 +2558,7 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <description>Number of reception channels</description>
-                <displayedName>Num of receivers</displayedName>
+                <displayedName>No. Receivers</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2656,7 +2591,7 @@
             <key>REPETITION_TIME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>REPETITION_TIME</name>
-                <value>0.522</value>
+                <value>0.5742</value>
                 <defaultValue>0.2</defaultValue>
                 <description>Repetition Time</description>
                 <displayedName>TR</displayedName>
@@ -2677,7 +2612,7 @@
                 <value>3.125E-4</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Info: True voxel size in the frequency encoding direction (FOV/acquisition_matrix_dimension_1D) </description>
-                <displayedName>Voxel size read</displayedName>
+                <displayedName>Voxel Size Read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2695,7 +2630,7 @@
                 <value>3.125E-4</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Info: True voxel in the phase encoding direction (FOV/acquisition_matrix_dimension_2D) </description>
-                <displayedName>Voxel size phase</displayedName>
+                <displayedName>Voxel Size Phase</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2713,7 +2648,7 @@
                 <value>0.001</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: True voxel size in the third direction</description>
-                <displayedName>Voxel size slice/3D</displayedName>
+                <displayedName>Voxel Size Slice/3D</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2731,7 +2666,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Distance of the Saturation Band from the FOV </description>
-                <displayedName>SatBand - distance from  FOV</displayedName>
+                <displayedName>SatBand - Distance from FOV</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2749,7 +2684,7 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable saturation band</description>
-                <displayedName>Saturation band</displayedName>
+                <displayedName>Saturation Band</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Miscellaneous</group>
@@ -2763,7 +2698,7 @@
                 <value>40.0</value>
                 <defaultValue>40.0</defaultValue>
                 <description>Amplitude of the spoiler gradient following the saturation pulse. The spoiler will futher eliminate the transverse magnetisation by creating a phase dispersion.</description>
-                <displayedName>SatBand - gradient amplitude</displayedName>
+                <displayedName>SatBand - Gradient Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2781,7 +2716,7 @@
                 <value>RIGHT</value>
                 <defaultValue>CRANIAL</defaultValue>
                 <description>Orientation of the Saturation Band</description>
-                <displayedName>SatBand - orientation</displayedName>
+                <displayedName>SatBand - Orientation</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2806,7 +2741,7 @@
                 <value>500.0</value>
                 <defaultValue>500.0</defaultValue>
                 <description>T1 of the saturated tissue : the longitudinal magnetization will be nulled when the excitation pulse is applied.</description>
-                <displayedName>SatBand - target T1</displayedName>
+                <displayedName>SatBand - Target T1</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2824,7 +2759,7 @@
                 <value>0.01</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Thickness of the Saturation Band</description>
-                <displayedName>SatBand - thickness</displayedName>
+                <displayedName>SatBand - Thickness</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2842,7 +2777,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Saturation Band Pulse amplitude</description>
-                <displayedName>SatBand - TX amplitude</displayedName>
+                <displayedName>SatBand - TX Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2860,7 +2795,7 @@
                 <value>SINC3</value>
                 <defaultValue>HARD</defaultValue>
                 <description>Saturation Band Pulse shape</description>
-                <displayedName>SatBand - TX shape</displayedName>
+                <displayedName>SatBand - TX Shape</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>true</restrictedToSuggested>
@@ -2875,27 +2810,13 @@
             </value>
         </entry>
         <entry>
-            <key>SATURATION_RECOVERY</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
-                <name>SATURATION_RECOVERY</name>
-                <value>false</value>
-                <defaultValue>false</defaultValue>
-                <description>Use saturation before acquisition</description>
-                <displayedName>Saturation recovery</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <group>Miscellaneous</group>
-                <category>Acquisition</category>
-            </value>
-        </entry>
-        <entry>
             <key>SEQUENCE_NAME</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_NAME</name>
                 <value>SPIN_ECHO</value>
                 <defaultValue>SPIN_ECHO</defaultValue>
                 <description>Info: Name of the sequence</description>
-                <displayedName>Sequence name</displayedName>
+                <displayedName>Sequence Name</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>true</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2909,8 +2830,8 @@
                 <name>SEQUENCE_TIME</name>
                 <value>134.676005</value>
                 <defaultValue>0.0</defaultValue>
-                <description>Info: Acquisition time</description>
-                <displayedName>TA</displayedName>
+                <description>Info: Total acquisition time</description>
+                <displayedName>Acquisition Time</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2943,7 +2864,7 @@
                 <value>SE_2D_SAG_256x128x12_ETL=4</value>
                 <defaultValue></defaultValue>
                 <description>Info: Description of the sequence</description>
-                <displayedName>Sequence description</displayedName>
+                <displayedName>Sequence Description</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2957,7 +2878,7 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>True during setup process / False for regular use for the sequence</description>
-                <displayedName>Setup mode</displayedName>
+                <displayedName>SETUP_MODE</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Miscellaneous</group>
@@ -2970,8 +2891,8 @@
                 <name>SE_TYPE</name>
                 <value>FSE</value>
                 <defaultValue>FSE</defaultValue>
-                <description>chose between FSE and MultiEcho</description>
-                <displayedName>SE_TYPE</displayedName>
+                <description>Choose between FSE and MultiEcho</description>
+                <displayedName>Echo Train Type</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2989,7 +2910,7 @@
                 <value>0.5</value>
                 <defaultValue>0.5</defaultValue>
                 <description>Ratio of the slice refocusing gradient</description>
-                <displayedName>Slice refocusing gradient ratio</displayedName>
+                <displayedName>Slice Refocusing Gradient Ratio</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3007,7 +2928,7 @@
                 <value>0.001</value>
                 <defaultValue>0.005</defaultValue>
                 <description>Slice thickness</description>
-                <displayedName>Slice thickness</displayedName>
+                <displayedName>Slice Thickness</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3024,8 +2945,8 @@
                 <name>SLICE_THICKNESS_180_WIDER</name>
                 <value>false</value>
                 <defaultValue>false</defaultValue>
-                <description>Slightly increase the slice thickness for the 180 RF pulse (Checked)</description>
-                <displayedName>Slice thickness 180 wider</displayedName>
+                <description>Enable to slightly increase the slice thickness for the 180 RF pulse (Checked)</description>
+                <displayedName>Slice Thickness 180 Wider</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Dimension</group>
@@ -3039,7 +2960,7 @@
                 <value>1.0199</value>
                 <defaultValue>Software version</defaultValue>
                 <description>Info: Version of the software</description>
-                <displayedName>Software version</displayedName>
+                <displayedName>Software Version</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3053,7 +2974,7 @@
                 <name>SPACING_BETWEEN_SLICE</name>
                 <value>1.9999999999999998E-4</value>
                 <defaultValue>5.0</defaultValue>
-                <description>Gap between slice</description>
+                <description>Gap Between Slice</description>
                 <displayedName>Slice Spacing</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
@@ -3090,7 +3011,7 @@
                 <value>true</value>
                 <defaultValue>false</defaultValue>
                 <description>Use BW to calculate BW per pixel (Check) / Use  BW per pixel to calculate BW (Uncheck)</description>
-                <displayedName>BW option</displayedName>
+                <displayedName>BW Option</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Reception</group>
@@ -3122,7 +3043,7 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable to have same pixel dimension in frequency and phase encoding direction, this will adjust Phase FOV</description>
-                <displayedName>Square pixel</displayedName>
+                <displayedName>Square Pixel</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Dimension</group>
@@ -3136,7 +3057,7 @@
                 <value>Station name</value>
                 <defaultValue>Station name</defaultValue>
                 <description>Info: Station name</description>
-                <displayedName>STATION_NAME</displayedName>
+                <displayedName>Station Name</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>true</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3151,7 +3072,7 @@
                 <value>HeadFirstProne</value>
                 <defaultValue>FeetFirstProne</defaultValue>
                 <description>Subject position relative to the magnet</description>
-                <displayedName>Subject position</displayedName>
+                <displayedName>Subject Position</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>true</restrictedToSuggested>
@@ -3183,8 +3104,8 @@
                 <name>TOOL_FSE_TRAIN_1D</name>
                 <value>false</value>
                 <defaultValue>false</defaultValue>
-                <description>Debug tool</description>
-                <displayedName>Tool FSE_TRAIN_1D</displayedName>
+                <description>Debug tool to visualize the entire Train</description>
+                <displayedName>TOOL_FSE_TRAIN_1D</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <category>Acquisition</category>
@@ -3196,8 +3117,8 @@
                 <name>TRANSFORM_PLUGIN</name>
                 <value>Centered2DRot</value>
                 <defaultValue>Centered2DRot</defaultValue>
-                <description>Info: Transform the acquisition space to the k-space</description>
-                <displayedName>Transform plugin</displayedName>
+                <description>Transform the acquisition space to the k-space</description>
+                <displayedName>Transform Plugin</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3218,7 +3139,7 @@
                 <value>Ext1_XOR_Ext2</value>
                 <defaultValue>Ext1_XOR_Ext2</defaultValue>
                 <description>Choose the channels that will be used to synchronise the acquisition with an external signal</description>
-                <displayedName>Trigger channel</displayedName>
+                <displayedName>Trigger Channel</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>true</restrictedToSuggested>
@@ -3237,7 +3158,7 @@
                 <value>false</value>
                 <defaultValue>false</defaultValue>
                 <description>Enable to synchronize the acquisition with external trigger</description>
-                <displayedName>Trigger external </displayedName>
+                <displayedName>Trigger External </displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Delay</group>
@@ -3251,7 +3172,7 @@
                 <value>0.0</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Time to wait between reception of the trigger signal and sequence start</description>
-                <displayedName>Trigger delay</displayedName>
+                <displayedName>Trigger Delay</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Time</numberEnum>
@@ -3268,7 +3189,7 @@
                 <value>89.2697162132732</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info:180 RF pulse amplitude</description>
-                <displayedName>TX 180 amplitude</displayedName>
+                <displayedName>TX 180 Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3286,7 +3207,7 @@
                 <value>44.5547338292634</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: 90 RF pulse amplitude</description>
-                <displayedName>TX 90 amplitude</displayedName>
+                <displayedName>TX 90 Amplitude</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3304,7 +3225,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable to automatically set attenuation and amplitude for the RF according to the calibration</description>
-                <displayedName>TX att/amp auto</displayedName>
+                <displayedName>TX Att/Amp Auto</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Emission</group>
@@ -3318,7 +3239,7 @@
                 <value>29.0</value>
                 <defaultValue>36.0</defaultValue>
                 <description>RF pulse attenuation</description>
-                <displayedName>TX attenuation</displayedName>
+                <displayedName>TX Attenuation</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3341,8 +3262,8 @@
                 <defaultValue>1.45</defaultValue>
                 <defaultValue>2.55</defaultValue>
                 <defaultValue>3.9</defaultValue>
-                <description>Info: Bandwidth factor of the RF pulse for 4 shapes: 1-HARD, 2-GAUSSIAN, 3-SINC3 and 4-SINC5</description>
-                <displayedName>TX BW factor</displayedName>
+                <description>Bandwidth factor of the RF pulse for 4 shapes: 1-HARD, 2-GAUSSIAN, 3-SINC3 and 4-SINC5</description>
+                <displayedName>TX BW Factor</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Double</numberEnum>
@@ -3364,8 +3285,8 @@
                 <defaultValue>3.2</defaultValue>
                 <defaultValue>5.0</defaultValue>
                 <defaultValue>7.3</defaultValue>
-                <description>Info: Bandwidth factor 3D of the RF pulse for 4 shapes: 1-HARD, 2-GAUSSIAN, 3-SINC3 and 4-SINC5</description>
-                <displayedName>TX BW factor 3D</displayedName>
+                <description>Bandwidth factor 3D of the RF pulse for 4 shapes: 1-HARD, 2-GAUSSIAN, 3-SINC3 and 4-SINC5</description>
+                <displayedName>TX BW Factor 3D</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Double</numberEnum>
@@ -3382,7 +3303,7 @@
                 <value>0.001</value>
                 <defaultValue>0.0</defaultValue>
                 <description>180 RF pulse duration</description>
-                <displayedName>TX 180 length</displayedName>
+                <displayedName>TX 180 Length</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3400,7 +3321,7 @@
                 <value>0.001</value>
                 <defaultValue>0.0</defaultValue>
                 <description>90 RF pulse duration</description>
-                <displayedName>TX 90 length</displayedName>
+                <displayedName>TX 90 Length</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3417,7 +3338,7 @@
                 <name>TX_ROUTE</name>
                 <value>0</value>
                 <description>Info: Physical transmit channel</description>
-                <displayedName>TX route</displayedName>
+                <displayedName>TX Route</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <numberEnum>Integer</numberEnum>
@@ -3434,7 +3355,7 @@
                 <value>SINC3</value>
                 <defaultValue>HARD</defaultValue>
                 <description>180 RF pulse shape</description>
-                <displayedName>TX 180 shape</displayedName>
+                <displayedName>TX 180 Shape</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3454,7 +3375,7 @@
                 <value>SINC3</value>
                 <defaultValue>HARD</defaultValue>
                 <description>90 RF pulse shape</description>
-                <displayedName>TX 90 shape</displayedName>
+                <displayedName>TX 90 Shape</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3475,7 +3396,7 @@
                 <value>256</value>
                 <defaultValue>1</defaultValue>
                 <description>Image size in readout direction (user matrix dimension 1D)</description>
-                <displayedName>Matrix size read</displayedName>
+                <displayedName>Matrix Size 1D Read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3493,7 +3414,7 @@
                 <value>128</value>
                 <defaultValue>1</defaultValue>
                 <description>Image size in phase encoding direction  (user matrix dimension 2D)</description>
-                <displayedName>Matrix size phase</displayedName>
+                <displayedName>Matrix Size 2D Phase</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3511,7 +3432,7 @@
                 <value>12</value>
                 <defaultValue>1</defaultValue>
                 <description>Image size in the third dimension: slice or 3D PE  (user matrix dimension 3D)</description>
-                <displayedName>Matrix size 3D / num of slices</displayedName>
+                <displayedName>Matrix Size 3D / No. Slices</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3529,7 +3450,7 @@
                 <value>1</value>
                 <defaultValue>1</defaultValue>
                 <description>Info: Number of image data set (user maxtrix 4D)</description>
-                <displayedName>Num of data set</displayedName>
+                <displayedName>No. Data Sets</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -3547,7 +3468,7 @@
                 <value>100.0</value>
                 <defaultValue>100.0</defaultValue>
                 <description> Percent of the k-space that is acquired, the rest will be completed by zeros in the phase encoding direction (zero filling interpolation)</description>
-                <displayedName>Zero-filling phase</displayedName>
+                <displayedName>Zero-filling Phase</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
