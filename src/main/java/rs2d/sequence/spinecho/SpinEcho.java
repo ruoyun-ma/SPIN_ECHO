@@ -41,7 +41,7 @@ import static rs2d.sequence.spinecho.U.*;
 //
 public class SpinEcho extends BaseSequenceGenerator {
 
-    private String sequenceVersion = "Version9.12";
+    private String sequenceVersion = "Version9.16";
     private boolean CameleonVersion105 = false;
 
     private double protonFrequency;
