@@ -6,7 +6,6 @@ package rs2d.sequence.spinecho;
 //
 // ---------------------------------------------------------------------
 
-
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.instrument.util.GradientMath;
@@ -28,9 +27,6 @@ import java.util.*;
 import static java.util.Arrays.asList;
 
 import rs2d.sequence.common.*;
-
-
-//import javax.vecmath.Matrix3d;
 
 import static rs2d.sequence.spinecho.S.*;
 import static rs2d.sequence.spinecho.U.*;
@@ -841,8 +837,8 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         set(Time_tx_90, TX_LENGTH_90);     // set RF pulse length to sequence
         set(Time_tx_180, TX_LENGTH_180);   // set 180° RF pulse length to sequence
-        RFPulse pulseTX90 = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_90, Tx_phase_90, Time_tx_90, Tx_shape_90, Tx_shape_phase_90, Tx_freq_offset_90);
-        RFPulse pulseTX180 = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_180, Tx_phase_180, Time_tx_180, Tx_shape_180, Tx_shape_phase_180, Tx_freq_offset_180);
+        RFPulse pulseTX90 = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_90, Tx_phase_90, Time_tx_90, Tx_shape_90, Tx_shape_phase_90, Tx_freq_offset_90, nucleus);
+        RFPulse pulseTX180 = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_180, Tx_phase_180, Time_tx_180, Tx_shape_180, Tx_shape_phase_180, Tx_freq_offset_180, nucleus);
 
         // Fat SAT RF pulse
         double tx_bandwidth_90_fs = getDouble(FATSAT_BANDWIDTH);
@@ -869,7 +865,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         set(Time_before_fatsat_wep_pulse, blankingDelay);
         set(Time_grad_ramp_fatsat, is_fatsat_enabled ? grad_rise_time : minInstructionDelay);
         //
-        RFPulse pulseTXFatSat = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat, Time_tx_fatsat, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat);
+        RFPulse pulseTXFatSat = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_fatsat, Tx_phase_fatsat, Time_tx_fatsat, Tx_shape_fatsat, Tx_shape_phase_fatsat, Freq_offset_tx_fatsat, nucleus);
 
         // SAT Band  RF pulse
         set(Time_grad_ramp_sb, is_satband_enabled ? grad_rise_time : minInstructionDelay);
@@ -877,7 +873,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         double tx_length_sb = is_satband_enabled ? txLength90 : minInstructionDelay;
         set(Time_tx_sb, tx_length_sb);
         //
-        RFPulse pulseTXSatBand = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_sb, Tx_phase_sb, Time_tx_sb, Tx_shape_sb, Tx_shape_phase_sb, Freq_offset_tx_sb);
+        RFPulse pulseTXSatBand = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_sb, Tx_phase_sb, Time_tx_sb, Tx_shape_sb, Tx_shape_phase_sb, Freq_offset_tx_sb, nucleus);
 
         //Correction of the 90 water saturation RF angle according to the water T1 relaxation.
         double flip_angle = getDouble(FLIP_ANGLE);
@@ -1686,7 +1682,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------------------------------
         //calculate TX FREQUENCY offsets tables for slice positionning
         // ------------------------------------------------------------------
-        RFPulse pulseTXIR = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_180, Tx_phase_180, Time_tx_IR_length, Tx_shape_180, Tx_shape_phase_180, Tx_freq_offset_IR);
+        RFPulse pulseTXIR = RFPulse.createRFPulse(getSequence(), Tx_att, Tx_amp_180, Tx_phase_180, Time_tx_IR_length, Tx_shape_180, Tx_shape_phase_180, Tx_freq_offset_IR, nucleus);
 
         if (isMultiplanar && nb_planar_excitation > 1 && isEnableSlice) {
             //MULTI-PLANAR case : calculation of frequency offset table
@@ -1717,13 +1713,13 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------------------------------
         // calculate TX FREQUENCY offsets tables for multi-slice acquisitions and
         // ------------------------------------------------------------------
-        RFPulse pulseTX90Prep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_tx_prep_90);
+        RFPulse pulseTX90Prep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_tx_prep_90, nucleus);
         pulseTX90Prep.setCompensationFrequencyOffset(pulseTX90, grad_ratio_slice_refoc);
 
-        RFPulse pulseTX180Prep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_tx_prep_180);
+        RFPulse pulseTX180Prep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_tx_prep_180, nucleus);
         pulseTX180Prep.setCompensationFrequencyOffset(pulseTX180, grad_ratio_slice_refoc);
 
-        RFPulse pulseTXIRPrep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_tx_prep_IR);
+        RFPulse pulseTXIRPrep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_tx_prep_IR, nucleus);
         pulseTXIRPrep.setCompensationFrequencyOffset(pulseTXIR, grad_ratio_slice_refoc);
 
 
@@ -1861,9 +1857,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         // Apply values ot Tx offset
         pulseTXSatBand.addFrequencyOffset(offsetFreqSBTable);
         pulseTXSatBand.setFrequencyOffset(is_satband_enabled ? Order.LoopB : Order.FourLoop);
-        RFPulse pulseTXSatBandPrep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp_sb, Freq_offset_tx_sb_prep);
+        RFPulse pulseTXSatBandPrep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp_sb, Freq_offset_tx_sb_prep, nucleus);
         pulseTXSatBandPrep.setCompensationFrequencyOffset(pulseTXSatBand, 0.5);
-        RFPulse pulseTXSatBandComp = RFPulse.createRFPulse(getSequence(), Time_grad_ramp_sb, Freq_offset_tx_sb_comp);
+        RFPulse pulseTXSatBandComp = RFPulse.createRFPulse(getSequence(), Time_grad_ramp_sb, Freq_offset_tx_sb_comp, nucleus);
         pulseTXSatBandComp.setCompensationFrequencyOffset(pulseTXSatBand, 0.5);
 
         // ------------------------------------------------------------------
@@ -1871,16 +1867,16 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------------------------------
         pulseTXFatSat.setFrequencyOffset(is_fatsat_enabled && is_fatsat_binomial? tx_frequency_offset_90_fs : 0.0);
 
-        RFPulse pulseTXFatSatPrep = RFPulse.createRFPulse(getSequence(), Time_before_fatsat_pulse, Freq_offset_tx_fatsat_prep);
+        RFPulse pulseTXFatSatPrep = RFPulse.createRFPulse(getSequence(), Time_before_fatsat_pulse, Freq_offset_tx_fatsat_prep, nucleus);
         pulseTXFatSatPrep.setCompensationFrequencyOffset(pulseTXFatSat, 0.5);
-        RFPulse pulseTXFatSatComp = RFPulse.createRFPulse(getSequence(), Time_grad_ramp_fatsat, Freq_offset_tx_fatsat_comp);
+        RFPulse pulseTXFatSatComp = RFPulse.createRFPulse(getSequence(), Time_grad_ramp_fatsat, Freq_offset_tx_fatsat_comp, nucleus);
         pulseTXFatSatComp.setCompensationFrequencyOffset(pulseTXFatSat, 0.5);
 
         //----------------------------------------------------------------------
         // OFF CENTER FIELD OF VIEW 1D
         // modify RX FREQUENCY OFFSET
         //----------------------------------------------------------------------
-        RFPulse pulseRX = RFPulse.createRFPulse(getSequence(), Time_rx, Rx_freq_offset, Rx_phase);
+        RFPulse pulseRX = RFPulse.createRFPulse(getSequence(), Time_rx, Rx_freq_offset, Rx_phase, nucleus);
         pulseRX.setFrequencyOffsetReadout(gradReadout, off_center_distance_1D);
 
         //fill the OFF_CENTER_FIELD_OF_VIEW_EFF User Parameter
@@ -1898,10 +1894,10 @@ public class SpinEcho extends BaseSequenceGenerator {
         double timeADC2 = TimeEvents.getTimeBetweenEvents(getSequence(), Events.Acq.ID, Events.LoopEndEcho.ID - 1)
                 - observation_time + observation_time / 2.0;
 
-        RFPulse pulseRXPrep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_rx_1D_3Dprep);
+        RFPulse pulseRXPrep = RFPulse.createRFPulse(getSequence(), Time_grad_ramp, FreqOffset_rx_1D_3Dprep, nucleus);
         pulseRXPrep.setCompensationFrequencyOffsetWithTime(pulseRX, timeADC1);
 
-        RFPulse pulseRXComp = RFPulse.createRFPulse(getSequence(), Time_min_instruction, FreqOffset_rx_1D_3Dcomp);
+        RFPulse pulseRXComp = RFPulse.createRFPulse(getSequence(), Time_min_instruction, FreqOffset_rx_1D_3Dcomp, nucleus);
         pulseRXComp.setCompensationFrequencyOffsetWithTime(pulseRX, timeADC2);
 
         //--------------------------------------------------------------------------------------
