@@ -1,7 +1,7 @@
 package rs2d.sequence.common;
 
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
-//import rs2d.spinlab.hardware.controller.HardwareHandler;
+
 import rs2d.spinlab.instrument.util.GradientMath;
 import rs2d.spinlab.sequence.Sequence;
 import rs2d.spinlab.sequence.table.Shape;
@@ -12,9 +12,7 @@ import rs2d.spinlab.tools.table.Order;
 import rs2d.spinlab.tools.utility.Nucleus;
 
 /**
- * Class Gradient
- * V2.3- 2019-06-06 JR from DW EPI
- * V2.1- 2018-03-20b JR
+ * Class Gradient: small Common Version 1.3S
  */
 public class Gradient5Event extends Gradient {
 
@@ -26,12 +24,6 @@ public class Gradient5Event extends Gradient {
         flatTimeTable1 = flat_TimeTab1;
         flatTimeTable3 = flat_TimeTab3;
         init();
-        //        Table flatTimeTable1 = getSequence().getPublicTable(Time_grad_read_crusher);
-//        System.out.println(flatTimeTable1.getFirst());
-//        System.out.println(flatTimeTable1.size());
-//        System.out.println(flatTimeTable1.getName());
-//        System.out.println(flatTimeTable1.get(0).doubleValue());
-
     }
 
     public static Gradient5Event createGradient(Sequence sequence, GeneratorSequenceParamEnum amplitudeTab, GeneratorSequenceParamEnum flat_TimeTab1, GeneratorSequenceParamEnum flat_TimeTab2, GeneratorSequenceParamEnum flat_TimeTab3, GeneratorSequenceParamEnum shapeUpTab, GeneratorSequenceParamEnum shapeDownTab, GeneratorSequenceParamEnum rampTimeTab) {
@@ -50,12 +42,6 @@ public class Gradient5Event extends Gradient {
         flatTimeTable1 = flat_TimeTab1;
         flatTimeTable3 = flat_TimeTab3;
         init();
-        //        Table flatTimeTable1 = getSequence().getPublicTable(Time_grad_read_crusher);
-//        System.out.println(flatTimeTable1.getFirst());
-//        System.out.println(flatTimeTable1.size());
-//        System.out.println(flatTimeTable1.getName());
-//        System.out.println(flatTimeTable1.get(0).doubleValue());
-
     }
 
     public static Gradient5Event createGradient(Sequence sequence, GeneratorSequenceParamEnum amplitudeTab, GeneratorSequenceParamEnum flat_TimeTab1, GeneratorSequenceParamEnum flat_TimeTab2, GeneratorSequenceParamEnum flat_TimeTab3, GeneratorSequenceParamEnum shapeUpTab, GeneratorSequenceParamEnum shapeDownTab, GeneratorSequenceParamEnum rampTimeTab, Nucleus nucleus) {
@@ -82,46 +68,33 @@ public class Gradient5Event extends Gradient {
     /**
      * Calculate equivalentTime of a rectangular gradient with same Area and amplitude
      *
-     * @return equivalentTime :
      *//*
      */
     @Override
-    public double prepareEquivalentTime() {
-//        System.out.println(" ");
-//        System.out.println(" prepareEquivalentTime() ");
-//        System.out.println(" flatTimeTable " + flatTimeTable1);
+    public void prepareEquivalentTime() {
         if (Double.isNaN(grad_shape_rise_time)) {
             computeShapeRiseTime();
         }
         if (flatTimeTable1 != null) {
-//            System.out.println("flatTimeTable.get(0).doubleValue()  = " + flatTimeTable.get(0).doubleValue());
-//            System.out.println("flatTimeTable1.get(0).doubleValue()  = " + flatTimeTable1.get(0).doubleValue());
-//            System.out.println("flatTimeTable3.get(0).doubleValue()  = " + flatTimeTable3.get(0).doubleValue());
             minTopTime = flatTimeTable.get(0).doubleValue() + flatTimeTable1.get(0).doubleValue() + flatTimeTable3.get(0).doubleValue();
             equivalentTime = (minTopTime + grad_shape_rise_time);
-//            System.out.println("minTopTime  = " + minTopTime);
-//            System.out.println("grad_shape_rise_time  = " + grad_shape_rise_time);
         }
-        return equivalentTime;
     }
 
     /*
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //     RO             Readout  methods             RO
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        //     RO             Readout  methodes             RO
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        */
+    */
     @Override
     public double[] getEquivalentTimeFlat(Table time, double ratio) {
         ratio = Math.min(1.0, Math.max(0.0, ratio));
         double[] equivalentTime = new double[time.size()];
         for (int t = 0; t < time.size(); t++) {
-            equivalentTime[t] = time.get(t).doubleValue() * ratio +flatTimeTable1.get(0).doubleValue() ;
-//            System.out.println(t + " "+time.get(t).doubleValue()+" * "+ratio);
-//            System.out.println( " =  "+equivalentTime[t]);
+            equivalentTime[t] = time.get(t).doubleValue() * ratio + flatTimeTable1.get(0).doubleValue();
         }
-        System.out.println(  "   getEquivalentTimeFlat Grad 5  " );
+        System.out.println("   getEquivalentTimeFlat Grad 5  ");
         return equivalentTime;
     }
 

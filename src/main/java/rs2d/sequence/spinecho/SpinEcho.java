@@ -2427,7 +2427,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     }
 
     public String getVersion() {
-        return "use-hardware-interface";
+        return "master_2021.06";
     }
     //</editor-fold>
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <application>
-    <name>SPIN_ECHO_master</name>
+    <name>SPIN_ECHO_master_2021.06</name>
     <description></description>
     <usage></usage>
     <generatorName>seqdev-temp</generatorName>
@@ -161,7 +161,7 @@
                     <name>ACCU_DIM</name>
                     <value>1</value>
                     <defaultValue>1</defaultValue>
-                    <description>Dimension of the data accumulation</description>
+                    <description>Dimension on which averaging is performed by the Cameleon</description>
                     <displayedName>ACCU_DIM</displayedName>
                     <locked>true</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -179,7 +179,7 @@
                     <name>ACQUISITION_MATRIX_DIMENSION_1D</name>
                     <value>256</value>
                     <defaultValue>128</defaultValue>
-                    <description>Info: Acquisition size of the first dimension</description>
+                    <description>Info: Size of the initial dataset (raw data) in the first dimension</description>
                     <displayedName>Acquisition Matrix 1D</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -197,7 +197,7 @@
                     <name>ACQUISITION_MATRIX_DIMENSION_2D</name>
                     <value>128</value>
                     <defaultValue>128</defaultValue>
-                    <description>Info: Acquisition size of the second dimension</description>
+                    <description>Info: Size of the initial dataset (raw data) in the second dimension</description>
                     <displayedName>Acquisition Matrix 2D</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -215,7 +215,7 @@
                     <name>ACQUISITION_MATRIX_DIMENSION_3D</name>
                     <value>12</value>
                     <defaultValue>1</defaultValue>
-                    <description>Info: Acquisition size of the third dimension</description>
+                    <description>Info: Size of the initial dataset (raw data) in the third dimension</description>
                     <displayedName>Acquisition Matrix 3D</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -231,9 +231,9 @@
                 <key>ACQUISITION_MATRIX_DIMENSION_4D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_4D</name>
-                    <value>1</value>
+                    <value>3</value>
                     <defaultValue>1</defaultValue>
-                    <description>Info: Acquisition size of the fourth dimension</description>
+                    <description>Info: Size of the initial dataset (raw data) in the fourth dimension</description>
                     <displayedName>Acquisition Matrix 4D</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
@@ -270,6 +270,8 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>ACQUISITION_TIME_OFFSET</name>
                     <value>0.0</value>
+                    <value>0.0</value>
+                    <value>0.0</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Relative acquisition start times in Dynamic or MultiSeries scans</description>
                     <displayedName>Acquisition Time Offset</displayedName>
@@ -286,7 +288,7 @@
                 <key>ACQUISITION_TIME_PER_SCAN</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_TIME_PER_SCAN</name>
-                    <value>0.005111821086261981</value>
+                    <value>0.005111808</value>
                     <defaultValue>1.0</defaultValue>
                     <description>Info: Time during which the signal is sampled by the ADC</description>
                     <displayedName>Observation Time </displayedName>
@@ -304,7 +306,7 @@
                 <key>BASE_FREQ_1</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>BASE_FREQ_1</name>
-                    <value>1.27552944E8</value>
+                    <value>1.28E8</value>
                     <defaultValue>1.27552944E8</defaultValue>
                     <description>Info: Frequency of the observed nucleus</description>
                     <displayedName>Base Frequency 1</displayedName>
@@ -398,7 +400,7 @@
                     <name>DIGITAL_FILTER_REMOVED</name>
                     <value>true</value>
                     <defaultValue>true</defaultValue>
-                    <description>Data shift due to the digital filter are removed</description>
+                    <description>Enable to activate the data shift</description>
                     <displayedName>DIGITAL_FILTER_REMOVED</displayedName>
                     <locked>false</locked>
                     <lockedToDefault>true</lockedToDefault>
@@ -576,7 +578,7 @@
                 <key>ECHO_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME</name>
-                    <value>0.009000000000000001</value>
+                    <value>0.01041</value>
                     <defaultValue>0.005</defaultValue>
                     <description>Echo Time</description>
                     <displayedName>TE</displayedName>
@@ -594,7 +596,7 @@
                 <key>ECHO_TIME_EFFECTIVE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME_EFFECTIVE</name>
-                    <value>0.009000000000000001</value>
+                    <value>0.01041</value>
                     <defaultValue>0.01</defaultValue>
                     <description>Info: Effective echo time in Fast Spin Echo sequence</description>
                     <displayedName>TE Eff</displayedName>
@@ -949,7 +951,7 @@
                 <key>GRADIENT_AREA_CRUSHER</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER</name>
-                    <value>5.567078717420658E-5</value>
+                    <value>5.180999999999999E-5</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Crusher gradient area</description>
                     <displayedName>Crusher Gradient Area</displayedName>
@@ -967,7 +969,7 @@
                 <key>GRADIENT_AREA_CRUSHER_PI</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER_PI</name>
-                    <value>2.369905410005974</value>
+                    <value>2.2055516999999996</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Number of pi dephasing by the crusher</description>
                     <displayedName>Crusher Gradient Area Pi</displayedName>
@@ -1273,7 +1275,7 @@
                 <key>INTERMEDIATE_FREQUENCY</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>INTERMEDIATE_FREQUENCY</name>
-                    <value>2.051E7</value>
+                    <value>1.251E7</value>
                     <defaultValue>1.251E7</defaultValue>
                     <description>Info: Frequency from the Hardware used for the signal demodulation (ADC optimal frequency)</description>
                     <displayedName>INTERMEDIATE_FREQUENCY</displayedName>
@@ -1529,7 +1531,7 @@
                 <key>MULTISERIES_PARAMETER_NAME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>MULTISERIES_PARAMETER_NAME</name>
-                    <value></value>
+                    <value>Water-Fat Phase Shift</value>
                     <defaultValue></defaultValue>
                     <description>Info: Name of MultiSeries Parameter: TE (multiecho), TI (multi-IR), TD (multi-trigger) or phase shift (DIXON)</description>
                     <displayedName>Multiseries Param Name</displayedName>
@@ -1548,6 +1550,9 @@
                 <key>MULTISERIES_PARAMETER_VALUE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listNumberParam">
                     <name>MULTISERIES_PARAMETER_VALUE</name>
+                    <value>-3.14</value>
+                    <value>0.0</value>
+                    <value>3.14</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: List of values of the incremented parameter in multiseries mode (cf. Mulriseries Param Name)</description>
                     <displayedName>Multiseries Param Values</displayedName>
@@ -2198,7 +2203,7 @@
                 <key>OBSERVED_FREQUENCY</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OBSERVED_FREQUENCY</name>
-                    <value>1.27552944E8</value>
+                    <value>1.28E8</value>
                     <defaultValue>6.3E7</defaultValue>
                     <description>Info: Frequency of the acquisition</description>
                     <displayedName>Observed Frequency</displayedName>
@@ -2982,7 +2987,7 @@
                 <key>SEQUENCE_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SEQUENCE_TIME</name>
-                    <value>134.676005</value>
+                    <value>442.134015</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Total acquisition time</description>
                     <displayedName>Acquisition Time</displayedName>
@@ -3000,7 +3005,7 @@
                 <key>SEQUENCE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQUENCE_VERSION</name>
-                    <value>Version8.1</value>
+                    <value>Version9.17</value>
                     <defaultValue></defaultValue>
                     <description>Info: Sequence version</description>
                     <displayedName>Sequence version</displayedName>
@@ -3015,7 +3020,7 @@
                 <key>SEQ_DESCRIPTION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQ_DESCRIPTION</name>
-                    <value>SE_2D_SAG_256x128x12_ETL=4</value>
+                    <value>SE_2D_SAG_256x128x12x3_ETL=4_3PTS_DIXON(-PI_0+PI)</value>
                     <defaultValue></defaultValue>
                     <description>Info: Description of the sequence</description>
                     <displayedName>Sequence Description</displayedName>
@@ -3144,7 +3149,7 @@
                 <key>SPECTRAL_WIDTH</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH</name>
-                    <value>50080.0</value>
+                    <value>50080.1282051282</value>
                     <defaultValue>12500.0</defaultValue>
                     <description>Receiver bandwidth (SW, BW, bandwidth )</description>
                     <displayedName>BW</displayedName>
@@ -3176,7 +3181,7 @@
                 <key>SPECTRAL_WIDTH_PER_PIXEL</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH_PER_PIXEL</name>
-                    <value>195.625</value>
+                    <value>195.62550080128204</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Bandwidth Width per pixel in Hz / Px</description>
                     <displayedName>BW/px</displayedName>
@@ -3340,7 +3345,7 @@
                 <key>TX_AMP_180</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_AMP_180</name>
-                    <value>89.2697162132732</value>
+                    <value>73.69567183915586</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info:180 RF pulse amplitude</description>
                     <displayedName>TX 180 Amplitude</displayedName>
@@ -3358,7 +3363,7 @@
                 <key>TX_AMP_90</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_AMP_90</name>
-                    <value>44.5547338292634</value>
+                    <value>37.115971498302386</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: 90 RF pulse amplitude</description>
                     <displayedName>TX 90 Amplitude</displayedName>
@@ -3390,7 +3395,7 @@
                 <key>TX_ATT</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_ATT</name>
-                    <value>29.0</value>
+                    <value>37.0</value>
                     <defaultValue>36.0</defaultValue>
                     <description>RF pulse attenuation</description>
                     <displayedName>TX Attenuation</displayedName>
@@ -3601,7 +3606,7 @@
                 <key>USER_MATRIX_DIMENSION_4D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_MATRIX_DIMENSION_4D</name>
-                    <value>1</value>
+                    <value>3</value>
                     <defaultValue>1</defaultValue>
                     <description>Info: Number of image data set (user maxtrix 4D)</description>
                     <displayedName>No. Data Sets</displayedName>
