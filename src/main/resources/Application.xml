@@ -286,7 +286,7 @@
                 <key>ACQUISITION_TIME_PER_SCAN</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_TIME_PER_SCAN</name>
-                    <value>0.005111821086261981</value>
+                    <value>0.0051183616</value>
                     <defaultValue>1.0</defaultValue>
                     <description>Info: Time during which the signal is sampled by the ADC</description>
                     <displayedName>Observation Time </displayedName>
@@ -304,7 +304,7 @@
                 <key>BASE_FREQ_1</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>BASE_FREQ_1</name>
-                    <value>1.27552944E8</value>
+                    <value>1.28E8</value>
                     <defaultValue>1.27552944E8</defaultValue>
                     <description>Info: Frequency of the observed nucleus</description>
                     <displayedName>Base Frequency 1</displayedName>
@@ -428,7 +428,7 @@
                 <key>DIXON_3PTS</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                     <name>DIXON_3PTS</name>
-                    <value>true</value>
+                    <value>false</value>
                     <defaultValue>false</defaultValue>
                     <description>Enable 3-points Dixon measurement</description>
                     <displayedName>Dixon 3pts</displayedName>
@@ -558,7 +558,7 @@
                 <key>ECHO_SPACING</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_SPACING</name>
-                    <value>0.01041</value>
+                    <value>0.009000000000000001</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Delay between two consecutive echoes</description>
                     <displayedName>Echo Spacing</displayedName>
@@ -684,7 +684,7 @@
                 <key>FATSAT_GRAD_APP_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FATSAT_GRAD_APP_TIME</name>
-                    <value>8.0E-5</value>
+                    <value>1.0E-5</value>
                     <defaultValue>0.001</defaultValue>
                     <description>Top time of Fat-Sat spoiler gradient</description>
                     <displayedName>FatSat - Gradient Duration</displayedName>
@@ -738,7 +738,7 @@
                 <key>FATSAT_TX_LENGTH</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FATSAT_TX_LENGTH</name>
-                    <value>0.0108</value>
+                    <value>0.0058</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Fat-Sat Pulse duration (input for binomial pulse)</description>
                     <displayedName>FatSat - TX Length</displayedName>
@@ -949,7 +949,7 @@
                 <key>GRADIENT_AREA_CRUSHER</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER</name>
-                    <value>5.567078717420658E-5</value>
+                    <value>-1.0887760800000003E-4</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Crusher gradient area</description>
                     <displayedName>Crusher Gradient Area</displayedName>
@@ -967,7 +967,7 @@
                 <key>GRADIENT_AREA_CRUSHER_PI</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER_PI</name>
-                    <value>2.369905410005974</value>
+                    <value>-4.634919772560002</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Number of pi dephasing by the crusher</description>
                     <displayedName>Crusher Gradient Area Pi</displayedName>
@@ -1209,7 +1209,7 @@
                 <key>GRADIENT_RISE_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_RISE_TIME</name>
-                    <value>1.5E-4</value>
+                    <value>1.6E-4</value>
                     <defaultValue>1.9999999999999998E-4</defaultValue>
                     <description>Rise time of the gradient</description>
                     <displayedName>Gradient Rise Time</displayedName>
@@ -1273,7 +1273,7 @@
                 <key>INTERMEDIATE_FREQUENCY</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>INTERMEDIATE_FREQUENCY</name>
-                    <value>2.051E7</value>
+                    <value>1.251E7</value>
                     <defaultValue>1.251E7</defaultValue>
                     <description>Info: Frequency from the Hardware used for the signal demodulation (ADC optimal frequency)</description>
                     <displayedName>INTERMEDIATE_FREQUENCY</displayedName>
@@ -2198,7 +2198,7 @@
                 <key>OBSERVED_FREQUENCY</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OBSERVED_FREQUENCY</name>
-                    <value>1.27552944E8</value>
+                    <value>1.28E8</value>
                     <defaultValue>6.3E7</defaultValue>
                     <description>Info: Frequency of the acquisition</description>
                     <displayedName>Observed Frequency</displayedName>
@@ -2745,7 +2745,7 @@
                 <key>REPETITION_TIME</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>REPETITION_TIME</name>
-                    <value>0.5742</value>
+                    <value>0.522</value>
                     <defaultValue>0.2</defaultValue>
                     <description>Repetition Time</description>
                     <displayedName>TR</displayedName>
@@ -3000,7 +3000,7 @@
                 <key>SEQUENCE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQUENCE_VERSION</name>
-                    <value>Version8.1</value>
+                    <value>Version9.15</value>
                     <defaultValue></defaultValue>
                     <description>Info: Sequence version</description>
                     <displayedName>Sequence version</displayedName>
@@ -3111,11 +3111,11 @@
                 <key>SOFTWARE_VERSION</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SOFTWARE_VERSION</name>
-                    <value>1.0199</value>
+                    <value> </value>
                     <defaultValue>Software version</defaultValue>
                     <description>Info: Version of the software</description>
                     <displayedName>Software Version</displayedName>
-                    <locked>true</locked>
+                    <locked>false</locked>
                     <lockedToDefault>false</lockedToDefault>
                     <restrictedToSuggested>false</restrictedToSuggested>
                     <group>Miscellaneous</group>
@@ -3144,7 +3144,7 @@
                 <key>SPECTRAL_WIDTH</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH</name>
-                    <value>50080.0</value>
+                    <value>50016.005121638926</value>
                     <defaultValue>12500.0</defaultValue>
                     <description>Receiver bandwidth (SW, BW, bandwidth )</description>
                     <displayedName>BW</displayedName>
@@ -3176,7 +3176,7 @@
                 <key>SPECTRAL_WIDTH_PER_PIXEL</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH_PER_PIXEL</name>
-                    <value>195.625</value>
+                    <value>195.37502000640205</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Bandwidth Width per pixel in Hz / Px</description>
                     <displayedName>BW/px</displayedName>
@@ -3340,7 +3340,7 @@
                 <key>TX_AMP_180</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_AMP_180</name>
-                    <value>89.2697162132732</value>
+                    <value>73.69567183915586</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info:180 RF pulse amplitude</description>
                     <displayedName>TX 180 Amplitude</displayedName>
@@ -3358,7 +3358,7 @@
                 <key>TX_AMP_90</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_AMP_90</name>
-                    <value>44.5547338292634</value>
+                    <value>37.115971498302386</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: 90 RF pulse amplitude</description>
                     <displayedName>TX 90 Amplitude</displayedName>
@@ -3390,7 +3390,7 @@
                 <key>TX_ATT</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>TX_ATT</name>
-                    <value>29.0</value>
+                    <value>37.0</value>
                     <defaultValue>36.0</defaultValue>
                     <description>RF pulse attenuation</description>
                     <displayedName>TX Attenuation</displayedName>

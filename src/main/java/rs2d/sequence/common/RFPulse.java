@@ -3,7 +3,6 @@ package rs2d.sequence.common;
 import rs2d.commons.log.Log;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.instrument.Instrument;
-
 import rs2d.spinlab.instrument.InstrumentTxChannel;
 import rs2d.spinlab.instrument.probe.Probe;
 import rs2d.spinlab.instrument.probe.ProbeChannelPower;
@@ -63,18 +62,18 @@ public class RFPulse {
 
     private double pulseDuration;
     private double observeFrequency = Double.NaN;
-    private Nucleus nucleus;
+    private Nucleus nucleus = Nucleus.H1;
     private double powerPulse = Double.NaN;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                  Constructor
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    public RFPulse(){
+    public RFPulse() {
 
     }
 
-            public RFPulse(Param attPar, Table amplitudeTab, Table phaseTab,
-                   Table timeTab, Shape shape, Shape shapePhase, Table offsetFreqTab) {
+    public RFPulse(Param attPar, Table amplitudeTab, Table phaseTab,
+                   Table timeTab, Shape shape, Shape shapePhase, Table offsetFreqTab, Nucleus nucleus) {
         amplitudeTable = amplitudeTab;
         attParam = attPar;
         phase = phaseTab;
@@ -85,36 +84,42 @@ public class RFPulse {
 
         pulseDuration = timeTable.get(0).doubleValue();
         FrequencyOffsetTable = offsetFreqTab;
+
+        this.nucleus = nucleus;
+
     }
 
 
-    public RFPulse(Table timeTab, Table offsetFreqTab) {
+    public RFPulse(Table timeTab, Table offsetFreqTab, Nucleus nucleus) {
         timeTable = timeTab;
 
         pulseDuration = timeTab.get(0).doubleValue();
         FrequencyOffsetTable = offsetFreqTab;
+        this.nucleus = nucleus;
     }
 
-    public RFPulse(Table timeTab, Table offsetFreqTab, Table phaseTab) {
+    public RFPulse(Table timeTab, Table offsetFreqTab, Table phaseTab, Nucleus nucleus) {
         timeTable = timeTab;
         phase = phaseTab;
         pulseDuration = timeTab.get(0).doubleValue();
         FrequencyOffsetTable = offsetFreqTab;
+
+        this.nucleus = nucleus;
     }
 
 
-    public static RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum txAttParam, GeneratorSequenceParamEnum amplitudeTab, GeneratorSequenceParamEnum txPhaseTab,
-                                        GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum shape, GeneratorSequenceParamEnum shapePhaseShape, GeneratorSequenceParamEnum offsetTab) {
-        return new RFPulse(sequence.getPublicParam(txAttParam.name()), sequence.getTable(amplitudeTab.name()), sequence.getTable(txPhaseTab.name()),
-                sequence.getPublicTable(timeTab.name()), (Shape) sequence.getTable(shape.name()), (Shape) sequence.getTable(shapePhaseShape.name()), sequence.getTable(offsetTab.name()));
+    public static rs2d.sequence.common.RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum txAttParam, GeneratorSequenceParamEnum amplitudeTab, GeneratorSequenceParamEnum txPhaseTab,
+                                                             GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum shape, GeneratorSequenceParamEnum shapePhaseShape, GeneratorSequenceParamEnum offsetTab, Nucleus nucleus) {
+        return new rs2d.sequence.common.RFPulse(sequence.getPublicParam(txAttParam.name()), sequence.getTable(amplitudeTab.name()), sequence.getTable(txPhaseTab.name()),
+                sequence.getPublicTable(timeTab.name()), (Shape) sequence.getTable(shape.name()), (Shape) sequence.getTable(shapePhaseShape.name()), sequence.getTable(offsetTab.name()), nucleus);
     }
 
-    public static RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum offsetTab) {
-        return new RFPulse(sequence.getPublicTable(timeTab.name()), sequence.getTable(offsetTab.name()));
+    public static rs2d.sequence.common.RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum offsetTab, Nucleus nucleus) {
+        return new rs2d.sequence.common.RFPulse(sequence.getPublicTable(timeTab.name()), sequence.getTable(offsetTab.name()), nucleus);
     }
 
-    public static RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum offsetTab, GeneratorSequenceParamEnum txPhaseTab) {
-        return new RFPulse(sequence.getPublicTable(timeTab.name()), sequence.getTable(offsetTab.name()), sequence.getTable(txPhaseTab.name()));
+    public static rs2d.sequence.common.RFPulse createRFPulse(Sequence sequence, GeneratorSequenceParamEnum timeTab, GeneratorSequenceParamEnum offsetTab, GeneratorSequenceParamEnum txPhaseTab, Nucleus nucleus) {
+        return new rs2d.sequence.common.RFPulse(sequence.getPublicTable(timeTab.name()), sequence.getTable(offsetTab.name()), sequence.getTable(txPhaseTab.name()), nucleus);
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -224,7 +229,7 @@ public class RFPulse {
         }
         // Calculate amp with the new and real Att
         tx_amp90 = calculateTxAmp90(txCh);
-        tx_amp180 = attParamTxAmp180(txCh);
+        tx_amp180 = calculateTxAmp180(txCh);
         tx_amp = tx_amp90 * flipAngle / 90;
         setSequenceTableSingleValue(amplitudeTable, tx_amp);
         attParam.setValue(txAtt);
@@ -287,7 +292,7 @@ public class RFPulse {
      * @param txCh
      * @return tx_amp
      */
-    private double attParamTxAmp180(InstrumentTxChannel txCh) {
+    private double calculateTxAmp180(InstrumentTxChannel txCh) {
         double tx_amp;
         Probe probe = Instrument.instance().getTransmitProbe();
         ProbeChannelPower pulse = TxMath.getProbePower(probe, null, nucleus.name());
@@ -370,14 +375,14 @@ public class RFPulse {
             txAtt = (int) TxMath.getTxAttFor(powerPulse, txCh, amp, observeFrequency);
             txAtt = Math.min(txAtt, 63);
         } catch (Exception e) {
-            System.out.println(" Tx att too high reduce it to 63 ");
-            Log.info(getClass(), " Tx att too high reduce it to 63 ");
+            System.out.println(" Tx att too high, reduce it to 63 ");
+            Log.info(getClass(), " Tx att too high, reduce it to 63 ");
             txAtt = 63;
         }
         attParam.setValue(txAtt);
 
         return txAtt;
-    }
+}
 
     /**
      * calculate and set txAtt in order to get the powerPulse at pulse amplitude = amp for a specific power
@@ -401,6 +406,7 @@ public class RFPulse {
         attParam.setValue(txAtt);
         return txAtt;
     }
+
     /**
      * prepare and set txAmp according to txAtt , flipAngle
      *
@@ -429,7 +435,7 @@ public class RFPulse {
         }
         InstrumentTxChannel txCh = Instrument.instance().getTxChannels().get(txRoute.get(0));
         tx_amp90 = calculateTxAmp90(txCh);
-        tx_amp180 = attParamTxAmp180(txCh);
+        tx_amp180 = calculateTxAmp180(txCh);
         setSequenceTableValues(amplitudeTable, order);
         for (int i = 0; i < FA_list.length; i++) {
             tx_amp = (FA_list[i] < 135 ? tx_amp90 : tx_amp180) * FA_list[i] / (FA_list[i] < 135 ? 90 : 180);
@@ -447,7 +453,7 @@ public class RFPulse {
      *
      * @param pulseName     :GAUSSIAN , SINC3 , SINC5 , HARD
      * @param numberOfPoint The number of point of the generated shape
-     * @param type      or "90 degree" "Refocusing (spin-echo)"
+     * @param type          or "90 degree" "Refocusing (spin-echo)"
      */
     public void setShape(String pulseName, int numberOfPoint, String type) throws Exception {
         shapePhase.clear();
@@ -466,6 +472,7 @@ public class RFPulse {
                         || (i > ((int) (numberOfPoint * 4.0 / 6.0)) && (i <= ((int) (numberOfPoint * 5.0 / 6.0)))))
                         ? 180 : 0);
             }
+
         } else if ("HARD".equalsIgnoreCase(pulseName)) {
             shape.clear();    // set to HARD pulse
             shapePhase.clear();    // set to HARD pulse
@@ -497,10 +504,10 @@ public class RFPulse {
 
     private void setTableValuesFromSLRGen(Table table, int nbpoint, int bw, double amp, String type, boolean abs, String bwstring) throws Exception {
         TableGeneratorInterface gen = null;
-       gen = loadTableGenerator("SLR");
-        if  ( gen == null) {
-            System.out.println( " no SLR Generator instaled");
-            Log.error(getClass(), " no SLR Generator instaled" );
+        gen = loadTableGenerator("SLR");
+        if (gen == null) {
+            System.out.println(" no SLR Generator instaled");
+            Log.error(getClass(), " no SLR Generator instaled");
         }
         gen.getParams().get(0).setValue(nbpoint);
         gen.getParams().get(1).setValue(bwstring);
@@ -520,9 +527,9 @@ public class RFPulse {
     private void setTableValuesFromSLRPhaseGen(Table table, int nbpoint, int bw, double amp, String type, boolean abs, String bwstring) throws Exception {
         TableGeneratorInterface gen = null;
         gen = loadTableGenerator("SLRPhase");
-        if  ( gen == null) {
-            System.out.println( " no SLR Generator instaled");
-            Log.error(getClass(), " no SLR Generator instaled" );
+        if (gen == null) {
+            System.out.println(" no SLR Generator instaled");
+            Log.error(getClass(), " no SLR Generator instaled");
         }
         gen.getParams().get(0).setValue(nbpoint);
         gen.getParams().get(1).setValue(bwstring);
@@ -658,13 +665,14 @@ public class RFPulse {
         double frequencyCenter3D90 = calculateOffsetFreq(grad_amp_slice_mTpm, offCenterDistance3D);
         double slice_thickness = Double.isNaN(gradSlice.getSliceThickness()) ? 0 : gradSlice.getSliceThickness();
         double multi_planar_fov = (numberOfFreqOffset - 1) * (spacing_between_slice + slice_thickness);
-        double multiPlanarFreqOffset = multi_planar_fov * grad_amp_slice_mTpm * (GradientMath.GAMMA);
+        double multiPlanarFreqOffset = multi_planar_fov * grad_amp_slice_mTpm * (GradientMath.GAMMA / nucleus.getRatio());
         txFrequencyOffsetTable = new double[numberOfFreqOffset];
         for (int i = 0; i < numberOfFreqOffset; i++) {
             double tx_frequency_offset = (multiPlanarFreqOffset / 2) - (numberOfFreqOffset == 1 ? 0 : i * multiPlanarFreqOffset / (numberOfFreqOffset - 1)) + frequencyCenter3D90;
             txFrequencyOffsetTable[i] = tx_frequency_offset;
         }
     }
+
 
     /**
      * reorder txFrequencyOffsetTable acording to the plugin
@@ -700,7 +708,7 @@ public class RFPulse {
     }
 
     public double calculateOffsetFreq(double grad_amp_mTpm, double offCenterDistance) {
-        return (-grad_amp_mTpm * offCenterDistance * (GradientMath.GAMMA));
+        return (-grad_amp_mTpm * offCenterDistance * (GradientMath.GAMMA / nucleus.getRatio()));
     }
 
     public void setFrequencyOffset(Order order) {
@@ -771,7 +779,7 @@ public class RFPulse {
      * @param pulse :  to compensate
      * @param ratio : ratio of the pule duration to be compensated
      */
-    public void setCompensationFrequencyOffset(RFPulse pulse, double ratio) {
+    public void setCompensationFrequencyOffset(rs2d.sequence.common.RFPulse pulse, double ratio) {
         FrequencyOffsetOrder = pulse.getFrequencyOffsetOrder();
         numberOfFreqOffset = pulse.getNumberOfFreqOffset();
         if (numberOfFreqOffset != -1) {
@@ -790,7 +798,7 @@ public class RFPulse {
      * @param pulse :  to compensate
      * @param time  : time duration of the pulse to be compensated
      */
-    public void setCompensationFrequencyOffsetWithTime(RFPulse pulse, double time) {
+    public void setCompensationFrequencyOffsetWithTime(rs2d.sequence.common.RFPulse pulse, double time) {
         FrequencyOffsetOrder = pulse.getFrequencyOffsetOrder();
         numberOfFreqOffset = pulse.getNumberOfFreqOffset();
         txFrequencyOffsetTable = new double[numberOfFreqOffset];
@@ -810,7 +818,7 @@ public class RFPulse {
         numberOfFreqOffset = 1;
         double grad_amp_read_read_mTpm = grad.getAmplitude_mTpm();// amplitude in T/m
         txFrequencyOffsetTable = new double[numberOfFreqOffset];
-        txFrequencyOffsetTable[0] = -grad_amp_read_read_mTpm * off_center_distance * (GradientMath.GAMMA);
+        txFrequencyOffsetTable[0] = -grad_amp_read_read_mTpm * off_center_distance * (GradientMath.GAMMA / nucleus.getRatio());
         setSequenceTableValues(FrequencyOffsetTable, FrequencyOffsetOrder, txFrequencyOffsetTable[0]);
     }
 
@@ -822,9 +830,9 @@ public class RFPulse {
         txFrequencyOffsetTable = new double[numberOfFreqOffset];
         for (int i = 0; i < numberOfFreqOffset; i++) {
             if (i % 2 == 0) {
-                txFrequencyOffsetTable[i] = -grad_amp_read_read_mTpm * off_center_distance * (GradientMath.GAMMA);
+                txFrequencyOffsetTable[i] = -grad_amp_read_read_mTpm * off_center_distance * (GradientMath.GAMMA / nucleus.getRatio());
             } else {
-                txFrequencyOffsetTable[i] = grad_amp_read_read_mTpm * off_center_distance * (GradientMath.GAMMA);
+                txFrequencyOffsetTable[i] = grad_amp_read_read_mTpm * off_center_distance * (GradientMath.GAMMA / nucleus.getRatio());
             }
         }
         setSequenceTableValues(FrequencyOffsetTable, FrequencyOffsetOrder, txFrequencyOffsetTable);
