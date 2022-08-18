@@ -152,7 +152,7 @@
             <key>BASE_FREQ_1</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>BASE_FREQ_1</name>
-                <value>1.28E8</value>
+                <value>1.2800000241427468E8</value>
                 <defaultValue>1.27552944E8</defaultValue>
                 <description>Info: Frequency of the observed nucleus</description>
                 <displayedName>Base Frequency 1</displayedName>
@@ -289,7 +289,7 @@
             <key>DIXON_FAT_PERIODE</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>DIXON_FAT_PERIODE</name>
-                <value>0.002232142857142857</value>
+                <value>0.002232142815041249</value>
                 <defaultValue>0.0035499999999999998</defaultValue>
                 <description>Periode of the phase cycling between fat and water (3.5ppm i.e. 2.2ms at 3T, 4.4 at 1.5T)</description>
                 <displayedName>Fat-Water Periode</displayedName>
@@ -480,7 +480,7 @@
                 <name>FATSAT</name>
                 <value>Disable</value>
                 <defaultValue>Disable</defaultValue>
-                <description>Select the fat saturation pulse type: "disable" no FatSat pulse ; "spectrally selective" 90° spectrally selective pulse ; "binomial" (45°,-45°) composite non-selective pulse</description>
+                <description>Select the fat saturation pulse type: "Disable" no FatSat pulse ; "Spectrally Selective" 90° spectrally selective pulse ; "Binomial" (45°,-45°) composite non-selective pulse</description>
                 <displayedName>Fat Saturation Pulse</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
@@ -497,7 +497,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_BANDWIDTH</name>
                 <value>250.0</value>
-                <defaultValue>448.0</defaultValue>
+                <defaultValue>451.5</defaultValue>
                 <description>Fat-Sat pulse Bandwidth (input for spectrally selective pulse)</description>
                 <displayedName>FatSat - TX BW</displayedName>
                 <locked>false</locked>
@@ -551,7 +551,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FATSAT_OFFSET_FREQ</name>
                 <value>-440.0</value>
-                <defaultValue>-448.0</defaultValue>
+                <defaultValue>-451.5</defaultValue>
                 <description>Separation between fat and water frequencies (at 3T ~ 420-448Hz ; at 1.5T ~ 210-224Hz)  : Default value = water frequency * 3.5 </description>
                 <displayedName>Fat-water Offset</displayedName>
                 <locked>false</locked>
@@ -746,7 +746,7 @@
                 <value>30.0</value>
                 <defaultValue>8.0</defaultValue>
                 <description>Amplitude of the crusher gradient</description>
-                <displayedName>Crusher Gradient Amplitude</displayedName>
+                <displayedName>Gradient Amplitude Crusher</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -764,7 +764,7 @@
                 <value>12.0</value>
                 <defaultValue>8.0</defaultValue>
                 <description>Amplitude of the crusher gradient after the Inversion pulse</description>
-                <displayedName>Crusher Gradient IR Amplitude</displayedName>
+                <displayedName>Gradient Amplitude Crusher IR</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -782,7 +782,7 @@
                 <value>20.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude of the spoiler gradient</description>
-                <displayedName>Spoiler Gradient Amplitude</displayedName>
+                <displayedName>Gradient Amplitude Spoiler</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -800,7 +800,7 @@
                 <value>5.180999999999999E-5</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Crusher gradient area</description>
-                <displayedName>Crusher Gradient Area</displayedName>
+                <displayedName>Gradient Area Crusher</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -818,7 +818,7 @@
                 <value>2.2055516999999996</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Number of pi dephasing by the crusher</description>
-                <displayedName>Crusher Gradient Area Pi</displayedName>
+                <displayedName>Gradient Area Crusher Pi</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -836,7 +836,7 @@
                 <value>5.0E-4</value>
                 <defaultValue>3.0E-4</defaultValue>
                 <description>Top time of the crusher gradient played at the end of scan</description>
-                <displayedName>Crusher Gradient End Duration</displayedName>
+                <displayedName>Gradient Duration Crusher End</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -854,7 +854,7 @@
                 <value>3.9999999999999996E-4</value>
                 <defaultValue>3.9999999999999996E-4</defaultValue>
                 <description>Top time of the crusher gradient played after Inversion pulse</description>
-                <displayedName>Crusher Gradient IR Duration </displayedName>
+                <displayedName>Gradient Duration Crusher IR</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -872,7 +872,7 @@
                 <value>4.9999999999999996E-6</value>
                 <defaultValue>4.9999999999999996E-6</defaultValue>
                 <description>Top time of the crusher gradient associated to the readout gradient </description>
-                <displayedName>Crusher Gradient Read Duration </displayedName>
+                <displayedName>Gradient Duration Crusher Read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -890,7 +890,7 @@
                 <value>4.0E-4</value>
                 <defaultValue>3.9999999999999996E-4</defaultValue>
                 <description>Top time of the crusher gradients</description>
-                <displayedName>Crusher Gradient Duration</displayedName>
+                <displayedName>Gradient Duration Crushers</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -908,7 +908,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable IR gradient crusher</description>
-                <displayedName>Crusher Gradient IR</displayedName>
+                <displayedName> Gradient Crusher IR</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -922,7 +922,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable 2D phase encoding gradient</description>
-                <displayedName>Phase-2D Gradient</displayedName>
+                <displayedName>Gradient Phase-2D</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -933,10 +933,10 @@
             <key>GRADIENT_ENABLE_PHASE_3D</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>GRADIENT_ENABLE_PHASE_3D</name>
-                <value>false</value>
+                <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable 3D phase encoding gradient</description>
-                <displayedName>Phase-3D Gradient </displayedName>
+                <displayedName>Gradient Phase-3D</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -950,7 +950,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable frequency encoding gradient</description>
-                <displayedName>Read Gradient</displayedName>
+                <displayedName>Gradient Read</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -964,7 +964,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable slice encoding gradient</description>
-                <displayedName>Slice Gradient</displayedName>
+                <displayedName>Gradient Slice</displayedName>
                 <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -978,7 +978,7 @@
                 <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>Enable slice encoding crusher gradients before &amp; after the 180 RF pulse</description>
-                <displayedName>Crusher Gradient Slice</displayedName>
+                <displayedName>Gradient Crusher Slice</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -989,10 +989,10 @@
             <key>GRADIENT_ENABLE_SPOILER</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>GRADIENT_ENABLE_SPOILER</name>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>false</defaultValue>
-                <description>Enable gradient spoiler in the three direction</description>
-                <displayedName>Spoiler Gradients</displayedName>
+                <description>Enable gradient spoiler in the three directions</description>
+                <displayedName>Gradient Spoilers</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <group>Gradient</group>
@@ -1006,7 +1006,7 @@
                 <value>4.0E-4</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Top time of phase encoding gradient</description>
-                <displayedName>Phase Gradient Duration</displayedName>
+                <displayedName>Gradient Duration Phase</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1024,7 +1024,7 @@
                 <value>0.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Amplitude added to the read prephasing gradient to have an offset </description>
-                <displayedName>Read Gradient Offset</displayedName>
+                <displayedName>Gradient Offset Read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -1042,7 +1042,7 @@
                 <value>3.9999999999999996E-4</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Top time application read prephasing gradient</description>
-                <displayedName>Read Prephasing Gradient Duration</displayedName>
+                <displayedName>Gradient Duration Prephasing Read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2049,7 +2049,7 @@
             <key>OBSERVED_FREQUENCY</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>OBSERVED_FREQUENCY</name>
-                <value>1.28E8</value>
+                <value>1.2800000241427468E8</value>
                 <defaultValue>6.3E7</defaultValue>
                 <description>Info: Frequency of the acquisition</description>
                 <displayedName>Observed Frequency</displayedName>
@@ -2533,7 +2533,7 @@
                 <value>0.5</value>
                 <defaultValue>0.5</defaultValue>
                 <description>Prephasing reading gradient ratio</description>
-                <displayedName>Prephasing Read Gradient Ratio</displayedName>
+                <displayedName>Gradient Ratio Prephasing Read</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
@@ -2851,7 +2851,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version9.17</value>
+                <value>Version9.16</value>
                 <defaultValue></defaultValue>
                 <description>Info: Sequence version</description>
                 <displayedName>Sequence version</displayedName>
@@ -2915,7 +2915,7 @@
                 <value>0.5</value>
                 <defaultValue>0.5</defaultValue>
                 <description>Ratio of the slice refocusing gradient</description>
-                <displayedName>Slice Refocusing Gradient Ratio</displayedName>
+                <displayedName>Gradient Ratio Prephasing Slice</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
