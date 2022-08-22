@@ -68,7 +68,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     private int echoTrainLength;
     private int nbOfInterleavedSlice;
     private int nb_planar_excitation;
-    private int nb_of_shoot_3d;
+    private int nb_of_slice_packs;
 
     private double spectralWidth;
     private boolean isSW;
@@ -258,7 +258,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         sliceThickness = getDouble(SLICE_THICKNESS);
         spacingBetweenSlice = getDouble(SPACING_BETWEEN_SLICE);
-        nb_of_shoot_3d = getInt(NUMBER_OF_SHOOT_3D);
+        nb_of_slice_packs = getInt(NUMBER_OF_SHOOT_3D);
         isSlicePacked = getBoolean(MULTISLICE_PACKED);
 
         pixelDimension = getDouble(RESOLUTION_FREQUENCY);
@@ -544,20 +544,21 @@ public class SpinEcho extends BaseSequenceGenerator {
             acquisitionMatrixDimension3D = (acquisitionMatrixDimension3D < 4) && isEnablePhase3D ? 4 : acquisitionMatrixDimension3D;
             userMatrixDimension3D = Math.max(userMatrixDimension3D, acquisitionMatrixDimension3D);
             getParam(USER_MATRIX_DIMENSION_3D).setValue(userMatrixDimension3D);
-            nb_of_shoot_3d = 0;
+            nb_of_slice_packs = 0;
             nbOfInterleavedSlice = 1;
             nb_planar_excitation = 1;
         } else {
             acquisitionMatrixDimension3D = userMatrixDimension3D;
             nb_planar_excitation = userMatrixDimension3D;
-            nb_of_shoot_3d = getInt(NUMBER_OF_SHOOT_3D);
-            nb_of_shoot_3d = getInferiorDivisorToGetModulusZero(nb_of_shoot_3d, userMatrixDimension3D);
-            nbOfInterleavedSlice = (int) Math.ceil((float) acquisitionMatrixDimension3D / nb_of_shoot_3d);
+            nb_of_slice_packs = getInt(NUMBER_OF_SHOOT_3D);
+            nb_of_slice_packs = getInferiorDivisorToGetModulusZero(nb_of_slice_packs, userMatrixDimension3D);
+            nbOfInterleavedSlice = (int) Math.ceil((float) acquisitionMatrixDimension3D / nb_of_slice_packs);
         }
-        getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_shoot_3d);
+        getParam(NUMBER_OF_INTERLEAVED_SLICE_PACKS).setValue(nb_of_slice_packs);
+        getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_slice_packs);
         getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(isMultiplanar ? nbOfInterleavedSlice : 0);
 
-        nb_scan_3d = isMultiplanar ? nb_of_shoot_3d : acquisitionMatrixDimension3D;
+        nb_scan_3d = isMultiplanar ? nb_of_slice_packs : acquisitionMatrixDimension3D;
 
         // -----------------------------------------------
         // 3D managment 2/2: FOV
@@ -1534,9 +1535,10 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (getText(IMAGE_CONTRAST).equalsIgnoreCase("T1-weighted") && isMultiplanar) {
             nbOfInterleavedSlice = (int) Math.floor((TE_TR_lim[3] - timeBeforeAndAfterSlice_min) / timeSliceLoop_min);
             nbOfInterleavedSlice = getInferiorDivisorToGetModulusZero(nbOfInterleavedSlice, acquisitionMatrixDimension3D);
-            nb_of_shoot_3d = userMatrixDimension3D / nbOfInterleavedSlice;
+            nb_of_slice_packs = userMatrixDimension3D / nbOfInterleavedSlice;
 
-            getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_shoot_3d);
+            getParam(NUMBER_OF_INTERLEAVED_SLICE_PACKS).setValue(nb_of_slice_packs);
+            getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_slice_packs);
             getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(nbOfInterleavedSlice);
             plugin = getTransformPlugin();
             plugin.setParameters(new ArrayList<>(getUserParams()));
@@ -1569,11 +1571,11 @@ public class SpinEcho extends BaseSequenceGenerator {
             int max_nb_interleaved_excitation = (int) Math.floor(
                     (TE_TR_lim[3] - timeBeforeAndAfterSlice_min)
                             / (tr_min - timeBeforeAndAfterSlice_min)
-                            * ((float) userMatrixDimension3D / nb_of_shoot_3d));
+                            * ((float) userMatrixDimension3D / nb_of_slice_packs));
             max_nb_interleaved_excitation = getInferiorDivisorToGetModulusZero(max_nb_interleaved_excitation, userMatrixDimension3D);
-            int nb_of_shoot_3d_min = userMatrixDimension3D / max_nb_interleaved_excitation;
-            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_shoot_3d_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to guaranty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
-            nb_of_shoot_3d = nb_of_shoot_3d_min;
+            int nb_of_slice_packs_min = userMatrixDimension3D / max_nb_interleaved_excitation;
+            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_slice_packs_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to guaranty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
+            nb_of_slice_packs = nb_of_slice_packs_min;
         }
 
         if (tr < tr_min) {

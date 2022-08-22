@@ -2182,6 +2182,23 @@
                 </value>
             </entry>
             <entry>
+                <key>NUMBER_OF_INTERLEAVED_SLICE_PACKS</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                    <name>NUMBER_OF_INTERLEAVED_SLICE_PACKS</name>
+                    <value>1.0</value>
+                    <defaultValue>0.0</defaultValue>
+                    <description>Info: Copy of No. Interleaved slice packs (temporary param) ; Total number of slice / Number of interleaved slice</description>
+                    <displayedName>NUMBER_OF_INTERLEAVED_SLICE_PACKS (temp)</displayedName>
+                    <locked>true</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <restrictedToSuggested>false</restrictedToSuggested>
+                    <numberEnum>Double</numberEnum>
+                    <minValue>-1.7976931348623157E308</minValue>
+                    <maxValue>1.7976931348623157E308</maxValue>
+                    <category>Acquisition</category>
+                </value>
+            </entry>
+            <entry>
                 <key>NUMBER_OF_SHOOT_3D</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NUMBER_OF_SHOOT_3D</name>
