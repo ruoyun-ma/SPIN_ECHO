@@ -2033,9 +2033,9 @@
                 <name>NUMBER_OF_INTERLEAVED_SLICE_PACKS</name>
                 <value>1.0</value>
                 <defaultValue>0.0</defaultValue>
-                <description>Info: Copy of No. Interleaved slice packs (temporary param) ; Total number of slice / Number of interleaved slice</description>
-                <displayedName>NUMBER_OF_INTERLEAVED_SLICE_PACKS (temp)</displayedName>
-                <locked>true</locked>
+                <description>To split the slices in different packs acquired in one TR (No. Slices per TR = No. Slices / No. Interleaved Packs).  To reach lower TR, increase the number of packs (must be a divisor of the No. Slices).</description>
+                <displayedName>No. Interleaved slice packs</displayedName>
+                <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Double</numberEnum>
@@ -2050,9 +2050,9 @@
                 <name>NUMBER_OF_SHOOT_3D</name>
                 <value>1</value>
                 <defaultValue>1</defaultValue>
-                <description>To split the slices in different packs acquired in one TR (No. Slices per TR = No. Slices / No. Interleaved Packs).  To reach lower TR, increase the number of packs (must be a divisor of the No. Slices).     </description>
-                <displayedName>No. Interleaved Slice Packs</displayedName>
-                <locked>false</locked>
+                <description>Info: Copy of No. Interleaved slice packs (temporary param, will be remmplaced) ; Total number of slice / Number of interleaved slice      </description>
+                <displayedName>NUMBER_OF_SHOOT_3D (temp)</displayedName>
+                <locked>true</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
                 <numberEnum>Scan</numberEnum>
@@ -2868,7 +2868,7 @@
             <key>SEQUENCE_VERSION</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQUENCE_VERSION</name>
-                <value>Version9.16</value>
+                <value>Version9.17</value>
                 <defaultValue></defaultValue>
                 <description>Info: Sequence version</description>
                 <displayedName>Sequence version</displayedName>
@@ -3226,7 +3226,7 @@
             <key>TX_AMP_90</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
-                <value>37.115971498302386</value>
+                <value>50.623735852524064</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: 90 RF pulse amplitude</description>
                 <displayedName>TX 90 Amplitude</displayedName>

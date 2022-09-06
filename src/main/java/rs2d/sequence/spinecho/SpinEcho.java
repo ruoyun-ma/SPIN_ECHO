@@ -37,7 +37,7 @@ import static rs2d.sequence.spinecho.U.*;
 //
 public class SpinEcho extends BaseSequenceGenerator {
 
-    private String sequenceVersion = "Version9.16";
+    private String sequenceVersion = "Version9.17";
     private boolean CameleonVersion105 = false;
 
     private double protonFrequency;
@@ -550,7 +550,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         } else {
             acquisitionMatrixDimension3D = userMatrixDimension3D;
             nb_planar_excitation = userMatrixDimension3D;
-            nb_of_slice_packs = getInt(NUMBER_OF_SHOOT_3D);
+            nb_of_slice_packs = getInt(NUMBER_OF_INTERLEAVED_SLICE_PACKS);
             nb_of_slice_packs = getInferiorDivisorToGetModulusZero(nb_of_slice_packs, userMatrixDimension3D);
             nbOfInterleavedSlice = (int) Math.ceil((float) acquisitionMatrixDimension3D / nb_of_slice_packs);
         }
