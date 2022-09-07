@@ -1444,7 +1444,7 @@
         <Entry>
             <count>1</count>
             <key>elem65</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="txElement" offsetKey="table13" phaseKey="table14" ampKey="table15" shapeKey="table16" shapePhaseKey="table17" attKey="table18" phaseModKey="table164" shapeNameKey="param327" nameKey="param223" enabledKey="param224"/>
+            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="txElement" offsetKey="table13" phaseKey="table20" ampKey="table15" shapeKey="table16" shapePhaseKey="table17" attKey="table18" phaseModKey="table164" shapeNameKey="param327" nameKey="param223" enabledKey="param224"/>
         </Entry>
         <Entry>
             <count>1</count>
@@ -26196,7 +26196,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>60a3c0fa-b2b9-4b36-b68e-32483e14346c</uuid>
+                        <uuid>3d1ba27d-2b5f-46f5-9940-730301b40953</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -26210,7 +26210,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>8f03bed7-57f3-4f3d-aa72-5e413d47171b</uuid>
+                        <uuid>019d95a5-af5d-44a1-a17f-cd9c2ae57f49</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -26224,7 +26224,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>1577c98a-8226-4cb5-a00c-1b29905ce7fb</uuid>
+                        <uuid>942d8afe-2e2d-47dc-b15a-a6033dab777f</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -26238,7 +26238,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>51db4753-ec95-4550-bd8b-08c3777e9330</uuid>
+                        <uuid>e4d87789-ba09-4e5a-9865-a4bd7f50d565</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -26248,7 +26248,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>9c74ae3f-18c7-4dd3-a099-d3aa446d0660</uuid>
+                        <uuid>135b1247-7255-49cd-9e9e-c5b57210cfca</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -26605,19 +26605,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>table14</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
-                <name>Phase119</name>
-                <description></description>
-                <numberEnum>Phase</numberEnum>
-                <order>One</order>
-                <locked>false</locked>
-                <address>0</address>
-                <list>0</list>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>key15</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="shape">
                 <name>Phase</name>
@@ -26735,7 +26722,7 @@
             </value>
         </Entry>
         <Entry>
-            <count>1</count>
+            <count>2</count>
             <key>table20</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="table">
                 <name>Tx_phase_sb</name>
@@ -26805,7 +26792,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>a7f03be0-90d9-4173-aea6-b761bc7ede4a</uuid>
+                        <uuid>6ff66b97-4408-4f4c-8ef4-eeffa923832c</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -26819,7 +26806,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>37030d9e-fcda-4033-83e7-65afdb725824</uuid>
+                        <uuid>69d8c995-fdd3-4d26-ba32-363d572f53c8</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -26833,7 +26820,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>1ac4376f-c21a-47f1-ba7a-c2f9741190c3</uuid>
+                        <uuid>fc64dd3b-b8c7-45e7-a295-baccd20f490b</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -26847,7 +26834,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>3266fb86-ab0d-4111-a9cc-cf368839a66a</uuid>
+                        <uuid>4d567f25-de39-4398-86f5-3bb7be004af2</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -26857,7 +26844,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>4f96b46d-edb1-4d42-b33e-e0b8a0c7f9f5</uuid>
+                        <uuid>38ae30b1-adca-4bc6-b54c-c8a4793a1cbb</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -27327,7 +27314,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>1d59761e-38dc-4183-99d3-e859c03de786</uuid>
+                        <uuid>6e576172-7e23-4676-beb8-14f311c45587</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -27341,7 +27328,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>b2042cde-6e36-4b8a-8ade-88c9b798dccd</uuid>
+                        <uuid>6fe6d787-095a-41c9-a21e-aadfc075b844</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -27355,7 +27342,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>b23d33c5-49fe-43eb-9cec-ba27b87b42cb</uuid>
+                        <uuid>33105618-93f1-4ddc-a8a6-45c155849a9c</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -27369,7 +27356,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>d7f6b42d-a131-45c9-8446-caa42c528f6e</uuid>
+                        <uuid>dcb068c8-c89c-4b60-95ad-5f7ca2d84f41</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -27379,7 +27366,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>076065d4-70b2-4d95-8486-45bb16e13c19</uuid>
+                        <uuid>09604ed0-6eb2-4f30-b8bd-f4b2fff4e6fc</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -30025,7 +30012,7 @@
                     <name>Gaussian</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>4d5e6d98-b0be-4a9a-b861-e94524bd9463</uuid>
+                        <uuid>c04e47aa-4bbf-48a6-bfd9-067a29bdbd6a</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -30039,7 +30026,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Width</name>
-                        <uuid>2a09e9fe-3bc8-4ccf-acb8-bcd776ba91d0</uuid>
+                        <uuid>ce72c772-38e7-445b-a959-9204f19c5075</uuid>
                         <value>0.25</value>
                         <defaultValue>0.25</defaultValue>
                         <description>Width of the gaussian</description>
@@ -30053,7 +30040,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>07c9c102-6e6f-43fd-a3d1-9908870337ef</uuid>
+                        <uuid>9f7a720b-e98b-4795-b27f-047d517abe23</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the gaussian</description>
@@ -30067,7 +30054,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>e649cd86-5246-4832-b658-e3ee65b93912</uuid>
+                        <uuid>b1e68519-0600-4159-823c-7d2b962d1011</uuid>
                         <value>false</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolute value</description>
