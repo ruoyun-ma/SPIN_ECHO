@@ -294,7 +294,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         is_fatsat_enabled = !getText(FATSAT).equalsIgnoreCase("disable");
         is_fatsat_binomial = getText(FATSAT).equalsIgnoreCase("binomial");
 
-        System.out.println("  ");
         is_satband_enabled = getBoolean(SATBAND_ENABLED);
         position_sli_ph_rea = satBandPrep(SATBAND_ORIENTATION, ORIENTATION, IMAGE_ORIENTATION_SUBJECT);
         nb_satband = is_satband_enabled ? (int) Arrays.stream(position_sli_ph_rea).filter(item -> item == 1).count() : 1;
