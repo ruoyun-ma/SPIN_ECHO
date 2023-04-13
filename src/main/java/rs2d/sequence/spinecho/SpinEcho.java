@@ -7,27 +7,31 @@ package rs2d.sequence.spinecho;
 // ---------------------------------------------------------------------
 
 import rs2d.commons.log.Log;
+import rs2d.sequence.common.Gradient;
+import rs2d.sequence.common.Gradient5Event;
+import rs2d.sequence.common.RFPulse;
+import rs2d.spinlab.api.Hardware;
 import rs2d.spinlab.data.transformPlugin.TransformPlugin;
 import rs2d.spinlab.instrument.util.GradientMath;
 import rs2d.spinlab.sequence.SequenceTool;
 import rs2d.spinlab.sequence.element.TimeElement;
+import rs2d.spinlab.sequence.table.Table;
+import rs2d.spinlab.sequence.table.Utility;
 import rs2d.spinlab.sequenceGenerator.BaseSequenceGenerator;
 import rs2d.spinlab.sequenceGenerator.util.GradientRotation;
-import rs2d.spinlab.api.Hardware;
 import rs2d.spinlab.sequenceGenerator.util.TimeEvents;
-import rs2d.spinlab.sequence.table.*;
 import rs2d.spinlab.tools.param.*;
 import rs2d.spinlab.tools.role.RoleEnum;
 import rs2d.spinlab.tools.table.Order;
 import rs2d.spinlab.tools.utility.GradientAxe;
 import rs2d.spinlab.tools.utility.Nucleus;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static java.util.Arrays.asList;
-
-import rs2d.sequence.common.*;
-
 import static rs2d.sequence.spinecho.S.*;
 import static rs2d.sequence.spinecho.U.*;
 
@@ -37,7 +41,7 @@ import static rs2d.sequence.spinecho.U.*;
 //
 public class SpinEcho extends BaseSequenceGenerator {
 
-    private String sequenceVersion = "Version9.17";
+    private String sequenceVersion = "Version9.18";
     private boolean CameleonVersion105 = false;
 
     private double protonFrequency;
@@ -258,7 +262,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         sliceThickness = getDouble(SLICE_THICKNESS);
         spacingBetweenSlice = getDouble(SPACING_BETWEEN_SLICE);
-        nb_of_slice_packs = getInt(NUMBER_OF_SHOOT_3D);
+        nb_of_slice_packs = getInt(NUMBER_OF_INTERLEAVED_SLICE_PACKS);
         isSlicePacked = getBoolean(MULTISLICE_PACKED);
 
         pixelDimension = getDouble(RESOLUTION_FREQUENCY);
@@ -543,19 +547,18 @@ public class SpinEcho extends BaseSequenceGenerator {
             acquisitionMatrixDimension3D = (acquisitionMatrixDimension3D < 4) && isEnablePhase3D ? 4 : acquisitionMatrixDimension3D;
             userMatrixDimension3D = Math.max(userMatrixDimension3D, acquisitionMatrixDimension3D);
             getParam(USER_MATRIX_DIMENSION_3D).setValue(userMatrixDimension3D);
-            nb_of_slice_packs = 0;
+            nb_of_slice_packs = 1;
             nbOfInterleavedSlice = 1;
             nb_planar_excitation = 1;
         } else {
             acquisitionMatrixDimension3D = userMatrixDimension3D;
             nb_planar_excitation = userMatrixDimension3D;
-            nb_of_slice_packs = getInt(NUMBER_OF_INTERLEAVED_SLICE_PACKS);
             nb_of_slice_packs = getInferiorDivisorToGetModulusZero(nb_of_slice_packs, userMatrixDimension3D);
             nbOfInterleavedSlice = (int) Math.ceil((float) acquisitionMatrixDimension3D / nb_of_slice_packs);
         }
         getParam(NUMBER_OF_INTERLEAVED_SLICE_PACKS).setValue(nb_of_slice_packs);
         getParam(NUMBER_OF_SHOOT_3D).setValue(nb_of_slice_packs);
-        getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(isMultiplanar ? nbOfInterleavedSlice : 0);
+        getParam(NUMBER_OF_INTERLEAVED_SLICE).setValue(nbOfInterleavedSlice);
 
         nb_scan_3d = isMultiplanar ? nb_of_slice_packs : acquisitionMatrixDimension3D;
 
@@ -799,7 +802,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         boolean isEnableCrusherIR = getBoolean(GRADIENT_ENABLE_CRUSHER_IR);
         set(Grad_enable_crush_IR, isInversionRecovery && isEnableCrusherIR);
         set(Enable_sb, is_satband_enabled);
-        set(Enable_fs, is_fatsat_enabled );
+        set(Enable_fs, is_fatsat_enabled);
         set(Enable_fs_wep, is_fatsat_binomial);
 
         // ------------------------------------------
@@ -916,7 +919,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                 txLength90 = pulseTX90.getPulseDuration();
             }
 
-            double FlipAngleFatSat = is_fatsat_enabled ? (is_fatsat_binomial ? 45.0 : 90.0) : 0.0 ;
+            double FlipAngleFatSat = is_fatsat_enabled ? (is_fatsat_binomial ? 45.0 : 90.0) : 0.0;
             double FreqFatSat = observeFrequency + (is_fatsat_enabled && !is_fatsat_binomial ? tx_frequency_offset_90_fs : 0.0);
             if (!pulseTXFatSat.prepPower(FlipAngleFatSat, FreqFatSat, nucleus)) {
                 tx_length_90_fs = pulseTXFatSat.getPulseDuration();
@@ -1573,7 +1576,7 @@ public class SpinEcho extends BaseSequenceGenerator {
                             * ((float) userMatrixDimension3D / nb_of_slice_packs));
             max_nb_interleaved_excitation = getInferiorDivisorToGetModulusZero(max_nb_interleaved_excitation, userMatrixDimension3D);
             int nb_of_slice_packs_min = userMatrixDimension3D / max_nb_interleaved_excitation;
-            notifyOutOfRangeParam(NUMBER_OF_SHOOT_3D, nb_of_slice_packs_min, ((NumberParam) getParam(NUMBER_OF_SHOOT_3D)).getMaxValue(), "TR need to be reduce to guaranty T1-weighted imaging: increase NUMBER_OF_SHOOT_3D \"");
+            notifyOutOfRangeParam(NUMBER_OF_INTERLEAVED_SLICE_PACKS, nb_of_slice_packs_min, ((NumberParam) getParam(NUMBER_OF_INTERLEAVED_SLICE_PACKS)).getMaxValue(), "TR need to be reduce to guaranty T1-weighted imaging: increase NUMBER_OF_INTERLEAVED_SLICE_PACKS \"");
             nb_of_slice_packs = nb_of_slice_packs_min;
         }
 
@@ -1866,7 +1869,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         // ------------------------------------------------------------------
         //calculate TX FREQUENCY FATSAT and compensation
         // ------------------------------------------------------------------
-        pulseTXFatSat.setFrequencyOffset(is_fatsat_enabled && is_fatsat_binomial? tx_frequency_offset_90_fs : 0.0);
+        pulseTXFatSat.setFrequencyOffset(is_fatsat_enabled && is_fatsat_binomial ? tx_frequency_offset_90_fs : 0.0);
 
         RFPulse pulseTXFatSatPrep = RFPulse.createRFPulse(getSequence(), Time_before_fatsat_pulse, Freq_offset_tx_fatsat_prep, nucleus);
         pulseTXFatSatPrep.setCompensationFrequencyOffset(pulseTXFatSat, 0.5);
@@ -1995,9 +1998,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         } else if (isDixon) {
             number_of_MultiSeries = 3;
             multiseries_parameter_name = "Water-Fat Phase Shift";
-            multiseries_values_list.add(-roundToDecimal(Math.PI,2));
+            multiseries_values_list.add(-roundToDecimal(Math.PI, 2));
             multiseries_values_list.add(0);
-            multiseries_values_list.add(roundToDecimal(Math.PI,2));
+            multiseries_values_list.add(roundToDecimal(Math.PI, 2));
         }
         getParam(MULTISERIES_PARAMETER_VALUE).setValue(multiseries_values_list);
         getParam(MULTISERIES_PARAMETER_NAME).setValue(multiseries_parameter_name);
