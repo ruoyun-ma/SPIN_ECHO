@@ -44,7 +44,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ACQUISITION_MATRIX_DIMENSION_2D</name>
                 <uuid>cf0dfa27-fe29-4ca7-b64e-815d9c207dec</uuid>
-                <value>128</value>
+                <value>126</value>
                 <defaultValue>128</defaultValue>
                 <description>Info: Size of the initial dataset (raw data) in the second dimension</description>
                 <displayedName>Acquisition Matrix 2D</displayedName>
@@ -160,7 +160,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>BASE_FREQ_1</name>
                 <uuid>ab181ac3-550f-4ab3-9cac-d6488d910098</uuid>
-                <value>1.28E8</value>
+                <value>1.2781254E8</value>
                 <defaultValue>1.27552944E8</defaultValue>
                 <description>Info: Frequency of the observed nucleus</description>
                 <displayedName>Base Frequency 1</displayedName>
@@ -273,8 +273,8 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>DIGITAL_FILTER_SHIFT</name>
                 <uuid>cdc5b826-3bc8-487d-84a2-7128dfa96d2e</uuid>
-                <value>19</value>
-                <defaultValue>19</defaultValue>
+                <value>20</value>
+                <defaultValue>20</defaultValue>
                 <description>Data shift due to the digital filter</description>
                 <displayedName>DIGITAL_FILTER_SHIFT</displayedName>
                 <locked>false</locked>
@@ -306,7 +306,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>DIXON_FAT_PERIODE</name>
                 <uuid>6e6b0a41-aa80-435a-80d6-2e47c0fbb2fd</uuid>
-                <value>0.002232142815041249</value>
+                <value>0.002235416567795707</value>
                 <defaultValue>0.0035499999999999998</defaultValue>
                 <description>Periode of the phase cycling between fat and water (3.5ppm i.e. 2.2ms at 3T, 4.4 at 1.5T)</description>
                 <displayedName>Fat-Water Periode</displayedName>
@@ -449,7 +449,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_SPACING</name>
                 <uuid>3c181002-7b56-47b9-8a59-c1c6b5b577b0</uuid>
-                <value>0.009000000000000001</value>
+                <value>0.00934</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Delay between two consecutive echoes</description>
                 <displayedName>Echo Spacing</displayedName>
@@ -468,7 +468,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME</name>
                 <uuid>1fcfdf7f-f41c-4b51-9d6c-6bd347f074b2</uuid>
-                <value>0.009000000000000001</value>
+                <value>0.00934</value>
                 <defaultValue>0.005</defaultValue>
                 <description>Echo Time</description>
                 <displayedName>TE</displayedName>
@@ -487,7 +487,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TIME_EFFECTIVE</name>
                 <uuid>60a9081d-2188-4d4a-bc43-f55e692c9bba</uuid>
-                <value>0.009000000000000001</value>
+                <value>0.00934</value>
                 <defaultValue>0.01</defaultValue>
                 <description>Info: Effective echo time in Fast Spin Echo sequence</description>
                 <displayedName>TE Eff</displayedName>
@@ -506,7 +506,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>ECHO_TRAIN_LENGTH</name>
                 <uuid>1d38f9a3-b8b3-43e8-b46e-3818344e6003</uuid>
-                <value>4</value>
+                <value>7</value>
                 <defaultValue>1</defaultValue>
                 <description>Echo train lentgth</description>
                 <displayedName>ETL</displayedName>
@@ -862,7 +862,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER</name>
                 <uuid>f44414e7-33e7-4a17-8408-40dfdd4ed236</uuid>
-                <value>7.620480000000002E-5</value>
+                <value>1.5874006014705875E-5</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Crusher gradient area</description>
                 <displayedName>Gradient Area Crusher</displayedName>
@@ -881,7 +881,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_AREA_CRUSHER_PI</name>
                 <uuid>f0a7df1f-97c3-4410-97f0-4166b0e2c91c</uuid>
-                <value>3.244038336000001</value>
+                <value>0.6758751500857422</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Number of pi dephasing by the crusher</description>
                 <displayedName>Gradient Area Crusher Pi</displayedName>
@@ -1138,7 +1138,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>GRADIENT_RISE_TIME</name>
                 <uuid>830aa1e6-7c6f-4eaa-884c-872a2e724101</uuid>
-                <value>1.6E-4</value>
+                <value>2.6E-4</value>
                 <defaultValue>1.9999999999999998E-4</defaultValue>
                 <description>Rise time of the gradient</description>
                 <displayedName>Gradient Rise Time</displayedName>
@@ -1205,8 +1205,8 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>INTERMEDIATE_FREQUENCY</name>
                 <uuid>d8590d34-23a1-4356-81a1-76628b016c47</uuid>
-                <value>1.251E7</value>
-                <defaultValue>1.251E7</defaultValue>
+                <value>1.253E7</value>
+                <defaultValue>1.253E7</defaultValue>
                 <description>Info: Frequency from the Hardware used for the signal demodulation (ADC optimal frequency)</description>
                 <displayedName>INTERMEDIATE_FREQUENCY</displayedName>
                 <locked>true</locked>
@@ -1387,8 +1387,8 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>MAGNETIC_FIELD_STRENGTH</name>
                 <uuid>a8bf93ef-b214-4213-bf65-80fc1ec50490</uuid>
-                <value>3.0</value>
-                <defaultValue>3.0</defaultValue>
+                <value>3.001881551174367</value>
+                <defaultValue>3.001881551174367</defaultValue>
                 <description>Info: Magnetic field strength</description>
                 <displayedName>B0 Strength</displayedName>
                 <locked>false</locked>
@@ -2174,7 +2174,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>OBSERVED_FREQUENCY</name>
                 <uuid>5cd638e0-3d35-4bc9-bb27-a0a71bbba7c4</uuid>
-                <value>1.28E8</value>
+                <value>1.2781254725870714E8</value>
                 <defaultValue>6.3E7</defaultValue>
                 <description>Info: Frequency of the acquisition</description>
                 <displayedName>Observed Frequency</displayedName>
@@ -2747,7 +2747,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>REPETITION_TIME</name>
                 <uuid>e0f04363-aa2c-4f91-a9bf-5b0cc9a1c460</uuid>
-                <value>0.522</value>
+                <value>0.9648</value>
                 <defaultValue>0.2</defaultValue>
                 <description>Repetition Time</description>
                 <displayedName>TR</displayedName>
@@ -2785,7 +2785,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>RESOLUTION_PHASE</name>
                 <uuid>3cb0d1f1-eca8-4e9d-adbc-8b4e24917393</uuid>
-                <value>3.125E-4</value>
+                <value>3.1746031746031746E-4</value>
                 <defaultValue>5.0E-4</defaultValue>
                 <description>Info: True voxel in the phase encoding direction (FOV/acquisition_matrix_dimension_2D) </description>
                 <displayedName>Voxel Size Phase</displayedName>
@@ -2997,7 +2997,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SEQUENCE_TIME</name>
                 <uuid>2678f9ad-773c-4e7d-b41c-85fc1e5d0e76</uuid>
-                <value>134.676005</value>
+                <value>140.86080499999997</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Total acquisition time</description>
                 <displayedName>Acquisition Time</displayedName>
@@ -3032,7 +3032,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>SEQ_DESCRIPTION</name>
                 <uuid>6e264e2e-5362-45c2-8b31-50d7b196547b</uuid>
-                <value>SE_2D_SAG_256x128x12_ETL=4</value>
+                <value>SE_2D_SAG_256x126x12_ETL=7</value>
                 <defaultValue></defaultValue>
                 <description>Info: Description of the sequence</description>
                 <displayedName>Sequence Description</displayedName>
@@ -3453,7 +3453,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_180</name>
                 <uuid>f7574528-1e88-4be6-81f7-1a568266b375</uuid>
-                <value>73.05464177476566</value>
+                <value>76.16152549848972</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info:180 RF pulse amplitude</description>
                 <displayedName>TX 180 Amplitude</displayedName>
@@ -3472,7 +3472,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_AMP_90</name>
                 <uuid>8fd48a7b-a586-409b-8123-bddf1f6cfa06</uuid>
-                <value>25.480042126288367</value>
+                <value>49.10664195149967</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: 90 RF pulse amplitude</description>
                 <displayedName>TX 90 Amplitude</displayedName>
@@ -3506,7 +3506,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_ATT</name>
                 <uuid>cf40815b-90b1-4836-8e8c-d69fcd1875a1</uuid>
-                <value>30</value>
+                <value>8</value>
                 <defaultValue>36</defaultValue>
                 <description>RF pulse attenuation</description>
                 <displayedName>TX Attenuation</displayedName>
@@ -3573,7 +3573,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>TX_LENGTH_180</name>
                 <uuid>427011fd-ba15-4b43-ba5d-1ad11fc060cd</uuid>
-                <value>0.001</value>
+                <value>0.001287</value>
                 <defaultValue>0.0</defaultValue>
                 <description>180 RF pulse duration</description>
                 <displayedName>TX 180 Length</displayedName>
@@ -3785,7 +3785,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>USER_ZERO_FILLING_2D</name>
                 <uuid>9384e454-7c60-4c73-ae45-3fa4d1ba372b</uuid>
-                <value>0.0</value>
+                <value>1.5625</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Percentage of zero filling</description>
                 <displayedName>ZERO_FILING_2D</displayedName>

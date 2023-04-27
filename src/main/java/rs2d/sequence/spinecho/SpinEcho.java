@@ -1077,10 +1077,29 @@ public class SpinEcho extends BaseSequenceGenerator {
         // pre-calculate PHASE_2D
         Gradient gradPhase2D = Gradient.createGradient(getSequence(), Grad_amp_phase_2D_prep, Time_grad_phase_top, Grad_shape_rise_up, Grad_shape_rise_down, Time_grad_ramp, nucleus);
         gradPhase2D.preparePhaseEncodingForCheck(acquisitionMatrixDimension2D, acquisitionMatrixDimension2D, fovPhase, is_k_s_centred);
+        System.out.println("is FSE " + (sequenceSE == SE.FSE));
+        System.out.println("echoTrainLength " + echoTrainLength);
+        System.out.println("isKSCenterMode " + isKSCenterMode);
+        System.out.println("isFSETrainTest " + isFSETrainTest);
         if (sequenceSE == SE.FSE && echoTrainLength != 1 && !isKSCenterMode && !isFSETrainTest) {
             gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
         }
-
+        /*// test for PAT
+        double[] newAmplitudeArray = new double[gradPhase2D.getSteps()/2+8];
+        for (int i = 0; i < gradPhase2D.getSteps()/2-4; i++) {
+            newAmplitudeArray[i] = gradPhase2D.getAmplitudeArray(i*2);
+        }
+        for (int i = gradPhase2D.getSteps()/2-4; i < gradPhase2D.getSteps()/2+4; i++) {
+            newAmplitudeArray[i] = gradPhase2D.getAmplitudeArray((gradPhase2D.getSteps()/2-4)*2+i-(gradPhase2D.getSteps()/2-4));
+        }
+        for (int i = gradPhase2D.getSteps()/2+4; i < gradPhase2D.getSteps()/2+8; i++) {
+            newAmplitudeArray[i] = gradPhase2D.getAmplitudeArray(i*2);
+        }
+        gradPhase2D.setAmplitude(newAmplitudeArray);
+        int acq2DOri = getInt(ACQUISITION_MATRIX_DIMENSION_2D);
+        getParam(ACQUISITION_MATRIX_DIMENSION_2D).setValue(acq2DOri/2+8);
+        set(Nb_2d,nb_scan_2d/2+1);
+        plugin.setParameters(new ArrayList<>(getUserParams()));*/
         // Check if enougth time for 2D_PHASE, 3D_PHASE SLICE_REF or READ_PREP
         grad_area_sequence_max = 100 * (grad_phase_application_time + grad_shape_rise_time);
         grad_area_max = Math.max(gradSlicePhase3D.getTotalArea(), gradPhase2D.getTotalArea());            // calculate the maximum gradient aera between SLICE REFOC & READ PREPHASING
@@ -2429,7 +2448,7 @@ public class SpinEcho extends BaseSequenceGenerator {
     }
 
     public String getVersion() {
-        return "master";
+        return "localDevPAT";
     }
     //</editor-fold>
 }
