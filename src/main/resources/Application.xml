@@ -897,6 +897,24 @@
                 </value>
             </entry>
             <entry>
+                <key>FIRST_PUT_2D</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                    <name>FIRST_PUT_2D</name>
+                    <uuid>70f50f40-bbd1-46b8-888b-82e05f2b1fc1</uuid>
+                    <value>0</value>
+                    <defaultValue>0</defaultValue>
+                    <description>First line of acquisition in phase direnction (when PAT is used)</description>
+                    <displayedName>PAT - First Put 2D</displayedName>
+                    <locked>false</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <restrictedToSuggested>false</restrictedToSuggested>
+                    <numberEnum>Scan</numberEnum>
+                    <minValue>0</minValue>
+                    <maxValue>2147483647</maxValue>
+                    <category>Acquisition</category>
+                </value>
+            </entry>
+            <entry>
                 <key>FLIP_ANGLE</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FLIP_ANGLE</name>
@@ -1551,8 +1569,8 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>MAGNETIC_FIELD_STRENGTH</name>
                     <uuid>a8bf93ef-b214-4213-bf65-80fc1ec50490</uuid>
-                    <value>3.001881551174367</value>
-                    <defaultValue>3.001881551174367</defaultValue>
+                    <value>3.0018813806920517</value>
+                    <defaultValue>3.0018813806920517</defaultValue>
                     <description>Info: Magnetic field strength</description>
                     <displayedName>B0 Strength</displayedName>
                     <locked>false</locked>
@@ -1703,6 +1721,24 @@
                 </value>
             </entry>
             <entry>
+                <key>NB_REF_LINES_2D</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                    <name>NB_REF_LINES_2D</name>
+                    <uuid>cdf3a51f-c3ab-4f52-a75d-63df937249ad</uuid>
+                    <value>0</value>
+                    <defaultValue>0</defaultValue>
+                    <description>Number of reference lines in phase encoding direction</description>
+                    <displayedName>PAT - No. Ref Lines 2D</displayedName>
+                    <locked>false</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <restrictedToSuggested>false</restrictedToSuggested>
+                    <numberEnum>Scan</numberEnum>
+                    <minValue>0</minValue>
+                    <maxValue>2147483647</maxValue>
+                    <category>Acquisition</category>
+                </value>
+            </entry>
+            <entry>
                 <key>NUCLEUS_1</key>
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>NUCLEUS_1</name>
@@ -1793,7 +1829,9 @@
                     <suggestedValues>125Te</suggestedValues>
                     <suggestedValues>127I</suggestedValues>
                     <suggestedValues>129Xe</suggestedValues>
+                    <suggestedValues>129mXe</suggestedValues>
                     <suggestedValues>131Xe</suggestedValues>
+                    <suggestedValues>131mXe</suggestedValues>
                     <suggestedValues>133Cs</suggestedValues>
                     <suggestedValues>135Ba</suggestedValues>
                     <suggestedValues>137Ba</suggestedValues>
@@ -1932,7 +1970,9 @@
                     <suggestedValues>125Te</suggestedValues>
                     <suggestedValues>127I</suggestedValues>
                     <suggestedValues>129Xe</suggestedValues>
+                    <suggestedValues>129mXe</suggestedValues>
                     <suggestedValues>131Xe</suggestedValues>
+                    <suggestedValues>131mXe</suggestedValues>
                     <suggestedValues>133Cs</suggestedValues>
                     <suggestedValues>135Ba</suggestedValues>
                     <suggestedValues>137Ba</suggestedValues>
@@ -2071,7 +2111,9 @@
                     <suggestedValues>125Te</suggestedValues>
                     <suggestedValues>127I</suggestedValues>
                     <suggestedValues>129Xe</suggestedValues>
+                    <suggestedValues>129mXe</suggestedValues>
                     <suggestedValues>131Xe</suggestedValues>
+                    <suggestedValues>131mXe</suggestedValues>
                     <suggestedValues>133Cs</suggestedValues>
                     <suggestedValues>135Ba</suggestedValues>
                     <suggestedValues>137Ba</suggestedValues>
@@ -2210,7 +2252,9 @@
                     <suggestedValues>125Te</suggestedValues>
                     <suggestedValues>127I</suggestedValues>
                     <suggestedValues>129Xe</suggestedValues>
+                    <suggestedValues>129mXe</suggestedValues>
                     <suggestedValues>131Xe</suggestedValues>
+                    <suggestedValues>131mXe</suggestedValues>
                     <suggestedValues>133Cs</suggestedValues>
                     <suggestedValues>135Ba</suggestedValues>
                     <suggestedValues>137Ba</suggestedValues>
@@ -2338,7 +2382,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>OBSERVED_FREQUENCY</name>
                     <uuid>5cd638e0-3d35-4bc9-bb27-a0a71bbba7c4</uuid>
-                    <value>1.2781254725870714E8</value>
+                    <value>1.2781254E8</value>
                     <defaultValue>6.3E7</defaultValue>
                     <description>Info: Frequency of the acquisition</description>
                     <displayedName>Observed Frequency</displayedName>
@@ -2720,6 +2764,25 @@
                     <suggestedValues>SAGITTAL</suggestedValues>
                     <suggestedValues>OBLIQUE</suggestedValues>
                     <group>Dimension</group>
+                    <category>Acquisition</category>
+                </value>
+            </entry>
+            <entry>
+                <key>PAF_2D</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
+                    <name>PAF_2D</name>
+                    <uuid>0d7164a5-b596-491c-80a2-30a9678ad38a</uuid>
+                    <value>1</value>
+                    <defaultValue>1</defaultValue>
+                    <description>PAT Acceleration Factor in Phase direction</description>
+                    <displayedName>PAT - Factor 2D</displayedName>
+                    <locked>false</locked>
+                    <lockedToDefault>false</lockedToDefault>
+                    <restrictedToSuggested>false</restrictedToSuggested>
+                    <numberEnum>Scan</numberEnum>
+                    <minValue>1</minValue>
+                    <maxValue>2147483647</maxValue>
+                    <group>Scan</group>
                     <category>Acquisition</category>
                 </value>
             </entry>

@@ -74,10 +74,6 @@
             <keyList></keyList>
             <keyList></keyList>
         </acquChannel>
-        <actualScanKey>key19</actualScanKey>
-        <actualScanKey>key22</actualScanKey>
-        <actualScanKey>key25</actualScanKey>
-        <actualScanKey>key28</actualScanKey>
         <gradChannels gradientAxeKey="key239" nameKey="key178">
             <keyList></keyList>
             <keyList></keyList>
@@ -520,10 +516,6 @@
             <keyList>key237</keyList>
             <keyList>key289</keyList>
         </phaseResetChannel>
-        <startScanKey>key20</startScanKey>
-        <startScanKey>key23</startScanKey>
-        <startScanKey>key26</startScanKey>
-        <startScanKey>key29</startScanKey>
         <timeChannel nameKey="key38" defaultElementKey="key3">
             <keyList>key245</keyList>
             <keyList>key303</keyList>
@@ -3447,7 +3439,9 @@
                 <suggestedValues>125Te</suggestedValues>
                 <suggestedValues>127I</suggestedValues>
                 <suggestedValues>129Xe</suggestedValues>
+                <suggestedValues>129mXe</suggestedValues>
                 <suggestedValues>131Xe</suggestedValues>
+                <suggestedValues>131mXe</suggestedValues>
                 <suggestedValues>133Cs</suggestedValues>
                 <suggestedValues>135Ba</suggestedValues>
                 <suggestedValues>137Ba</suggestedValues>
@@ -4037,23 +4031,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>key19</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Actual 1D</name>
-                <uuid>2a37b267-ea49-4f06-9094-1f2535980902</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Actual 1D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>param19</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="enumParam">
                 <name>CodeEnum58</name>
@@ -4063,23 +4040,6 @@
                 <displayedName>CodeEnum</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>key20</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Start 1D</name>
-                <uuid>05fd4c35-9d31-4394-a515-bb65c5d67015</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Start 1D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
             </value>
         </Entry>
         <Entry>
@@ -4132,23 +4092,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>key22</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Actual 2D</name>
-                <uuid>c396b60b-d6ce-40f3-8f28-ebf618ab52e4</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Actual 2D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>param22</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled120</name>
@@ -4159,23 +4102,6 @@
                 <displayedName>enabled4</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>key23</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Start 2D</name>
-                <uuid>0478e5f0-0300-4857-969b-1dfc44e4650b</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Start 2D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
             </value>
         </Entry>
         <Entry>
@@ -4227,23 +4153,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>key25</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Actual 3D</name>
-                <uuid>10da9adf-d31c-46fe-bea2-fe354f596275</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Actual 3D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>param25</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>enabled125</name>
@@ -4254,23 +4163,6 @@
                 <displayedName>enabled5</displayedName>
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>key26</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Start 3D</name>
-                <uuid>bab88c6a-b102-4443-902e-c911305ab27e</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Start 3D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
             </value>
         </Entry>
         <Entry>
@@ -4321,23 +4213,6 @@
         </Entry>
         <Entry>
             <count>1</count>
-            <key>key28</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Actual 4D</name>
-                <uuid>47808412-23e9-42f1-b98a-84d0f984f698</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Actual 4D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
             <key>param28</key>
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                 <name>name140</name>
@@ -4349,23 +4224,6 @@
                 <locked>false</locked>
                 <lockedToDefault>false</lockedToDefault>
                 <restrictedToSuggested>false</restrictedToSuggested>
-            </value>
-        </Entry>
-        <Entry>
-            <count>1</count>
-            <key>key29</key>
-            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
-                <name>Start 4D</name>
-                <uuid>1b2244d8-4fe7-436b-a25f-59ca3114481c</uuid>
-                <value>0</value>
-                <defaultValue>1</defaultValue>
-                <displayedName>Start 4D</displayedName>
-                <locked>false</locked>
-                <lockedToDefault>false</lockedToDefault>
-                <restrictedToSuggested>false</restrictedToSuggested>
-                <numberEnum>Scan</numberEnum>
-                <minValue>0</minValue>
-                <maxValue>65536</maxValue>
             </value>
         </Entry>
         <Entry>
@@ -4680,7 +4538,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Tx_frequency</name>
                 <uuid>4da9f4f8-c5c0-4e00-99a2-2f8e3e47e799</uuid>
-                <value>1.2781254725870714E8</value>
+                <value>1.2781254E8</value>
                 <defaultValue>6.35E7</defaultValue>
                 <displayedName>Frequency0</displayedName>
                 <locked>false</locked>
@@ -26560,7 +26418,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>125efe92-ac99-405c-94c3-610b53b97596</uuid>
+                        <uuid>fb07df4f-eba3-4dc3-ba28-9534ef0efebf</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -26574,7 +26432,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>44d8c1e7-0a54-4706-97d4-9944841663ec</uuid>
+                        <uuid>705819a1-12c4-4f37-8088-7069a47e28fe</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -26588,7 +26446,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>123f8671-7747-4c8b-aa79-6bd420cf0ac4</uuid>
+                        <uuid>3beca2e3-e80e-4a8e-8290-04764447629b</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -26602,7 +26460,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>c56c2778-286b-4b08-a92c-484bcbb51cc5</uuid>
+                        <uuid>317e3310-b63a-4c4d-8a2c-6b38a8690b03</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -26612,7 +26470,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>16fdb25c-7d2a-4c5c-9ee7-ab3b4b4de917</uuid>
+                        <uuid>a2418ecf-7e00-4fe3-b392-ebde1bb2aaf5</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -27156,7 +27014,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>376bc22d-fa08-4950-a216-71f20be6ce4c</uuid>
+                        <uuid>f2865c35-6fec-403a-afa8-b0fdf4e98991</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -27170,7 +27028,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>a9dfff1e-053a-404d-a657-325c6d5967c2</uuid>
+                        <uuid>8509cdcd-3417-43b3-8edb-806d5d1d7f6b</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -27184,7 +27042,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>503f0250-fe3b-4bdf-872f-6ce51add6df1</uuid>
+                        <uuid>8dd174cd-992c-49df-8e8d-36ae9018d398</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -27198,7 +27056,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>a84d2a47-f7e3-4184-846f-fd918d5b6349</uuid>
+                        <uuid>d1b45c72-e5e9-49c5-82d7-6ff4db036fc9</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -27208,7 +27066,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>88d64649-e6be-4bcb-b0d7-4f88ed0583fb</uuid>
+                        <uuid>689ba33f-bf0b-4571-8b07-ba0f1fc3aca8</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -27678,7 +27536,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>81ff19b3-4210-48bb-85c2-8a7b27b89d7f</uuid>
+                        <uuid>cf4f3df2-9869-4a4e-999f-2468049fd563</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -27692,7 +27550,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>e4a121d7-0e29-43a0-80a9-fb34e38ec3bd</uuid>
+                        <uuid>defeb71f-be45-4747-91f9-b03f43f0f9d2</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -27706,7 +27564,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>55062219-87b0-47bc-afb8-8f59a2bae0c7</uuid>
+                        <uuid>4ecdec91-0f4c-47cf-811e-e8dc94d59169</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -27720,7 +27578,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>e1b658c9-2bef-4c08-ad72-951a387f4c3e</uuid>
+                        <uuid>10cb414b-bbf3-4194-8a9a-0b1e4de8e74c</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -27730,7 +27588,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>6d1f51d4-8777-4644-8471-a94a5a2d8590</uuid>
+                        <uuid>ad6bda43-740c-41b1-a5a5-a359ad4631ea</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -30376,7 +30234,7 @@
                     <name>Gaussian</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>cd17200f-d378-4871-8f7c-659c2cdb314f</uuid>
+                        <uuid>9989b1c9-e67d-4bb0-8618-55a14105c625</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -30390,7 +30248,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Width</name>
-                        <uuid>5ec41b9d-5b33-4cac-b1c1-e7f83750b2b1</uuid>
+                        <uuid>92d41b6c-7c41-4d61-af84-f1a30ff356ec</uuid>
                         <value>0.25</value>
                         <defaultValue>0.25</defaultValue>
                         <description>Width of the gaussian</description>
@@ -30404,7 +30262,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>1fef1acf-71ce-4634-b568-0c34afaaa427</uuid>
+                        <uuid>9ac634e6-69df-4147-943c-93dc1a028307</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the gaussian</description>
@@ -30418,7 +30276,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>de0b1cba-d2ef-49a9-9df1-780ee3b5f70d</uuid>
+                        <uuid>fb64e7e9-3813-4d06-9125-bf41db605465</uuid>
                         <value>false</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolute value</description>
