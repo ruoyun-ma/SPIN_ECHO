@@ -130,9 +130,15 @@ public class SpinEcho extends BaseSequenceGenerator {
 
     private double observation_time;
 
+    private boolean isPAT;
+    private int nbRefLines2D;
+    private int iPAT2D;
+    private int nbTotalLines2D;
+    private int firstPut2D;
     private enum SE {FSE, MultiEcho, OneShotFSE}
-
-
+    private Map<Integer, Integer> idxPAT = new TreeMap<>();
+    private Map<Integer, Integer> idxPATinv = new TreeMap<>();
+    private Map<Integer, Integer> patMask = new TreeMap<>();
     private double minInstructionDelay = 0.000005;     // single instruction minimal duration
 
     public SpinEcho() {
@@ -503,6 +509,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         acquisitionMatrixDimension2D = floorEven((1 - zero_filling_2D) * userMatrixDimension2D);
         acquisitionMatrixDimension2D = (acquisitionMatrixDimension2D < 4) && isEnablePhase ? 4 : acquisitionMatrixDimension2D;
 
+
+
+
         // Pixel dimension calculation
         double pixelDimensionPhase = fovPhase / acquisitionMatrixDimension2D;
         getParam(RESOLUTION_PHASE).setValue(pixelDimensionPhase); // phase true resolution for display
@@ -510,16 +519,25 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         // 2nd D managment  ETL
         // -----------------------------------------------
+        this.iPAT2D = getInt(PAF_2D);
+        if (iPAT2D > 1){ this.isPAT = true; }
+
         nb_scan_2d = acquisitionMatrixDimension2D;
-        if (!(sequenceSE == SE.MultiEcho)) {
-            echoTrainLength = (sequenceSE == SE.OneShotFSE ? acquisitionMatrixDimension2D : getInferiorDivisorToGetModulusZero(echoTrainLength, acquisitionMatrixDimension2D / 2));
-            getParam(ECHO_TRAIN_LENGTH).setValue(echoTrainLength);
-            nb_scan_2d = Math.floorDiv(acquisitionMatrixDimension2D, echoTrainLength);
-            if (!(transformplugin.equalsIgnoreCase("Sequential2D"))) {
-                nb_scan_2d = floorEven(nb_scan_2d); // Centred or bordered skim need to be multiple of 2
+        if (!(sequenceSE == SE.MultiEcho) ) {
+            if(!this.isPAT) {
+                echoTrainLength = (sequenceSE == SE.OneShotFSE ? acquisitionMatrixDimension2D : getInferiorDivisorToGetModulusZero(echoTrainLength, acquisitionMatrixDimension2D / 2));
+                getParam(ECHO_TRAIN_LENGTH).setValue(echoTrainLength);
+                nb_scan_2d = Math.floorDiv(acquisitionMatrixDimension2D, echoTrainLength);
+                if (!(transformplugin.equalsIgnoreCase("Sequential2D"))) {
+                    nb_scan_2d = floorEven(nb_scan_2d); // Centred or bordered skim need to be multiple of 2
+                }
+                acquisitionMatrixDimension2D = nb_scan_2d * echoTrainLength;
+            }else {
+                setParamsPAT2D();
             }
-            acquisitionMatrixDimension2D = nb_scan_2d * echoTrainLength;
+
         }
+
         userMatrixDimension2D = Math.max(userMatrixDimension2D, acquisitionMatrixDimension2D);
         getParam(USER_MATRIX_DIMENSION_2D).setValue(userMatrixDimension2D);
 
@@ -1082,24 +1100,57 @@ public class SpinEcho extends BaseSequenceGenerator {
         System.out.println("isKSCenterMode " + isKSCenterMode);
         System.out.println("isFSETrainTest " + isFSETrainTest);
         if (sequenceSE == SE.FSE && echoTrainLength != 1 && !isKSCenterMode && !isFSETrainTest) {
-            gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
+            if (isPAT){
+                int firstPut2D = getInt(FIRST_PUT_2D);
+                System.out.println("iPAT2D = " + iPAT2D);
+                buildMap(this.iPAT2D,this.nbRefLines2D,firstPut2D);
+                System.out.println("idxPAT size = " + idxPAT.size());
+                List<Integer> idxData = new ArrayList<>();
+                for (int i = 0 ; i < this.idxPAT.size(); i++){
+                    idxData.add(idxPAT.get(i));
+                    System.out.println("index = " + idxPAT.get(i));
+                    System.out.println("inv index = " + idxPATinv.get(idxPAT.get(i)));
+                }
+                gradPhase2D.reoderPhaseEncodingPAT(plugin, echoTrainLength, idxData, acquisitionMatrixDimension1D);
+
+                // copy gradient amplictude array
+
+                /*double[] amplitudeArray = new double[gradPhase2D.getSteps()];
+                for (int k = 0; k < gradPhase2D.getSteps(); k++){
+                    amplitudeArray[k] = gradPhase2D.getAmplitudeArray(k);
+                }
+                int acquisitionMatrixDimension2DReduced = idxData.size();
+                double loopNumber, indexNew;
+                if (amplitudeArray != null) {
+                    double[] newTable = new double[acquisitionMatrixDimension2DReduced ];
+                    int[] tmp = Centric(acquisitionMatrixDimension2DReduced);
+                    for (int j = 0; j < acquisitionMatrixDimension2DReduced ; j++) {
+                        int idx = idxData.get(j);
+                        System.out.println("reorderPhaseEncoding step " + idx);
+                        int[] indexScan = this.invTransf(0, idx, 0, 0);
+                        //if ("Centric4D".equalsIgnoreCase(plugin.getName())) {
+                        //    indexScan[1] = tmp[j];
+                        //}
+                        loopNumber = indexScan[0] / acquisitionMatrixDimension1D; // Echo-block number: ETL-loop index
+                        System.out.println("loopNumber = " + loopNumber);
+                        System.out.println("indexScan[0] = " + indexScan[0]);
+                        System.out.println("indexScan[1] = " + indexScan[1]);
+                        indexNew = indexScan[1] * echoTrainLength + loopNumber;    // indexScan[1]: index de Nb 2D
+                        System.out.println("indexNew = " + indexNew);
+                        newTable[(int) indexNew] = amplitudeArray[idx];
+                    }
+                    System.out.println("original size of amplitude array = " + amplitudeArray.length);
+                    amplitudeArray = newTable;
+                    System.out.println("new size of amplitude array = " + amplitudeArray.length);
+                    gradPhase2D.setAmplitude(amplitudeArray);
+                }*/
+
+
+            } else {
+                gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
+            }
         }
-        /*// test for PAT
-        double[] newAmplitudeArray = new double[gradPhase2D.getSteps()/2+8];
-        for (int i = 0; i < gradPhase2D.getSteps()/2-4; i++) {
-            newAmplitudeArray[i] = gradPhase2D.getAmplitudeArray(i*2);
-        }
-        for (int i = gradPhase2D.getSteps()/2-4; i < gradPhase2D.getSteps()/2+4; i++) {
-            newAmplitudeArray[i] = gradPhase2D.getAmplitudeArray((gradPhase2D.getSteps()/2-4)*2+i-(gradPhase2D.getSteps()/2-4));
-        }
-        for (int i = gradPhase2D.getSteps()/2+4; i < gradPhase2D.getSteps()/2+8; i++) {
-            newAmplitudeArray[i] = gradPhase2D.getAmplitudeArray(i*2);
-        }
-        gradPhase2D.setAmplitude(newAmplitudeArray);
-        int acq2DOri = getInt(ACQUISITION_MATRIX_DIMENSION_2D);
-        getParam(ACQUISITION_MATRIX_DIMENSION_2D).setValue(acq2DOri/2+8);
-        set(Nb_2d,nb_scan_2d/2+1);
-        plugin.setParameters(new ArrayList<>(getUserParams()));*/
+        
         // Check if enougth time for 2D_PHASE, 3D_PHASE SLICE_REF or READ_PREP
         grad_area_sequence_max = 100 * (grad_phase_application_time + grad_shape_rise_time);
         grad_area_max = Math.max(gradSlicePhase3D.getTotalArea(), gradPhase2D.getTotalArea());            // calculate the maximum gradient aera between SLICE REFOC & READ PREPHASING
@@ -1708,10 +1759,18 @@ public class SpinEcho extends BaseSequenceGenerator {
         if (isMultiplanar && nb_planar_excitation > 1 && isEnableSlice) {
             //MULTI-PLANAR case : calculation of frequency offset table
             pulseTX90.prepareOffsetFreqMultiSlice(gradSlice90, nb_planar_excitation, spacingBetweenSlice, off_center_distance_3D);
-            pulseTX90.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            if (isPAT){
+                pulseTX90.reoderOffsetFreqPAT(plugin, firstPut2D, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            }else{
+                pulseTX90.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            }
             pulseTX90.setFrequencyOffset(nbOfInterleavedSlice != 1 ? Order.ThreeLoop : Order.Three);
             pulseTX180.prepareOffsetFreqMultiSlice(gradSlice180, nb_planar_excitation, spacingBetweenSlice, off_center_distance_3D);
-            pulseTX180.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            if (isPAT) {
+                pulseTX180.reoderOffsetFreqPAT(plugin, firstPut2D, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            }else {
+                pulseTX180.reoderOffsetFreq(plugin, acquisitionMatrixDimension1D * echoTrainLength, nbOfInterleavedSlice);
+            }
             pulseTX180.setFrequencyOffset(nbOfInterleavedSlice != 1 ? Order.ThreeLoop : Order.Three);
             if (isInversionRecovery) {
                 pulseTXIR.prepareOffsetFreqMultiSlice(gradSlice180, nb_planar_excitation, spacingBetweenSlice, off_center_distance_3D);
@@ -2305,7 +2364,53 @@ public class SpinEcho extends BaseSequenceGenerator {
         }
         return tx_bandwidth_factor;
     }
+    private void buildMap(int iPAT, int nbRefLines, int firstPut){
 
+        System.out.println("iPAT = " + iPAT);
+        int refLineStart = this.acquisitionMatrixDimension2D/2 - nbRefLines/2; // first Line for ref signal, only consider the integrated mode
+        System.out.println("refLineStart = " + refLineStart);
+        int refLineEnd = refLineStart + nbRefLines - 1;
+        System.out.println("refLineEnd = " + refLineEnd);
+        int firstAcqPostRef = (int) Math.ceil ((double)refLineEnd/(double)iPAT) * iPAT + firstPut;
+        System.out.println("firstAcqPostRef = " + firstAcqPostRef);
+        int idxFull = firstPut; // kspace line from full data, e.g., 0,3,6,9,12,13,14,15,
+        int idxComp = 0;// compressed/linear index: 0,1,2
+        while (idxFull < this.acquisitionMatrixDimension2D){
+
+            if (idxFull < refLineStart) {
+                this.idxPAT.put(idxComp, idxFull);
+                this.idxPATinv.put(idxFull, idxComp);
+                if (idxFull + iPAT < refLineStart){
+                    idxFull += iPAT;
+                } else {
+                    idxFull = refLineStart;
+                }
+                idxComp += 1;
+            } else if(idxFull >= firstAcqPostRef){
+                this.idxPAT.put(idxComp, idxFull);
+                this.idxPATinv.put(idxFull, idxComp);
+                idxFull += iPAT;
+                idxComp += 1;
+            } else if((idxFull >= refLineStart) && (idxFull <= refLineEnd)){
+                this.idxPAT.put(idxComp, idxFull);
+                this.idxPATinv.put(idxFull, idxComp);
+                idxFull += 1;
+                idxComp += 1;
+            } else {
+                idxFull += 1;
+            }
+        }
+    }
+
+    private void buildMask(){
+
+        for (int i = 0; i < this.acquisitionMatrixDimension2D; i++){
+            this.patMask.put(i,0);
+        }
+        for (int i = 0; i < idxPAT.size(); i++){
+            this.patMask.put(idxPAT.get(i),1);
+        }
+    }
     private double ceilToSubDecimal(double numberToBeRounded, double Order) {
         return Math.ceil(numberToBeRounded * Math.pow(10, Order)) / Math.pow(10, Order);
     }
@@ -2434,6 +2539,179 @@ public class SpinEcho extends BaseSequenceGenerator {
         return new_divisor;
     }
 
+    private int[] invTransf(int i, int j, int k, int l) {
+        int jBackup = j;
+        int JUMP_SIZE = 2;
+        int nbSlicePacks = getInt(NUMBER_OF_INTERLEAVED_SLICE_PACKS);
+
+            j = idxPATinv.get(j);
+            int matrix2Dreduced = this.idxPATinv.size();
+            int nb2dreduced = matrix2Dreduced / this.echoTrainLength;
+            int shift2dreduced = echoEffective == 1 ? 0 : (int) Math.round((echoEffective - 0.5) * (nb2dreduced / 2));
+            if (isMultiplanar) {
+                int scan1D;
+                int scan3D;
+                int tb = nb2dreduced / (2); // number of scan2D per half k-space
+                //System.out.println("tb = " + tb);
+                if (j < matrix2Dreduced / 2 - shift2dreduced) {
+                    scan1D = ((echoTrainLength - 1) - (j + shift2dreduced) / tb) * acquisitionMatrixDimension1D + i;
+                    //System.out.println("(j + shift2dreduced) = " + (j + shift2dreduced) );
+                    int temp = (j + shift2dreduced) / tb;
+                    //System.out.println("(j + shift2dreduced) / tb = " + temp);
+                    //System.out.println("criteria = " + ((echoTrainLength - 1) - (j + shift2dreduced) / tb));
+                    //System.out.println("scan1D 1 = " + scan1D);
+                } else if (j >= matrix2Dreduced - shift2dreduced) {
+                    scan1D = ((echoTrainLength - 1) - (j - (matrix2Dreduced - shift2dreduced)) / tb) * acquisitionMatrixDimension1D + i;
+                    //System.out.println("scan1D 2 = " + scan1D);
+                } else {
+                    scan1D = (((j + shift2dreduced) - matrix2Dreduced / 2) / tb) * acquisitionMatrixDimension1D + i;
+                    //System.out.println("scan1D 3 = " + scan1D);
+                }
+
+                if (nbSlicePacks == 1) {
+                    int transSlicePos = k / JUMP_SIZE + (k % 2 != 0 ? acquisitionMatrixDimension3D / 2 + (acquisitionMatrixDimension3D % 2 != 0 ? 1 : 0) : 0);
+                    scan1D += transSlicePos * acquisitionMatrixDimension1D * echoTrainLength;
+                    scan3D = 0;
+                } else {
+                    scan1D += (k / nbSlicePacks) * acquisitionMatrixDimension1D * echoTrainLength;
+                    scan3D = k % nbSlicePacks;
+                }
+
+                // int scan2D = (j % tb) + (j / (matrix2D / 2)) * tb;
+                int scan2D = ((j + shift2dreduced) % tb) + (((j + shift2dreduced) / (matrix2Dreduced / 2)) % 2) * tb;
+
+                // if (i == 0 && j == 14) {
+                // Log.debug(this.getClass(),scan1D + " " + scan2D);
+                // }
+
+                j = jBackup;
+
+                return new int[]{scan1D, scan2D, scan3D, l};
+            } else {
+                // OK à simplifier.
+                int scan1D;
+                int tb = nb2dreduced / (2); // number of scan2D per half k-space
+                if (j < acquisitionMatrixDimension1D/ 2 - shift2dreduced) {
+                    scan1D = ((echoTrainLength - 1) - (j + shift2dreduced) / tb) * acquisitionMatrixDimension1D + i;
+                } else if (j >= acquisitionMatrixDimension2D - shift2dreduced) {
+                    scan1D = ((echoTrainLength - 1) - (j - (acquisitionMatrixDimension2D - shift2dreduced)) / tb) * acquisitionMatrixDimension1D + i;
+                 } else {
+                     scan1D = (((j + shift2dreduced) - acquisitionMatrixDimension2D / 2) / tb) * acquisitionMatrixDimension1D + i;
+                 }
+                  // int scan2D = (j % tb) + (j / (matrix2D / 2)) * tb;
+                 int scan2D = ((j + shift2dreduced) % tb) + (((j + shift2dreduced) / (acquisitionMatrixDimension2D / 2)) % 2) * tb;
+                 if(this.isPAT){
+                       j = jBackup;
+                 }
+        return new int[] {scan1D, scan2D, k, l};
+    }
+
+    }
+    private int[] Centric(int acquisition_matrix_dimension_3D) {
+        int[] k_index = new int[acquisition_matrix_dimension_3D];
+        int[] tmpInv = new int[acquisition_matrix_dimension_3D];
+
+        k_index[0] = 0;
+        for (int i = 1; i < acquisition_matrix_dimension_3D; i++) {
+            if (k_index[i - 1] == 0) {
+                k_index[i] = 1;
+            } else if (k_index[i - 1] > 0) {
+                k_index[i] = -1 * k_index[i - 1];
+            } else if (k_index[i - 1] < 0) {
+                k_index[i] = -1 * (k_index[i - 1] - 1);
+            }
+        }
+        for (int i = 0; i < acquisition_matrix_dimension_3D; i++) {
+            k_index[i] = k_index[i] + (acquisition_matrix_dimension_3D / 2 - 1);
+        }
+        for (int i = 0; i < acquisition_matrix_dimension_3D; i++) {
+            tmpInv[k_index[i]] = i;
+        }
+        return tmpInv;
+    }
+
+    private void setParamsPAT2D(){
+        this.nbRefLines2D = getInt(NB_REF_LINES_2D);
+        this.firstPut2D = getInt(FIRST_PUT_2D);
+        if (this.firstPut2D > iPAT2D - 1){
+            this.firstPut2D = 0;
+        }
+
+        int lastPut2D = (int) Math.floor((double)acquisitionMatrixDimension2D/(double)iPAT2D - 1)*iPAT2D + this.firstPut2D;
+
+        // make it symmetric as possible
+        for (int i = 0; i < iPAT2D; i++) {
+            if (acquisitionMatrixDimension2D - lastPut2D -1 > firstPut2D+1) { // xooxooxoo.....xoo
+                this.firstPut2D += 1;
+            } else if (acquisitionMatrixDimension2D - lastPut2D -1 < firstPut2D -1) { // ooxooxoox ... oox
+                this.firstPut2D -= 1;
+            } else {
+                break; // the distribution is symmetric enough : oxooxoo...ooxo, or xoxoxo...xoxo
+            }
+        }
+        getParam(FIRST_PUT_2D).setValue(firstPut2D);
+
+        // build map and mask based on the original, user-defined parameters
+        this.buildMap(this.iPAT2D, this.nbRefLines2D, this.firstPut2D);
+        this.buildMask();
+
+
+        for (int i = 0; i < this.patMask.size(); i++){
+            System.out.println(patMask.get(i));
+        }
+        this.nbTotalLines2D = this.idxPAT.size();
+        System.out.println("nbTotalLines2D = " + this.nbTotalLines2D);
+        System.out.println("echo train length = " + echoTrainLength);
+        System.out.println("Math.ceil(double(this.nbTotalLines2D)/(double)echoTrainLength ) =" +(Math.ceil((double)this.nbTotalLines2D/(double)echoTrainLength) ));
+        int newNbTotalLines2D = (int) (Math.ceil((double)this.nbTotalLines2D/(double)(echoTrainLength)) * (double)echoTrainLength );
+        if (newNbTotalLines2D % 2 > 0){
+            newNbTotalLines2D += echoTrainLength;
+        }
+        int deltaLines = newNbTotalLines2D - this.nbTotalLines2D;
+        this.nbTotalLines2D = newNbTotalLines2D;
+        System.out.println("new nbTotalLines2D = " + this.nbTotalLines2D);
+        // put the additional lines to ref lines
+        int idxSearch1 = acquisitionMatrixDimension2D/2 - nbRefLines2D/2;
+        int countFill = 0;
+        int idx = 0;
+        while (countFill < deltaLines ){
+            if (this.patMask.get(idxSearch1-idx) == 0){
+                this.patMask.put(idxSearch1-idx, 1);
+                countFill += 1;
+
+            }
+            if (this.patMask.get(idxSearch1+idx) == 0){
+                this.patMask.put(idxSearch1+idx, 1);
+                countFill += 1;
+
+            }
+            idx += 1;
+        }
+        for (int i = 0; i < this.patMask.size(); i++){
+            System.out.println(patMask.get(i));
+        }
+        // make refline mask: the edge
+        // count new ref lines:
+        this.nbRefLines2D = 0;
+        for (int i = 0; i < patMask.size()-1; i++){
+            if ((patMask.get(i) > 0) & (patMask.get(i+1) > 0)){
+                this.nbRefLines2D += 1;
+            }
+        }
+        System.out.println("this.nbTotalLines2D % 2 = " +this.nbRefLines2D%2);
+        if ((this.nbRefLines2D % 2) > 0) {
+            System.out.println("even nbRefLines2D = "+ this.nbRefLines2D);
+            this.nbRefLines2D = this.nbRefLines2D + 1;
+        }
+
+        this.idxPAT.clear();
+        this.idxPATinv.clear();
+
+        System.out.println("nbRefLines2D = "+ this.nbRefLines2D);
+        getParam(NB_REF_LINES_2D).setValue(nbRefLines2D);
+        this.nb_scan_2d = this.nbTotalLines2D / this.echoTrainLength;
+
+    }
     public List<RoleEnum> getPluginAccess() {
         return Collections.singletonList(RoleEnum.User);
     }

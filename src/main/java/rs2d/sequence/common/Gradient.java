@@ -11,6 +11,8 @@ import rs2d.spinlab.sequenceGenerator.GeneratorSequenceParamEnum;
 import rs2d.spinlab.tools.table.Order;
 import rs2d.spinlab.tools.utility.Nucleus;
 
+import java.util.List;
+
 /**
  * Class Gradient: small Common Version 1.3S
  */
@@ -960,6 +962,37 @@ public class Gradient {
                 newTable[(int) indexNew] = amplitudeArray[j];
             }
             amplitudeArray = newTable;
+        }
+    }
+    public void reoderPhaseEncodingPAT(TransformPlugin plugin, int echoTrainLength, List<Integer> idxData, int acquisitionMatrixDimension1D) {
+        // flow Comp
+        //if (gradFlowComp != null) {
+        //    gradFlowComp.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
+        //}
+        double loopNumber, indexNew;
+        int acquisitionMatrixDimension2DReduced = idxData.size();
+        if (amplitudeArray != null) {
+            double[] newTable = new double[acquisitionMatrixDimension2DReduced ];
+            int[] tmp = Centric(acquisitionMatrixDimension2DReduced);
+            for (int j = 0; j < acquisitionMatrixDimension2DReduced ; j++) {
+                int idx = idxData.get(j);
+                System.out.println("reorderPhaseEncoding step " + idx);
+                int[] indexScan = plugin.invTransf(0, idx, 0, 0);
+                //if ("Centric4D".equalsIgnoreCase(plugin.getName())) {
+                //    indexScan[1] = tmp[j];
+                //}
+                loopNumber = indexScan[0] / acquisitionMatrixDimension1D; // Echo-block number: ETL-loop index
+                System.out.println("loopNumber = " + loopNumber);
+                System.out.println("indexScan[0] = " + indexScan[0]);
+                System.out.println("indexScan[1] = " + indexScan[1]);
+                indexNew = indexScan[1] * echoTrainLength + loopNumber;    // indexScan[1]: index de Nb 2D
+                System.out.println("indexNew = " + indexNew);
+                newTable[(int) indexNew] = amplitudeArray[idx];
+            }
+            System.out.println("original size of amplitude array = " + amplitudeArray.length);
+            amplitudeArray = newTable;
+            System.out.println("new size of amplitude array = " + amplitudeArray.length);
+            this.steps = amplitudeArray.length;
         }
     }
 

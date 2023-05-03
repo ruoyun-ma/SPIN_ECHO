@@ -737,7 +737,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>FIRST_PUT_2D</name>
                 <uuid>70f50f40-bbd1-46b8-888b-82e05f2b1fc1</uuid>
-                <value>0</value>
+                <value>1</value>
                 <defaultValue>0</defaultValue>
                 <description>First line of acquisition in phase direnction (when PAT is used)</description>
                 <displayedName>PAT - First Put 2D</displayedName>
@@ -1561,7 +1561,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>NB_REF_LINES_2D</name>
                 <uuid>cdf3a51f-c3ab-4f52-a75d-63df937249ad</uuid>
-                <value>0</value>
+                <value>14</value>
                 <defaultValue>0</defaultValue>
                 <description>Number of reference lines in phase encoding direction</description>
                 <displayedName>PAT - No. Ref Lines 2D</displayedName>
@@ -2162,7 +2162,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>NUMBER_OF_INTERLEAVED_SLICE</name>
                 <uuid>bd68dc8e-dac9-4f19-9d5c-e524bcd98fee</uuid>
-                <value>12</value>
+                <value>4</value>
                 <defaultValue>0</defaultValue>
                 <description>Info: Number of interleaved slice acquired during one TR</description>
                 <displayedName>No. Slices per TR</displayedName>
@@ -2181,7 +2181,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>NUMBER_OF_INTERLEAVED_SLICE_PACKS</name>
                 <uuid>e7693207-cb6c-4a60-aa23-ff9d58b1eee4</uuid>
-                <value>1.0</value>
+                <value>3.0</value>
                 <defaultValue>0.0</defaultValue>
                 <description>To split the slices in different packs acquired in one TR (No. Slices per TR = No. Slices / No. Interleaved Packs).  To reach lower TR, increase the number of packs (must be a divisor of the No. Slices).</description>
                 <displayedName>No. Interleaved slice packs</displayedName>
@@ -2199,7 +2199,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>NUMBER_OF_SHOOT_3D</name>
                 <uuid>78f27b89-a541-4428-b281-eb0a1e887761</uuid>
-                <value>1</value>
+                <value>3</value>
                 <defaultValue>1</defaultValue>
                 <description>Info: Copy of No. Interleaved slice packs (temporary param, will be remmplaced) ; Total number of slice / Number of interleaved slice      </description>
                 <displayedName>NUMBER_OF_SHOOT_3D (temp)</displayedName>
@@ -2608,7 +2608,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>PAF_2D</name>
                 <uuid>0d7164a5-b596-491c-80a2-30a9678ad38a</uuid>
-                <value>1</value>
+                <value>2</value>
                 <defaultValue>1</defaultValue>
                 <description>PAT Acceleration Factor in Phase direction</description>
                 <displayedName>PAT - Factor 2D</displayedName>
@@ -3060,7 +3060,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>SEQUENCE_TIME</name>
                 <uuid>2678f9ad-773c-4e7d-b41c-85fc1e5d0e76</uuid>
-                <value>140.86080499999997</value>
+                <value>233.48160499999997</value>
                 <defaultValue>0.0</defaultValue>
                 <description>Info: Total acquisition time</description>
                 <displayedName>Acquisition Time</displayedName>

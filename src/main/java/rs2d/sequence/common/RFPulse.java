@@ -698,6 +698,19 @@ public class RFPulse {
         txFrequencyOffsetTable = offset_table;
     }
 
+    public void reoderOffsetFreqPAT(TransformPlugin plugin, int firstPut, int acquisitionPointsPerSlice, int slicesAcquiredInSingleScan) {
+        double sliceNumber;
+        double[] offset_table = new double[numberOfFreqOffset];
+        for (int k = 0; k < numberOfFreqOffset; k++) {
+            int[] indexScan = plugin.invTransf(0, firstPut, k, 0);
+            // slicesAcquiredInSingleScan are acquired in one TR so length index[2] = number of TR need to acquired all the slices
+            // For the nth TR : index[0] = nTR * slicesAcquiredInSingleScan
+            sliceNumber = (int) (indexScan[0] / (double) acquisitionPointsPerSlice) + indexScan[2] * slicesAcquiredInSingleScan;
+            offset_table[(int) sliceNumber] = txFrequencyOffsetTable[k];
+        }
+        txFrequencyOffsetTable = offset_table;
+    }
+
     /**
      * Calculate the frequency offset that corresponds to the off-center distance wanted given the gradient amplitude
      *
