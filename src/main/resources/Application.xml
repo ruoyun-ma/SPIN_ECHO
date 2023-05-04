@@ -189,7 +189,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_1D</name>
                     <uuid>d418dd0c-8ed3-462d-9139-dab73889eed7</uuid>
-                    <value>256</value>
+                    <value>128</value>
                     <defaultValue>128</defaultValue>
                     <description>Info: Size of the initial dataset (raw data) in the first dimension</description>
                     <displayedName>Acquisition Matrix 1D</displayedName>
@@ -208,7 +208,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_2D</name>
                     <uuid>cf0dfa27-fe29-4ca7-b64e-815d9c207dec</uuid>
-                    <value>126</value>
+                    <value>120</value>
                     <defaultValue>128</defaultValue>
                     <description>Info: Size of the initial dataset (raw data) in the second dimension</description>
                     <displayedName>Acquisition Matrix 2D</displayedName>
@@ -227,7 +227,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_MATRIX_DIMENSION_3D</name>
                     <uuid>a6af4bab-f892-46a9-9fb2-b7b89a4e5630</uuid>
-                    <value>12</value>
+                    <value>6</value>
                     <defaultValue>1</defaultValue>
                     <description>Info: Size of the initial dataset (raw data) in the third dimension</description>
                     <displayedName>Acquisition Matrix 3D</displayedName>
@@ -305,7 +305,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ACQUISITION_TIME_PER_SCAN</name>
                     <uuid>10919155-05d8-4b40-a93b-4007d45a744e</uuid>
-                    <value>0.005111808</value>
+                    <value>0.002555904</value>
                     <defaultValue>1.0</defaultValue>
                     <description>Info: Time during which the signal is sampled by the ADC</description>
                     <displayedName>Observation Time</displayedName>
@@ -613,7 +613,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_SPACING</name>
                     <uuid>3c181002-7b56-47b9-8a59-c1c6b5b577b0</uuid>
-                    <value>0.00934</value>
+                    <value>0.00707</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Delay between two consecutive echoes</description>
                     <displayedName>Echo Spacing</displayedName>
@@ -632,7 +632,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME</name>
                     <uuid>1fcfdf7f-f41c-4b51-9d6c-6bd347f074b2</uuid>
-                    <value>0.00934</value>
+                    <value>0.00707</value>
                     <defaultValue>0.005</defaultValue>
                     <description>Echo Time</description>
                     <displayedName>TE</displayedName>
@@ -651,7 +651,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TIME_EFFECTIVE</name>
                     <uuid>60a9081d-2188-4d4a-bc43-f55e692c9bba</uuid>
-                    <value>0.00934</value>
+                    <value>0.00707</value>
                     <defaultValue>0.01</defaultValue>
                     <description>Info: Effective echo time in Fast Spin Echo sequence</description>
                     <displayedName>TE Eff</displayedName>
@@ -670,7 +670,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>ECHO_TRAIN_LENGTH</name>
                     <uuid>1d38f9a3-b8b3-43e8-b46e-3818344e6003</uuid>
-                    <value>7</value>
+                    <value>12</value>
                     <defaultValue>1</defaultValue>
                     <description>Echo train lentgth</description>
                     <displayedName>ETL</displayedName>
@@ -844,7 +844,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FIELD_OF_VIEW</name>
                     <uuid>1cdfcfe1-b486-4fcd-8d1a-4022edc60fcc</uuid>
-                    <value>0.08</value>
+                    <value>0.06</value>
                     <defaultValue>0.6</defaultValue>
                     <description>Field Of View along the frequency encoding direction</description>
                     <displayedName>FOV Read</displayedName>
@@ -863,7 +863,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FIELD_OF_VIEW_3D</name>
                     <uuid>130d0e68-3133-48c4-a9f6-6f48dceed9b4</uuid>
-                    <value>0.0142</value>
+                    <value>0.010000000000000002</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Field Of View coverage along the direction orthogonal to the phase and frequency encoding directions</description>
                     <displayedName>FOV Slice/3D</displayedName>
@@ -882,7 +882,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FIELD_OF_VIEW_PHASE</name>
                     <uuid>76f57b05-4c79-488a-999a-c7de21ab7d21</uuid>
-                    <value>0.04</value>
+                    <value>0.06</value>
                     <defaultValue>0.1</defaultValue>
                     <description>Field Of View along the phase encoding direction</description>
                     <displayedName>FOV Phase</displayedName>
@@ -953,7 +953,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>FOV_EFF</name>
                     <uuid>f6e23c0c-eaed-411b-9301-7b2474806e4f</uuid>
-                    <value>0.08</value>
+                    <value>0.06</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Return the acquired FOV length</description>
                     <displayedName>FOV Eff</displayedName>
@@ -1063,7 +1063,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>GRADIENT_AREA_CRUSHER_PI</name>
                     <uuid>f0a7df1f-97c3-4410-97f0-4166b0e2c91c</uuid>
-                    <value>0.6758751500857422</value>
+                    <value>1.0138127251286133</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Number of pi dephasing by the crusher</description>
                     <displayedName>Gradient Area Crusher Pi</displayedName>
@@ -1339,7 +1339,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>IMAGE_CONTRAST</name>
                     <uuid>61227c09-5412-444e-b9b2-b7c415e04d00</uuid>
-                    <value>Custom</value>
+                    <value>T1-weighted</value>
                     <defaultValue>T1-weighted</defaultValue>
                     <description>Type of image contrast</description>
                     <displayedName>Image Contrast</displayedName>
@@ -1725,7 +1725,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NB_REF_LINES_2D</name>
                     <uuid>cdf3a51f-c3ab-4f52-a75d-63df937249ad</uuid>
-                    <value>14</value>
+                    <value>48</value>
                     <defaultValue>0</defaultValue>
                     <description>Number of reference lines in phase encoding direction</description>
                     <displayedName>PAT - No. Ref Lines 2D</displayedName>
@@ -2326,7 +2326,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NUMBER_OF_INTERLEAVED_SLICE</name>
                     <uuid>bd68dc8e-dac9-4f19-9d5c-e524bcd98fee</uuid>
-                    <value>4</value>
+                    <value>3</value>
                     <defaultValue>0</defaultValue>
                     <description>Info: Number of interleaved slice acquired during one TR</description>
                     <displayedName>No. Slices per TR</displayedName>
@@ -2345,7 +2345,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NUMBER_OF_INTERLEAVED_SLICE_PACKS</name>
                     <uuid>e7693207-cb6c-4a60-aa23-ff9d58b1eee4</uuid>
-                    <value>3.0</value>
+                    <value>2.0</value>
                     <defaultValue>0.0</defaultValue>
                     <description>To split the slices in different packs acquired in one TR (No. Slices per TR = No. Slices / No. Interleaved Packs).  To reach lower TR, increase the number of packs (must be a divisor of the No. Slices).</description>
                     <displayedName>No. Interleaved slice packs</displayedName>
@@ -2363,7 +2363,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>NUMBER_OF_SHOOT_3D</name>
                     <uuid>78f27b89-a541-4428-b281-eb0a1e887761</uuid>
-                    <value>3</value>
+                    <value>2</value>
                     <defaultValue>1</defaultValue>
                     <description>Info: Copy of No. Interleaved slice packs (temporary param, will be remmplaced) ; Total number of slice / Number of interleaved slice      </description>
                     <displayedName>NUMBER_OF_SHOOT_3D (temp)</displayedName>
@@ -2772,7 +2772,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>PAF_2D</name>
                     <uuid>0d7164a5-b596-491c-80a2-30a9678ad38a</uuid>
-                    <value>2</value>
+                    <value>3</value>
                     <defaultValue>1</defaultValue>
                     <description>PAT Acceleration Factor in Phase direction</description>
                     <displayedName>PAT - Factor 2D</displayedName>
@@ -2869,7 +2869,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>PHASE_FIELD_OF_VIEW_RATIO</name>
                     <uuid>917bc526-abbb-4b57-a09b-8324e650bc3e</uuid>
-                    <value>50.0</value>
+                    <value>100.0</value>
                     <defaultValue>100.0</defaultValue>
                     <description>Info: Ratio between the phase-encoded FOV and the frequency-encoded FOV in % </description>
                     <displayedName>Phase FOV Ratio</displayedName>
@@ -2974,7 +2974,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>REPETITION_TIME</name>
                     <uuid>e0f04363-aa2c-4f91-a9bf-5b0cc9a1c460</uuid>
-                    <value>0.9648</value>
+                    <value>0.2682</value>
                     <defaultValue>0.2</defaultValue>
                     <description>Repetition Time</description>
                     <displayedName>TR</displayedName>
@@ -2993,7 +2993,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RESOLUTION_FREQUENCY</name>
                     <uuid>8f40e525-51b9-47c7-8277-85b30318b25f</uuid>
-                    <value>3.125E-4</value>
+                    <value>4.6875E-4</value>
                     <defaultValue>0.01</defaultValue>
                     <description>Info: True voxel size in the frequency encoding direction (FOV/acquisition_matrix_dimension_1D) </description>
                     <displayedName>Voxel Size Read</displayedName>
@@ -3012,7 +3012,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RESOLUTION_PHASE</name>
                     <uuid>3cb0d1f1-eca8-4e9d-adbc-8b4e24917393</uuid>
-                    <value>3.1746031746031746E-4</value>
+                    <value>5.0E-4</value>
                     <defaultValue>5.0E-4</defaultValue>
                     <description>Info: True voxel in the phase encoding direction (FOV/acquisition_matrix_dimension_2D) </description>
                     <displayedName>Voxel Size Phase</displayedName>
@@ -3031,7 +3031,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>RESOLUTION_SLICE</name>
                     <uuid>bfbd729c-597a-49b2-a428-e67869a112ca</uuid>
-                    <value>0.001</value>
+                    <value>0.0015</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: True voxel size in the third direction</description>
                     <displayedName>Voxel Size Slice/3D</displayedName>
@@ -3224,7 +3224,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SEQUENCE_TIME</name>
                     <uuid>2678f9ad-773c-4e7d-b41c-85fc1e5d0e76</uuid>
-                    <value>233.48160499999997</value>
+                    <value>26.283605</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Info: Total acquisition time</description>
                     <displayedName>Acquisition Time</displayedName>
@@ -3259,7 +3259,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textParam">
                     <name>SEQ_DESCRIPTION</name>
                     <uuid>6e264e2e-5362-45c2-8b31-50d7b196547b</uuid>
-                    <value>SE_2D_SAG_256x126x12_ETL=7</value>
+                    <value>SE_2D_SAG_128x120x6_ETL=12</value>
                     <defaultValue></defaultValue>
                     <description>Info: Description of the sequence</description>
                     <displayedName>Sequence Description</displayedName>
@@ -3327,7 +3327,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SLICE_THICKNESS</name>
                     <uuid>0e9d9151-f525-4328-a338-003174e30b81</uuid>
-                    <value>0.001</value>
+                    <value>0.0015</value>
                     <defaultValue>0.005</defaultValue>
                     <description>Slice thickness</description>
                     <displayedName>Slice Thickness</displayedName>
@@ -3430,7 +3430,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>SPECTRAL_WIDTH_PER_PIXEL</name>
                     <uuid>81512c5d-1669-4d4c-ac00-3d460f314c7e</uuid>
-                    <value>195.62550080128204</value>
+                    <value>391.2510016025641</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Bandwidth Width per pixel in Hz / Px</description>
                     <displayedName>BW/px</displayedName>
@@ -3898,7 +3898,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_MATRIX_DIMENSION_1D</name>
                     <uuid>1f8e3cbb-4313-4da7-9880-703c5196a87f</uuid>
-                    <value>256</value>
+                    <value>128</value>
                     <defaultValue>1</defaultValue>
                     <description>Image size in readout direction (user matrix dimension 1D)</description>
                     <displayedName>Matrix Size 1D Read</displayedName>
@@ -3936,7 +3936,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_MATRIX_DIMENSION_3D</name>
                     <uuid>2c53f185-ffc9-458e-b75f-3535dca1fd9d</uuid>
-                    <value>12</value>
+                    <value>6</value>
                     <defaultValue>1</defaultValue>
                     <description>Image size in the third dimension: slice or 3D PE  (user matrix dimension 3D)</description>
                     <displayedName>Matrix Size 3D / No. Slices</displayedName>
@@ -4012,7 +4012,7 @@
                 <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                     <name>USER_ZERO_FILLING_2D</name>
                     <uuid>9384e454-7c60-4c73-ae45-3fa4d1ba372b</uuid>
-                    <value>1.5625</value>
+                    <value>6.25</value>
                     <defaultValue>0.0</defaultValue>
                     <description>Percentage of zero filling</description>
                     <displayedName>ZERO_FILING_2D</displayedName>

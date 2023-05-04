@@ -966,9 +966,9 @@ public class Gradient {
     }
     public void reoderPhaseEncodingPAT(TransformPlugin plugin, int echoTrainLength, List<Integer> idxData, int acquisitionMatrixDimension1D) {
         // flow Comp
-        //if (gradFlowComp != null) {
-        //    gradFlowComp.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
-        //}
+        if (gradFlowComp != null) {
+            gradFlowComp.reoderPhaseEncodingPAT(plugin, echoTrainLength, idxData, acquisitionMatrixDimension1D);
+        }
         double loopNumber, indexNew;
         int acquisitionMatrixDimension2DReduced = idxData.size();
         if (amplitudeArray != null) {

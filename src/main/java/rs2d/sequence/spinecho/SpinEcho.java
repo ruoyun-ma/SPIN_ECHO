@@ -1112,40 +1112,6 @@ public class SpinEcho extends BaseSequenceGenerator {
                     System.out.println("inv index = " + idxPATinv.get(idxPAT.get(i)));
                 }
                 gradPhase2D.reoderPhaseEncodingPAT(plugin, echoTrainLength, idxData, acquisitionMatrixDimension1D);
-
-                // copy gradient amplictude array
-
-                /*double[] amplitudeArray = new double[gradPhase2D.getSteps()];
-                for (int k = 0; k < gradPhase2D.getSteps(); k++){
-                    amplitudeArray[k] = gradPhase2D.getAmplitudeArray(k);
-                }
-                int acquisitionMatrixDimension2DReduced = idxData.size();
-                double loopNumber, indexNew;
-                if (amplitudeArray != null) {
-                    double[] newTable = new double[acquisitionMatrixDimension2DReduced ];
-                    int[] tmp = Centric(acquisitionMatrixDimension2DReduced);
-                    for (int j = 0; j < acquisitionMatrixDimension2DReduced ; j++) {
-                        int idx = idxData.get(j);
-                        System.out.println("reorderPhaseEncoding step " + idx);
-                        int[] indexScan = this.invTransf(0, idx, 0, 0);
-                        //if ("Centric4D".equalsIgnoreCase(plugin.getName())) {
-                        //    indexScan[1] = tmp[j];
-                        //}
-                        loopNumber = indexScan[0] / acquisitionMatrixDimension1D; // Echo-block number: ETL-loop index
-                        System.out.println("loopNumber = " + loopNumber);
-                        System.out.println("indexScan[0] = " + indexScan[0]);
-                        System.out.println("indexScan[1] = " + indexScan[1]);
-                        indexNew = indexScan[1] * echoTrainLength + loopNumber;    // indexScan[1]: index de Nb 2D
-                        System.out.println("indexNew = " + indexNew);
-                        newTable[(int) indexNew] = amplitudeArray[idx];
-                    }
-                    System.out.println("original size of amplitude array = " + amplitudeArray.length);
-                    amplitudeArray = newTable;
-                    System.out.println("new size of amplitude array = " + amplitudeArray.length);
-                    gradPhase2D.setAmplitude(amplitudeArray);
-                }*/
-
-
             } else {
                 gradPhase2D.reoderPhaseEncoding(plugin, echoTrainLength, acquisitionMatrixDimension2D, acquisitionMatrixDimension1D);
             }
@@ -2664,7 +2630,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         System.out.println("echo train length = " + echoTrainLength);
         System.out.println("Math.ceil(double(this.nbTotalLines2D)/(double)echoTrainLength ) =" +(Math.ceil((double)this.nbTotalLines2D/(double)echoTrainLength) ));
         int newNbTotalLines2D = (int) (Math.ceil((double)this.nbTotalLines2D/(double)(echoTrainLength)) * (double)echoTrainLength );
-        if (newNbTotalLines2D % 2 > 0){
+        if ((newNbTotalLines2D/this.echoTrainLength) % 2 > 0){
             newNbTotalLines2D += echoTrainLength;
         }
         int deltaLines = newNbTotalLines2D - this.nbTotalLines2D;
@@ -2672,6 +2638,7 @@ public class SpinEcho extends BaseSequenceGenerator {
         System.out.println("new nbTotalLines2D = " + this.nbTotalLines2D);
         // put the additional lines to ref lines
         int idxSearch1 = acquisitionMatrixDimension2D/2 - nbRefLines2D/2;
+        int idxSearch2 = idxSearch1 + nbRefLines2D - 1;
         int countFill = 0;
         int idx = 0;
         while (countFill < deltaLines ){
@@ -2680,8 +2647,8 @@ public class SpinEcho extends BaseSequenceGenerator {
                 countFill += 1;
 
             }
-            if (this.patMask.get(idxSearch1+idx) == 0){
-                this.patMask.put(idxSearch1+idx, 1);
+            if (this.patMask.get(idxSearch2+idx) == 0){
+                this.patMask.put(idxSearch2+idx, 1);
                 countFill += 1;
 
             }

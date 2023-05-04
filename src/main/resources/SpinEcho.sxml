@@ -4063,7 +4063,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Nb_2d</name>
                 <uuid>819a0d7e-292d-4262-8431-a331d12d02b2</uuid>
-                <value>126</value>
+                <value>6</value>
                 <defaultValue>1</defaultValue>
                 <displayedName>Nb 2D</displayedName>
                 <locked>false</locked>
@@ -4124,7 +4124,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Nb_3d</name>
                 <uuid>68b2c5aa-d4fb-4a57-b6e8-e7d5d625434f</uuid>
-                <value>3</value>
+                <value>2</value>
                 <defaultValue>1</defaultValue>
                 <displayedName>Nb 3D</displayedName>
                 <locked>false</locked>
@@ -10232,7 +10232,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="numberParam">
                 <name>Nb_point</name>
                 <uuid>e3ac499f-d200-4ba3-92b3-39be4d30d29d</uuid>
-                <value>256</value>
+                <value>128</value>
                 <defaultValue>128</defaultValue>
                 <displayedName>Nb Point</displayedName>
                 <locked>false</locked>
@@ -23989,7 +23989,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>Grad_enable_read_prep_2</name>
                 <uuid>1fb62d18-9261-42b8-8d2a-4b992a886157</uuid>
-                <value>true</value>
+                <value>false</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_read_prep_2</displayedName>
@@ -24034,7 +24034,7 @@
             <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="booleanParam">
                 <name>Grad_enable_read_prep_1</name>
                 <uuid>7b97bb11-75f6-42af-9211-ee49cfa7916c</uuid>
-                <value>false</value>
+                <value>true</value>
                 <defaultValue>true</defaultValue>
                 <description>The state of the element</description>
                 <displayedName>Grad_enable_read_prep_1</displayedName>
@@ -26131,18 +26131,12 @@
                         <lockedToDefault>false</lockedToDefault>
                     </params>
                 </generator>
-                <list>16829.999999999996</list>
-                <list>7649.999999999998</list>
-                <list>-1530.0</list>
-                <list>-10710.0</list>
-                <list>13769.999999999996</list>
-                <list>4589.999999999998</list>
-                <list>-4590.0</list>
-                <list>-13770.0</list>
-                <list>10709.999999999996</list>
-                <list>1529.9999999999982</list>
-                <list>-7650.0</list>
-                <list>-16829.999999999996</list>
+                <list>7224.999999999999</list>
+                <list>1445.0</list>
+                <list>-4334.999999999999</list>
+                <list>4335.0</list>
+                <list>-1444.999999999999</list>
+                <list>-7224.999999999997</list>
             </value>
         </Entry>
         <Entry>
@@ -26197,7 +26191,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>2</address>
-                <list>2.6E-4</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26266,7 +26260,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>8</address>
-                <list>5.595999999999665E-6</list>
+                <list>1.4854799999999968E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -26306,7 +26300,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>10</address>
-                <list>0.005111808</list>
+                <list>0.002555904</list>
             </value>
         </Entry>
         <Entry>
@@ -26400,7 +26394,7 @@
                 <group>Dimension</group>
                 <locked>false</locked>
                 <address>-1</address>
-                <list>3</list>
+                <list>2</list>
             </value>
         </Entry>
         <Entry>
@@ -26418,7 +26412,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>e50c80b3-4cca-484b-a137-e32a1b0f8436</uuid>
+                        <uuid>42fa48d9-c5d2-4c20-9394-fae5ab2867ba</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -26432,7 +26426,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>f5b5a860-72ba-4fa8-89b8-225cdf441ae3</uuid>
+                        <uuid>27549177-b4ef-42e8-8d8b-6c4225fd5220</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -26446,7 +26440,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>548bd830-0939-4694-a80b-e2704b2d09a1</uuid>
+                        <uuid>82a9a482-7120-48b0-b65b-95f4008c0393</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -26460,7 +26454,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>f1729256-e46f-4edd-9f06-081c9904378a</uuid>
+                        <uuid>729b49d7-6e1f-4ce2-9718-7e38da091bb2</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -26470,7 +26464,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>e5a6675a-e998-4001-af06-62510b7853f4</uuid>
+                        <uuid>19a4f68d-c70a-42f0-b657-aa9bd60bf4f3</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -26968,7 +26962,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>5</address>
-                <list>2.3650000000000006E-4</list>
+                <list>6.5000000000002495E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -26996,7 +26990,7 @@
                 <group>Gradient</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>58.04440246958683</list>
+                <list>38.696268313057885</list>
             </value>
         </Entry>
         <Entry>
@@ -27014,7 +27008,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>fe5b6c5b-43f6-4584-acd7-b4a0ccf996f0</uuid>
+                        <uuid>1812f28f-a2bf-499f-8ddc-6e7ee0003bc0</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -27028,7 +27022,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>e2140963-f216-4d5e-ae9f-36d76f139b49</uuid>
+                        <uuid>58fdced5-d5a2-4fbf-b75b-d171d6bb17c7</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -27042,7 +27036,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>7a2928fb-3b59-41a5-9b5e-9c84c88c8380</uuid>
+                        <uuid>0e41f933-7747-4299-89b2-9bcc7a2b4d6a</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -27056,7 +27050,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>8bf4af7e-d274-45fc-bc75-ce30d0329c4e</uuid>
+                        <uuid>b577fa7c-1812-462b-bae8-f74d8a8bd21b</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -27066,7 +27060,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>177554c4-e277-40a1-8d9e-c8e595a52e10</uuid>
+                        <uuid>26dcec6e-c8ea-4dd2-a6f6-a204709dde36</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -27439,18 +27433,12 @@
                         <lockedToDefault>false</lockedToDefault>
                     </params>
                 </generator>
-                <list>13076.923076923078</list>
-                <list>5944.055944055945</list>
-                <list>-1188.811188811189</list>
-                <list>-8321.678321678322</list>
-                <list>10699.3006993007</list>
-                <list>3566.4335664335667</list>
-                <list>-3566.4335664335667</list>
-                <list>-10699.3006993007</list>
-                <list>8321.678321678322</list>
-                <list>1188.811188811189</list>
-                <list>-5944.055944055945</list>
-                <list>-13076.923076923082</list>
+                <list>5613.830613830613</list>
+                <list>1122.7661227661229</list>
+                <list>-3368.2983682983677</list>
+                <list>3368.298368298368</list>
+                <list>-1122.766122766122</list>
+                <list>-5613.830613830613</list>
             </value>
         </Entry>
         <Entry>
@@ -27536,7 +27524,7 @@
                     <name>Sinus Cardinal with Apodisation</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>31947c7e-cc27-40b5-ac31-237a7aa5418e</uuid>
+                        <uuid>ecde2c65-b2a3-48fe-9d78-0c1dd15d698e</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -27550,7 +27538,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Nb lobe</name>
-                        <uuid>17c16d7e-fb0c-44ad-a9ab-03652eca5e0b</uuid>
+                        <uuid>e3a82b69-e11b-4e64-95e7-6e0debac0d96</uuid>
                         <value>2</value>
                         <defaultValue>3</defaultValue>
                         <description>Number of lobe of the sinus cardinal</description>
@@ -27564,7 +27552,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>7b44df63-5d2d-4b82-8e3c-9e0866097884</uuid>
+                        <uuid>641e97d0-9620-4456-aea3-f088bdfb7297</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the sinus cardinal</description>
@@ -27578,7 +27566,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>c187b9fc-9b90-4de7-8457-2b7be5b67fba</uuid>
+                        <uuid>7b02b1d4-30bf-4a91-acc2-171bcf862a44</uuid>
                         <value>true</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolue value</description>
@@ -27588,7 +27576,7 @@
                     </params>
                     <params xsi:type="textParam">
                         <name>Window</name>
-                        <uuid>b4607e99-3bb7-44e8-900a-5f69380dc815</uuid>
+                        <uuid>3c295e5c-0fa3-437a-8ada-c1cd8ec1dec7</uuid>
                         <value>Hamming</value>
                         <defaultValue>None</defaultValue>
                         <description>The apodisation window</description>
@@ -27987,7 +27975,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>8</address>
-                <list>5.595999999999665E-6</list>
+                <list>1.485480000000001E-4</list>
             </value>
         </Entry>
         <Entry>
@@ -30175,7 +30163,7 @@
                 <group>Gradient</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>74.70314597835824</list>
+                <list>49.802097318905496</list>
             </value>
         </Entry>
         <Entry>
@@ -30234,7 +30222,7 @@
                     <name>Gaussian</name>
                     <params xsi:type="numberParam">
                         <name>Nb points</name>
-                        <uuid>637a82d1-6dcb-4367-a414-2083ed430607</uuid>
+                        <uuid>3de6faab-b486-49fe-9d00-11f386d11a06</uuid>
                         <value>128</value>
                         <defaultValue>64</defaultValue>
                         <description>Number of points</description>
@@ -30248,7 +30236,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Width</name>
-                        <uuid>8e7de12c-5f75-4f6a-9842-83282433ff48</uuid>
+                        <uuid>1818aa19-c7a4-413a-9cdb-130cd4e8e3cf</uuid>
                         <value>0.25</value>
                         <defaultValue>0.25</defaultValue>
                         <description>Width of the gaussian</description>
@@ -30262,7 +30250,7 @@
                     </params>
                     <params xsi:type="numberParam">
                         <name>Amplitude</name>
-                        <uuid>2b88011b-133d-4bed-b761-effc61cfae78</uuid>
+                        <uuid>1f8f0f32-aa70-4f66-bd4b-c6c09e545328</uuid>
                         <value>100.0</value>
                         <defaultValue>100.0</defaultValue>
                         <description>Amplitude of the gaussian</description>
@@ -30276,7 +30264,7 @@
                     </params>
                     <params xsi:type="booleanParam">
                         <name>Abs</name>
-                        <uuid>e5a09413-865c-45a4-adac-22f9fdf52ef5</uuid>
+                        <uuid>09afcae1-ca47-40d0-8369-b889b1c201e3</uuid>
                         <value>false</value>
                         <defaultValue>false</defaultValue>
                         <description>Absolute value</description>
@@ -32681,7 +32669,7 @@
                 <group>Gradient</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>74.77017979426176</list>
+                <list>52.347550652450764</list>
             </value>
         </Entry>
         <Entry>
@@ -32732,7 +32720,7 @@
                 <group>Gradient</group>
                 <locked>false</locked>
                 <address>2</address>
-                <list>-71.30754843388742</list>
+                <list>-47.538365622591606</list>
             </value>
         </Entry>
         <Entry>
@@ -32785,7 +32773,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>11</address>
-                <list>0.17014725</list>
+                <list>2.016666666666833E-5</list>
             </value>
         </Entry>
         <Entry>
@@ -32982,7 +32970,7 @@
                 <group>Gradient</group>
                 <locked>false</locked>
                 <address>1</address>
-                <list>18.338936901581317</list>
+                <list>24.451915868775092</list>
             </value>
         </Entry>
         <Entry>
@@ -33178,76 +33166,78 @@
                         <lockedToDefault>false</lockedToDefault>
                     </params>
                 </generator>
-                <list>-5.54836200076933</list>
-                <list>-13.316068801846392</list>
-                <list>-24.412792803385052</list>
-                <list>-35.50951680492371</list>
-                <list>-46.60624080646237</list>
-                <list>-57.70296480800103</list>
-                <list>-68.79968880953969</list>
+                <list>-2.2193448003077307</list>
                 <list>-4.4386896006154615</list>
-                <list>-11.09672400153866</list>
-                <list>-22.19344800307732</list>
-                <list>-33.290172004615975</list>
-                <list>-44.38689600615464</list>
-                <list>-55.483620007693304</list>
-                <list>-66.58034400923196</list>
-                <list>-3.3290172004616068</list>
+                <list>-6.658034400923199</list>
                 <list>-8.87737920123093</list>
-                <list>-19.974103202769584</list>
-                <list>-31.07082720430825</list>
-                <list>-42.167551205846905</list>
-                <list>-53.264275207385566</list>
-                <list>-64.36099920892423</list>
-                <list>-2.219344800307738</list>
-                <list>-7.767706801077061</list>
-                <list>-17.75475840246186</list>
-                <list>-28.851482404000514</list>
-                <list>-39.94820640553918</list>
-                <list>-51.044930407077835</list>
-                <list>-62.141654408616496</list>
-                <list>-1.109672400153869</list>
-                <list>-6.658034400923192</list>
-                <list>-15.535413602154122</list>
-                <list>-26.632137603692783</list>
-                <list>-37.728861605231444</list>
-                <list>-48.825585606770105</list>
-                <list>-59.922309608308765</list>
+                <list>-11.09672400153866</list>
+                <list>-13.316068801846392</list>
+                <list>-15.535413602154126</list>
+                <list>-17.754758402461857</list>
+                <list>-23.673011203282478</list>
+                <list>-30.33104560420567</list>
+                <list>-36.98908000512887</list>
+                <list>-43.64711440605207</list>
+                <list>-1.479563200205149</list>
+                <list>-3.698908000512887</list>
+                <list>-5.918252800820618</list>
+                <list>-8.137597601128348</list>
+                <list>-10.35694240143608</list>
+                <list>-12.576287201743813</list>
+                <list>-14.795632002051544</list>
+                <list>-17.014976802359282</list>
+                <list>-21.45366640297474</list>
+                <list>-28.11170080389794</list>
+                <list>-34.76973520482114</list>
+                <list>-41.42776960574433</list>
+                <list>-0.7397816001025816</list>
+                <list>-2.9591264004103124</list>
+                <list>-5.178471200718043</list>
+                <list>-7.397816001025774</list>
+                <list>-9.617160801333505</list>
+                <list>-11.836505601641235</list>
+                <list>-14.05585040194897</list>
+                <list>-16.2751952022567</list>
+                <list>-19.234321602667013</list>
+                <list>-25.89235600359021</list>
+                <list>-32.55039040451341</list>
+                <list>-39.2084248054366</list>
                 <list>0.0</list>
-                <list>5.54836200076933</list>
-                <list>15.535413602154122</list>
-                <list>26.632137603692783</list>
-                <list>37.728861605231444</list>
-                <list>48.825585606770105</list>
-                <list>59.922309608308765</list>
-                <list>1.109672400153869</list>
-                <list>6.658034400923185</list>
-                <list>17.754758402461846</list>
-                <list>28.85148240400052</list>
-                <list>39.94820640553918</list>
-                <list>51.04493040707783</list>
-                <list>62.1416544086165</list>
-                <list>2.219344800307738</list>
-                <list>8.877379201230923</list>
-                <list>19.974103202769584</list>
-                <list>31.070827204308245</list>
-                <list>42.167551205846905</list>
-                <list>53.264275207385566</list>
-                <list>64.36099920892421</list>
-                <list>3.3290172004616068</list>
-                <list>11.09672400153866</list>
-                <list>22.19344800307732</list>
-                <list>33.29017200461597</list>
-                <list>44.38689600615463</list>
-                <list>55.483620007693304</list>
-                <list>66.58034400923195</list>
+                <list>2.2193448003077307</list>
                 <list>4.4386896006154615</list>
-                <list>13.316068801846399</list>
-                <list>24.412792803385045</list>
-                <list>35.509516804923706</list>
-                <list>46.60624080646237</list>
-                <list>57.70296480800103</list>
-                <list>68.79968880953969</list>
+                <list>6.658034400923199</list>
+                <list>8.87737920123093</list>
+                <list>11.09672400153866</list>
+                <list>13.316068801846392</list>
+                <list>15.535413602154122</list>
+                <list>18.494540002564435</list>
+                <list>25.152574403487634</list>
+                <list>31.810608804410833</list>
+                <list>38.46864320533402</list>
+                <list>0.7397816001025816</list>
+                <list>2.9591264004103124</list>
+                <list>5.178471200718043</list>
+                <list>7.397816001025774</list>
+                <list>9.617160801333512</list>
+                <list>11.836505601641242</list>
+                <list>14.055850401948973</list>
+                <list>16.275195202256704</list>
+                <list>20.713884802872172</list>
+                <list>27.371919203795372</list>
+                <list>34.02995360471856</list>
+                <list>40.687988005641756</list>
+                <list>1.4795632002051633</list>
+                <list>3.698908000512894</list>
+                <list>5.918252800820618</list>
+                <list>8.137597601128348</list>
+                <list>10.35694240143608</list>
+                <list>12.576287201743824</list>
+                <list>14.795632002051555</list>
+                <list>17.014976802359286</list>
+                <list>22.933229603179896</list>
+                <list>29.591264004103095</list>
+                <list>36.249298405026295</list>
+                <list>42.90733280594948</list>
             </value>
         </Entry>
         <Entry>
@@ -33467,76 +33457,78 @@
                         <lockedToDefault>false</lockedToDefault>
                     </params>
                 </generator>
-                <list>5.54836200076933</list>
-                <list>13.316068801846392</list>
-                <list>24.412792803385056</list>
-                <list>35.50951680492371</list>
-                <list>46.60624080646237</list>
-                <list>57.70296480800103</list>
-                <list>68.79968880953969</list>
+                <list>2.2193448003077307</list>
                 <list>4.4386896006154615</list>
-                <list>11.09672400153866</list>
-                <list>22.19344800307732</list>
-                <list>33.290172004615975</list>
-                <list>44.38689600615464</list>
-                <list>55.48362000769331</list>
-                <list>66.58034400923196</list>
-                <list>3.3290172004616068</list>
+                <list>6.658034400923198</list>
                 <list>8.87737920123093</list>
-                <list>19.974103202769584</list>
-                <list>31.070827204308255</list>
-                <list>42.167551205846905</list>
-                <list>53.264275207385566</list>
-                <list>64.36099920892423</list>
-                <list>2.219344800307738</list>
-                <list>7.767706801077061</list>
-                <list>17.75475840246186</list>
-                <list>28.851482404000514</list>
-                <list>39.94820640553918</list>
-                <list>51.04493040707784</list>
-                <list>62.141654408616496</list>
-                <list>1.109672400153869</list>
-                <list>6.658034400923192</list>
-                <list>15.535413602154122</list>
-                <list>26.632137603692783</list>
-                <list>37.728861605231444</list>
-                <list>48.82558560677011</list>
-                <list>59.922309608308765</list>
+                <list>11.09672400153866</list>
+                <list>13.316068801846392</list>
+                <list>15.535413602154128</list>
+                <list>17.754758402461857</list>
+                <list>23.673011203282478</list>
+                <list>30.33104560420567</list>
+                <list>36.98908000512887</list>
+                <list>43.64711440605207</list>
+                <list>1.479563200205149</list>
+                <list>3.6989080005128865</list>
+                <list>5.918252800820618</list>
+                <list>8.137597601128348</list>
+                <list>10.35694240143608</list>
+                <list>12.576287201743812</list>
+                <list>14.795632002051544</list>
+                <list>17.014976802359282</list>
+                <list>21.45366640297474</list>
+                <list>28.11170080389794</list>
+                <list>34.76973520482114</list>
+                <list>41.42776960574433</list>
+                <list>0.7397816001025816</list>
+                <list>2.9591264004103124</list>
+                <list>5.178471200718043</list>
+                <list>7.397816001025773</list>
+                <list>9.617160801333505</list>
+                <list>11.836505601641235</list>
+                <list>14.05585040194897</list>
+                <list>16.2751952022567</list>
+                <list>19.234321602667013</list>
+                <list>25.89235600359021</list>
+                <list>32.55039040451341</list>
+                <list>39.2084248054366</list>
                 <list>0.0</list>
-                <list>-5.54836200076933</list>
-                <list>-15.535413602154122</list>
-                <list>-26.632137603692783</list>
-                <list>-37.728861605231444</list>
-                <list>-48.82558560677011</list>
-                <list>-59.922309608308765</list>
-                <list>-1.109672400153869</list>
-                <list>-6.658034400923185</list>
-                <list>-17.754758402461846</list>
-                <list>-28.851482404000517</list>
-                <list>-39.94820640553918</list>
-                <list>-51.04493040707783</list>
-                <list>-62.14165440861651</list>
-                <list>-2.219344800307738</list>
-                <list>-8.877379201230923</list>
-                <list>-19.974103202769584</list>
-                <list>-31.070827204308245</list>
-                <list>-42.167551205846905</list>
-                <list>-53.264275207385566</list>
-                <list>-64.36099920892421</list>
-                <list>-3.3290172004616068</list>
-                <list>-11.09672400153866</list>
-                <list>-22.19344800307732</list>
-                <list>-33.29017200461597</list>
-                <list>-44.38689600615463</list>
-                <list>-55.48362000769331</list>
-                <list>-66.58034400923195</list>
+                <list>-2.2193448003077307</list>
                 <list>-4.4386896006154615</list>
-                <list>-13.316068801846397</list>
-                <list>-24.412792803385045</list>
-                <list>-35.509516804923706</list>
-                <list>-46.60624080646237</list>
-                <list>-57.70296480800103</list>
-                <list>-68.79968880953969</list>
+                <list>-6.658034400923198</list>
+                <list>-8.87737920123093</list>
+                <list>-11.09672400153866</list>
+                <list>-13.316068801846392</list>
+                <list>-15.535413602154122</list>
+                <list>-18.494540002564435</list>
+                <list>-25.152574403487634</list>
+                <list>-31.810608804410833</list>
+                <list>-38.46864320533402</list>
+                <list>-0.7397816001025816</list>
+                <list>-2.9591264004103124</list>
+                <list>-5.178471200718043</list>
+                <list>-7.397816001025773</list>
+                <list>-9.617160801333512</list>
+                <list>-11.836505601641242</list>
+                <list>-14.055850401948971</list>
+                <list>-16.275195202256704</list>
+                <list>-20.713884802872172</list>
+                <list>-27.37191920379537</list>
+                <list>-34.02995360471856</list>
+                <list>-40.687988005641756</list>
+                <list>-1.4795632002051633</list>
+                <list>-3.698908000512894</list>
+                <list>-5.918252800820618</list>
+                <list>-8.137597601128348</list>
+                <list>-10.35694240143608</list>
+                <list>-12.576287201743826</list>
+                <list>-14.795632002051555</list>
+                <list>-17.014976802359286</list>
+                <list>-22.933229603179896</list>
+                <list>-29.591264004103092</list>
+                <list>-36.249298405026295</list>
+                <list>-42.90733280594948</list>
             </value>
         </Entry>
         <Entry>
@@ -33589,7 +33581,7 @@
                 <group>Delay</group>
                 <locked>false</locked>
                 <address>4</address>
-                <list>3.9999999999999996E-4</list>
+                <list>5.0E-6</list>
             </value>
         </Entry>
         <Entry>
@@ -34742,18 +34734,12 @@
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>-1596.153846153843</list>
-                <list>-3173.0769230769206</list>
-                <list>2942.307692307693</list>
-                <list>1365.384615384617</list>
-                <list>-3403.8461538461465</list>
-                <list>-1134.6153846153811</list>
-                <list>1134.6153846153845</list>
-                <list>3403.8461538461534</list>
-                <list>-1365.3846153846102</list>
-                <list>-2942.307692307689</list>
-                <list>3173.0769230769242</list>
-                <list>1596.153846153843</list>
+                <list>-2355.7692307692305</list>
+                <list>-2778.8461538461543</list>
+                <list>644.2307692307675</list>
+                <list>-644.2307692307692</list>
+                <list>2778.8461538461524</list>
+                <list>2355.769230769225</list>
             </value>
         </Entry>
         <Entry>
@@ -35115,7 +35101,7 @@
                 <group>Dimension</group>
                 <locked>false</locked>
                 <address>-1</address>
-                <list>6</list>
+                <list>11</list>
             </value>
         </Entry>
         <Entry>
@@ -35885,18 +35871,12 @@
                 <group>Emission</group>
                 <locked>false</locked>
                 <address>0</address>
-                <list>-1596.1538461538498</list>
-                <list>-3173.0769230769242</list>
-                <list>2942.307692307693</list>
-                <list>1365.384615384617</list>
-                <list>-3403.8461538461565</list>
-                <list>-1134.6153846153845</list>
-                <list>1134.6153846153845</list>
-                <list>3403.8461538461565</list>
-                <list>-1365.384615384617</list>
-                <list>-2942.307692307693</list>
-                <list>3173.0769230769242</list>
-                <list>1596.1538461538566</list>
+                <list>-2355.7692307692287</list>
+                <list>-2778.8461538461543</list>
+                <list>644.2307692307675</list>
+                <list>-644.2307692307692</list>
+                <list>2778.846153846152</list>
+                <list>2355.7692307692287</list>
             </value>
         </Entry>
         <Entry>
