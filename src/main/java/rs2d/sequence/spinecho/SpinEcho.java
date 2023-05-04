@@ -315,6 +315,9 @@ public class SpinEcho extends BaseSequenceGenerator {
         isEnableRead = getBoolean(GRADIENT_ENABLE_READ);
 
         observation_time = getDouble(ACQUISITION_TIME_PER_SCAN);
+
+        iPAT2D = getInt(PAF_2D);
+        isPAT = iPAT2D > 1 ? true: false;
     }
 
     // --------------------------------------------------------------------------------------------------------------------------------------------
@@ -494,7 +497,7 @@ public class SpinEcho extends BaseSequenceGenerator {
 
         double partial_phase = getDouble(USER_PARTIAL_PHASE);
         double zero_filling_2D = (100 - partial_phase) / 100f;
-        if (!(sequenceSE == SE.MultiEcho)) {
+        if (!(sequenceSE == SE.MultiEcho) & (!isPAT)) {
             int acq2D = (int) Math.floor((1 - zero_filling_2D) * userMatrixDimension2D);
             int fact2FSE = (sequenceSE == SE.OneShotFSE ? 1 : 2);
             echoTrainLength = Math.min(echoTrainLength, acq2D / fact2FSE);
@@ -509,9 +512,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         acquisitionMatrixDimension2D = floorEven((1 - zero_filling_2D) * userMatrixDimension2D);
         acquisitionMatrixDimension2D = (acquisitionMatrixDimension2D < 4) && isEnablePhase ? 4 : acquisitionMatrixDimension2D;
 
-
-
-
         // Pixel dimension calculation
         double pixelDimensionPhase = fovPhase / acquisitionMatrixDimension2D;
         getParam(RESOLUTION_PHASE).setValue(pixelDimensionPhase); // phase true resolution for display
@@ -519,9 +519,6 @@ public class SpinEcho extends BaseSequenceGenerator {
         // -----------------------------------------------
         // 2nd D managment  ETL
         // -----------------------------------------------
-        this.iPAT2D = getInt(PAF_2D);
-        if (iPAT2D > 1){ this.isPAT = true; }
-
         nb_scan_2d = acquisitionMatrixDimension2D;
         if (!(sequenceSE == SE.MultiEcho) ) {
             if(!this.isPAT) {

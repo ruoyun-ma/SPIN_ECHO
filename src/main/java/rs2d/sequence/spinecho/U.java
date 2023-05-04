@@ -59,7 +59,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(0);
             param.setMaxValue(65536);
-            param.setValue(120);
+            param.setValue(128);
             param.setDefaultValue(128);
             return param;
         }
@@ -710,7 +710,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(0);
             param.setMaxValue(2147483647);
-            param.setValue(1);
+            param.setValue(2);
             param.setDefaultValue(0);
             return param;
         }
@@ -1494,7 +1494,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Scan);
             param.setMinValue(0);
             param.setMaxValue(2147483647);
-            param.setValue(48);
+            param.setValue(10);
             param.setDefaultValue(0);
             return param;
         }
@@ -2151,7 +2151,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Length);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(5.0E-4);
+            param.setValue(4.6875E-4);
             param.setDefaultValue(5.0E-4);
             return param;
         }
@@ -2341,7 +2341,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.Time);
             param.setMinValue(0.0);
             param.setMaxValue(1.0E9);
-            param.setValue(26.283605);
+            param.setValue(17.701205);
             param.setDefaultValue(0.0);
             return param;
         }
@@ -2371,7 +2371,7 @@ public enum U implements GeneratorParamEnum {
             param.setDescription("Info: Description of the sequence");
             param.setCategory(Category.Acquisition);
             param.setUuid("6e264e2e-5362-45c2-8b31-50d7b196547b");
-            param.setValue("SE_2D_SAG_128x120x6_ETL=12");
+            param.setValue("SE_2D_SAG_128x128x6_ETL=12");
             param.setDefaultValue("");
             return param;
         }
@@ -3074,7 +3074,7 @@ public enum U implements GeneratorParamEnum {
             param.setNumberEnum(NumberEnum.PERCENT);
             param.setMinValue(0.0);
             param.setMaxValue(100.0);
-            param.setValue(6.25);
+            param.setValue(0.0);
             param.setDefaultValue(0.0);
             return param;
         }
